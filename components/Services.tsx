@@ -55,27 +55,27 @@ export default function Services() {
   ]
 
   return (
-    <section id="services" ref={ref} className="py-24 bg-gradient-to-b from-slate-50 to-white">
+    <section id="services" ref={ref} className="py-16 sm:py-24 bg-gradient-to-b from-slate-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <span className="text-red-600 font-semibold text-sm uppercase tracking-wider">
+          <span className="text-red-600 font-semibold text-xs sm:text-sm uppercase tracking-wider">
             Produtos e Serviços
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mt-3 sm:mt-4 mb-4 sm:mb-6 px-4">
             Equipamentos para{' '}
             <span className="text-red-600">Sua Operação</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
             Importação direta de empilhadeiras e equipamentos industriais com o melhor custo-benefício do mercado
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {products.map((product, index) => (
             <motion.div
               key={product.title}
@@ -92,7 +92,7 @@ export default function Services() {
                 boxShadow: "0 25px 50px -12px rgba(220, 38, 38, 0.25)",
                 transition: { duration: 0.3 }
               }}
-              className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all border border-gray-100 relative overflow-hidden group"
+              className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all border border-gray-100 relative overflow-hidden group"
             >
               {/* Animated Background Gradient */}
               <motion.div
@@ -113,14 +113,14 @@ export default function Services() {
                     initial={{ scale: 0, rotate: -180 }}
                     animate={isInView ? { scale: 1, rotate: 0 } : {}}
                     transition={{ delay: 0.2 * index + 0.3, type: "spring" }}
-                    className="absolute top-0 right-0 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold"
+                    className="absolute top-0 right-0 bg-red-600 text-white px-2 sm:px-3 py-1 rounded-full text-xs font-bold"
                   >
                     {product.badge}
                   </motion.div>
                 )}
                 
                 <motion.div 
-                  className="text-red-600 mb-4"
+                  className="text-red-600 mb-3 sm:mb-4"
                   whileHover={{
                     scale: 1.2,
                     rotate: [0, -15, 15, 0],
@@ -129,13 +129,13 @@ export default function Services() {
                 >
                   {product.icon}
                 </motion.div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
                   {product.title}
                 </h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">
                   {product.description}
                 </p>
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-2 mb-4 sm:mb-6">
                   {product.features.map((feature, idx) => (
                     <motion.li 
                       key={idx} 

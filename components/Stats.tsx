@@ -41,7 +41,7 @@ export default function Stats() {
   ]
 
   return (
-    <section ref={ref} className="py-24 bg-gradient-to-br from-red-900 via-red-800 to-red-900 relative overflow-hidden">
+    <section ref={ref} className="py-16 sm:py-24 bg-gradient-to-br from-red-900 via-red-800 to-red-900 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -55,20 +55,20 @@ export default function Stats() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <span className="text-red-300 font-semibold text-sm uppercase tracking-wider">
+          <span className="text-red-300 font-semibold text-xs sm:text-sm uppercase tracking-wider">
             Nossos Números
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-3 sm:mt-4 mb-4 sm:mb-6 px-4">
             Resultados que Falam por Si
           </h2>
-          <p className="text-xl text-red-100 max-w-3xl mx-auto">
+          <p className="text-base sm:text-xl text-red-100 max-w-3xl mx-auto px-4">
             Números que comprovam nossa excelência e compromisso com o sucesso dos nossos clientes
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -86,7 +86,7 @@ export default function Stats() {
                 rotate: [0, -3, 3, 0],
                 transition: { duration: 0.4 }
               }}
-              className="text-center bg-white/10 backdrop-blur-sm p-6 rounded-2xl hover:bg-white/20 transition-all border border-white/20 relative overflow-hidden group"
+              className="text-center bg-white/10 backdrop-blur-sm p-4 sm:p-6 rounded-2xl hover:bg-white/20 transition-all border border-white/20 relative overflow-hidden group"
             >
               {/* Animated Glow Effect */}
               <motion.div
@@ -108,7 +108,7 @@ export default function Stats() {
                   type: "spring",
                   stiffness: 200
                 }}
-                className="relative inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4 group-hover:bg-white/30 transition-all"
+                className="relative inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full mb-3 sm:mb-4 group-hover:bg-white/30 transition-all"
               >
                 <motion.div 
                   className="text-white"
@@ -131,7 +131,7 @@ export default function Stats() {
                 isInView={isInView}
                 suffix={stat.suffix}
               />
-              <p className="text-red-100 mt-3 font-medium">{stat.label}</p>
+              <p className="text-red-100 mt-2 sm:mt-3 font-medium text-xs sm:text-base">{stat.label}</p>
 
               {/* Particle Effect on Hover */}
               <motion.div
@@ -174,7 +174,7 @@ function Counter({ target, duration, isInView, suffix }: { target: number; durat
   }, [isInView, target, duration])
 
   return (
-    <div className="text-5xl md:text-6xl font-bold text-white">
+    <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-white">
       {count.toLocaleString()}{suffix}
     </div>
   )

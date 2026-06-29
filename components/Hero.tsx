@@ -34,8 +34,8 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -46,7 +46,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
+              className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight"
             >
               Soluções em
               <span className="block text-red-500">Empilhadeiras</span>
@@ -56,7 +56,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-xl text-gray-100 mb-8 leading-relaxed"
+              className="text-base sm:text-xl text-gray-100 mb-6 sm:mb-8 leading-relaxed"
             >
               Importação e distribuição de máquinas e equipamentos industriais para movimentação de cargas. Atuamos em todo o Sul do Brasil com foco na eficiência da sua operação.
             </motion.p>
@@ -65,18 +65,18 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
             >
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center bg-red-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-red-700 transition-all hover:scale-105 shadow-lg"
+                className="inline-flex items-center justify-center bg-red-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-red-700 transition-all hover:scale-105 shadow-lg text-sm sm:text-base"
               >
                 Solicite um Orçamento
-                <ArrowRight className="ml-2" size={20} />
+                <ArrowRight className="ml-2" size={18} />
               </a>
               <a
                 href="#services"
-                className="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-red-600 transition-all"
+                className="inline-flex items-center justify-center border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-red-600 transition-all text-sm sm:text-base"
               >
                 Nossos Produtos
               </a>
@@ -87,19 +87,19 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className="grid grid-cols-3 gap-6 mt-12"
+              className="grid grid-cols-3 gap-3 sm:gap-6 mt-8 sm:mt-12"
             >
               <div className="text-center">
-                <div className="text-3xl font-bold text-red-500">1000+</div>
-                <div className="text-sm text-gray-200">Equipamentos Vendidos</div>
+                <div className="text-2xl sm:text-3xl font-bold text-red-500">1000+</div>
+                <div className="text-xs sm:text-sm text-gray-200">Equipamentos Vendidos</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-red-500">24h</div>
-                <div className="text-sm text-gray-200">Assistência Técnica</div>
+                <div className="text-2xl sm:text-3xl font-bold text-red-500">24h</div>
+                <div className="text-xs sm:text-sm text-gray-200">Assistência Técnica</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-red-500">20+</div>
-                <div className="text-sm text-gray-200">Anos de Experiência</div>
+                <div className="text-2xl sm:text-3xl font-bold text-red-500">20+</div>
+                <div className="text-xs sm:text-sm text-gray-200">Anos de Experiência</div>
               </div>
             </motion.div>
           </motion.div>
