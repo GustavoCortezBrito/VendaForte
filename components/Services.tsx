@@ -119,16 +119,9 @@ export default function Services() {
                   </motion.div>
                 )}
                 
-                <motion.div 
-                  className="text-red-600 mb-3 sm:mb-4"
-                  whileHover={{
-                    scale: 1.2,
-                    rotate: [0, -15, 15, 0],
-                    transition: { duration: 0.5 }
-                  }}
-                >
+                <div className="text-red-600 mb-3 sm:mb-4">
                   {product.icon}
-                </motion.div>
+                </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
                   {product.title}
                 </h3>

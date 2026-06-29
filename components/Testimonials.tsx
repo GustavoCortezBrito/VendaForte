@@ -138,7 +138,7 @@ export default function Testimonials() {
               </div>
               <p className="text-gray-600 mb-4">Baseado em 17 avaliações</p>
               <a 
-                href="https://www.google.com/maps/place/Grupo+Venda+Forte" 
+                href="https://maps.app.goo.gl/JU9AaTSb7JFw1qJ68" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
@@ -287,212 +287,52 @@ export default function Testimonials() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {/* Adami */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-              transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
-              whileHover={{ 
-                scale: 1.1, 
-                y: -10,
-                rotate: [0, -5, 5, 0],
-                transition: { duration: 0.4 }
-              }}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-100 flex items-center justify-center group relative overflow-hidden"
-            >
+            {[
+              { name: 'Adami', file: 'adami.png', category: 'Indústria' },
+              { name: 'BRF', file: 'brf.png', category: 'Brasil Foods' },
+              { name: 'Copacol', file: 'copacol.png', category: 'Cooperativa' },
+              { name: 'GT Foods', file: 'gtfoods.png', category: 'Alimentos' },
+              { name: 'JBS', file: 'jbs.png', category: 'Friboi' },
+              { name: 'Muffato', file: 'muffato.png', category: 'Supermercados' },
+              { name: 'Randon', file: 'randon.png', category: 'Implementos' },
+              { name: 'Seara', file: 'seara.png', category: 'Alimentos' },
+            ].map((client, index) => (
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-red-50 to-transparent opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
-              <div className="text-center relative z-10">
-                <svg viewBox="0 0 120 40" className="w-28 h-10 mb-2">
-                  <text x="60" y="28" textAnchor="middle" className="fill-gray-700 group-hover:fill-red-600 transition-colors" style={{ fontSize: '24px', fontWeight: '700', fontFamily: 'Arial, sans-serif' }}>ADAMI</text>
-                </svg>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">Indústria</p>
-              </div>
-            </motion.div>
-
-            {/* BRF */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-              transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
-              whileHover={{ 
-                scale: 1.1, 
-                y: -10,
-                rotate: [0, -5, 5, 0],
-                transition: { duration: 0.4 }
-              }}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-100 flex items-center justify-center group relative overflow-hidden"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-green-50 to-transparent opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
-              <div className="text-center relative z-10">
-                <svg viewBox="0 0 120 40" className="w-28 h-10 mb-2">
-                  <rect x="10" y="8" width="28" height="24" rx="4" className="fill-green-600 group-hover:fill-red-600 transition-colors"/>
-                  <text x="24" y="26" textAnchor="middle" className="fill-white" style={{ fontSize: '16px', fontWeight: '700', fontFamily: 'Arial, sans-serif' }}>BRF</text>
-                </svg>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">Brasil Foods</p>
-              </div>
-            </motion.div>
-
-            {/* Copacol */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-              transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
-              whileHover={{ 
-                scale: 1.1, 
-                y: -10,
-                rotate: [0, -5, 5, 0],
-                transition: { duration: 0.4 }
-              }}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-100 flex items-center justify-center group relative overflow-hidden"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-orange-50 to-transparent opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
-              <div className="text-center relative z-10">
-                <svg viewBox="0 0 140 40" className="w-32 h-10 mb-2">
-                  <circle cx="20" cy="20" r="12" className="fill-orange-500 group-hover:fill-red-600 transition-colors"/>
-                  <text x="70" y="26" textAnchor="middle" className="fill-gray-700 group-hover:fill-red-600 transition-colors" style={{ fontSize: '20px', fontWeight: '700', fontFamily: 'Arial, sans-serif' }}>COPACOL</text>
-                </svg>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">Cooperativa</p>
-              </div>
-            </motion.div>
-
-            {/* GT Foods */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-              transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
-              whileHover={{ 
-                scale: 1.1, 
-                y: -10,
-                rotate: [0, -5, 5, 0],
-                transition: { duration: 0.4 }
-              }}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-100 flex items-center justify-center group relative overflow-hidden"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-purple-50 to-transparent opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
-              <div className="text-center relative z-10">
-                <svg viewBox="0 0 120 40" className="w-28 h-10 mb-2">
-                  <text x="30" y="28" textAnchor="middle" className="fill-purple-600 group-hover:fill-red-600 transition-colors" style={{ fontSize: '28px', fontWeight: '700', fontFamily: 'Arial, sans-serif' }}>GT</text>
-                  <text x="72" y="22" textAnchor="middle" className="fill-gray-600 group-hover:fill-red-600 transition-colors" style={{ fontSize: '14px', fontWeight: '600', fontFamily: 'Arial, sans-serif' }}>FOODS</text>
-                </svg>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">Alimentos</p>
-              </div>
-            </motion.div>
-
-            {/* JBS */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-              transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
-              whileHover={{ 
-                scale: 1.1, 
-                y: -10,
-                rotate: [0, -5, 5, 0],
-                transition: { duration: 0.4 }
-              }}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-100 flex items-center justify-center group relative overflow-hidden"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-green-50 to-transparent opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
-              <div className="text-center relative z-10">
-                <svg viewBox="0 0 120 40" className="w-28 h-10 mb-2">
-                  <rect x="20" y="10" width="80" height="20" rx="10" className="fill-green-700 group-hover:fill-red-600 transition-colors"/>
-                  <text x="60" y="26" textAnchor="middle" className="fill-white" style={{ fontSize: '18px', fontWeight: '700', fontFamily: 'Arial, sans-serif', letterSpacing: '2px' }}>JBS</text>
-                </svg>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">Friboi</p>
-              </div>
-            </motion.div>
-
-            {/* Muffato */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-              transition={{ delay: 0.6, type: "spring", stiffness: 100 }}
-              whileHover={{ 
-                scale: 1.1, 
-                y: -10,
-                rotate: [0, -5, 5, 0],
-                transition: { duration: 0.4 }
-              }}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-100 flex items-center justify-center group relative overflow-hidden"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-yellow-50 to-transparent opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
-              <div className="text-center relative z-10">
-                <svg viewBox="0 0 140 40" className="w-32 h-10 mb-2">
-                  <path d="M10,20 Q15,10 20,20 T30,20" className="stroke-yellow-500 group-hover:stroke-red-600 transition-colors" fill="none" strokeWidth="3"/>
-                  <text x="70" y="26" textAnchor="middle" className="fill-gray-700 group-hover:fill-red-600 transition-colors" style={{ fontSize: '20px', fontWeight: '700', fontFamily: 'Arial, sans-serif' }}>MUFFATO</text>
-                </svg>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">Supermercados</p>
-              </div>
-            </motion.div>
-
-            {/* Randon */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-              transition={{ delay: 0.7, type: "spring", stiffness: 100 }}
-              whileHover={{ 
-                scale: 1.1, 
-                y: -10,
-                rotate: [0, -5, 5, 0],
-                transition: { duration: 0.4 }
-              }}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-100 flex items-center justify-center group relative overflow-hidden"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-transparent opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
-              <div className="text-center relative z-10">
-                <svg viewBox="0 0 120 40" className="w-28 h-10 mb-2">
-                  <rect x="10" y="12" width="100" height="16" className="fill-indigo-600 group-hover:fill-red-600 transition-colors"/>
-                  <text x="60" y="24" textAnchor="middle" className="fill-white" style={{ fontSize: '16px', fontWeight: '700', fontFamily: 'Arial, sans-serif' }}>RANDON</text>
-                </svg>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">Implementos</p>
-              </div>
-            </motion.div>
-
-            {/* Seara */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-              transition={{ delay: 0.8, type: "spring", stiffness: 100 }}
-              whileHover={{ 
-                scale: 1.1, 
-                y: -10,
-                rotate: [0, -5, 5, 0],
-                transition: { duration: 0.4 }
-              }}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-100 flex items-center justify-center group relative overflow-hidden"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
-              <div className="text-center relative z-10">
-                <svg viewBox="0 0 120 40" className="w-28 h-10 mb-2">
-                  <circle cx="20" cy="20" r="10" className="fill-blue-500 group-hover:fill-red-600 transition-colors"/>
-                  <text x="60" y="26" textAnchor="middle" className="fill-gray-700 group-hover:fill-red-600 transition-colors" style={{ fontSize: '22px', fontWeight: '700', fontFamily: 'Arial, sans-serif' }}>SEARA</text>
-                </svg>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">Alimentos</p>
-              </div>
-            </motion.div>
+                key={client.name}
+                initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
+                animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+                transition={{ delay: 0.1 * index, type: "spring", stiffness: 100 }}
+                whileHover={{ 
+                  scale: 1.1, 
+                  y: -10,
+                  rotate: [0, -5, 5, 0],
+                  transition: { duration: 0.4 }
+                }}
+                className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-100 flex items-center justify-center group relative overflow-hidden min-h-[120px]"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-red-50 to-transparent opacity-0 group-hover:opacity-100"
+                  transition={{ duration: 0.3 }}
+                />
+                <div className="text-center relative z-10 w-full">
+                  <div className="h-12 flex items-center justify-center mb-3">
+                    <img 
+                      src={`/images/clients/${client.file}`} 
+                      alt={`Logo ${client.name}`}
+                      className="max-h-12 max-w-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                      onError={(e) => {
+                        // Fallback para texto se imagem não existir
+                        const target = e.currentTarget as HTMLImageElement
+                        target.style.display = 'none'
+                        const parent = target.parentElement!
+                        parent.innerHTML = `<span class="text-2xl font-bold text-gray-700 group-hover:text-red-600 transition-colors">${client.name}</span>`
+                      }}
+                    />
+                  </div>
+                  <p className="text-xs text-gray-400 uppercase tracking-wide">{client.category}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
 
           {/* Nota sobre logos */}

@@ -1,9 +1,12 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
 import { Mail, Phone, MapPin } from 'lucide-react'
 
 export default function Footer() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
@@ -66,19 +69,18 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer ref={ref} className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
-          <div>
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-2xl font-bold mb-4 text-red-500"
-            >
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="text-2xl font-bold mb-4 text-red-500">
               Venda Forte
-            </motion.h3>
+            </h3>
             <p className="text-gray-400 mb-6 leading-relaxed">
               Importação e distribuição de máquinas e equipamentos industriais para movimentação de cargas. Atuamos em todo o Sul do Brasil com matriz em Chapecó-SC.
             </p>
@@ -90,9 +92,8 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 * index }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ delay: 0.1 * index, duration: 0.4 }}
                   whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
                   className={`w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center ${social.color} transition-all duration-300`}
                   aria-label={social.label}
@@ -101,19 +102,22 @@ export default function Footer() {
                 </motion.a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Quick Links */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             <h4 className="text-lg font-semibold mb-4">Links Rápidos</h4>
             <ul className="space-y-2">
               {quickLinks.map((link, index) => (
                 <motion.li
                   key={link.label}
                   initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.05 * index }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ delay: 0.1 + 0.05 * index, duration: 0.4 }}
                 >
                   <a
                     href={link.href}
@@ -125,19 +129,22 @@ export default function Footer() {
                 </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Services */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <h4 className="text-lg font-semibold mb-4">Serviços</h4>
             <ul className="space-y-2">
               {services.map((service, index) => (
                 <motion.li
                   key={service.label}
                   initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.05 * index }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ delay: 0.2 + 0.05 * index, duration: 0.4 }}
                 >
                   <a
                     href={service.href}
@@ -149,16 +156,20 @@ export default function Footer() {
                 </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Contact Info */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             <h4 className="text-lg font-semibold mb-4">Contato</h4>
             <ul className="space-y-4">
               <motion.li
                 initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.3, duration: 0.4 }}
                 className="flex items-start text-gray-400"
               >
                 <MapPin size={20} className="mr-3 mt-1 flex-shrink-0 text-red-600" />
@@ -166,9 +177,8 @@ export default function Footer() {
               </motion.li>
               <motion.li
                 initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.4, duration: 0.4 }}
                 className="flex items-center text-gray-400"
               >
                 <Phone size={20} className="mr-3 flex-shrink-0 text-red-600" />
@@ -183,9 +193,8 @@ export default function Footer() {
               </motion.li>
               <motion.li
                 initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.5, duration: 0.4 }}
                 className="flex items-center text-gray-400"
               >
                 <Mail size={20} className="mr-3 flex-shrink-0 text-red-600" />
@@ -194,14 +203,14 @@ export default function Footer() {
                 </a>
               </motion.li>
             </ul>
-          </div>
+          </motion.div>
         </div>
 
         {/* Bottom Bar */}
         <motion.div
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.6, duration: 0.6 }}
           className="border-t border-gray-800 pt-8 mt-8"
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">

@@ -73,8 +73,10 @@ export default function Navbar() {
                 />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">Venda Forte</h1>
-                <p className="text-xs text-gray-600">Grupo</p>
+                <h1 className="text-xl font-bold text-gray-900">
+                  Venda Forte
+                </h1>
+                <p className="text-xs text-gray-500 font-medium">Grupo</p>
               </div>
             </motion.div>
 
