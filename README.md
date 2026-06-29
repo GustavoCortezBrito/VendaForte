@@ -1,36 +1,199 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Landing Page - Grupo Venda Forte
 
-## Getting Started
+Landing page moderna e profissional para empresa de empilhadeiras em Santa Catarina.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-16.2-black)
+![React](https://img.shields.io/badge/React-19-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Tailwind](https://img.shields.io/badge/Tailwind-3-cyan)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-purple)
+
+## 🏢 Sobre o Grupo Venda Forte
+
+O Grupo Venda Forte é especializado em:
+- **Venda de Empilhadeiras** (elétricas, gás e diesel)
+- **Locação de Equipamentos**
+- **Assistência Técnica 24h**
+- **Peças Originais**
+- **Contratos de Manutenção**
+
+**Atendimento:** Chapecó e Joinville - SC  
+**Telefones:**  
+- Chapecó: 49 3323-9050
+- Joinville: 47 3842-3333
+
+## 🎨 Design
+
+O design segue a identidade visual do site original:
+- **Cor Principal:** Vermelho (#DC2626)
+- **Cor Secundária:** Cinza Escuro (#111827)
+- **Estilo:** Moderno, limpo e profissional
+- **Inspiração:** [grupovendaforte.com](https://grupovendaforte.com)
+
+## 🎨 Tecnologias Utilizadas
+
+- **Next.js 14** - Framework React com App Router
+- **React 18** - Biblioteca JavaScript para interfaces
+- **TypeScript** - Tipagem estática
+- **Tailwind CSS** - Framework CSS utilitário
+- **Framer Motion** - Animações fluidas e modernas
+- **Lucide React** - Ícones modernos
+
+## ✨ Características
+
+- ✅ Design moderno e profissional
+- ✅ Totalmente responsivo (Mobile, Tablet, Desktop)
+- ✅ Animações suaves com Framer Motion
+- ✅ Performance otimizada
+- ✅ SEO friendly
+- ✅ Acessibilidade (WCAG)
+- ✅ Gradientes e efeitos visuais modernos
+
+## 📦 Seções da Landing Page
+
+1. **Hero** - Seção inicial impactante com CTA
+2. **About** - Sobre a empresa e valores
+3. **Services** - Portfólio completo de serviços
+4. **Stats** - Números e estatísticas com animação
+5. **Testimonials** - Depoimentos de clientes
+6. **CTA** - Call-to-action com formulário
+7. **Contact** - Informações de contato
+8. **Footer** - Links e redes sociais
+
+## 🚀 Como Executar
+
+### Instalação
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone o repositório (se aplicável)
+git clone [url-do-repositorio]
+
+# Entre na pasta do projeto
+cd vendaforte-landing
+
+# Instale as dependências
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Desenvolvimento
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Inicie o servidor de desenvolvimento
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
 
-## Learn More
+### Build de Produção
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Criar build otimizado
+npm run build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Executar em produção
+npm start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎯 Personalização
 
-## Deploy on Vercel
+### Cores
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+As cores principais podem ser ajustadas no arquivo `tailwind.config.ts` ou diretamente nos componentes:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Azul Principal**: `blue-600`
+- **Amarelo/Ouro**: `yellow-400`
+- **Texto**: `gray-900`
+
+### Conteúdo
+
+Edite os componentes em `/components` para personalizar:
+
+- Textos e descrições
+- Imagens e ícones
+- Informações de contato
+- Links de redes sociais
+
+### Animações
+
+As animações podem ser ajustadas nos componentes individuais, modificando os parâmetros do Framer Motion:
+
+```typescript
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+>
+```
+
+## 📱 Responsividade
+
+A landing page é totalmente responsiva e foi testada em:
+
+- 📱 Mobile (320px - 767px)
+- 📱 Tablet (768px - 1023px)
+- 💻 Desktop (1024px+)
+- 🖥️ Large Desktop (1440px+)
+
+## 🔧 Estrutura de Arquivos
+
+```
+vendaforte-landing/
+├── app/
+│   ├── layout.tsx       # Layout principal
+│   ├── page.tsx         # Página inicial
+│   └── globals.css      # Estilos globais
+├── components/
+│   ├── Navbar.tsx       # Barra de navegação
+│   ├── Hero.tsx         # Seção hero
+│   ├── About.tsx        # Seção sobre
+│   ├── Services.tsx     # Seção serviços
+│   ├── Stats.tsx        # Estatísticas
+│   ├── Testimonials.tsx # Depoimentos
+│   ├── CTA.tsx          # Call-to-action
+│   ├── Contact.tsx      # Contato
+│   └── Footer.tsx       # Rodapé
+├── public/              # Arquivos estáticos
+└── package.json         # Dependências
+```
+
+## 🌟 Próximos Passos
+
+Para colocar o site no ar, você pode:
+
+1. **Vercel** (Recomendado para Next.js)
+   ```bash
+   npm install -g vercel
+   vercel
+   ```
+
+2. **Netlify**
+   - Conecte seu repositório Git
+   - Deploy automático
+
+3. **AWS Amplify / Azure / Google Cloud**
+   - Plataformas enterprise
+
+## 📝 Customizações Sugeridas
+
+- [ ] Adicionar imagens reais da empresa
+- [ ] Integrar formulários com backend (API)
+- [ ] Adicionar Google Analytics
+- [ ] Implementar chatbot
+- [ ] Adicionar blog/notícias
+- [ ] Integrar WhatsApp Business
+- [ ] Adicionar vídeos institucionais
+- [ ] Implementar multi-idioma (i18n)
+
+## 📄 Licença
+
+Este projeto foi desenvolvido para o Grupo Venda Forte.
+
+## 👨‍💻 Suporte
+
+Para dúvidas ou suporte, entre em contato através de:
+- E-mail: contato@grupovendaforte.com
+- Telefone: +55 (11) 3456-7890
+
+---
+
+Desenvolvido com ❤️ usando Next.js e Tailwind CSS
