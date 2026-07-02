@@ -2,19 +2,29 @@
 
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { useMemo } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Hero() {
-  // Partículas customizadas
-  const particles = useMemo(() => 
-    Array.from({ length: 50 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      delay: Math.random() * 5,
-      duration: 20 + Math.random() * 15,
-    })), []
-  )
+  const [particles, setParticles] = useState<Array<{
+    id: number
+    x: number
+    y: number
+    delay: number
+    duration: number
+  }>>([])
+
+  // Gera partículas apenas no cliente para evitar hydration mismatch
+  useEffect(() => {
+    setParticles(
+      Array.from({ length: 50 }, (_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        delay: Math.random() * 5,
+        duration: 20 + Math.random() * 15,
+      }))
+    )
+  }, [])
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -29,30 +39,32 @@ export default function Hero() {
       </div>
 
       {/* Particles Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {particles.map((particle) => (
-          <motion.div
-            key={particle.id}
-            className="absolute w-1 h-1 bg-white/30 rounded-full"
-            style={{
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
-            }}
-            animate={{
-              y: [0, -40, 0],
-              x: [0, Math.sin(particle.id) * 15, 0],
-              opacity: [0.1, 0.4, 0.1],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: particle.duration,
-              delay: particle.delay,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
+      {particles.length > 0 && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {particles.map((particle) => (
+            <motion.div
+              key={particle.id}
+              className="absolute w-1 h-1 bg-white/30 rounded-full"
+              style={{
+                left: `${particle.x}%`,
+                top: `${particle.y}%`,
+              }}
+              animate={{
+                y: [0, -40, 0],
+                x: [0, Math.sin(particle.id) * 15, 0],
+                opacity: [0.1, 0.4, 0.1],
+                scale: [1, 1.3, 1],
+              }}
+              transition={{
+                duration: particle.duration,
+                delay: particle.delay,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
