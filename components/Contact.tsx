@@ -37,9 +37,9 @@ export default function Contact() {
   ]
 
   return (
-    <section id="contact" ref={ref} className="py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-      {/* Background Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden">
+    <section id="contact" ref={ref} className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      {/* Background Decorative Elements - Hidden on Mobile */}
+      <div className="hidden md:block absolute inset-0 overflow-hidden">
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
@@ -64,22 +64,22 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-12 md:mb-16"
         >
-          <span className="text-red-600 font-semibold text-sm uppercase tracking-wider">
+          <span className="text-red-600 font-semibold text-xs sm:text-sm uppercase tracking-wider">
             Entre em Contato
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mt-3 sm:mt-4 mb-3 sm:mb-4 md:mb-6 px-4 leading-tight">
             Vamos Conversar sobre suas{' '}
             <span className="text-red-600">Necessidades</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
             Nossa equipe está pronta para oferecer as melhores soluções em equipamentos industriais
           </p>
         </motion.div>
 
         {/* Contact Info Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-10 sm:mb-12 md:mb-16">
           {contactInfo.map((item, index) => (
             <motion.a
               key={item.title}
@@ -93,40 +93,32 @@ export default function Contact() {
                 stiffness: 100
               }}
               whileHover={{ 
-                y: -12, 
+                y: -8, 
                 scale: 1.05,
                 rotate: [0, -2, 2, 0],
                 transition: { duration: 0.3 }
               }}
               whileTap={{ scale: 0.95 }}
-              className="group bg-white p-6 rounded-2xl shadow-md hover:shadow-2xl transition-all text-center border border-gray-100 relative overflow-hidden"
+              className="group bg-white p-3 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl shadow-sm md:shadow-md hover:shadow-lg md:hover:shadow-2xl transition-all text-center border border-gray-100 relative overflow-hidden"
             >
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-br from-red-50 to-transparent opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
+              <div className="hidden md:block absolute inset-0 bg-gradient-to-br from-red-50 to-transparent opacity-0 group-hover:opacity-100" />
               
-              {/* Animated Pulse Ring */}
+              {/* Animated Pulse Ring - Hidden on Mobile */}
               <motion.div
-                className="absolute inset-0 border-2 border-red-500 rounded-2xl"
+                className="hidden md:block absolute inset-0 border-2 border-red-500 rounded-xl sm:rounded-2xl"
                 initial={{ scale: 1, opacity: 0 }}
                 whileHover={{ scale: 1.1, opacity: 0 }}
                 transition={{ duration: 0.6, repeat: Infinity }}
               />
 
               <div className="relative z-10">
-                <motion.div 
-                  className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-red-100 to-red-50 text-red-600 rounded-xl mb-4"
-                  whileHover={{ 
-                    scale: 1.2,
-                    rotate: [0, -10, 10, 0],
-                    transition: { duration: 0.5 }
-                  }}
-                >
-                  {item.icon}
-                </motion.div>
-                <h3 className="font-bold text-gray-900 mb-2 text-sm">{item.title}</h3>
-                <p className="text-gray-600 text-sm font-medium">{item.info}</p>
+                <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-red-100 to-red-50 text-red-600 rounded-xl mb-2 sm:mb-3 md:mb-4">
+                  <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6">
+                    {item.icon}
+                  </div>
+                </div>
+                <h3 className="font-bold text-gray-900 mb-1 sm:mb-2 text-xs sm:text-sm leading-tight">{item.title}</h3>
+                <p className="text-gray-600 text-xs sm:text-sm font-medium leading-tight">{item.info}</p>
               </div>
             </motion.a>
           ))}

@@ -57,21 +57,21 @@ export default function FAQ() {
   const visibleFAQs = showAll ? faqs : faqs.slice(0, 6)
 
   return (
-    <section id="faq" ref={ref} className="py-24 bg-white">
+    <section id="faq" ref={ref} className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-white via-gray-50 to-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16 md:mb-20"
         >
-          <span className="text-red-600 font-semibold text-sm uppercase tracking-wider">
+          <span className="inline-block text-red-600 font-bold text-xs sm:text-sm uppercase tracking-wider mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-red-50 rounded-full">
             Perguntas Frequentes
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">
-            Dúvidas <span className="text-red-600">Comuns</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mt-3 sm:mt-4 mb-4 sm:mb-6 px-4 leading-tight">
+            Dúvidas <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Comuns</span>
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 px-4">
             Encontre respostas para as perguntas mais frequentes sobre nossos produtos e serviços
           </p>
         </motion.div>
@@ -92,20 +92,16 @@ export default function FAQ() {
                 scale: 1.02,
                 transition: { duration: 0.2 }
               }}
-              className="bg-gray-50 rounded-xl overflow-hidden border border-gray-200 hover:border-red-300 transition-colors relative"
+              className="bg-white rounded-xl sm:rounded-2xl overflow-hidden border-2 border-gray-100 hover:border-red-200 transition-all shadow-sm md:shadow-md hover:shadow-lg md:hover:shadow-xl relative"
             >
-              {/* Animated Border on Hover */}
-              <motion.div
-                className="absolute inset-0 border-2 border-red-500 rounded-xl opacity-0"
-                whileHover={{ opacity: 1 }}
-                transition={{ duration: 0.2 }}
-              />
+              {/* Animated Border on Hover - Hidden on Mobile */}
+              <div className="hidden md:block absolute inset-0 border-2 border-red-500 rounded-xl opacity-0 hover:opacity-100 transition-opacity pointer-events-none" />
 
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="relative z-10 w-full px-6 py-5 flex items-center justify-between text-left hover:bg-gray-100 transition-colors"
+                className="relative z-10 w-full px-4 sm:px-5 md:px-6 py-4 sm:py-5 flex items-center justify-between text-left hover:bg-gray-100 transition-colors"
               >
-                <span className="font-semibold text-gray-900 pr-8">
+                <span className="font-semibold text-gray-900 pr-6 sm:pr-8 text-sm sm:text-base leading-tight">
                   {faq.question}
                 </span>
                 <motion.div
@@ -136,7 +132,7 @@ export default function FAQ() {
                 className="overflow-hidden"
               >
                 <motion.div 
-                  className="px-6 pb-5 text-gray-600 leading-relaxed"
+                  className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 text-gray-600 leading-relaxed text-sm sm:text-base"
                   initial={{ y: -10 }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.3 }}
@@ -173,15 +169,15 @@ export default function FAQ() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8 }}
-          className="mt-16 bg-gradient-to-r from-red-600 to-red-700 rounded-2xl p-8 text-center text-white"
+          className="mt-12 sm:mt-14 md:mt-16 bg-gradient-to-r from-red-600 via-red-700 to-red-600 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 text-white text-center shadow-2xl"
         >
-          <h3 className="text-2xl font-bold mb-3">Ainda tem dúvidas?</h3>
-          <p className="mb-6 text-red-100">
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">Ainda tem dúvidas?</h3>
+          <p className="mb-6 sm:mb-8 text-red-100 text-sm sm:text-base md:text-lg leading-relaxed">
             Nossa equipe está pronta para ajudar você com qualquer questão
           </p>
           <a
             href="#contact"
-            className="inline-block bg-white text-red-600 px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all"
+            className="inline-block bg-white text-red-600 px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full font-bold hover:shadow-xl hover:scale-105 transition-all text-base sm:text-lg"
           >
             Fale com Especialista
           </a>

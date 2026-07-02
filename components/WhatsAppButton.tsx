@@ -65,25 +65,7 @@ export default function WhatsAppButton() {
           </motion.div>
         </motion.button>
 
-        {/* Tooltip */}
-        <AnimatePresence>
-          {!isOpen && (
-            <motion.div
-              initial={{ opacity: 0, x: 20, scale: 0.8 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 20, scale: 0.8 }}
-              transition={{ delay: 2 }}
-              className="absolute right-20 top-1/2 -translate-y-1/2 bg-gray-900 text-white px-4 py-2 rounded-lg whitespace-nowrap shadow-xl"
-            >
-              <div className="text-sm font-medium">Fale conosco!</div>
-              <div className="text-xs text-gray-300">Respondemos rapidamente</div>
-              {/* Arrow */}
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full">
-                <div className="w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-l-8 border-l-gray-900" />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Tooltip - Hidden */}
       </motion.div>
 
       {/* Expanded Chat Box */}

@@ -45,8 +45,10 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed w-full z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
+        className={`fixed w-full z-50 transition-all duration-500 ${
+          isScrolled 
+            ? 'bg-white shadow-lg' 
+            : 'bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,10 +75,16 @@ export default function Navbar() {
                 />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">
+                <h1 className={`text-xl font-bold transition-colors duration-300 ${
+                  isScrolled ? 'text-gray-900' : 'text-white'
+                }`}>
                   Venda Forte
                 </h1>
-                <p className="text-xs text-gray-500 font-medium">Grupo</p>
+                <p className={`text-xs font-medium transition-colors duration-300 ${
+                  isScrolled ? 'text-gray-500' : 'text-white/80'
+                }`}>
+                  Grupo
+                </p>
               </div>
             </motion.div>
 
@@ -90,10 +98,16 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 * index }}
-                    className="text-gray-800 hover:text-red-600 transition-colors font-medium relative group"
+                    className={`font-medium relative group transition-colors duration-300 ${
+                      isScrolled 
+                        ? 'text-gray-800 hover:text-red-600' 
+                        : 'text-white hover:text-red-300'
+                    }`}
                   >
                     {item.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 transition-all group-hover:w-full"></span>
+                    <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${
+                      isScrolled ? 'bg-red-600' : 'bg-white'
+                    }`}></span>
                   </motion.a>
                 ))}
                 <motion.a
@@ -112,7 +126,11 @@ export default function Navbar() {
             <div className="md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-md text-gray-800 hover:bg-gray-100 transition-colors"
+                className={`p-2 rounded-md transition-colors ${
+                  isScrolled 
+                    ? 'text-gray-800 hover:bg-gray-100' 
+                    : 'text-white hover:bg-white/10'
+                }`}
               >
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -126,15 +144,23 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white shadow-lg border-t"
+            className={`md:hidden ${
+              isScrolled ? 'bg-white' : 'bg-gray-900/95 backdrop-blur-lg'
+            } shadow-lg border-t ${
+              isScrolled ? 'border-gray-200' : 'border-white/10'
+            }`}
           >
-            <div className="px-4 pt-2 pb-4 space-y-2">
+            <div className="px-4 pt-4 pb-6 space-y-1">
               {menuItems.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="block px-4 py-3 text-gray-800 hover:bg-red-50 rounded-lg transition-colors font-medium"
+                  className={`block px-4 py-3 rounded-xl transition-all font-medium ${
+                    isScrolled
+                      ? 'text-gray-800 hover:bg-red-50 hover:text-red-600'
+                      : 'text-white hover:bg-white/10'
+                  }`}
                 >
                   {item.label}
                 </a>
@@ -142,7 +168,7 @@ export default function Navbar() {
               <a
                 href="#contact"
                 onClick={() => setIsOpen(false)}
-                className="block px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:shadow-lg transition-all text-center font-semibold"
+                className="block px-4 py-3 mt-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:shadow-lg transition-all text-center font-semibold"
               >
                 Solicitar Orçamento
               </a>
