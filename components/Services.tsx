@@ -152,7 +152,14 @@ export default function Services() {
                     whileHover={{ x: "0%" }}
                     transition={{ duration: 0.3 }}
                   />
-                  <span className="relative z-10">Solicitar Orçamento</span>
+                  <span className="relative z-10">
+                    {index === 0 ? 'Solicitar Orçamento' : 
+                     index === 1 ? 'Obter Cotação' :
+                     index === 2 ? 'Consultar Preços' :
+                     index === 3 ? 'Solicitar Proposta' :
+                     index === 4 ? 'Agendar Manutenção' :
+                     'Consultar Disponibilidade'}
+                  </span>
                 </motion.a>
               </div>
             </motion.div>

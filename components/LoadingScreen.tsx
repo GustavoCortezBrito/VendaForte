@@ -139,9 +139,9 @@ export default function LoadingScreen() {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="text-center mb-8"
             >
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+              <div className="text-4xl md:text-5xl font-bold text-white mb-2">
                 Venda Forte
-              </h1>
+              </div>
               <p className="text-red-200 text-lg">
                 Equipamentos Industriais
               </p>

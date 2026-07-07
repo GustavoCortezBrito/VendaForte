@@ -115,10 +115,10 @@ export default function Navbar() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 }}
-                  aria-label="Solicitar orçamento - Menu principal"
+                  aria-label="Solicitar orçamento de empilhadeiras"
                   className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-semibold"
                 >
-                  Solicitar Orçamento
+                  Fale Conosco
                 </motion.a>
               </div>
             </div>
@@ -169,10 +169,10 @@ export default function Navbar() {
               <a
                 href="#contact"
                 onClick={() => setIsOpen(false)}
-                aria-label="Solicitar orçamento - Menu mobile"
+                aria-label="Entre em contato pelo formulário"
                 className="block px-4 py-3 mt-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:shadow-lg transition-all text-center font-semibold"
               >
-                Solicitar Orçamento
+                Fale Conosco
               </a>
             </div>
           </motion.div>

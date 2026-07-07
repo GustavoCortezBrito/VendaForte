@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 const siteUrl = "https://grupovendaforte.com";
 const siteName = "Grupo Venda Forte";
-const siteDescription = "Venda, locação e manutenção de empilhadeiras em Chapecó-SC. Equipamentos elétrricos, a gás e diesel. Peças multimarcas e assistência 24h. 20+ anos de experiência.";
+const siteDescription = "Empilhadeiras em Chapecó-SC: venda, locação e manutenção. Equipamentos elétricos, gás e diesel. Peças multimarcas. Assistência 24h.";
 const siteKeywords = [
   "empilhadeiras Chapecó",
   "empilhadeiras Santa Catarina",

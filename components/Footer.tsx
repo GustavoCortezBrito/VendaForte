@@ -96,7 +96,8 @@ export default function Footer() {
                   transition={{ delay: 0.1 * index, duration: 0.4 }}
                   whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
                   className={`w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center ${social.color} transition-all duration-300`}
-                  aria-label={social.label}
+                  aria-label={`Siga-nos no ${social.label}`}
+                  title={`Visite nosso perfil no ${social.label}`}
                 >
                   {social.icon}
                 </motion.a>
