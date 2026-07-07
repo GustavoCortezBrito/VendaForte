@@ -56,8 +56,29 @@ export default function FAQ() {
 
   const visibleFAQs = showAll ? faqs : faqs.slice(0, 6)
 
+  // JSON-LD Schema para FAQ aparecer no Google
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  }
+
   return (
-    <section id="faq" ref={ref} className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-white via-gray-50 to-white">
+    <>
+      {/* JSON-LD Schema para Google Rich Results */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
+      <section id="faq" ref={ref} className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-white via-gray-50 to-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
