@@ -118,7 +118,7 @@ export default function Hero() {
             transition={{ delay: 0.4 }}
             className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-100 mb-6 sm:mb-8 leading-relaxed max-w-3xl mx-auto px-2"
           >
-            Importação e distribuição de máquinas e equipamentos industriais para movimentação de cargas. Atuamos em todo o Sul do Brasil com foco na eficiência da sua operação.
+            O Grupo Venda Forte oferece soluções completas em empilhadeiras e equipamentos industriais. Importação e distribuição de máquinas para movimentação de cargas em todo o Sul do Brasil.
           </motion.p>
 
           <motion.div

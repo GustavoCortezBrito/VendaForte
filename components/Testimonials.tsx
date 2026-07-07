@@ -267,9 +267,9 @@ export default function Testimonials() {
           className="mt-20"
         >
           <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+            <div className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
               Empresas que <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Confiam</span> em Nós
-            </h3>
+            </div>
             <p className="text-gray-600 text-lg">Parceiros de sucesso em todo o Sul do Brasil</p>
           </div>
 

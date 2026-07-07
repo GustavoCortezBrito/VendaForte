@@ -109,9 +109,9 @@ export default function Services() {
                 <div className="text-red-600 mb-3 sm:mb-4">
                   {product.icon}
                 </div>
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 group-hover:text-red-600 transition-colors">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 group-hover:text-red-600 transition-colors">
                   {product.title}
-                </h3>
+                </div>
                 <p className="text-sm sm:text-base lg:text-lg text-gray-600 mb-4 sm:mb-6 leading-relaxed">
                   {product.description}
                 </p>

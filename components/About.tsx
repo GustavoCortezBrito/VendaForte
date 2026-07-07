@@ -147,9 +147,9 @@ export default function About() {
                       {value.icon}
                     </div>
                   </div>
-                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">
+                  <div className="text-sm sm:text-base md:text-lg font-bold text-gray-900 mb-1 sm:mb-2 leading-tight">
                     {value.title}
-                  </h3>
+                  </div>
                   <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
                     {value.description}
                   </p>
