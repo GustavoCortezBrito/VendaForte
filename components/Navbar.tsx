@@ -75,11 +75,11 @@ export default function Navbar() {
                 />
               </div>
               <div>
-                <h1 className={`text-xl font-bold transition-colors duration-300 ${
+                <div className={`text-xl font-bold transition-colors duration-300 ${
                   isScrolled ? 'text-gray-900' : 'text-white'
                 }`}>
                   Venda Forte
-                </h1>
+                </div>
                 <p className={`text-xs font-medium transition-colors duration-300 ${
                   isScrolled ? 'text-gray-500' : 'text-white/80'
                 }`}>
@@ -115,6 +115,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 }}
+                  aria-label="Solicitar orçamento - Menu principal"
                   className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-semibold"
                 >
                   Solicitar Orçamento
@@ -168,6 +169,7 @@ export default function Navbar() {
               <a
                 href="#contact"
                 onClick={() => setIsOpen(false)}
+                aria-label="Solicitar orçamento - Menu mobile"
                 className="block px-4 py-3 mt-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:shadow-lg transition-all text-center font-semibold"
               >
                 Solicitar Orçamento

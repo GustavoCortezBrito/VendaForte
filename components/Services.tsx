@@ -143,6 +143,7 @@ export default function Services() {
                   href="#contact"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  aria-label={`Solicitar orçamento para ${product.title}`}
                   className="block w-full bg-red-600 text-white text-center py-3 sm:py-3 rounded-full font-semibold hover:bg-red-700 transition-colors relative overflow-hidden group/button text-sm sm:text-base mt-auto"
                 >
                   <motion.span

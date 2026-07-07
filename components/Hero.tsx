@@ -107,8 +107,9 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight px-2 mt-16 sm:mt-20 md:mt-0"
           >
-            Soluções em
-            <span className="block text-red-500 mt-1 sm:mt-2">Empilhadeiras</span>
+            <span className="block text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-red-400 mb-2">Grupo Venda Forte</span>
+            Soluções Completas em
+            <span className="block text-red-500 mt-1 sm:mt-2">Empilhadeiras e Equipamentos</span>
           </motion.h1>
           
           <motion.p
@@ -128,6 +129,7 @@ export default function Hero() {
           >
             <a
               href="#contact"
+              aria-label="Solicitar orçamento - Botão principal Hero"
               className="inline-flex items-center justify-center bg-red-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-red-700 transition-all hover:scale-105 shadow-lg text-sm sm:text-base lg:text-lg"
             >
               Solicite um Orçamento
@@ -135,6 +137,7 @@ export default function Hero() {
             </a>
             <a
               href="#services"
+              aria-label="Ver nossos produtos e serviços"
               className="inline-flex items-center justify-center border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-red-600 transition-all text-sm sm:text-base lg:text-lg"
             >
               Nossos Produtos
