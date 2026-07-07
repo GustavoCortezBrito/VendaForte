@@ -1,0 +1,43 @@
+# Robots.txt para Grupo Venda Forte
+# Otimizado para mecanismos de busca tradicionais e IA (ChatGPT, Perplexity, etc)
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Permitir crawlers de IA
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# Crawlers tradicionais
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap
+Sitemap: https://grupovendaforte.com/sitemap.xml
+
+# Crawl-delay para bots específicos
+Crawl-delay: 1
