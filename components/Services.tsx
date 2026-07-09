@@ -12,31 +12,31 @@ export default function Services() {
   const products = [
     {
       icon: <Zap size={40} />,
-      title: 'Empilhadeiras Elétricas',
-      description: 'Ideais para ambientes fechados e operações que exigem zero emissões. Silenciosas, eficientes e econômicas.',
+      title: 'Empilhadeira Elétrica',
+      description: 'Empilhadeira elétrica ideal para ambientes fechados e operações que exigem zero emissões. Silenciosa, eficiente e econômica.',
       features: ['Capacidade 1.5 a 3.5 ton', 'Zero emissões', 'Baixo custo operacional', 'Operação silenciosa'],
       badge: 'Mais Vendido'
     },
     {
       icon: <Fuel size={40} />,
-      title: 'Empilhadeiras a Gás (GLP)',
+      title: 'Empilhadeira a Gás (GLP)',
       description: 'Potência e versatilidade para operações internas e externas. Reabastecimento rápido e alta produtividade.',
       features: ['Capacidade 1.5 a 5.0 ton', 'Uso interno/externo', 'Reabastecimento rápido', 'Alto desempenho'],
       badge: null
     },
     {
       icon: <Truck size={40} />,
-      title: 'Empilhadeiras a Diesel',
-      description: 'Máxima potência para trabalhos pesados e ambientes externos. Robustas e preparadas para uso intensivo.',
+      title: 'Empilhadeira Diesel',
+      description: 'Empilhadeira diesel com máxima potência para trabalhos pesados e ambientes externos. Robusta e preparada para uso intensivo.',
       features: ['Capacidade 2.5 a 10 ton', 'Uso externo intensivo', 'Alta durabilidade', 'Trabalhos pesados'],
       badge: null
     },
     {
       icon: <Package size={40} />,
-      title: 'Peças e Acessórios',
-      description: 'Estoque completo de peças originais multimarcas. Garantia de qualidade e compatibilidade total.',
-      features: ['Peças originais', 'Todas as marcas', 'Pronta entrega', 'Garantia de fábrica'],
-      badge: 'Estoque Completo'
+      title: 'Transpaleteira e Paleteira',
+      description: 'Transpaleteira elétrica e paleteira manual para movimentação horizontal de paletes. Ideais para depósitos e armazéns.',
+      features: ['Transpaleteira elétrica', 'Paleteira manual', 'Capacidade até 3 ton', 'Fácil manuseio'],
+      badge: 'Pronta Entrega'
     },
     {
       icon: <Wrench size={40} />,
@@ -47,10 +47,10 @@ export default function Services() {
     },
     {
       icon: <Clock size={40} />,
-      title: 'Locação de Equipamentos',
-      description: 'Aluguel flexível de empilhadeiras para períodos curtos ou longos. Manutenção incluída no contrato.',
-      features: ['Diária, mensal ou anual', 'Manutenção inclusa', 'Sem investimento inicial', 'Equipamentos novos'],
-      badge: null
+      title: 'Empilhadeira Autônoma',
+      description: 'Empilhadeira autônoma com tecnologia de ponta. Automação inteligente para operações 24/7 sem necessidade de operador.',
+      features: ['Navegação autônoma', 'Tecnologia IA', 'Operação 24/7', 'ROI em 18-24 meses'],
+      badge: 'Novidade'
     }
   ]
 

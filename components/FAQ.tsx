@@ -13,8 +13,8 @@ export default function FAQ() {
 
   const faqs = [
     {
-      question: 'Quais tipos de empilhadeiras vocês oferecem?',
-      answer: 'Oferecemos três tipos principais de empilhadeiras: Elétricas (1.5 a 3.5 ton), ideais para ambientes fechados; a Gás/GLP (1.5 a 5.0 ton), versáteis para uso interno e externo; e Diesel (2.5 a 10 ton), robustas para trabalhos pesados em ambientes externos.'
+      question: 'Quais tipos de empilhadeiras e equipamentos vocês oferecem?',
+      answer: 'Oferecemos uma linha completa: Empilhadeira Elétrica (1.5 a 3.5 ton), Empilhadeira Diesel (2.5 a 10 ton), Empilhadeira a Gás/GLP (1.5 a 5.0 ton), Transpaleteira Elétrica, Paleteira Manual e Empilhadeira Autônoma com tecnologia de navegação inteligente. Todos os equipamentos são importados diretamente e certificados.'
     },
     {
       question: 'Vocês trabalham com locação de equipamentos?',

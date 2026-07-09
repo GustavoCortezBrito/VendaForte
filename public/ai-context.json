@@ -99,16 +99,27 @@
         "@type": "Offer",
         "itemOffered": {
           "@type": "Product",
-          "name": "Empilhadeiras Elétricas",
-          "description": "Capacidade de 1.5 a 3.5 toneladas, ideais para ambientes fechados, zero emissões, operação silenciosa",
-          "category": "Empilhadeiras"
+          "name": "Empilhadeira Elétrica",
+          "description": "Empilhadeira elétrica com capacidade de 1.5 a 3.5 toneladas, ideais para ambientes fechados, zero emissões, operação silenciosa",
+          "category": "Empilhadeiras",
+          "keywords": ["empilhadeira elétrica", "empilhadeira elétrica industrial"]
         }
       },
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Product",
-          "name": "Empilhadeiras a Gás (GLP)",
+          "name": "Empilhadeira Diesel",
+          "description": "Empilhadeira diesel com capacidade de 2.5 a 10 toneladas, uso externo intensivo, trabalhos pesados e alta durabilidade",
+          "category": "Empilhadeiras",
+          "keywords": ["empilhadeira diesel", "empilhadeira diesel industrial"]
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Empilhadeira a Gás (GLP)",
           "description": "Capacidade de 1.5 a 5.0 toneladas, uso interno e externo, reabastecimento rápido",
           "category": "Empilhadeiras"
         }
@@ -117,9 +128,30 @@
         "@type": "Offer",
         "itemOffered": {
           "@type": "Product",
-          "name": "Empilhadeiras a Diesel",
-          "description": "Capacidade de 2.5 a 10 toneladas, uso externo intensivo, trabalhos pesados",
-          "category": "Empilhadeiras"
+          "name": "Transpaleteira Elétrica",
+          "description": "Transpaleteira elétrica para movimentação horizontal de paletes, capacidade até 3 toneladas",
+          "category": "Equipamentos de Movimentação",
+          "keywords": ["transpaleteira", "transpaleteira elétrica", "paleteira elétrica"]
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Paleteira Manual",
+          "description": "Paleteira manual robusta para movimentação de paletes em depósitos e armazéns",
+          "category": "Equipamentos de Movimentação",
+          "keywords": ["paleteira", "paleteira manual", "paleteira hidráulica"]
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Empilhadeira Autônoma",
+          "description": "Empilhadeira autônoma com tecnologia de navegação inteligente, operação 24/7 sem operador",
+          "category": "Automação Industrial",
+          "keywords": ["empilhadeira autônoma", "empilhadeira robótica", "AGV"]
         }
       },
       {
@@ -170,18 +202,26 @@
     },
 
     "keywords": [
+      "empilhadeira diesel",
+      "empilhadeira elétrica",
+      "transpaleteira",
+      "paleteira",
+      "empilhadeira autônoma",
       "empilhadeiras",
       "equipamentos industriais",
       "movimentação de cargas",
       "empilhadeiras elétricas",
       "empilhadeiras a gás",
-      "empilhadeiras diesel",
       "locação empilhadeiras",
       "manutenção empilhadeiras",
       "peças empilhadeiras",
       "Santa Catarina",
       "Chapecó",
-      "Sul do Brasil"
+      "Sul do Brasil",
+      "transpaleteira elétrica",
+      "paleteira manual",
+      "AGV",
+      "automação industrial"
     ],
 
     "slogan": "Soluções completas em movimentação de cargas"

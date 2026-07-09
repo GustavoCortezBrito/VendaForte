@@ -2,8 +2,15 @@ import type { Metadata } from "next";
 
 const siteUrl = "https://grupovendaforte.com";
 const siteName = "Grupo Venda Forte";
-const siteDescription = "Empilhadeiras em Chapecó-SC: venda, locação e manutenção. Equipamentos elétricos, gás e diesel. Peças multimarcas. Assistência 24h.";
+const siteDescription = "Empilhadeiras em Chapecó-SC: venda, locação e manutenção. Empilhadeira elétrica, empilhadeira diesel, transpaleteira, paleteira e empilhadeira autônoma.";
 const siteKeywords = [
+  // Palavras-chave principais (rastreamento GA/GSC)
+  "empilhadeira diesel",
+  "empilhadeira elétrica",
+  "transpaleteira",
+  "paleteira",
+  "empilhadeira autônoma",
+  // Palavras-chave secundárias
   "empilhadeiras Chapecó",
   "empilhadeiras Santa Catarina",
   "venda empilhadeiras",
@@ -12,13 +19,15 @@ const siteKeywords = [
   "peças empilhadeiras",
   "empilhadeiras elétricas",
   "empilhadeiras a gás",
-  "empilhadeiras diesel",
   "equipamentos industriais",
   "movimentação de cargas",
   "Grupo Venda Forte",
   "empilhadeiras Joinville",
   "empilhadeiras Sul do Brasil",
-  "assistência técnica empilhadeiras"
+  "assistência técnica empilhadeiras",
+  "transpaleteira elétrica",
+  "paleteira manual",
+  "empilhadeira autônoma inteligente"
 ];
 
 export const metadata: Metadata = {
@@ -102,7 +111,7 @@ export const metadata: Metadata = {
     // Informações Estruturadas para IA
     'ai:business_type': 'Industrial Equipment Supplier',
     'ai:service_area': 'Chapecó, Joinville, Itajaí, Maringá, Seberi, Esteio - Sul do Brasil',
-    'ai:main_products': 'Empilhadeiras Elétricas, Empilhadeiras a Gás, Empilhadeiras a Diesel, Peças e Acessórios',
+    'ai:main_products': 'Empilhadeira Elétrica, Empilhadeira Diesel, Empilhadeira a Gás, Transpaleteira, Paleteira, Empilhadeira Autônoma, Peças Multimarcas',
     'ai:main_services': 'Venda, Locação, Manutenção, Assistência Técnica 24h',
     'ai:experience_years': '20+',
     'ai:contact_phone': '+55 49 3323-9050',
