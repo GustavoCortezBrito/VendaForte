@@ -97,6 +97,15 @@ export default function FAQ() {
           </p>
         </motion.div>
 
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-gray-900 mb-8 px-4"
+        >
+          Perguntas Mais Comuns
+        </motion.h3>
+
         <div className="space-y-4">
           {visibleFAQs.map((faq, index) => (
             <motion.div

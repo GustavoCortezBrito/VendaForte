@@ -76,6 +76,14 @@ export default function About() {
             >
               O Grupo Venda Forte é uma empresa de importação e distribuição de máquinas e equipamentos industriais para movimentação de cargas. Oferecemos soluções completas com empilhadeira elétrica, empilhadeira diesel, transpaleteira, paleteira e empilhadeira autônoma, além de peças multimarcas.
             </motion.p>
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.35 }}
+              className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mt-4 mb-3"
+            >
+              Mais de 20 Anos de Experiência
+            </motion.h3>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
