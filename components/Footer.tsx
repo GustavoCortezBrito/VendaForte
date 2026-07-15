@@ -138,7 +138,7 @@ export default function Footer() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h4 className="text-lg font-semibold mb-4">Serviços</h4>
+            <div className="text-lg font-semibold mb-4">Serviços</div>
             <ul className="space-y-2">
               {services.map((service, index) => (
                 <motion.li
@@ -165,7 +165,7 @@ export default function Footer() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h4 className="text-lg font-semibold mb-4">Contato</h4>
+            <div className="text-lg font-semibold mb-4">Contato</div>
             <ul className="space-y-4">
               <motion.li
                 initial={{ opacity: 0, y: 10 }}

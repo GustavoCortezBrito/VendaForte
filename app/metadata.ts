@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const siteUrl = "https://grupovendaforte.com";
+const siteUrl = "https://venda-forte.vercel.app";
 const siteName = "Grupo Venda Forte";
 const siteDescription = "Empilhadeiras em Chapecó-SC: venda, locação e manutenção. Empilhadeira elétrica, empilhadeira diesel, transpaleteira, paleteira e empilhadeira autônoma.";
 const siteKeywords = [
