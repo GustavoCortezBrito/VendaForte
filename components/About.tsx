@@ -56,7 +56,7 @@ export default function About() {
             <span className="text-red-600">Movimentação de Cargas</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            Mais de 20 anos de experiência trazendo soluções completas para sua operação
+            <strong>Grupo Venda Forte</strong> - <strong>Soluções completas em empilhadeiras e equipamentos</strong> industriais com mais de 20 anos de experiência
           </p>
         </motion.div>
 

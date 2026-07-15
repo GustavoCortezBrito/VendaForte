@@ -207,9 +207,10 @@ export default function FAQ() {
           </p>
           <a
             href="#contact"
+            aria-label="Entre em contato para tirar dúvidas"
             className="inline-block bg-white text-red-600 px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full font-bold hover:shadow-xl hover:scale-105 transition-all text-base sm:text-lg"
           >
-            Fale com Especialista
+            Tire suas Dúvidas Agora
           </a>
         </motion.div>
       </div>

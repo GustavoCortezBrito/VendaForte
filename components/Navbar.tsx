@@ -172,7 +172,7 @@ export default function Navbar() {
                 aria-label="Entre em contato pelo formulário"
                 className="block px-4 py-3 mt-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:shadow-lg transition-all text-center font-semibold"
               >
-                Fale Conosco
+                Entre em Contato
               </a>
             </div>
           </motion.div>
