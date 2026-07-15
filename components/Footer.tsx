@@ -53,11 +53,11 @@ export default function Footer() {
   ]
 
   const quickLinks = [
-    { label: 'Início', href: '#home' },
+    { label: 'Página Inicial', href: '#home' },
     { label: 'Sobre Nós', href: '#about' },
-    { label: 'Serviços', href: '#services' },
+    { label: 'Nossos Serviços', href: '#services' },
     { label: 'Depoimentos', href: '#testimonials' },
-    { label: 'Contato', href: '#contact' },
+    { label: 'Fale Conosco', href: '#contact' },
   ]
 
   const services = [
@@ -111,7 +111,7 @@ export default function Footer() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <h4 className="text-lg font-semibold mb-4">Links Rápidos</h4>
+            <div className="text-lg font-semibold mb-4">Links Rápidos</div>
             <ul className="space-y-2">
               {quickLinks.map((link, index) => (
                 <motion.li

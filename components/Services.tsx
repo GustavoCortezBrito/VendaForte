@@ -71,7 +71,7 @@ export default function Services() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Sua Operação</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            Importação direta de empilhadeiras e equipamentos industriais com o melhor custo-benefício do mercado
+            Soluções completas de importação e distribuição de equipamentos industriais com o melhor custo-benefício do mercado
           </p>
         </motion.div>
 
