@@ -101,7 +101,7 @@ export default function WhatsAppButton() {
                     />
                   </div>
                   <div>
-                    <h3 className="text-white font-bold text-base">Grupo Venda Forte</h3>
+                    <div className="text-white font-bold text-base">Grupo Venda Forte</div>
                     <p className="text-green-100 text-xs flex items-center gap-1">
                       <span className="w-2 h-2 bg-green-300 rounded-full animate-pulse" />
                       Normalmente responde em minutos

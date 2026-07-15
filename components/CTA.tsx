@@ -77,9 +77,9 @@ export default function CTA() {
             transition={{ duration: 0.8 }}
             className="bg-white p-8 md:p-12 rounded-3xl shadow-2xl"
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <div className="text-2xl font-bold text-gray-900 mb-6">
               Solicite um Orçamento
-            </h3>
+            </div>
             <form className="space-y-4">
               <div>
                 <input

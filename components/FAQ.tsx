@@ -192,7 +192,7 @@ export default function FAQ() {
           transition={{ delay: 0.8 }}
           className="mt-12 sm:mt-14 md:mt-16 bg-gradient-to-r from-red-600 via-red-700 to-red-600 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 text-white text-center shadow-2xl"
         >
-          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">Ainda tem dúvidas?</h3>
+          <div className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">Ainda tem dúvidas?</div>
           <p className="mb-6 sm:mb-8 text-red-100 text-sm sm:text-base md:text-lg leading-relaxed">
             Nossa equipe está pronta para ajudar você com qualquer questão
           </p>

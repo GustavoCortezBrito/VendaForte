@@ -78,9 +78,9 @@ export default function Footer() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-2xl font-bold mb-4 text-red-500">
+            <div className="text-2xl font-bold mb-4 text-red-500">
               Venda Forte
-            </h3>
+            </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
               Importação e distribuição de máquinas e equipamentos industriais para movimentação de cargas. Atuamos em todo o Sul do Brasil com matriz em Chapecó-SC.
             </p>

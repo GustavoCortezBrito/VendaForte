@@ -117,7 +117,7 @@ export default function Contact() {
                     {item.icon}
                   </div>
                 </div>
-                <h3 className="font-bold text-gray-900 mb-1 sm:mb-2 text-xs sm:text-sm leading-tight">{item.title}</h3>
+                <div className="font-bold text-gray-900 mb-1 sm:mb-2 text-xs sm:text-sm leading-tight">{item.title}</div>
                 <p className="text-gray-600 text-xs sm:text-sm font-medium leading-tight">{item.info}</p>
               </div>
             </motion.a>
@@ -153,9 +153,9 @@ export default function Contact() {
                     animate={isInView ? { opacity: 1, x: 0 } : {}}
                     transition={{ delay: 0.7 }}
                   >
-                    <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                      Solicite um Orçamento
-                    </h3>
+                    <div className="text-2xl md:text-3xl font-bold mb-4">
+                      Entre em Contato
+                    </div>
                     <p className="text-gray-300 mb-8 leading-relaxed">
                       Preencha o formulário ao lado e receba uma proposta personalizada em até 24 horas.
                     </p>
