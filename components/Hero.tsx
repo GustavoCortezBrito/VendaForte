@@ -118,7 +118,7 @@ export default function Hero() {
             transition={{ delay: 0.4 }}
             className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-100 mb-6 sm:mb-8 leading-relaxed max-w-3xl mx-auto px-2"
           >
-            O <strong>Grupo Venda Forte</strong> oferece <strong>soluções completas em empilhadeiras e equipamentos</strong> industriais. Trabalhamos com empilhadeira elétrica, empilhadeira diesel, transpaleteira, paleteira e empilhadeira autônoma. Importação e distribuição de máquinas para movimentação de cargas em todo o Sul do Brasil.
+            Somos especialistas em soluções completas em empilhadeiras e equipamentos industriais. Trabalhamos com empilhadeira elétrica, empilhadeira diesel, transpaleteira, paleteira e empilhadeira autônoma. Importação e distribuição de máquinas para movimentação de cargas em todo o Sul do Brasil.
           </motion.p>
 
           <motion.div
