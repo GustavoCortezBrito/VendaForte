@@ -2,12 +2,71 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Mail, Phone, MapPin, Clock } from 'lucide-react'
 
 export default function Contact() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  
+  // Estado para os campos do formulário
+  const [formData, setFormData] = useState({
+    nome: '',
+    email: '',
+    telefone: '',
+    empresa: '',
+    cidade: '',
+    equipamento: '',
+    mensagem: ''
+  })
+
+  // Atualizar campos
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  // Enviar via WhatsApp
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Formatar mensagem para WhatsApp
+    const mensagemWhatsApp = `
+🔴 *NOVA SOLICITAÇÃO - SITE VENDA FORTE*
+
+👤 *Nome:* ${formData.nome}
+📧 *E-mail:* ${formData.email}
+📱 *Telefone:* ${formData.telefone}
+${formData.empresa ? `🏢 *Empresa:* ${formData.empresa}` : ''}
+${formData.cidade ? `📍 *Cidade:* ${formData.cidade}` : ''}
+${formData.equipamento ? `🚜 *Equipamento:* ${formData.equipamento}` : ''}
+
+💬 *Mensagem:*
+${formData.mensagem}
+    `.trim()
+
+    // Número do WhatsApp da empresa
+    const numeroWhatsApp = '5549988395635'
+    
+    // Criar link do WhatsApp
+    const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagemWhatsApp)}`
+    
+    // Abrir WhatsApp
+    window.open(linkWhatsApp, '_blank')
+    
+    // Limpar formulário
+    setFormData({
+      nome: '',
+      email: '',
+      telefone: '',
+      empresa: '',
+      cidade: '',
+      equipamento: '',
+      mensagem: ''
+    })
+  }
 
   const contactInfo = [
     {
@@ -245,7 +304,7 @@ export default function Contact() {
 
               {/* Right Side - Form */}
               <div className="md:col-span-3 p-8 md:p-10">
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Nome Completo */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -257,6 +316,9 @@ export default function Contact() {
                     </label>
                     <input
                       type="text"
+                      name="nome"
+                      value={formData.nome}
+                      onChange={handleChange}
                       placeholder="Digite seu nome completo"
                       required
                       className="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-red-500 focus:bg-white outline-none transition-all text-gray-900 placeholder-gray-400"
@@ -275,6 +337,9 @@ export default function Contact() {
                       </label>
                       <input
                         type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                         placeholder="seu@email.com"
                         required
                         className="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-red-500 focus:bg-white outline-none transition-all text-gray-900 placeholder-gray-400"
@@ -291,6 +356,9 @@ export default function Contact() {
                       </label>
                       <input
                         type="tel"
+                        name="telefone"
+                        value={formData.telefone}
+                        onChange={handleChange}
                         placeholder="(00) 00000-0000"
                         required
                         className="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-red-500 focus:bg-white outline-none transition-all text-gray-900 placeholder-gray-400"
@@ -310,6 +378,9 @@ export default function Contact() {
                       </label>
                       <input
                         type="text"
+                        name="empresa"
+                        value={formData.empresa}
+                        onChange={handleChange}
                         placeholder="Nome da empresa"
                         className="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-red-500 focus:bg-white outline-none transition-all text-gray-900 placeholder-gray-400"
                       />
@@ -325,6 +396,9 @@ export default function Contact() {
                       </label>
                       <input
                         type="text"
+                        name="cidade"
+                        value={formData.cidade}
+                        onChange={handleChange}
                         placeholder="Sua cidade"
                         className="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-red-500 focus:bg-white outline-none transition-all text-gray-900 placeholder-gray-400"
                       />
@@ -340,7 +414,12 @@ export default function Contact() {
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Tipo de Equipamento
                     </label>
-                    <select className="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-red-500 focus:bg-white outline-none transition-all text-gray-900">
+                    <select
+                      name="equipamento"
+                      value={formData.equipamento}
+                      onChange={handleChange}
+                      className="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-red-500 focus:bg-white outline-none transition-all text-gray-900"
+                    >
                       <option value="">Selecione uma opção</option>
                       <option value="eletrica">Empilhadeira Elétrica</option>
                       <option value="gas">Empilhadeira a Gás</option>
@@ -361,6 +440,9 @@ export default function Contact() {
                       Mensagem *
                     </label>
                     <textarea
+                      name="mensagem"
+                      value={formData.mensagem}
+                      onChange={handleChange}
                       placeholder="Descreva suas necessidades e como podemos ajudar..."
                       rows={5}
                       required

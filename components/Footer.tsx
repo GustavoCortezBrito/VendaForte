@@ -82,7 +82,7 @@ export default function Footer() {
               Venda Forte
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
-              Importação e distribuição de máquinas e equipamentos industriais para movimentação de cargas. Atuamos em todo o Sul do Brasil com matriz em Chapecó-SC.
+              Soluções completas em empilhadeiras e equipamentos industriais. Importação e distribuição de máquinas para movimentação de cargas. Atuamos em todo o Sul do Brasil com matriz em Chapecó-SC.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social, index) => (

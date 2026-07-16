@@ -39,7 +39,7 @@ export default function CTA() {
               transition={{ delay: 0.2 }}
               className="text-4xl md:text-5xl font-bold text-white mb-6"
             >
-              Precisa de Equipamentos para sua Operação?
+              Soluções Completas em Empilhadeiras e Equipamentos
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -47,7 +47,7 @@ export default function CTA() {
               transition={{ delay: 0.3 }}
               className="text-xl text-gray-100 mb-8"
             >
-              Solicite um orçamento sem compromisso e descubra as melhores soluções para movimentação de cargas.
+              Solicite um orçamento sem compromisso. Oferecemos soluções completas em empilhadeiras e equipamentos para movimentação de cargas com o melhor custo-benefício do mercado.
             </motion.p>
 
             <motion.div
