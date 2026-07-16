@@ -64,7 +64,7 @@ export default function Stats() {
             Resultados que Falam por Si
           </h2>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl text-red-100 max-w-3xl mx-auto px-4">
-            Números que comprovam nossa excelência e compromisso com o sucesso dos nossos clientes
+            Grupo Venda Forte soluções completas em empilhadeiras e equipamentos - Números que comprovam nossa excelência
           </p>
         </motion.div>
 

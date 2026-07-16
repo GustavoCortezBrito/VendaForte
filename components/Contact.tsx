@@ -74,7 +74,7 @@ export default function Contact() {
             <span className="text-red-600">Necessidades</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            Nossa equipe está pronta para oferecer as melhores soluções em equipamentos industriais
+            Grupo Venda Forte soluções completas em empilhadeiras e equipamentos. Nossa equipe está pronta para atender você
           </p>
         </motion.div>
 
