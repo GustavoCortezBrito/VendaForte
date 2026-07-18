@@ -133,7 +133,7 @@ ${formData.mensagem}
             <span className="text-red-600">Necessidades</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            Grupo Venda Forte soluções completas em empilhadeiras e equipamentos. Nossa equipe está pronta para atender você
+            Venda Forte: soluções completas em empilhadeiras e equipamentos. Nossa equipe está pronta para atender você
           </p>
         </motion.div>
 

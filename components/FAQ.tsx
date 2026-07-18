@@ -93,7 +93,7 @@ export default function FAQ() {
             Dúvidas <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Comuns</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 px-4">
-            Encontre respostas para as perguntas mais frequentes sobre nossos produtos e serviços
+            Encontre respostas para as perguntas mais frequentes sobre o Venda Forte e nossos serviços
           </p>
         </motion.div>
 

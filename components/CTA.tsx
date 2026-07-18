@@ -47,7 +47,7 @@ export default function CTA() {
               transition={{ delay: 0.3 }}
               className="text-xl text-gray-100 mb-8"
             >
-              Solicite um orçamento sem compromisso. Oferecemos soluções completas em empilhadeiras e equipamentos para movimentação de cargas com o melhor custo-benefício do mercado.
+              Solicite um orçamento sem compromisso. O Venda Forte oferece soluções completas em empilhadeiras e equipamentos para movimentação de cargas com o melhor custo-benefício do mercado.
             </motion.p>
 
             <motion.div

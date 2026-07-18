@@ -140,7 +140,7 @@ export default function Testimonials() {
             Avaliações
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6 sm:mb-8 px-4 leading-tight">
-            Avaliações no <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Google</span>
+            O que dizem sobre o <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Venda Forte</span>
           </h2>
           
           {/* Google Rating Card */}

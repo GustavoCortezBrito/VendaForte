@@ -56,7 +56,7 @@ export default function About() {
             <span className="text-red-600">Empilhadeiras e Equipamentos</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            Oferecemos soluções completas em empilhadeiras e equipamentos para movimentação de cargas. Mais de 20 anos de experiência trazendo resultados para sua operação
+            Oferecemos soluções completas em empilhadeiras e equipamentos para movimentação de cargas. O Venda Forte tem mais de 20 anos de experiência trazendo resultados para sua operação
           </p>
         </motion.div>
 
@@ -74,7 +74,7 @@ export default function About() {
               transition={{ delay: 0.3 }}
               className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed"
             >
-              O Grupo Venda Forte oferece soluções completas em empilhadeiras e equipamentos para movimentação de cargas. Somos uma empresa especializada em importação e distribuição de máquinas industriais. Nossas soluções completas incluem empilhadeira elétrica, empilhadeira diesel, transpaleteira, paleteira e empilhadeira autônoma, além de peças multimarcas e assistência técnica especializada.
+              O Grupo Venda Forte oferece soluções completas em empilhadeiras e equipamentos para movimentação de cargas. Somos uma empresa especializada em importação e distribuição de máquinas industriais. As soluções completas do Venda Forte incluem empilhadeira elétrica, empilhadeira diesel, transpaleteira, paleteira e empilhadeira autônoma, além de peças multimarcas e assistência técnica especializada.
             </motion.p>
             <motion.h3
               initial={{ opacity: 0, y: 20 }}
