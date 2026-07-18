@@ -132,7 +132,7 @@ export default function Hero() {
               aria-label="Solicitar orçamento - Botão principal Hero"
               className="inline-flex items-center justify-center bg-red-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-red-700 transition-all hover:scale-105 shadow-lg text-sm sm:text-base lg:text-lg"
             >
-              Solicite um Orçamento
+              Peça seu Orçamento
               <ArrowRight className="ml-2" size={18} />
             </a>
             <a

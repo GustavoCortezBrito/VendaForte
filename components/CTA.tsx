@@ -39,7 +39,7 @@ export default function CTA() {
               transition={{ delay: 0.2 }}
               className="text-4xl md:text-5xl font-bold text-white mb-6"
             >
-              Soluções Completas em Empilhadeiras e Equipamentos
+              Solicite um Orçamento Personalizado
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -78,7 +78,7 @@ export default function CTA() {
             className="bg-white p-8 md:p-12 rounded-3xl shadow-2xl"
           >
             <div className="text-2xl font-bold text-gray-900 mb-6">
-              Solicite um Orçamento
+              Receba uma Proposta
             </div>
             <form className="space-y-4">
               <div>

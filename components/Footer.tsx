@@ -57,7 +57,7 @@ export default function Footer() {
     { label: 'Sobre Nós', href: '#about' },
     { label: 'Nossos Serviços', href: '#services' },
     { label: 'Depoimentos', href: '#testimonials' },
-    { label: 'Fale Conosco', href: '#contact' },
+    { label: 'Formulário de Contato', href: '#contact' },
   ]
 
   const services = [

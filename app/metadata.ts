@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 const siteUrl = "https://www.grupovendaforte.com";
 const siteName = "Grupo Venda Forte";
-const siteDescription = "Soluções completas em empilhadeiras e equipamentos industriais. Oferecemos empilhadeira elétrica, empilhadeira diesel, transpaleteira, paleteira e empilhadeira autônoma. Venda, locação e manutenção em Chapecó-SC e região Sul.";
+const siteDescription = "Empilhadeiras em Chapecó-SC: elétrica, diesel, transpaleteira, paleteira e autônoma. Venda, locação e manutenção em todo Sul do Brasil.";
 const siteKeywords = [
   // Palavras-chave principais do H1
   "soluções completas em empilhadeiras",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   // Metadados Básicos
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} - Soluções Completas em Empilhadeiras e Equipamentos`,
+    default: `Empilhadeiras e Equipamentos | ${siteName}`,
     template: `%s | ${siteName}`
   },
   description: siteDescription,
@@ -67,14 +67,14 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
     url: siteUrl,
     siteName: siteName,
-    title: `${siteName} - Soluções Completas em Empilhadeiras e Equipamentos`,
+    title: `Empilhadeiras e Equipamentos | ${siteName}`,
     description: siteDescription,
     images: [
       {
         url: `${siteUrl}/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: `${siteName} - Soluções Completas em Empilhadeiras e Equipamentos`,
+        alt: `Empilhadeiras e Equipamentos - ${siteName}`,
         type: 'image/jpeg',
       },
       {
@@ -90,7 +90,7 @@ export const metadata: Metadata = {
   // Twitter Card
   twitter: {
     card: 'summary_large_image',
-    title: `${siteName} - Soluções Completas em Empilhadeiras e Equipamentos`,
+    title: `Empilhadeiras e Equipamentos | ${siteName}`,
     description: siteDescription,
     images: [`${siteUrl}/og-image.jpg`],
     creator: '@grupovendaforte',

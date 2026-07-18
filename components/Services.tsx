@@ -67,8 +67,8 @@ export default function Services() {
             Produtos e Serviços
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mt-3 sm:mt-4 mb-4 sm:mb-6 px-4 leading-tight">
-            Soluções Completas em{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Empilhadeiras e Equipamentos</span>
+            Produtos e Serviços para{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Sua Operação</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
             Oferecemos soluções completas em empilhadeiras e equipamentos com importação e distribuição. O melhor custo-benefício do mercado

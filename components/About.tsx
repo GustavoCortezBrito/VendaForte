@@ -52,7 +52,7 @@ export default function About() {
             Sobre Nós
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mt-3 sm:mt-4 mb-3 sm:mb-4 md:mb-6 px-4 leading-tight">
-            Soluções Completas em{' '}
+            Especialistas em{' '}
             <span className="text-red-600">Empilhadeiras e Equipamentos</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">

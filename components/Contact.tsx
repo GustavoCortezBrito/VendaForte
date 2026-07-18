@@ -126,7 +126,7 @@ ${formData.mensagem}
           className="text-center mb-10 sm:mb-12 md:mb-16"
         >
           <span className="text-red-600 font-semibold text-xs sm:text-sm uppercase tracking-wider">
-            Entre em Contato
+            Fale com Nossa Equipe
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mt-3 sm:mt-4 mb-3 sm:mb-4 md:mb-6 px-4 leading-tight">
             Vamos Conversar sobre suas{' '}
@@ -213,7 +213,7 @@ ${formData.mensagem}
                     transition={{ delay: 0.7 }}
                   >
                     <div className="text-2xl md:text-3xl font-bold mb-4">
-                      Entre em Contato
+                      Envie sua Mensagem
                     </div>
                     <p className="text-gray-300 mb-8 leading-relaxed">
                       Preencha o formulário ao lado e receba uma proposta personalizada em até 24 horas.
