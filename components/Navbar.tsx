@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { motion, useScroll, useSpring } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Settings } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -25,12 +26,13 @@ export default function Navbar() {
   }, [])
 
   const menuItems = [
-    { label: 'Início', href: '#home' },
-    { label: 'Sobre', href: '#about' },
-    { label: 'Produtos', href: '#services' },
-    { label: 'Avaliações', href: '#testimonials' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Contato', href: '#contact' },
+    { label: 'Início', href: '/#home' },
+    { label: 'Sobre', href: '/#about' },
+    { label: 'Produtos', href: '/#services' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Avaliações', href: '/#testimonials' },
+    { label: 'FAQ', href: '/#faq' },
+    { label: 'Contato', href: '/#contact' },
   ]
 
   return (
@@ -110,6 +112,26 @@ export default function Navbar() {
                     }`}></span>
                   </motion.a>
                 ))}
+                
+                {/* Ícone Admin */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  <Link
+                    href="/admin/login"
+                    className={`p-2 rounded-lg transition-all ${
+                      isScrolled
+                        ? 'hover:bg-gray-100 text-gray-600 hover:text-red-600'
+                        : 'hover:bg-white/10 text-white'
+                    }`}
+                    title="Painel Admin"
+                  >
+                    <Settings size={20} />
+                  </Link>
+                </motion.div>
+                
                 <motion.a
                   href="#contact"
                   initial={{ opacity: 0, scale: 0.8 }}

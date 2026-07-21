@@ -2,12 +2,57 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 
 export default function CTA() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
+
+  const [formData, setFormData] = useState({
+    nome: '',
+    email: '',
+    telefone: '',
+    empresa: '',
+    mensagem: ''
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        alert('✅ Mensagem enviada com sucesso! Entraremos em contato em breve.')
+        setFormData({
+          nome: '',
+          email: '',
+          telefone: '',
+          empresa: '',
+          mensagem: ''
+        })
+      } else {
+        alert('❌ Erro ao enviar mensagem. Por favor, tente novamente.')
+      }
+    } catch (error) {
+      alert('❌ Erro ao enviar mensagem. Por favor, tente novamente.')
+      console.error('Erro:', error)
+    }
+  }
 
   const benefits = [
     'Orçamento personalizado e gratuito',
@@ -80,39 +125,58 @@ export default function CTA() {
             <div className="text-2xl font-bold text-gray-900 mb-6">
               Receba uma Proposta
             </div>
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <input
                   type="text"
+                  name="nome"
+                  value={formData.nome}
+                  onChange={handleChange}
                   placeholder="Seu nome"
+                  required
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
                 />
               </div>
               <div>
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="Seu e-mail"
+                  required
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
                 />
               </div>
               <div>
                 <input
                   type="tel"
+                  name="telefone"
+                  value={formData.telefone}
+                  onChange={handleChange}
                   placeholder="Seu telefone"
+                  required
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
                 />
               </div>
               <div>
                 <input
                   type="text"
+                  name="empresa"
+                  value={formData.empresa}
+                  onChange={handleChange}
                   placeholder="Nome da sua empresa"
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
                 />
               </div>
               <div>
                 <textarea
+                  name="mensagem"
+                  value={formData.mensagem}
+                  onChange={handleChange}
                   placeholder="Que tipo de equipamento você precisa?"
                   rows={4}
+                  required
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all resize-none"
                 />
               </div>

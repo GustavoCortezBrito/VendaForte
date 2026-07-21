@@ -53,19 +53,20 @@ export default function Footer() {
   ]
 
   const quickLinks = [
-    { label: 'Página Inicial', href: '#home' },
-    { label: 'Sobre Nós', href: '#about' },
-    { label: 'Nossos Serviços', href: '#services' },
-    { label: 'Depoimentos', href: '#testimonials' },
-    { label: 'Formulário de Contato', href: '#contact' },
+    { label: 'Página Inicial', href: '/#home' },
+    { label: 'Sobre Nós', href: '/#about' },
+    { label: 'Nossos Serviços', href: '/#services' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Depoimentos', href: '/#testimonials' },
+    { label: 'Formulário de Contato', href: '/#contact' },
   ]
 
   const services = [
-    { label: 'Venda de Empilhadeiras', href: '#services' },
-    { label: 'Locação de Equipamentos', href: '#services' },
-    { label: 'Assistência Técnica', href: '#services' },
-    { label: 'Peças Originais', href: '#services' },
-    { label: 'Contratos de Manutenção', href: '#services' },
+    { label: 'Venda de Empilhadeiras', href: '/#services' },
+    { label: 'Locação de Equipamentos', href: '/#services' },
+    { label: 'Assistência Técnica', href: '/#services' },
+    { label: 'Peças Originais', href: '/#services' },
+    { label: 'Contratos de Manutenção', href: '/#services' },
   ]
 
   return (

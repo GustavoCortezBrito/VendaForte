@@ -28,44 +28,42 @@ export default function Contact() {
     })
   }
 
-  // Enviar via WhatsApp
-  const handleSubmit = (e: React.FormEvent) => {
+  // Enviar via API (email)
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Formatar mensagem para WhatsApp
-    const mensagemWhatsApp = `
-🔴 *NOVA SOLICITAÇÃO - SITE VENDA FORTE*
+    try {
+      // Enviar para API
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-👤 *Nome:* ${formData.nome}
-📧 *E-mail:* ${formData.email}
-📱 *Telefone:* ${formData.telefone}
-${formData.empresa ? `🏢 *Empresa:* ${formData.empresa}` : ''}
-${formData.cidade ? `📍 *Cidade:* ${formData.cidade}` : ''}
-${formData.equipamento ? `🚜 *Equipamento:* ${formData.equipamento}` : ''}
-
-💬 *Mensagem:*
-${formData.mensagem}
-    `.trim()
-
-    // Número do WhatsApp da empresa
-    const numeroWhatsApp = '5549988395635'
-    
-    // Criar link do WhatsApp
-    const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagemWhatsApp)}`
-    
-    // Abrir WhatsApp
-    window.open(linkWhatsApp, '_blank')
-    
-    // Limpar formulário
-    setFormData({
-      nome: '',
-      email: '',
-      telefone: '',
-      empresa: '',
-      cidade: '',
-      equipamento: '',
-      mensagem: ''
-    })
+      if (response.ok) {
+        alert('✅ Mensagem enviada com sucesso! Entraremos em contato em breve.')
+        
+        // Limpar formulário
+        setFormData({
+          nome: '',
+          email: '',
+          telefone: '',
+          empresa: '',
+          cidade: '',
+          equipamento: '',
+          mensagem: ''
+        })
+      } else {
+        const error = await response.json()
+        alert('❌ Erro ao enviar mensagem. Por favor, tente novamente ou entre em contato via WhatsApp.')
+        console.error('Erro:', error)
+      }
+    } catch (error) {
+      alert('❌ Erro ao enviar mensagem. Por favor, tente novamente ou entre em contato via WhatsApp.')
+      console.error('Erro:', error)
+    }
   }
 
   const contactInfo = [

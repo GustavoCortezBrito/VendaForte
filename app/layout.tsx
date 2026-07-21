@@ -60,9 +60,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <LoadingScreen />
-        <Navbar />
         {children}
-        <WhatsAppButton />
       </body>
     </html>
   );
