@@ -30,7 +30,7 @@ Você verá uma mensagem de sucesso!
 
 ## 📧 Configuração Atual
 
-- ✅ **API Key configurada**: `re_BwfsqKTU_M8KL3bSkJ9AmXShrNtLYkHNs`
+- ✅ **API Key configurada**: (definida no `.env.local` — nunca commitar!)
 - ✅ **Email de origem**: `onboarding@resend.dev` (temporário)
 - ✅ **Email de destino**: `rodrigo@grupovendaforte.com`
 - ✅ **Reply-to**: Email do cliente (responde direto)
@@ -109,7 +109,7 @@ Responder para [Nome do Cliente]
 
 3. **Adicione a variável:**
    - **Key**: `RESEND_API_KEY`
-   - **Value**: `re_BwfsqKTU_M8KL3bSkJ9AmXShrNtLYkHNs`
+   - **Value**: (copie do seu `.env.local` ou gere uma nova no painel do Resend)
    - **Environment**: Production
 
 4. **Redeploy o projeto**
