@@ -8,7 +8,11 @@ export async function POST(request: NextRequest) {
     })
 
     // Deletar cookie diretamente na Response (compatível com Next.js 16)
-    response.cookies.delete('vendaforte_auth_token')
+    response.cookies.set('vendaforte_auth_token', '', {
+      path: '/',
+      maxAge: 0,
+      expires: new Date(0)
+    })
 
     return response
   } catch (error) {
