@@ -4,10 +4,16 @@ import { useState, useEffect } from 'react'
 import { motion, useScroll, useSpring } from 'framer-motion'
 import { Menu, X, Settings } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
+
+  const isHomePage = pathname === '/'
+  // Header é considerado "light" (fundo branco / texto escuro) se rolou OU se está em qualquer página que não seja a home
+  const isLightHeader = isScrolled || !isHomePage
   
   // Progress bar do scroll
   const { scrollYProgress } = useScroll()
@@ -27,6 +33,7 @@ export default function Navbar() {
 
   const menuItems = [
     { label: 'Início', href: '/#home' },
+    { label: 'Empilhadeiras', href: '/empilhadeiras-eletricas' },
     { label: 'Sobre', href: '/#about' },
     { label: 'Produtos', href: '/#services' },
     { label: 'Blog', href: '/blog' },
@@ -47,20 +54,15 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed w-full z-50 transition-all duration-500 ${
-          isScrolled 
-            ? 'bg-white shadow-lg' 
+        className={`fixed w-full z-50 transition-all duration-300 ${
+          isLightHeader 
+            ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100' 
             : 'bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="flex items-center gap-3"
-            >
+            <Link href="/" className="flex items-center gap-3">
               <div className="relative w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
                 {/* Logo Image */}
                 <img 
@@ -68,7 +70,6 @@ export default function Navbar() {
                   alt="Venda Forte Logo" 
                   className="w-full h-full object-contain"
                   onError={(e) => {
-                    // Fallback se imagem não existir
                     e.currentTarget.style.display = 'none'
                     const parent = e.currentTarget.parentElement!
                     parent.classList.add('bg-red-600')
@@ -78,17 +79,17 @@ export default function Navbar() {
               </div>
               <div>
                 <div className={`text-xl font-bold transition-colors duration-300 ${
-                  isScrolled ? 'text-gray-900' : 'text-white'
+                  isLightHeader ? 'text-gray-900' : 'text-white'
                 }`}>
                   Venda Forte
                 </div>
                 <p className={`text-xs font-medium transition-colors duration-300 ${
-                  isScrolled ? 'text-gray-500' : 'text-white/80'
+                  isLightHeader ? 'text-gray-500' : 'text-white/80'
                 }`}>
                   Grupo
                 </p>
               </div>
-            </motion.div>
+            </Link>
 
             {/* Desktop Menu */}
             <div className="hidden md:block">
@@ -99,16 +100,16 @@ export default function Navbar() {
                     href={item.href}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 * index }}
+                    transition={{ delay: 0.05 * index }}
                     className={`font-medium relative group transition-colors duration-300 ${
-                      isScrolled 
+                      isLightHeader 
                         ? 'text-gray-800 hover:text-red-600' 
                         : 'text-white hover:text-red-300'
                     }`}
                   >
                     {item.label}
                     <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${
-                      isScrolled ? 'bg-red-600' : 'bg-white'
+                      isLightHeader ? 'bg-red-600' : 'bg-white'
                     }`}></span>
                   </motion.a>
                 ))}
@@ -117,12 +118,12 @@ export default function Navbar() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6 }}
+                  transition={{ delay: 0.5 }}
                 >
                   <Link
                     href="/admin/login"
                     className={`p-2 rounded-lg transition-all ${
-                      isScrolled
+                      isLightHeader
                         ? 'hover:bg-gray-100 text-gray-600 hover:text-red-600'
                         : 'hover:bg-white/10 text-white'
                     }`}
@@ -133,7 +134,7 @@ export default function Navbar() {
                 </motion.div>
                 
                 <motion.a
-                  href="#contact"
+                  href="/#contact"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 }}
@@ -150,7 +151,7 @@ export default function Navbar() {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={`p-2 rounded-md transition-colors ${
-                  isScrolled 
+                  isLightHeader 
                     ? 'text-gray-800 hover:bg-gray-100' 
                     : 'text-white hover:bg-white/10'
                 }`}
@@ -168,9 +169,9 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             className={`md:hidden ${
-              isScrolled ? 'bg-white' : 'bg-gray-900/95 backdrop-blur-lg'
+              isLightHeader ? 'bg-white' : 'bg-gray-900/95 backdrop-blur-lg'
             } shadow-lg border-t ${
-              isScrolled ? 'border-gray-200' : 'border-white/10'
+              isLightHeader ? 'border-gray-200' : 'border-white/10'
             }`}
           >
             <div className="px-4 pt-4 pb-6 space-y-1">
@@ -180,7 +181,7 @@ export default function Navbar() {
                   href={item.href}
                   onClick={() => setIsOpen(false)}
                   className={`block px-4 py-3 rounded-xl transition-all font-medium ${
-                    isScrolled
+                    isLightHeader
                       ? 'text-gray-800 hover:bg-red-50 hover:text-red-600'
                       : 'text-white hover:bg-white/10'
                   }`}
@@ -189,7 +190,7 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="#contact"
+                href="/#contact"
                 onClick={() => setIsOpen(false)}
                 aria-label="Entre em contato pelo formulário"
                 className="block px-4 py-3 mt-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:shadow-lg transition-all text-center font-semibold"

@@ -165,28 +165,46 @@ export default function AdminBlogPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo e Título - Estilo Original */}
-            <div className="flex items-center gap-3">
-              <div className="relative w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
-                <img 
-                  src="/logo.png" 
-                  alt="Venda Forte Logo" 
-                  className="w-full h-full object-contain"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                    const parent = e.currentTarget.parentElement!
-                    parent.classList.add('bg-red-600')
-                    parent.innerHTML = '<span class="text-white font-bold text-xl">VF</span>'
-                  }}
-                />
-              </div>
-              <div>
-                <div className="text-xl font-bold text-gray-900">
-                  Venda Forte
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-3">
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
+                  <img 
+                    src="/logo.png" 
+                    alt="Venda Forte Logo" 
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none'
+                      const parent = e.currentTarget.parentElement!
+                      parent.classList.add('bg-red-600')
+                      parent.innerHTML = '<span class="text-white font-bold text-xl">VF</span>'
+                    }}
+                  />
                 </div>
-                <p className="text-xs font-medium text-gray-500">
-                  Painel Administrativo
-                </p>
+                <div>
+                  <div className="text-xl font-bold text-gray-900">
+                    Venda Forte
+                  </div>
+                  <p className="text-xs font-medium text-gray-500">
+                    Painel Administrativo
+                  </p>
+                </div>
               </div>
+
+              {/* Tabs de Gerenciamento */}
+              <nav className="hidden md:flex items-center gap-2 border-l border-gray-200 pl-6">
+                <Link
+                  href="/admin/empilhadeiras"
+                  className="px-3.5 py-2 rounded-xl text-gray-600 hover:text-red-600 hover:bg-red-50 font-bold text-xs flex items-center gap-1.5 transition-colors"
+                >
+                  Empilhadeiras
+                </Link>
+                <Link
+                  href="/admin/blog"
+                  className="px-3.5 py-2 rounded-xl bg-red-600 text-white font-bold text-xs flex items-center gap-1.5 shadow"
+                >
+                  Blog & Notícias
+                </Link>
+              </nav>
             </div>
 
             {/* Botões de Ação */}
