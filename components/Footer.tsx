@@ -79,11 +79,11 @@ export default function Footer() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <div className="text-2xl font-bold mb-4 text-red-500">
+            <div className="text-2xl font-bold mb-2 text-red-500">
               Venda Forte
             </div>
-            <p className="text-gray-400 mb-6 leading-relaxed">
-              Soluções completas em empilhadeiras e equipamentos industriais. Importação e distribuição de máquinas para movimentação de cargas. Atuamos em todo o Sul do Brasil com matriz em Chapecó-SC.
+            <p className="text-gray-300 text-sm mb-6 leading-relaxed">
+              Seu Dealer Autorizado EP Equipment no Sul do Brasil, oferecendo soluções completas em empilhadeiras e equipamentos para movimentação de cargas.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social, index) => (

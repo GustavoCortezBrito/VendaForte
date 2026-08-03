@@ -52,11 +52,10 @@ export default function About() {
             Sobre Nós
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mt-3 sm:mt-4 mb-3 sm:mb-4 md:mb-6 px-4 leading-tight">
-            Especialistas em{' '}
-            <span className="text-red-600">Empilhadeiras e Equipamentos</span>
+            Dealer Autorizado <span className="text-red-600">EP Equipment</span>
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            Oferecemos soluções completas em empilhadeiras e equipamentos para movimentação de cargas. O Venda Forte tem mais de 20 anos de experiência trazendo resultados para sua operação
+          <p className="text-base sm:text-lg md:text-xl text-gray-700 font-medium max-w-4xl mx-auto px-4 leading-relaxed">
+            O Grupo Venda Forte é Dealer Autorizado EP Equipment, oferecendo soluções completas em empilhadeiras e equipamentos para movimentação de cargas no Sul do Brasil.
           </p>
         </motion.div>
 
@@ -74,23 +73,15 @@ export default function About() {
               transition={{ delay: 0.3 }}
               className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed"
             >
-              O Grupo Venda Forte oferece soluções completas em empilhadeiras e equipamentos para movimentação de cargas. Somos uma empresa especializada em importação e distribuição de máquinas industriais. As soluções completas do Venda Forte incluem empilhadeira elétrica, empilhadeira diesel, transpaleteira, paleteira e empilhadeira autônoma, além de peças multimarcas e assistência técnica especializada.
+              Com mais de 20 anos de experiência, comercializamos a linha oficial EP Equipment, que inclui empilhadeiras elétricas (tecnologia Íon-Lítio), empilhadeiras a diesel, transpaleteiras, paleteiras e equipamentos autônomos. Nosso compromisso vai além da venda: garantimos suporte operacional completo, amplo estoque de peças e assistência técnica especializada.
             </motion.p>
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.35 }}
-              className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mt-4 mb-3"
-            >
-              Mais de 20 Anos de Experiência
-            </motion.h3>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.4 }}
-              className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed"
+              className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed font-normal"
             >
-              Atuamos em todo o Sul do Brasil, com matriz em Chapecó-SC e parceiros em Itajaí, Joinville, Maringá, Seberi e Esteio.
+              Com matriz em Chapecó-SC, filial em Joinville e estrutura de atendimento em Itajaí, Maringá, Seberi e Esteio, entregamos agilidade, tecnologia de fábrica e máxima produtividade para a sua operação.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}

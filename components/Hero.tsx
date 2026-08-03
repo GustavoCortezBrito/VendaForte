@@ -116,9 +116,9 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-100 mb-6 sm:mb-8 leading-relaxed max-w-3xl mx-auto px-2"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-100 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto px-2 font-normal"
           >
-            Venda Forte: soluções completas em empilhadeiras e equipamentos. Oferecemos empilhadeira elétrica, empilhadeira diesel, transpaleteira, paleteira e empilhadeira autônoma. Importação e distribuição de máquinas para movimentação de cargas em todo o Sul do Brasil.
+            O Grupo Venda Forte é <strong className="text-white font-semibold">Dealer Oficial da EP Equipment</strong>. Comercializamos a linha completa de empilhadeiras e equipamentos autônomos, garantindo suporte especializado, peças originais e tecnologia de ponta para otimizar a operação logística da sua empresa em Santa Catarina e toda a região Sul.
           </motion.p>
 
           <motion.div
