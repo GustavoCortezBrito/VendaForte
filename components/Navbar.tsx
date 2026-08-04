@@ -165,6 +165,7 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {isOpen && (
           <motion.div
+            aria-hidden="true"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -179,6 +180,7 @@ export default function Navbar() {
                 <a
                   key={item.label}
                   href={item.href}
+                  tabIndex={-1}
                   onClick={() => setIsOpen(false)}
                   className={`block px-4 py-3 rounded-xl transition-all font-medium ${
                     isLightHeader
@@ -191,6 +193,7 @@ export default function Navbar() {
               ))}
               <a
                 href="/#contact"
+                tabIndex={-1}
                 onClick={() => setIsOpen(false)}
                 aria-label="Entre em contato pelo formulário"
                 className="block px-4 py-3 mt-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:shadow-lg transition-all text-center font-semibold"

@@ -53,19 +53,19 @@ export default function Footer() {
   ]
 
   const quickLinks = [
-    { label: 'Início', href: '/#home' },
-    { label: 'Sobre Nós', href: '/#about' },
-    { label: 'Nossos Produtos', href: '/#services' },
-    { label: 'Perguntas Frequentes', href: '/#faq' },
-    { label: 'Depoimentos de Clientes', href: '/#testimonials' },
-    { label: 'Fale Conosco', href: '/#contact' },
+    { label: 'Página Principal', href: '/#home' },
+    { label: 'Quem Somos', href: '/#about' },
+    { label: 'Linha de Equipamentos', href: '/#services' },
+    { label: 'Dúvidas Frequentes (FAQ)', href: '/#faq' },
+    { label: 'O que nossos clientes dizem', href: '/#testimonials' },
+    { label: 'Solicitar Orçamento', href: '/#contact' },
   ]
 
   const services = [
-    { label: 'Catálogo de Empilhadeiras', href: '/empilhadeiras-eletricas' },
-    { label: 'Robôs Autônomos (AGVs/AMRs)', href: '/#services' },
-    { label: 'Linha a Combustão (Diesel)', href: '/#services' },
-    { label: 'Blog & Notícias', href: '/blog' },
+    { label: 'Catálogo de Empilhadeiras Elétricas EP', href: '/empilhadeiras-eletricas' },
+    { label: 'Empilhadeiras AGV e AMR Autônomas', href: '/#services' },
+    { label: 'Empilhadeiras a Diesel e GLP', href: '/#services' },
+    { label: 'Artigos e Conteúdo sobre Empilhadeiras', href: '/blog' },
   ]
 
   return (
