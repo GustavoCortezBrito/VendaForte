@@ -107,9 +107,15 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight px-2 mt-16 sm:mt-20 md:mt-0"
           >
-            <span className="block text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-red-400 mb-2">Grupo Venda Forte</span>
+            <span className="block text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-red-400 mb-2">
+              Grupo Venda Forte
+            </span>
+            {' '}
             Soluções Completas em
-            <span className="block text-red-500 mt-1 sm:mt-2">Empilhadeiras e Equipamentos</span>
+            {' '}
+            <span className="block text-red-500 mt-1 sm:mt-2">
+              Empilhadeiras e Equipamentos
+            </span>
           </motion.h1>
           
           <motion.p
