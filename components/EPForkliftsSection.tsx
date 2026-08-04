@@ -141,7 +141,7 @@ export default function EPForkliftsSection() {
                 href={`/empilhadeiras-eletricas/${p.slug}`}
                 className="w-full py-3 rounded-xl bg-gray-900 hover:bg-red-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-sm uppercase tracking-wider group/btn"
               >
-                <span>Ver Ficha Técnica</span>
+                <span>Ficha Técnica {p.title.replace(/^Empilhadeira Elétrica /i, '')}</span>
                 <ChevronRight size={14} className="group-hover/btn:translate-x-0.5 transition-transform" />
               </Link>
             </motion.div>

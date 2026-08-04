@@ -283,7 +283,7 @@ export default function MonthlyHighlight() {
                       href={`/empilhadeiras-eletricas/${currentItem.slug}`}
                       className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-gray-900 hover:bg-red-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-colors"
                     >
-                      <span>Ficha Técnica</span>
+                      <span>Ficha Técnica {currentItem.title}</span>
                       <ChevronRight size={16} />
                     </Link>
                   </motion.div>

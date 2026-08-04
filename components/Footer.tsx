@@ -53,20 +53,20 @@ export default function Footer() {
   ]
 
   const quickLinks = [
-    { label: 'Página Inicial', href: '/#home' },
-    { label: 'Sobre Nós', href: '/#about' },
-    { label: 'Nossos Serviços', href: '/#services' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'Depoimentos', href: '/#testimonials' },
-    { label: 'Formulário de Contato', href: '/#contact' },
+    { label: 'Início', href: '/#home' },
+    { label: 'Sobre o Grupo Venda Forte', href: '/#about' },
+    { label: 'Nossos Produtos & Serviços', href: '/#services' },
+    { label: 'Blog & Artigos', href: '/blog' },
+    { label: 'Avaliações de Clientes', href: '/#testimonials' },
+    { label: 'Fale Conosco', href: '/#contact' },
   ]
 
   const services = [
-    { label: 'Venda de Empilhadeiras', href: '/empilhadeiras-eletricas' },
-    { label: 'Locação de Equipamentos', href: '/#services' },
-    { label: 'Assistência Técnica', href: '/#services' },
-    { label: 'Peças Originais', href: '/#services' },
-    { label: 'Contratos de Manutenção', href: '/#services' },
+    { label: 'Venda de Empilhadeiras Elétricas', href: '/empilhadeiras-eletricas' },
+    { label: 'Locação de Frota Industrial', href: '/#services' },
+    { label: 'Assistência Técnica 24h', href: '/#services' },
+    { label: 'Peças Originais EP Equipment', href: '/#services' },
+    { label: 'Manutenção Preventiva de Frotas', href: '/#services' },
   ]
 
   return (
