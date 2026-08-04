@@ -200,9 +200,9 @@ export default function Testimonials() {
                       {testimonial.initials}
                     </div>
                     <div className="min-w-0">
-                      <h4 className="font-medium text-gray-900 text-xs sm:text-sm truncate">
+                      <p className="font-medium text-gray-900 text-xs sm:text-sm truncate">
                         {testimonial.name}
-                      </h4>
+                      </p>
                       <p className="text-xs text-gray-500 flex items-center gap-1">
                         {testimonial.isLocalGuide && (
                           <span className="inline-flex items-center">

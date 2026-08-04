@@ -121,7 +121,7 @@ export default function Navbar() {
                   transition={{ delay: 0.5 }}
                 >
                   <Link
-                    href="/admin/login"
+                    href="/admin"
                     className={`p-2 rounded-lg transition-all ${
                       isLightHeader
                         ? 'hover:bg-gray-100 text-gray-600 hover:text-red-600'

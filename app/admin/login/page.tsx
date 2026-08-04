@@ -47,8 +47,8 @@ export default function LoginPage() {
         return
       }
 
-      // Login bem-sucedido, redirecionar
-      router.push('/admin/blog')
+      // Login bem-sucedido, redirecionar para o Hub Administrativo
+      router.push('/admin')
       router.refresh()
     } catch (error) {
       console.error('Erro no login:', error)

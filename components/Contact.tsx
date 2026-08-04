@@ -229,7 +229,7 @@ export default function Contact() {
                         <Phone size={20} />
                       </div>
                       <div>
-                        <h4 className="font-semibold mb-1">Telefones</h4>
+                        <p className="font-semibold mb-1">Telefones</p>
                         <p className="text-sm text-gray-300">Chapecó: (49) 3323-9050</p>
                         <p className="text-sm text-gray-300">Joinville: (47) 3842-3333</p>
                       </div>
@@ -245,7 +245,7 @@ export default function Contact() {
                         <Mail size={20} />
                       </div>
                       <div>
-                        <h4 className="font-semibold mb-1">E-mail</h4>
+                        <p className="font-semibold mb-1">E-mail</p>
                         <p className="text-sm text-gray-300">comercial@grupovendaforte.com</p>
                       </div>
                     </motion.div>
@@ -260,7 +260,7 @@ export default function Contact() {
                         <MapPin size={20} />
                       </div>
                       <div>
-                        <h4 className="font-semibold mb-1">Cobertura</h4>
+                        <p className="font-semibold mb-1">Cobertura</p>
                         <p className="text-sm text-gray-300">Todo o Sul do Brasil</p>
                         <p className="text-xs text-gray-400 mt-1">6 cidades de atendimento</p>
                       </div>
@@ -276,7 +276,7 @@ export default function Contact() {
                         <Clock size={20} />
                       </div>
                       <div>
-                        <h4 className="font-semibold mb-1">Horário</h4>
+                        <p className="font-semibold mb-1">Horário</p>
                         <p className="text-sm text-gray-300">Segunda - Sexta: 8h às 18h</p>
                         <p className="text-sm text-gray-300">Sábado: 8h às 12h</p>
                       </div>

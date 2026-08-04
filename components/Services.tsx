@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { Truck, Wrench, Package, Clock, Zap, Fuel, Play, Cpu, Sparkles, ExternalLink, X, Bot, Video } from 'lucide-react'
+import { Truck, Wrench, Package, Zap, Fuel, Play, Sparkles, ExternalLink, X, Bot, ShieldCheck, ArrowRight } from 'lucide-react'
 
 // Componente SVG para o ícone do YouTube
 function YoutubeIcon({ size = 18, className = "" }: { size?: number; className?: string }) {
@@ -22,16 +22,16 @@ export default function Services() {
   // Vídeos Oficiais EP Equipment da linha de autônomas
   const autonomousVideos = [
     {
-      id: 'wX-y09vR0-c', // ID de vídeo demonstrativo EP AGV/AMR
+      id: 'wX-y09vR0-c',
       title: 'Robôs Autônomos de Movimentação EP (AGV / AMR)',
-      description: 'Veja os equipamentos autônomos EP operando com precisão milimétrica e navegação a laser sem necessidade de operador.',
+      description: 'Equipamentos autônomos EP operando com navegação a laser de alta precisão e integrados ao WMS/ERP sem operador.',
       thumbnail: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop',
       badge: 'Tecnologia Autônoma'
     },
     {
-      id: 'EP-XP15-AUTONOMOUS', // EP XP15 Autonomous Transpaleteira
-      title: 'Transpaleteira Autônoma EP XP15 & XP20',
-      description: 'Automação inteligente para transporte horizontal de cargas 24/7 com máxima eficiência e retorno sobre investimento rápido.',
+      id: 'EP-XP15-AUTONOMOUS',
+      title: 'Transpaleteiras Autônomas EP (XP15 & XP20)',
+      description: 'Automação robótica inteligente para transporte horizontal contínuo 24/7 com máxima eficiência de fluxo.',
       thumbnail: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop',
       badge: 'Operação 24/7'
     }
@@ -39,257 +39,174 @@ export default function Services() {
 
   const products = [
     {
-      icon: <Bot size={40} />,
-      title: 'Equipamentos Autônomos (AGVs / AMR)',
-      description: 'Linha oficial EP de empilhadeiras e transpaleteiras autônomas. Automação robótica inteligente para operações 24/7 com extrema precisão, segurança e zero operador.',
-      features: ['Navegação a Laser/SLAM', 'Inteligência Artificial Integrada', 'Operação Ininterrupta 24/7', 'Retorno de Investimento (ROI) Acelerado'],
-      badge: 'Destaque Autônomas EP',
-      isHighlighted: true,
-      hasVideo: true
+      icon: <Zap size={32} />,
+      title: 'Empilhadeiras Elétricas Íon-Lítio',
+      subtitle: 'Tecnologia Li-Ion EP Equipment',
+      description: 'Linha completa de empilhadeiras elétricas com baterias Íon-Lítio 80V/48V. Recarga em 1 hora, zero emissões e baixíssimo custo operacional.',
+      features: ['Baterias Lítio EP 80V/48V', 'Capacidade de 1.5t a 3.5t', 'Recarga rápida de oportunidade', 'Alta durabilidade & 5 anos de garantia'],
+      badge: 'Mais Vendido EP',
+      ctaText: 'Ver Linha Elétrica',
+      ctaHref: '/empilhadeiras-eletricas',
+      isHighlighted: true
     },
     {
-      icon: <Zap size={40} />,
-      title: 'Empilhadeira Elétrica (Íon-Lítio)',
-      description: 'Empilhadeira elétrica com tecnologia de baterias Íon-Lítio EP (80V/48V). Zero emissões, recarga ultra-rápida e baixíssimo custo operacional.',
-      features: ['Capacidade 1.5 a 3.5 ton', 'Baterias Íon-Lítio 80V', 'Baixo custo operacional', 'Operação silenciosa'],
-      badge: 'Mais Vendido',
+      icon: <Bot size={32} />,
+      title: 'Equipamentos Autônomos (AGVs/AMRs)',
+      subtitle: 'Robótica Logística Inteligente',
+      description: 'Robôs e empilhadeiras autônomas para movimentação industrial 24/7. Automação com navegação laser/SLAM sem necessidade de operador.',
+      features: ['Navegação Laser & SLAM', 'Operação Ininterrupta 24/7', 'Integração WMS/ERP de fábrica', 'Retorno de Investimento (ROI) rápido'],
+      badge: 'Automação EP',
+      ctaText: 'Ver Demonstração em Vídeo',
+      hasVideoModal: true,
       isHighlighted: false
     },
     {
-      icon: <Fuel size={40} />,
-      title: 'Empilhadeira a Gás (GLP)',
-      description: 'Potência e versatilidade para operações internas e externas. Reabastecimento rápido e alta produtividade em turnos intensivos.',
-      features: ['Capacidade 1.5 a 5.0 ton', 'Uso interno/externo', 'Reabastecimento rápido', 'Alto desempenho'],
-      badge: null,
+      icon: <Truck size={32} />,
+      title: 'Locação de Empilhadeiras & Frotas',
+      subtitle: 'Contratos Flexíveis para a Região Sul',
+      description: 'Locação por dia, mês ou contratos de longo prazo com frota nova e renovada. Manutenção e assistência técnica inclusas para zero parada.',
+      features: ['Frotas novas EP Equipment', 'Manutenção inclusa no contrato', 'Atendimento rápido em SC/RS/PR', 'Sem imobilização de capital'],
+      badge: 'Frota Própria',
+      ctaText: 'Solicitar Orçamento de Locação',
+      ctaHref: '#contact',
       isHighlighted: false
     },
     {
-      icon: <Truck size={40} />,
-      title: 'Empilhadeira Diesel',
-      description: 'Empilhadeira diesel com máxima potência para trabalhos pesados e ambientes externos. Robusta e preparada para uso intensivo.',
-      features: ['Capacidade 2.5 a 10 ton', 'Uso externo intensivo', 'Alta durabilidade', 'Trabalhos pesados'],
-      badge: null,
+      icon: <Wrench size={32} />,
+      title: 'Assistência Técnica & Manutenção',
+      subtitle: 'Suporte Especializado Multimarca',
+      description: 'Equipe de técnicos altamente qualificados e oficinas móveis preparadas para atendimentos preventivos e corretivos urgentes.',
+      features: ['Técnicos certificados EP', 'Oficinas móveis para atendimento', 'Manutenção preventiva & corretiva', 'Planos de revisão periódica'],
+      badge: 'Suporte 24/7',
+      ctaText: 'Falar com a Assistência',
+      ctaHref: '#contact',
       isHighlighted: false
     },
     {
-      icon: <Package size={40} />,
-      title: 'Transpaleteira e Paleteira',
-      description: 'Transpaleteira elétrica e paleteira manual para movimentação horizontal de paletes. Ideais para depósitos, armazéns e logística urbana.',
-      features: ['Transpaleteira elétrica', 'Paleteira manual', 'Capacidade até 3 ton', 'Fácil manuseio'],
-      badge: 'Pronta Entrega',
+      icon: <Package size={32} />,
+      title: 'Peças Originais EP Equipment',
+      subtitle: 'Estoque de Reposição Imediata',
+      description: 'Garantia de operação contínua com estoque completo de peças originais, carregadores, baterias de lítio e componentes de reposição.',
+      features: ['Peças originais de fábrica', 'Envio rápido para todo o Brasil', 'Baterias e módulos de recarga', 'Componentes com garantia'],
+      badge: 'Peças de Fábrica',
+      ctaText: 'Cotar Peças Originais',
+      ctaHref: '#contact',
       isHighlighted: false
     },
     {
-      icon: <Wrench size={40} />,
-      title: 'Manutenção & Peças Originais',
-      description: 'Suporte operacional completo, assistência técnica especializada com peças originais de fábrica EP Equipment e suporte multimarca.',
-      features: ['Manutenção preventiva/corretiva', 'Peças de fábrica EP', 'Atendimento no Sul do Brasil', 'Equipe técnica certificada'],
-      badge: 'Suporte Oficial',
+      icon: <Fuel size={32} />,
+      title: 'Empilhadeiras a Diesel & GLP',
+      subtitle: 'Robustez para Pátios e Uso Intensivo',
+      description: 'Empilhadeiras à combustão preparadas para trabalhos pesados em ambientes externos, terrenos irregulares e operações contínuas.',
+      features: ['Capacidades de 2.5t a 10t', 'Excelente estabilidade e tração', 'Motores de alta eficiência', 'Estrutura reforçada'],
+      badge: 'Uso Intensivo',
+      ctaText: 'Solicitar Cotação',
+      ctaHref: '#contact',
       isHighlighted: false
     }
   ]
 
   return (
-    <section id="services" ref={ref} className="py-20 md:py-24 bg-gradient-to-br from-slate-50 via-white to-gray-50 relative overflow-hidden">
+    <section id="services" ref={ref} className="py-20 md:py-28 bg-gradient-to-b from-white via-slate-50/60 to-white relative overflow-hidden font-sans">
       
-      {/* Background Decorative Blobs */}
-      <div className="hidden md:block absolute top-20 right-0 w-96 h-96 bg-red-600/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="hidden md:block absolute bottom-20 left-0 w-96 h-96 bg-red-800/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Elementos Decorativos Suaves de Fundo Animados */}
+      <motion.div
+        animate={{ scale: [1, 1.2, 1], opacity: [0.05, 0.1, 0.05] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="hidden md:block absolute top-10 right-0 w-96 h-96 bg-red-500/10 rounded-full blur-3xl pointer-events-none"
+      />
+      <motion.div
+        animate={{ scale: [1.2, 1, 1.2], opacity: [0.05, 0.1, 0.05] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+        className="hidden md:block absolute bottom-10 left-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none"
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Header Seção */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-flex items-center gap-2 text-red-600 font-bold text-xs sm:text-sm uppercase tracking-wider mb-3 px-4 py-1.5 bg-red-50 rounded-full border border-red-100 shadow-sm">
-            <Sparkles size={16} />
-            Produtos e Soluções Oficiais EP Equipment
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mt-2 mb-4 leading-tight tracking-tight">
-            Nossa Linha de <span className="text-red-600">Produtos</span>
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4 leading-relaxed font-normal">
-            Como Dealer Autorizado EP Equipment no Sul do Brasil, oferecemos a linha completa de empilhadeiras elétricas, a diesel, transpaleteiras e <strong className="text-gray-900 font-bold">equipamentos autônomos de alta tecnologia</strong>.
-          </p>
-        </motion.div>
-
-        {/* BANNER DE DESTAQUE: EQUIPAMENTOS AUTÔNOMOS E VÍDEOS EP */}
+        {/* Header da Seção */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-16 rounded-3xl bg-gradient-to-br from-gray-900 via-gray-900 to-red-950 p-6 sm:p-8 md:p-12 text-white shadow-2xl border border-red-900/30 relative overflow-hidden"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16 max-w-3xl mx-auto"
         >
-          {/* Ambient Lighting Background */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/20 rounded-full blur-3xl pointer-events-none" />
-          
-          <div className="relative z-10 grid lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Texto de Destaque Autônomas */}
-            <div className="lg:col-span-6 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/30 border border-red-500/40 text-red-400 font-bold text-xs uppercase tracking-wider">
-                <Cpu size={14} className="text-red-400" />
-                Tecnologia do Futuro EP Equipment
-              </div>
-
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight">
-                Destaque: <span className="text-red-500">Equipamentos Autônomos</span>
-              </h3>
-
-              <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                Transforme a logística da sua empresa com a linha de empilhadeiras e robôs autônomos (AGVs/AMRs) da EP Equipment. Operações inteligentes, seguras e com otimização total de fluxo de trabalho.
-              </p>
-
-              <div className="grid sm:grid-cols-2 gap-3 pt-2">
-                <div className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-200 bg-white/5 p-2.5 rounded-xl border border-white/10">
-                  <span className="w-2 h-2 rounded-full bg-red-500" />
-                  Navegação Laser & SLAM
-                </div>
-                <div className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-200 bg-white/5 p-2.5 rounded-xl border border-white/10">
-                  <span className="w-2 h-2 rounded-full bg-red-500" />
-                  Operação Contínua 24/7
-                </div>
-                <div className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-200 bg-white/5 p-2.5 rounded-xl border border-white/10">
-                  <span className="w-2 h-2 rounded-full bg-red-500" />
-                  Sem necessidade de operador
-                </div>
-                <div className="flex items-center gap-2.5 text-xs sm:text-sm text-gray-200 bg-white/5 p-2.5 rounded-xl border border-white/10">
-                  <span className="w-2 h-2 rounded-full bg-red-500" />
-                  Integração WMS/ERP
-                </div>
-              </div>
-
-              <div className="pt-4 flex flex-wrap items-center gap-4">
-                <a
-                  href="#contact"
-                  className="px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-sm transition-all shadow-lg shadow-red-600/30 inline-flex items-center gap-2"
-                >
-                  <span>Solicitar Cotação de Autônomas</span>
-                </a>
-                
-                <a
-                  href="https://www.youtube.com/@EPEquipment"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-sm transition-all inline-flex items-center gap-2 border border-white/15"
-                >
-                  <YoutubeIcon size={18} className="text-red-500" />
-                  <span>Canal EP Equipment no YouTube</span>
-                  <ExternalLink size={14} className="opacity-70" />
-                </a>
-              </div>
-            </div>
-
-            {/* Cards de Vídeo do YouTube */}
-            <div className="lg:col-span-6 grid sm:grid-cols-2 gap-4">
-              {autonomousVideos.map((video) => (
-                <div
-                  key={video.id}
-                  className="group relative bg-gray-800/80 rounded-2xl overflow-hidden border border-gray-700/60 hover:border-red-500/80 transition-all duration-300 shadow-xl flex flex-col justify-between"
-                >
-                  <div className="relative aspect-video overflow-hidden bg-gray-900">
-                    <img
-                      src={video.thumbnail}
-                      alt={video.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-95"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/20 to-transparent" />
-                    
-                    <span className="absolute top-2 left-2 px-2.5 py-0.5 rounded bg-red-600 text-white font-extrabold text-[10px] uppercase shadow-sm">
-                      {video.badge}
-                    </span>
-
-                    {/* Play Button Overlay */}
-                    <button
-                      onClick={() => setActiveVideo(video)}
-                      className="absolute inset-0 flex items-center justify-center group/btn focus:outline-none"
-                      aria-label={`Assistir vídeo: ${video.title}`}
-                    >
-                      <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-2xl group-hover/btn:scale-110 transition-transform">
-                        <Play size={22} className="ml-1 fill-white" />
-                      </div>
-                    </button>
-                  </div>
-
-                  <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
-                    <div>
-                      <h4 className="font-bold text-white text-sm line-clamp-1 group-hover:text-red-400 transition-colors">
-                        {video.title}
-                      </h4>
-                      <p className="text-xs text-gray-400 line-clamp-2 mt-1 leading-relaxed">
-                        {video.description}
-                      </p>
-                    </div>
-
-                    <button
-                      onClick={() => setActiveVideo(video)}
-                      className="pt-2 text-xs font-bold text-red-400 hover:text-red-300 inline-flex items-center gap-1.5 transition-colors"
-                    >
-                      <YoutubeIcon size={14} />
-                      <span>Ver Demonstração da EP</span>
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-          </div>
+          <span className="inline-flex items-center gap-2 text-red-600 font-bold text-xs sm:text-sm uppercase tracking-wider mb-3 px-4 py-1.5 bg-red-50 rounded-full border border-red-100 shadow-sm">
+            <Sparkles size={16} className="animate-spin text-red-500" style={{ animationDuration: '6s' }} />
+            Produtos, Serviços & Automação EP Equipment
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mt-2 mb-4 leading-tight tracking-tight">
+            Nossas Soluções em <span className="text-red-600">Empilhadeiras</span>
+          </h2>
+          <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-normal">
+            Como Dealer Autorizado <strong className="text-gray-900 font-semibold">EP Equipment no Sul do Brasil</strong>, oferecemos venda, locação, assistência técnica, peças originais e tecnologias autônomas para acelerar a logística do seu negócio.
+          </p>
         </motion.div>
 
-        {/* GRID PRINCIPAL DE PRODUTOS */}
+        {/* GRID DE CARDS COM ANIMAÇÃO FLUIDA */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {products.map((product, index) => (
             <motion.div
               key={product.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 35 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ 
                 delay: 0.08 * index, 
-                duration: 0.6,
+                duration: 0.5,
                 type: "spring",
                 stiffness: 90
               }}
               whileHover={{ 
                 y: -10,
-                boxShadow: product.isHighlighted 
-                  ? "0 25px 50px -12px rgba(220, 38, 38, 0.35)" 
-                  : "0 20px 40px -12px rgba(0, 0, 0, 0.12)",
-                transition: { duration: 0.3 }
+                scale: 1.02,
+                transition: { duration: 0.25 }
               }}
-              className={`p-6 sm:p-8 rounded-3xl transition-all border relative overflow-hidden flex flex-col h-full ${
+              className={`p-6 sm:p-8 rounded-3xl transition-all duration-300 border relative flex flex-col justify-between h-full bg-white group ${
                 product.isHighlighted
-                  ? 'bg-gradient-to-b from-red-50/90 via-white to-red-50/30 border-red-300 shadow-xl ring-2 ring-red-500/20'
-                  : 'bg-white border-gray-200/90 shadow-md hover:shadow-xl'
+                  ? 'border-red-500/40 shadow-xl ring-2 ring-red-500/10 hover:shadow-2xl hover:shadow-red-500/15'
+                  : 'border-gray-200/90 shadow-md hover:shadow-xl hover:border-red-400'
               }`}
             >
-              <div className="relative z-10 flex flex-col h-full">
-                {product.badge && (
-                  <div className={`absolute -top-2 -right-2 sm:top-0 sm:right-0 px-3 py-1 rounded-full text-xs font-bold shadow-sm ${
-                    product.isHighlighted 
-                      ? 'bg-red-600 text-white' 
-                      : 'bg-gray-900 text-white'
-                  }`}>
-                    {product.badge}
-                  </div>
-                )}
-                
-                <div className={`mb-4 ${product.isHighlighted ? 'text-red-600' : 'text-red-600'}`}>
-                  {product.icon}
+              <div>
+                {/* Badge Topo */}
+                <div className="flex items-center justify-between mb-5">
+                  <motion.div
+                    whileHover={{ rotate: [0, -10, 10, 0] }}
+                    transition={{ duration: 0.4 }}
+                    className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm ${
+                      product.isHighlighted 
+                        ? 'bg-red-600 text-white shadow-red-600/30 group-hover:scale-110 transition-transform' 
+                        : 'bg-red-50 text-red-600 border border-red-100 group-hover:bg-red-600 group-hover:text-white transition-all'
+                    }`}
+                  >
+                    {product.icon}
+                  </motion.div>
+
+                  {product.badge && (
+                    <span className={`px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider ${
+                      product.isHighlighted 
+                        ? 'bg-red-600 text-white shadow-sm' 
+                        : 'bg-gray-100 text-gray-800 border border-gray-200'
+                    }`}>
+                      {product.badge}
+                    </span>
+                  )}
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 mb-3 leading-snug">
+                {/* Título & Subtítulo */}
+                <p className="text-xl sm:text-2xl font-extrabold text-gray-900 mb-1 leading-snug">
                   {product.title}
-                </h3>
+                </p>
+                <p className="text-xs font-bold text-red-600 mb-4 uppercase tracking-wider">
+                  {product.subtitle}
+                </p>
 
-                <p className="text-sm text-gray-600 mb-6 leading-relaxed flex-grow">
+                {/* Descrição */}
+                <p className="text-xs sm:text-sm text-gray-600 mb-6 leading-relaxed">
                   {product.description}
                 </p>
 
-                <ul className="space-y-2 mb-6">
+                {/* Lista de Diferenciais */}
+                <ul className="space-y-2 mb-8 pt-4 border-t border-gray-100">
                   {product.features.map((feature, idx) => (
                     <li key={idx} className="flex items-center text-xs sm:text-sm text-gray-700 font-medium">
                       <span className="w-1.5 h-1.5 bg-red-600 rounded-full mr-2.5 flex-shrink-0" />
@@ -297,117 +214,112 @@ export default function Services() {
                     </li>
                   ))}
                 </ul>
-
-                <a
-                  href="#contact"
-                  className={`block w-full text-center py-3.5 rounded-full font-bold text-sm transition-all shadow-md uppercase tracking-wider mt-auto ${
-                    product.isHighlighted
-                      ? 'bg-red-600 hover:bg-red-700 text-white shadow-red-600/30'
-                      : 'bg-gray-900 hover:bg-red-600 text-white'
-                  }`}
-                >
-                  {product.isHighlighted ? 'Solicitar Cotação Autônoma' : 'Solicitar Orçamento'}
-                </a>
               </div>
+
+              {/* Botão de Ação CTA */}
+              <div>
+                {product.hasVideoModal ? (
+                  <button
+                    onClick={() => setActiveVideo(autonomousVideos[0])}
+                    className="w-full py-3.5 px-4 rounded-2xl bg-gray-900 hover:bg-red-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-md group"
+                  >
+                    <Play size={16} className="fill-white" />
+                    <span>{product.ctaText}</span>
+                  </button>
+                ) : (
+                  <a
+                    href={product.ctaHref}
+                    className={`w-full py-3.5 px-4 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-md ${
+                      product.isHighlighted
+                        ? 'bg-red-600 hover:bg-red-700 text-white shadow-red-600/25'
+                        : 'bg-gray-900 hover:bg-red-600 text-white'
+                    }`}
+                  >
+                    <span>{product.ctaText}</span>
+                    <ArrowRight size={16} />
+                  </a>
+                )}
+              </div>
+
             </motion.div>
           ))}
         </div>
 
-        {/* Faixa de Atendimento & Garantia EP */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6 }}
-          className="mt-16 bg-gradient-to-r from-red-600 via-red-700 to-red-600 rounded-3xl p-8 sm:p-12 text-white shadow-2xl"
-        >
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div className="transform hover:scale-105 transition-transform">
-              <div className="text-4xl sm:text-5xl font-extrabold mb-2">Dealer Oficial</div>
-              <p className="text-red-100 text-sm sm:text-base font-medium">EP Equipment no Sul do Brasil</p>
-            </div>
-            <div className="transform hover:scale-105 transition-transform">
-              <div className="text-4xl sm:text-5xl font-extrabold mb-2">20+ Anos</div>
-              <p className="text-red-100 text-sm sm:text-base font-medium">De Excelência no Mercado</p>
-            </div>
-            <div className="transform hover:scale-105 transition-transform">
-              <div className="text-4xl sm:text-5xl font-extrabold mb-2">6 Filiais</div>
-              <p className="text-red-100 text-sm sm:text-base font-medium">Chapecó, Joinville, Itajaí, Maringá, Seberi e Esteio</p>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Modal de Vídeo do YouTube */}
-      <AnimatePresence>
-        {activeVideo && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
-            onClick={() => setActiveVideo(null)}
-          >
+        {/* MODAL DE VÍDEO DEMONSTRATIVO DAS AUTÔNOMAS */}
+        <AnimatePresence>
+          {activeVideo && (
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-gray-900 rounded-3xl overflow-hidden max-w-3xl w-full border border-gray-800 shadow-2xl relative"
-              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActiveVideo(null)}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 sm:p-6"
             >
-              <div className="flex items-center justify-between p-4 border-b border-gray-800">
-                <div className="flex items-center gap-2 text-white font-bold text-sm">
-                  <YoutubeIcon className="text-red-500" size={20} />
-                  <span>{activeVideo.title}</span>
-                </div>
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+                className="bg-gray-900 rounded-3xl overflow-hidden max-w-4xl w-full border border-gray-800 shadow-2xl relative"
+              >
+                {/* Botão Fechar */}
                 <button
                   onClick={() => setActiveVideo(null)}
-                  className="p-1.5 rounded-full bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"
+                  className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-red-600 text-white flex items-center justify-center transition-colors"
                 >
                   <X size={20} />
                 </button>
-              </div>
 
-              <div className="relative aspect-video bg-black">
-                {activeVideo.id.startsWith('http') || activeVideo.id.length > 15 ? (
-                  <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-gray-950">
-                    <YoutubeIcon size={64} className="text-red-600 mb-4" />
-                    <h4 className="text-xl font-bold text-white mb-2">{activeVideo.title}</h4>
-                    <p className="text-sm text-gray-400 mb-6 max-w-md">{activeVideo.description}</p>
+                {/* Player ou Vídeo do YouTube */}
+                <div className="relative aspect-video bg-black flex items-center justify-center">
+                  <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${activeVideo.id}?autoplay=1`}
+                    title={activeVideo.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+
+                {/* Informações do Vídeo */}
+                <div className="p-6 bg-gray-900 text-white">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-2.5 py-0.5 rounded bg-red-600 text-white text-[10px] font-extrabold uppercase">
+                      Vídeo Oficial EP Equipment
+                    </span>
+                  </div>
+                  <p className="text-xl font-bold text-white mb-2">{activeVideo.title}</p>
+                  <p className="text-sm text-gray-300 leading-relaxed mb-4">{activeVideo.description}</p>
+
+                  <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-gray-800">
+                    <a
+                      href="#contact"
+                      onClick={() => setActiveVideo(null)}
+                      className="px-5 py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition-colors inline-flex items-center gap-2"
+                    >
+                      <span>Solicitar Cotação de Autônomas</span>
+                      <ArrowRight size={14} />
+                    </a>
+
                     <a
                       href="https://www.youtube.com/@EPEquipment"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full transition-all inline-flex items-center gap-2"
+                      className="text-xs font-semibold text-gray-400 hover:text-red-400 inline-flex items-center gap-1.5"
                     >
-                      <span>Assista no YouTube Oficial EP</span>
-                      <ExternalLink size={16} />
+                      <YoutubeIcon size={16} />
+                      <span>Ver Canal no YouTube</span>
+                      <ExternalLink size={12} />
                     </a>
                   </div>
-                ) : (
-                  <iframe
-                    src={`https://www.youtube-nocookie.com/embed/${activeVideo.id}?autoplay=1`}
-                    title={activeVideo.title}
-                    className="w-full h-full border-0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                )}
-              </div>
+                </div>
 
-              <div className="p-4 bg-gray-950 flex justify-between items-center text-xs text-gray-400">
-                <span>Venda Forte - Dealer Autorizado EP Equipment</span>
-                <a
-                  href="#contact"
-                  onClick={() => setActiveVideo(null)}
-                  className="text-red-400 font-bold hover:underline"
-                >
-                  Falar com Especialista →
-                </a>
-              </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+
+      </div>
     </section>
   )
 }

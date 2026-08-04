@@ -3,7 +3,7 @@ import { supabase, supabaseAdmin } from '@/lib/supabase'
 import { getUserFromRequest } from '@/lib/auth'
 
 // Fallback: buscar posts de arquivos .md se Supabase não estiver configurado
-import { getAllPosts as getAllPostsFromFiles, getPostBySlug as getPostBySlugFromFiles } from '@/lib/blog'
+import { getAllPosts as getAllPostsFromFiles, getPostBySlug as getPostBySlugFromFiles, createPost, updatePost, deletePost } from '@/lib/blog'
 
 // Verificar se Supabase está configurado
 const isSupabaseConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL && 
@@ -16,71 +16,86 @@ export async function GET(request: NextRequest) {
     const slug = searchParams.get('slug')
     const published = searchParams.get('published')
 
-    // Se Supabase não estiver configurado, usar arquivos .md
-    if (!isSupabaseConfigured) {
-      console.log('⚠️  Supabase não configurado, usando arquivos .md')
-      
-      if (slug) {
-        const post = getPostBySlugFromFiles(slug)
-        if (!post) {
-          return NextResponse.json(
-            { error: 'Post não encontrado' },
-            { status: 404 }
-          )
-        }
-        return NextResponse.json({ post })
-      }
-
-      const posts = getAllPostsFromFiles()
-      return NextResponse.json({ posts })
+    // Helper para formatar posts de arquivos .md locais
+    const getLocalPosts = () => {
+      const filePosts = getAllPostsFromFiles()
+      return filePosts.map(p => ({
+        ...p,
+        created_at: p.date,
+        reading_time: p.readingTime,
+        published: true
+      }))
     }
 
     // Se slug for fornecido, retorna post específico
     if (slug) {
-      const { data: post, error } = await supabaseAdmin
-        .from('posts')
-        .select('*')
-        .eq('slug', slug)
-        .single()
+      if (isSupabaseConfigured) {
+        try {
+          const { data: post, error } = await supabaseAdmin
+            .from('posts')
+            .select('*')
+            .eq('slug', slug)
+            .single()
 
-      if (error || !post) {
+          if (!error && post) {
+            return NextResponse.json({ post })
+          }
+        } catch (err) {
+          console.warn('⚠️ Supabase indisponível para post individual, buscando nos arquivos locais.')
+        }
+      }
+
+      const post = await getPostBySlugFromFiles(slug)
+      if (!post) {
         return NextResponse.json(
           { error: 'Post não encontrado' },
           { status: 404 }
         )
       }
-
-      return NextResponse.json({ post })
+      return NextResponse.json({
+        post: {
+          ...post,
+          created_at: post.date,
+          reading_time: post.readingTime,
+          published: true
+        }
+      })
     }
 
-    // Caso contrário, retorna todos os posts
-    let query = supabaseAdmin
-      .from('posts')
-      .select('*')
-      .order('created_at', { ascending: false })
+    // Listar todos os posts com fallback para arquivos locais
+    if (isSupabaseConfigured) {
+      try {
+        let query = supabaseAdmin
+          .from('posts')
+          .select('*')
+          .order('created_at', { ascending: false })
 
-    // Filtrar apenas publicados se especificado
-    if (published === 'true') {
-      query = query.eq('published', true)
+        if (published === 'true') {
+          query = query.eq('published', true)
+        }
+
+        const { data: posts, error } = await query
+
+        if (!error && posts && posts.length > 0) {
+          return NextResponse.json({ posts })
+        }
+      } catch (err) {
+        console.warn('⚠️ Supabase indisponível, usando fallback de posts locais (.md)')
+      }
     }
 
-    const { data: posts, error } = await query
-
-    if (error) {
-      console.error('Erro ao buscar posts:', error)
-      return NextResponse.json(
-        { error: 'Erro ao buscar posts' },
-        { status: 500 }
-      )
-    }
-
-    return NextResponse.json({ posts: posts || [] })
+    // Fallback seguro: carregar os posts .md da pasta content/blog
+    const localPosts = getLocalPosts()
+    return NextResponse.json({ posts: localPosts })
   } catch (error: any) {
-    console.error('Erro na API:', error)
-    return NextResponse.json(
-      { error: error.message || 'Erro ao buscar posts' },
-      { status: 500 }
-    )
+    console.error('Erro na API de blog, carregando arquivos locais:', error)
+    const localPosts = getAllPostsFromFiles().map(p => ({
+      ...p,
+      created_at: p.date,
+      reading_time: p.readingTime,
+      published: true
+    }))
+    return NextResponse.json({ posts: localPosts })
   }
 }
 
@@ -105,52 +120,75 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Verificar se slug já existe
-    const { data: existing } = await supabaseAdmin
-      .from('posts')
-      .select('id')
-      .eq('slug', slug)
-      .single()
-
-    if (existing) {
-      return NextResponse.json(
-        { error: 'Post com este slug já existe' },
-        { status: 409 }
-      )
-    }
-
     // Calcular tempo de leitura
     const wordCount = content ? content.trim().split(/\s+/).length : 0
     const readingTime = `${Math.ceil(wordCount / 200)} min de leitura`
 
-    // Criar post usando supabaseAdmin (para respeitar RLS do Supabase)
-    const { data: post, error } = await supabaseAdmin
-      .from('posts')
-      .insert({
-        slug,
-        title,
-        description: description || '',
-        content: content || '',
-        image: image || '/sede.png',
-        category: category || 'Geral',
-        tags: tags || [],
-        author: author || user.name,
-        published: published ?? true,
-        reading_time: readingTime,
-        author_id: user.id
-      })
-      .select()
-      .single()
+    if (isSupabaseConfigured) {
+      try {
+        const { data: post, error } = await supabaseAdmin
+          .from('posts')
+          .insert({
+            slug,
+            title,
+            description: description || '',
+            content: content || '',
+            image: image || '/sede.png',
+            category: category || 'Geral',
+            tags: tags || [],
+            author: author || user.name,
+            published: published ?? true,
+            reading_time: readingTime,
+            author_id: user.id
+          })
+          .select()
+          .single()
 
-    if (error) {
-      console.error('Erro ao criar post no Supabase:', error)
+        if (!error && post) {
+          // Criar também cópia local de segurança
+          createPost(slug, { title, description, content, image, category, tags, author, date: new Date().toISOString() })
+          return NextResponse.json({ success: true, post })
+        }
+      } catch (err) {
+        console.warn('⚠️ Supabase indisponível, salvando post localmente (.md)')
+      }
+    }
+
+    // Fallback: criar arquivo .md local
+    const createdLocal = createPost(slug, {
+      title,
+      description,
+      content,
+      image,
+      category,
+      tags,
+      author: author || user.name,
+      date: new Date().toISOString()
+    })
+
+    if (!createdLocal) {
       return NextResponse.json(
-        { error: `Erro ao criar post: ${error.message}` },
+        { error: 'Erro ao criar post localmente' },
         { status: 500 }
       )
     }
 
-    return NextResponse.json({ success: true, post })
+    return NextResponse.json({
+      success: true,
+      post: {
+        slug,
+        title,
+        description,
+        content,
+        image,
+        category,
+        tags,
+        author: author || user.name,
+        created_at: new Date().toISOString(),
+        reading_time: readingTime,
+        published: true
+      }
+    })
   } catch (error: any) {
     console.error('Erro ao criar post:', error)
     return NextResponse.json(
@@ -185,33 +223,47 @@ export async function PUT(request: NextRequest) {
     const wordCount = content ? content.trim().split(/\s+/).length : 0
     const readingTime = `${Math.ceil(wordCount / 200)} min de leitura`
 
-    // Atualizar post usando supabaseAdmin
-    const { data: post, error } = await supabaseAdmin
-      .from('posts')
-      .update({
-        title,
-        description,
-        content,
-        image,
-        category,
-        tags,
-        author,
-        published,
-        reading_time: readingTime
-      })
-      .eq('slug', slug)
-      .select()
-      .single()
+    if (isSupabaseConfigured) {
+      try {
+        const { data: post, error } = await supabaseAdmin
+          .from('posts')
+          .update({
+            title,
+            description,
+            content,
+            image,
+            category,
+            tags,
+            author,
+            published,
+            reading_time: readingTime
+          })
+          .eq('slug', slug)
+          .select()
+          .single()
 
-    if (error) {
-      console.error('Erro ao atualizar post no Supabase:', error)
-      return NextResponse.json(
-        { error: `Erro ao atualizar post: ${error.message}` },
-        { status: 500 }
-      )
+        if (!error && post) {
+          updatePost(slug, { title, description, content, image, category, tags, author, date: new Date().toISOString() })
+          return NextResponse.json({ success: true, post })
+        }
+      } catch (err) {
+        console.warn('⚠️ Supabase indisponível, atualizando post localmente (.md)')
+      }
     }
 
-    return NextResponse.json({ success: true, post })
+    // Fallback: atualizar arquivo .md local
+    updatePost(slug, {
+      title,
+      description,
+      content,
+      image,
+      category,
+      tags,
+      author: author || user.name,
+      date: new Date().toISOString()
+    })
+
+    return NextResponse.json({ success: true })
   } catch (error: any) {
     console.error('Erro ao atualizar post:', error)
     return NextResponse.json(
@@ -249,18 +301,19 @@ export async function DELETE(request: NextRequest) {
       )
     }
 
-    const { error } = await supabaseAdmin
-      .from('posts')
-      .delete()
-      .eq('slug', slug)
-
-    if (error) {
-      console.error('Erro ao deletar post no Supabase:', error)
-      return NextResponse.json(
-        { error: `Erro ao deletar post: ${error.message}` },
-        { status: 500 }
-      )
+    if (isSupabaseConfigured) {
+      try {
+        await supabaseAdmin
+          .from('posts')
+          .delete()
+          .eq('slug', slug)
+      } catch (err) {
+        console.warn('⚠️ Supabase indisponível ao deletar, removendo localmente (.md)')
+      }
     }
+
+    // Deletar também localmente
+    deletePost(slug)
 
     return NextResponse.json({ success: true })
   } catch (error: any) {

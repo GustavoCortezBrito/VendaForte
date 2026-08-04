@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Trash2, Edit, Plus, Eye, LogOut, Search, X, SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Trash2, Edit, Plus, Eye, LogOut, Search, X, SlidersHorizontal, ChevronLeft, ChevronRight, Truck, FileText } from 'lucide-react'
 
 interface Post {
   slug: string
@@ -160,83 +160,70 @@ export default function AdminBlogPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
-      {/* Header Administrativo */}
-      <header className="bg-white shadow-lg border-b-2 border-gray-100 sticky top-0 z-40">
+      {/* ── Header Admin ── */}
+      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo e Título - Estilo Original */}
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-3">
-                <div className="relative w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
-                  <img 
-                    src="/logo.png" 
-                    alt="Venda Forte Logo" 
-                    className="w-full h-full object-contain"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none'
-                      const parent = e.currentTarget.parentElement!
-                      parent.classList.add('bg-red-600')
-                      parent.innerHTML = '<span class="text-white font-bold text-xl">VF</span>'
-                    }}
-                  />
-                </div>
-                <div>
-                  <div className="text-xl font-bold text-gray-900">
-                    Venda Forte
-                  </div>
-                  <p className="text-xs font-medium text-gray-500">
-                    Painel Administrativo
-                  </p>
-                </div>
-              </div>
+          <div className="flex items-center justify-between h-16">
 
-              {/* Tabs de Gerenciamento */}
-              <nav className="hidden md:flex items-center gap-2 border-l border-gray-200 pl-6">
+            {/* Brand + Tabs */}
+            <div className="flex items-center gap-6">
+              <Link href="/admin" className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-red-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-red-600/20">
+                  VF
+                </div>
+                <div className="hidden sm:block">
+                  <span className="text-base font-bold text-gray-900 leading-none block">Venda Forte</span>
+                  <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider block">Painel Admin</span>
+                </div>
+              </Link>
+
+              <div className="flex items-center gap-2 border-l border-gray-200 pl-5">
                 <Link
                   href="/admin/empilhadeiras"
-                  className="px-3.5 py-2 rounded-xl text-gray-600 hover:text-red-600 hover:bg-red-50 font-bold text-xs flex items-center gap-1.5 transition-colors"
+                  className="px-4 py-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-semibold text-xs flex items-center gap-2 transition-colors"
                 >
-                  Empilhadeiras
+                  <Truck size={14} />
+                  <span className="hidden md:inline">Empilhadeiras</span>
                 </Link>
                 <Link
                   href="/admin/blog"
-                  className="px-3.5 py-2 rounded-xl bg-red-600 text-white font-bold text-xs flex items-center gap-1.5 shadow"
+                  className="px-4 py-2 rounded-full bg-red-600 text-white font-semibold text-xs flex items-center gap-2 shadow-md shadow-red-600/20"
                 >
-                  Blog & Notícias
+                  <FileText size={14} />
+                  <span className="hidden md:inline">Blog & Notícias</span>
                 </Link>
-              </nav>
+              </div>
             </div>
 
-            {/* Botões de Ação */}
+            {/* Right actions */}
             <div className="flex items-center gap-3">
               <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-gray-700 px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-all font-medium"
+                href="/blog"
+                target="_blank"
+                className="text-xs font-semibold text-gray-600 hover:text-red-600 flex items-center gap-1.5 transition-colors px-3 py-1.5 rounded-full hover:bg-red-50"
               >
-                <Eye size={20} />
-                <span className="hidden sm:inline">Ver Site</span>
+                <Eye size={14} />
+                <span className="hidden sm:inline">Ver Blog</span>
               </Link>
               <button
                 onClick={handleLogout}
-                className="inline-flex items-center gap-2 text-gray-700 px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-all font-medium"
+                className="p-2 text-gray-400 hover:text-red-600 rounded-full hover:bg-red-50 transition-colors"
+                title="Sair do Painel"
               >
-                <LogOut size={20} />
-                <span className="hidden sm:inline">Sair</span>
+                <LogOut size={18} />
               </button>
               <Link
                 href="/admin/blog/novo"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-semibold"
+                className="flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 sm:px-5 py-2 rounded-full hover:shadow-lg transition-all font-semibold text-xs"
               >
-                <Plus size={20} />
+                <Plus size={14} />
                 <span>Novo Post</span>
               </Link>
             </div>
+
           </div>
         </div>
-        
-        {/* Linha de Progresso Vermelha */}
-        <div className="h-1 bg-gradient-to-r from-red-600 via-red-500 to-red-600 w-full"></div>
-      </header>
+      </nav>
 
       {/* Conteúdo Principal */}
       <main className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">

@@ -62,7 +62,7 @@ export default function Footer() {
   ]
 
   const services = [
-    { label: 'Venda de Empilhadeiras', href: '/#services' },
+    { label: 'Venda de Empilhadeiras', href: '/empilhadeiras-eletricas' },
     { label: 'Locação de Equipamentos', href: '/#services' },
     { label: 'Assistência Técnica', href: '/#services' },
     { label: 'Peças Originais', href: '/#services' },

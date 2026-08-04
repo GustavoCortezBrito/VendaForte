@@ -80,9 +80,8 @@ a, button {
   animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Admin layout - hide main site navbar and footer */
-.admin-layout nav,
-.admin-layout footer {
+/* Admin layout styling */
+.admin-layout .site-footer {
   display: none !important;
 }
 

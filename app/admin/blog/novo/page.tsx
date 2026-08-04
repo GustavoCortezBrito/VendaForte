@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Save, Plus, X } from 'lucide-react'
+import { Save, Plus, X, Truck, FileText, ChevronRight, Eye, LogOut } from 'lucide-react'
 import RichTextEditor from '@/components/RichTextEditor'
 
 // Categorias padrão
@@ -35,6 +35,13 @@ export default function NovoPostPage() {
   const router = useRouter()
   const [authenticated, setAuthenticated] = useState(false)
   const [saving, setSaving] = useState(false)
+
+  async function handleLogout() {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' })
+    } catch {}
+    router.push('/admin/login')
+  }
   const [showNewCategory, setShowNewCategory] = useState(false)
   const [newCategoryName, setNewCategoryName] = useState('')
   const [existingCategories, setExistingCategories] = useState<string[]>(DEFAULT_CATEGORIES)
@@ -220,53 +227,80 @@ export default function NovoPostPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-lg border-b-2 border-gray-100 sticky top-0 z-40">
+      {/* ── Header Admin ── */}
+      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo e Título - Estilo Original */}
-            <Link href="/admin/blog" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <div className="relative w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
-                <img 
-                  src="/logo.png" 
-                  alt="Venda Forte Logo" 
-                  className="w-full h-full object-contain"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                    const parent = e.currentTarget.parentElement!
-                    parent.classList.add('bg-red-600')
-                    parent.innerHTML = '<span class="text-white font-bold text-xl">VF</span>'
-                  }}
-                />
-              </div>
-              <div>
-                <div className="text-xl font-bold text-gray-900">
-                  Venda Forte
-                </div>
-                <p className="text-xs font-medium text-gray-500">
-                  Criar Novo Post
-                </p>
-              </div>
-            </Link>
+          <div className="flex items-center justify-between h-16">
 
-            {/* Botão Voltar */}
-            <Link
-              href="/admin/blog"
-              className="inline-flex items-center gap-2 text-gray-700 px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-all font-medium"
-            >
-              <ArrowLeft size={20} />
-              <span className="hidden sm:inline">Voltar ao Painel</span>
-            </Link>
+            {/* Brand + Tabs + Breadcrumb */}
+            <div className="flex items-center gap-3 sm:gap-6">
+              <Link href="/admin" className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-red-600/20">
+                  VF
+                </div>
+                <div className="hidden sm:block">
+                  <span className="text-sm font-bold text-gray-900 leading-none block">Venda Forte</span>
+                  <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-wider block">Painel Admin</span>
+                </div>
+              </Link>
+
+              <div className="flex items-center gap-1 sm:gap-2 border-l border-gray-200 pl-3 sm:pl-5">
+                <Link
+                  href="/admin/empilhadeiras"
+                  className="px-3 py-1.5 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-semibold text-xs flex items-center gap-1.5 transition-colors"
+                >
+                  <Truck size={13} />
+                  <span className="hidden md:inline">Empilhadeiras</span>
+                </Link>
+                <Link
+                  href="/admin/blog"
+                  className="px-3 py-1.5 rounded-full bg-red-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-sm"
+                >
+                  <FileText size={13} />
+                  <span className="hidden md:inline">Blog</span>
+                </Link>
+              </div>
+
+              <ChevronRight size={14} className="text-gray-300 hidden sm:block" />
+              <span className="font-bold text-gray-900 text-xs sm:text-sm">Novo Post</span>
+            </div>
+
+            {/* Right actions */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Link
+                href="/blog"
+                target="_blank"
+                className="text-xs font-semibold text-gray-600 hover:text-red-600 flex items-center gap-1 transition-colors px-2.5 py-1.5 rounded-full hover:bg-red-50"
+              >
+                <Eye size={14} />
+                <span className="hidden md:inline">Ver Blog</span>
+              </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="p-1.5 text-gray-400 hover:text-red-600 rounded-full hover:bg-red-50 transition-colors"
+                title="Sair do Painel"
+              >
+                <LogOut size={16} />
+              </button>
+              <button
+                type="submit"
+                form="blog-form"
+                disabled={saving}
+                className="flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 sm:px-5 py-2 rounded-full hover:shadow-lg transition-all font-semibold text-xs disabled:opacity-50"
+              >
+                <Save size={14} />
+                <span>{saving ? 'Salvando...' : 'Publicar Post'}</span>
+              </button>
+            </div>
+
           </div>
         </div>
-        
-        {/* Linha de Progresso Vermelha */}
-        <div className="h-1 bg-gradient-to-r from-red-600 via-red-500 to-red-600 w-full"></div>
-      </header>
+      </nav>
 
       {/* Form */}
       <main className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-2xl p-10 space-y-8 border border-gray-100">
+        <form id="blog-form" onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-2xl p-10 space-y-8 border border-gray-100">
           {/* Título */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">

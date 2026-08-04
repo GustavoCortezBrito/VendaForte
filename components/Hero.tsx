@@ -118,7 +118,7 @@ export default function Hero() {
             transition={{ delay: 0.4 }}
             className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-100 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto px-2 font-normal"
           >
-            O Grupo Venda Forte é <strong className="text-white font-semibold">Dealer Oficial da EP Equipment</strong>. Comercializamos a linha completa de empilhadeiras e equipamentos autônomos, garantindo suporte especializado, peças originais e tecnologia de ponta para otimizar a operação logística da sua empresa em Santa Catarina e toda a região Sul.
+            O <strong className="text-white font-semibold">Grupo Venda Forte</strong> oferece <strong className="text-white font-semibold">soluções completas em empilhadeiras e equipamentos</strong> industriais e autônomos. Como Dealer Oficial da <strong className="text-white font-semibold">EP Equipment</strong>, fornecemos suporte especializado, peças originais e alta tecnologia para otimizar a operação logística em Santa Catarina e toda a região Sul.
           </motion.p>
 
           <motion.div
