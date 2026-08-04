@@ -54,19 +54,18 @@ export default function Footer() {
 
   const quickLinks = [
     { label: 'Início', href: '/#home' },
-    { label: 'Sobre o Grupo Venda Forte', href: '/#about' },
-    { label: 'Nossos Produtos & Serviços', href: '/#services' },
-    { label: 'Blog & Artigos', href: '/blog' },
-    { label: 'Avaliações de Clientes', href: '/#testimonials' },
+    { label: 'Sobre Nós', href: '/#about' },
+    { label: 'Nossos Produtos', href: '/#services' },
+    { label: 'Perguntas Frequentes', href: '/#faq' },
+    { label: 'Depoimentos de Clientes', href: '/#testimonials' },
     { label: 'Fale Conosco', href: '/#contact' },
   ]
 
   const services = [
-    { label: 'Venda de Empilhadeiras Elétricas', href: '/empilhadeiras-eletricas' },
-    { label: 'Locação de Frota Industrial', href: '/#services' },
-    { label: 'Assistência Técnica 24h', href: '/#services' },
-    { label: 'Peças Originais EP Equipment', href: '/#services' },
-    { label: 'Manutenção Preventiva de Frotas', href: '/#services' },
+    { label: 'Catálogo de Empilhadeiras', href: '/empilhadeiras-eletricas' },
+    { label: 'Robôs Autônomos (AGVs/AMRs)', href: '/#services' },
+    { label: 'Linha a Combustão (Diesel)', href: '/#services' },
+    { label: 'Blog & Notícias', href: '/blog' },
   ]
 
   return (
@@ -139,7 +138,7 @@ export default function Footer() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="text-lg font-semibold mb-4">Serviços</div>
+            <div className="text-lg font-semibold mb-4">Links Úteis</div>
             <ul className="space-y-2">
               {services.map((service, index) => (
                 <motion.li
