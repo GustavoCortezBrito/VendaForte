@@ -17,25 +17,7 @@ function YoutubeIcon({ size = 18, className = "" }: { size?: number; className?:
 export default function Services() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [activeVideo, setActiveVideo] = useState<{ id: string; title: string; description: string } | null>(null)
-
-  // Vídeos Oficiais EP Equipment da linha de autônomas
-  const autonomousVideos = [
-    {
-      id: 'wX-y09vR0-c',
-      title: 'Robôs Autônomos de Movimentação EP (AGV / AMR)',
-      description: 'Equipamentos autônomos EP operando com navegação a laser de alta precisão e integrados ao WMS/ERP sem operador.',
-      thumbnail: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop',
-      badge: 'Tecnologia Autônoma'
-    },
-    {
-      id: 'EP-XP15-AUTONOMOUS',
-      title: 'Transpaleteiras Autônomas EP (XP15 & XP20)',
-      description: 'Automação robótica inteligente para transporte horizontal contínuo 24/7 com máxima eficiência de fluxo.',
-      thumbnail: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop',
-      badge: 'Operação 24/7'
-    }
-  ]
+  const [showVideoModal, setShowVideoModal] = useState(false)
 
   const products = [
     {
@@ -56,7 +38,7 @@ export default function Services() {
       description: 'Robôs e empilhadeiras autônomas para movimentação industrial 24/7. Automação com navegação laser/SLAM sem necessidade de operador.',
       features: ['Navegação Laser & SLAM', 'Operação Ininterrupta 24/7', 'Integração WMS/ERP de fábrica', 'Retorno de Investimento (ROI) rápido'],
       badge: 'Automação EP',
-      ctaText: 'Ver Demonstração em Vídeo',
+      ctaText: 'Ver Canal EP no YouTube',
       hasVideoModal: true,
       isHighlighted: false
     },
@@ -220,7 +202,7 @@ export default function Services() {
               <div>
                 {product.hasVideoModal ? (
                   <button
-                    onClick={() => setActiveVideo(autonomousVideos[0])}
+                    onClick={() => setShowVideoModal(true)}
                     className="w-full py-3.5 px-4 rounded-2xl bg-gray-900 hover:bg-red-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-md group"
                   >
                     <Play size={16} className="fill-white" />
@@ -245,73 +227,65 @@ export default function Services() {
           ))}
         </div>
 
-        {/* MODAL DE VÍDEO DEMONSTRATIVO DAS AUTÔNOMAS */}
+        {/* MODAL CANAL EP EQUIPMENT NO YOUTUBE */}
         <AnimatePresence>
-          {activeVideo && (
+          {showVideoModal && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setActiveVideo(null)}
+              onClick={() => setShowVideoModal(false)}
               className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 sm:p-6"
             >
               <motion.div
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.95, opacity: 0 }}
+                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 onClick={(e) => e.stopPropagation()}
-                className="bg-gray-900 rounded-3xl overflow-hidden max-w-4xl w-full border border-gray-800 shadow-2xl relative"
+                className="bg-gray-950 rounded-3xl overflow-hidden max-w-lg w-full border border-gray-800 shadow-2xl relative"
               >
                 {/* Botão Fechar */}
                 <button
-                  onClick={() => setActiveVideo(null)}
-                  className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-red-600 text-white flex items-center justify-center transition-colors"
+                  onClick={() => setShowVideoModal(false)}
+                  className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white/10 hover:bg-red-600 text-white flex items-center justify-center transition-colors"
                 >
-                  <X size={20} />
+                  <X size={18} />
                 </button>
 
-                {/* Player ou Vídeo do YouTube */}
-                <div className="relative aspect-video bg-black flex items-center justify-center">
-                  <iframe
-                    className="w-full h-full"
-                    src={`https://www.youtube.com/embed/${activeVideo.id}?autoplay=1`}
-                    title={activeVideo.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+                {/* Visual Hero */}
+                <div className="relative h-48 bg-gradient-to-br from-gray-900 via-red-950 to-gray-900 flex flex-col items-center justify-center p-6 gap-3 overflow-hidden">
+                  <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=60&w=600)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+                  <div className="relative z-10 flex flex-col items-center gap-3 text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-red-600/90 flex items-center justify-center shadow-xl">
+                      <YoutubeIcon size={32} className="text-white" />
+                    </div>
+                    <p className="text-white font-extrabold text-xl leading-tight">Canal Oficial EP Equipment</p>
+                    <p className="text-gray-300 text-xs max-w-xs leading-relaxed">Veja as demonstrações completas dos robôs autônomos AGV/AMR e toda linha de empilhadeiras elétricas EP Equipment no YouTube.</p>
+                  </div>
                 </div>
 
-                {/* Informações do Vídeo */}
-                <div className="p-6 bg-gray-900 text-white">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="px-2.5 py-0.5 rounded bg-red-600 text-white text-[10px] font-extrabold uppercase">
-                      Vídeo Oficial EP Equipment
-                    </span>
-                  </div>
-                  <p className="text-xl font-bold text-white mb-2">{activeVideo.title}</p>
-                  <p className="text-sm text-gray-300 leading-relaxed mb-4">{activeVideo.description}</p>
+                {/* Botões de Ação */}
+                <div className="p-6 flex flex-col gap-3">
+                  <a
+                    href="https://www.youtube.com/@EPEquipment"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-4 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-lg shadow-red-600/20 group"
+                  >
+                    <YoutubeIcon size={20} className="text-white" />
+                    <span>Acessar Canal EP Equipment</span>
+                    <ExternalLink size={14} className="opacity-70 group-hover:opacity-100" />
+                  </a>
 
-                  <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-gray-800">
-                    <a
-                      href="#contact"
-                      onClick={() => setActiveVideo(null)}
-                      className="px-5 py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition-colors inline-flex items-center gap-2"
-                    >
-                      <span>Solicitar Cotação de Autônomas</span>
-                      <ArrowRight size={14} />
-                    </a>
-
-                    <a
-                      href="https://www.youtube.com/@EPEquipment"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs font-semibold text-gray-400 hover:text-red-400 inline-flex items-center gap-1.5"
-                    >
-                      <YoutubeIcon size={16} />
-                      <span>Ver Canal no YouTube</span>
-                      <ExternalLink size={12} />
-                    </a>
-                  </div>
+                  <a
+                    href="#contact"
+                    onClick={() => setShowVideoModal(false)}
+                    className="w-full py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors border border-white/10"
+                  >
+                    <span>Solicitar Cotação de Autônomas</span>
+                    <ArrowRight size={14} />
+                  </a>
                 </div>
 
               </motion.div>

@@ -13,7 +13,9 @@ import {
   Check,
   Truck,
   BatteryCharging,
-  FileText
+  FileText,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react'
 import { ForkliftProduct } from './ForkliftsCatalogClient'
 
@@ -25,6 +27,7 @@ interface Props {
 export default function ForkliftDetailClient({ product, relatedProducts }: Props) {
   const [activeImage, setActiveImage] = useState(product.mainImage)
   const [copied, setCopied] = useState(false)
+  const [showAllSpecs, setShowAllSpecs] = useState(false)
   const phoneNumber = '+5549988395635'
 
   const handleShare = () => {
@@ -210,31 +213,57 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
           </div>
         </div>
 
-        {/* Detailed Specs Table */}
-        {product.specs && Object.keys(product.specs).length > 0 && (
-          <div className="mt-12 bg-white border border-gray-200 rounded-3xl p-6 sm:p-8 shadow-xl">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-2">
-              <FileText size={22} className="text-red-600" />
-              Ficha Técnica Completa ({product.title})
-            </h2>
+        {/* Detailed Specs Table com botão Ver Mais */}
+        {product.specs && Object.keys(product.specs).length > 0 && (() => {
+          const specsArray = Object.entries(product.specs)
+          const displayedSpecs = showAllSpecs ? specsArray : specsArray.slice(0, 8)
 
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs sm:text-sm text-gray-700">
-                <tbody>
-                  {Object.entries(product.specs).map(([key, val], idx) => (
-                    <tr 
-                      key={key} 
-                      className={`border-b border-gray-100 ${idx % 2 === 0 ? 'bg-gray-50/60' : 'bg-white'}`}
-                    >
-                      <td className="py-3 px-4 font-bold text-gray-900 w-1/2">{key}</td>
-                      <td className="py-3 px-4 text-gray-700 font-medium">{val}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          return (
+            <div className="mt-12 bg-white border border-gray-200 rounded-3xl p-6 sm:p-8 shadow-xl">
+              <div className="flex items-center justify-between gap-4 mb-6">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 flex items-center gap-2">
+                  <FileText size={22} className="text-red-600" />
+                  Ficha Técnica Completa ({product.title})
+                </h2>
+                <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                  {specsArray.length} Especificações
+                </span>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm text-gray-700">
+                  <tbody>
+                    {displayedSpecs.map(([key, val], idx) => (
+                      <tr 
+                        key={key} 
+                        className={`border-b border-gray-100 ${idx % 2 === 0 ? 'bg-gray-50/60' : 'bg-white'}`}
+                      >
+                        <td className="py-3 px-4 font-bold text-gray-900 w-1/2">{key}</td>
+                        <td className="py-3 px-4 text-gray-700 font-medium">{val}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {specsArray.length > 8 && (
+                <div className="mt-6 text-center pt-4 border-t border-gray-100">
+                  <button
+                    onClick={() => setShowAllSpecs(!showAllSpecs)}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-50 hover:bg-red-600 text-red-600 hover:text-white font-bold text-xs sm:text-sm transition-all duration-300 shadow-sm border border-red-200 hover:border-red-600 group"
+                  >
+                    <span>{showAllSpecs ? 'Recolher Especificações' : `Ver Mais Especificações (${specsArray.length - 8} adicionais)`}</span>
+                    {showAllSpecs ? (
+                      <ChevronUp size={16} className="group-hover:-translate-y-0.5 transition-transform" />
+                    ) : (
+                      <ChevronDown size={16} className="group-hover:translate-y-0.5 transition-transform" />
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
-          </div>
-        )}
+          )
+        })()}
 
       </section>
     </div>
