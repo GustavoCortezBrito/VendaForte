@@ -55,7 +55,7 @@ export default function About() {
             Dealer Autorizado <span className="text-red-600">EP Equipment</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-700 font-medium max-w-4xl mx-auto px-4 leading-relaxed">
-            O Grupo Venda Forte é Dealer Autorizado EP Equipment, oferecendo soluções completas em empilhadeiras e equipamentos para movimentação de cargas no Sul do Brasil.
+            O Grupo Venda Forte atua desde 2014 no mercado de empilhadeiras. Desde 2021, somos Distribuidor Autorizado EP Equipment para Santa Catarina, oferecendo soluções completas em equipamentos para movimentação de cargas.
           </p>
         </motion.div>
 
@@ -73,7 +73,7 @@ export default function About() {
               transition={{ delay: 0.3 }}
               className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed"
             >
-              Com mais de 20 anos de experiência, comercializamos a linha oficial EP Equipment, que inclui empilhadeiras elétricas (tecnologia Íon-Lítio), empilhadeiras a diesel, transpaleteiras, paleteiras e equipamentos autônomos. Nosso compromisso vai além da venda: garantimos suporte operacional completo, amplo estoque de peças e assistência técnica especializada.
+              Desde 2014 no mercado de empilhadeiras, iniciamos com Representação Comercial Corporativa em parceria com a RAC Empilhadeiras (Linde/Kion/Still). Em julho de 2021, tornamo-nos <strong className="text-gray-900">Distribuidor Autorizado EP Equipment para Santa Catarina</strong>. Comercializamos empilhadeiras elétricas (tecnologia Íon-Lítio 80V/48V/24V), além de venda e aluguel de empilhadeiras, peças multimarcas e equipamentos autônomos (AGV/AMR).
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -81,7 +81,7 @@ export default function About() {
               transition={{ delay: 0.4 }}
               className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed font-normal"
             >
-              Com matriz em Chapecó-SC, filial em Joinville e estrutura de atendimento em Itajaí, Maringá, Seberi e Esteio, entregamos agilidade, tecnologia de fábrica e máxima produtividade para a sua operação.
+              Com <strong className="text-gray-900 font-semibold">matriz em Chapecó-SC</strong> e <strong className="text-gray-900 font-semibold">filial estratégica em Joinville-SC</strong>, oferecemos cobertura completa em <strong className="text-red-600 font-semibold">Santa Catarina</strong>. A partir dessas bases, atendemos clientes em todo o <strong className="text-gray-900 font-semibold">Sul do Brasil (Paraná e Rio Grande do Sul) e São Paulo</strong>. Nossa estrutura inclui showroom EP Equipment, oficina técnica certificada, estoque de peças multimarcas e equipe especializada, entregando agilidade, tecnologia de ponta e máxima produtividade.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -91,7 +91,7 @@ export default function About() {
             >
               <p className="text-xs sm:text-sm md:text-base text-gray-800 italic leading-relaxed">
                 <span className="text-red-600 font-bold text-lg sm:text-xl md:text-2xl">"</span>
-                Em nosso DNA está a constante busca para solucionar toda e qualquer operação de movimentação de cargas.
+                Possuímos uma metodologia de vendas inteligente, com foco na estratégia, qualidade no atendimento e na capacitação da equipe. O resultado disso é uma parceria sólida e duradoura com nossos clientes.
                 <span className="text-red-600 font-bold text-lg sm:text-xl md:text-2xl">"</span>
               </p>
               <p className="text-xs sm:text-sm text-gray-600 mt-2 sm:mt-3 font-semibold">
