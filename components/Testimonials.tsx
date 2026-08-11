@@ -273,31 +273,35 @@ export default function Testimonials() {
             <p className="text-gray-600 text-lg">Parceiros de sucesso em todo o Sul do Brasil</p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16 items-center justify-items-center">
             {[
-              { name: 'Adami', url: 'https://grupovendaforte.com/files/1295774/10709783dfb4b9bc30912ee66dcbe12f' },
-              { name: 'BRF', url: 'https://grupovendaforte.com/files/1295775/af691003297f76d9f561a1b6547d8083' },
-              { name: 'Copacol', url: 'https://grupovendaforte.com/files/1295776/e30f11cddd54f00adcd678256cce9fb2' },
-              { name: 'GT Foods', url: 'https://grupovendaforte.com/files/1295777/45161685dbdfc18a743d3f04512f3e3e' },
-              { name: 'JBS', url: 'https://grupovendaforte.com/files/1295778/3a69704c4656c8e6be78e17f2531f410' },
-              { name: 'Muffato', url: 'https://grupovendaforte.com/files/1295779/43975e9f9131ce1b46dde80b097542fe' },
-              { name: 'Randon', url: 'https://grupovendaforte.com/files/1295780/1c64087e43cb9f1d06c94c6706082049' },
-              { name: 'Seara', url: 'https://grupovendaforte.com/files/1295781/79aaf7a6ee7f843f2e738b73209302b1' },
+              { name: 'Adami', url: '/images/clients/adami-new.svg' },
+              { name: 'BRF', url: '/images/clients/brf.png' },
+              { name: 'Copacol', url: '/images/clients/copacol.png' },
+              { name: 'GT Foods', url: '/images/clients/gtfoods.png' },
+              { name: 'JBS', url: '/images/clients/jbs.png' },
+              { name: 'Muffato', url: '/images/clients/muffato.png' },
+              { name: 'Randon', url: '/images/clients/randon.png' },
+              { name: 'Seara', url: '/images/clients/seara.png' },
             ].map((client, index) => (
               <motion.div
                 key={client.name}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.1 * index, duration: 0.5 }}
-                className="flex items-center justify-center"
+                className="flex items-center justify-center w-full"
               >
                 <img 
                   src={client.url} 
                   alt={`Logo ${client.name}`}
-                  className="max-h-20 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 hover:scale-110"
+                  className="max-h-20 md:max-h-24 w-auto object-contain opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 filter contrast-125"
+                  loading="lazy"
                   onError={(e) => {
                     const target = e.currentTarget as HTMLImageElement
-                    target.style.display = 'none'
+                    const parent = target.parentElement
+                    if (parent) {
+                      parent.innerHTML = `<div class="text-gray-400 font-bold text-xl">${client.name}</div>`
+                    }
                   }}
                 />
               </motion.div>
@@ -317,7 +321,7 @@ export default function Testimonials() {
                 <p className="text-red-100 text-lg">Equipamentos Entregues</p>
               </div>
               <div className="transform hover:scale-105 transition-transform">
-                <p className="text-5xl font-bold mb-3">20+</p>
+                <p className="text-5xl font-bold mb-3">10+</p>
                 <p className="text-red-100 text-lg">Anos de Experiência</p>
               </div>
               <div className="transform hover:scale-105 transition-transform">
@@ -325,7 +329,7 @@ export default function Testimonials() {
                 <p className="text-red-100 text-lg">Clientes Satisfeitos</p>
               </div>
               <div className="transform hover:scale-105 transition-transform">
-                <p className="text-5xl font-bold mb-3">24h</p>
+                <p className="text-5xl font-bold mb-3">24/7</p>
                 <p className="text-red-100 text-lg">Suporte Técnico</p>
               </div>
             </div>
