@@ -97,11 +97,11 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: `${siteUrl}/og-image.jpg`,
+        url: `${siteUrl}/sede.png`,
         width: 1200,
         height: 630,
         alt: `Empilhadeiras e Equipamentos - ${siteName}`,
-        type: 'image/jpeg',
+        type: 'image/png',
       },
       {
         url: `${siteUrl}/logo.png`,
@@ -118,7 +118,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `Empilhadeiras e Equipamentos | ${siteName}`,
     description: siteDescription,
-    images: [`${siteUrl}/og-image.jpg`],
+    images: [`${siteUrl}/sede.png`],
     creator: '@grupovendaforte',
   },
 
