@@ -34,7 +34,7 @@ export default function Navbar() {
   const menuItems = [
     { label: 'Início', href: '/#home' },
     { label: 'Catálogo', href: '/empilhadeiras-eletricas' },
-    { label: 'Sobre', href: '/sobre' },
+    { label: 'Sobre', href: '/#about' },
     { label: 'Produtos', href: '/#services' },
     { label: 'Blog', href: '/blog' },
     { label: 'Avaliações', href: '/#testimonials' },

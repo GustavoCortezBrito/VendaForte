@@ -64,6 +64,16 @@ export const metadata: Metadata = {
   creator: siteName,
   publisher: siteName,
   
+  // Favicon e ícones
+  icons: {
+    icon: [
+      { url: '/logo.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: '/logo.png',
+    shortcut: '/logo.png',
+  },
+  
   // Robots e Indexação
   robots: {
     index: true,

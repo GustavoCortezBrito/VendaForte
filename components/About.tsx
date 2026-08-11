@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { Award, Lightbulb, Shield, Zap } from 'lucide-react'
+import Link from 'next/link'
 
 export default function About() {
   const ref = useRef(null)
@@ -97,6 +98,23 @@ export default function About() {
               <p className="text-xs sm:text-sm text-gray-600 mt-2 sm:mt-3 font-semibold">
                 — Rodrigo Schilke, CEO
               </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.6 }}
+              className="pt-2"
+            >
+              <Link
+                href="/sobre"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-sm sm:text-base transition-all hover:scale-105 shadow-lg"
+              >
+                Conheça Nossa História Completa
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
             </motion.div>
           </motion.div>
 
