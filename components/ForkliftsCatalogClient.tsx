@@ -319,8 +319,12 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                 <div className="relative z-10">
                   {/* Header */}
                   <div className="flex items-center gap-4 mb-6 pb-6 border-b-2 border-gray-100">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 text-white flex items-center justify-center font-extrabold text-2xl shadow-lg shadow-red-600/30">
-                      VF
+                    <div className="relative w-16 h-16 flex items-center justify-center">
+                      <img 
+                        src="/logo.png" 
+                        alt="Venda Forte" 
+                        className="w-full h-full object-contain rounded-xl drop-shadow-md"
+                      />
                     </div>
                     <div>
                       <h3 className="font-extrabold text-gray-900 text-xl">Venda Forte</h3>

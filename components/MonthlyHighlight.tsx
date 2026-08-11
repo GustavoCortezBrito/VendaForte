@@ -201,7 +201,7 @@ export default function MonthlyHighlight() {
                 <motion.div
                   whileHover={{ scale: 1.05, rotate: 1 }}
                   transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                  className="relative w-full aspect-[4/3] rounded-2xl bg-white flex items-center justify-center overflow-hidden cursor-pointer group" style={{ isolation: 'isolate' }}
+                  className="relative w-full aspect-[4/3] flex items-center justify-center cursor-pointer group"
                 >
                   <motion.img
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -209,8 +209,7 @@ export default function MonthlyHighlight() {
                     transition={{ duration: 0.3 }}
                     src={currentItem.image}
                     alt={currentItem.title}
-                    className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-xl transition-all"
-                    style={{ mixBlendMode: 'multiply' }}
+                    className="w-full h-full object-contain filter drop-shadow-lg group-hover:scale-105 transition-all duration-300"
                   />
                 </motion.div>
 
