@@ -1,19 +1,23 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { 
   Zap, 
-  ShieldCheck, 
   Search, 
   ChevronRight, 
   ChevronLeft,
   CheckCircle2,
   SlidersHorizontal,
-  ArrowRight,
   RotateCcw,
-  Layers
+  Layers,
+  Truck,
+  Box,
+  Forklift,
+  PackageCheck,
+  ArrowDownUp,
+  Cog
 } from 'lucide-react'
 
 export interface ForkliftProduct {
@@ -21,6 +25,8 @@ export interface ForkliftProduct {
   slug: string
   title: string
   subtitle: string
+  category?: string
+  categorySlug?: string
   type: string
   capacity: string
   liftingHeight: string
@@ -45,6 +51,7 @@ const ITEMS_PER_PAGE = 12
 
 export default function ForkliftsCatalogClient({ initialProducts }: Props) {
   const [search, setSearch] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState('all')
   const [rangeFilter, setRangeFilter] = useState('all')
   const [capacityFilter, setCapacityFilter] = useState('all')
   const [liftHeightFilter, setLiftHeightFilter] = useState('all')
@@ -74,24 +81,34 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
         p.subtitle.toLowerCase().includes(searchLower) ||
         p.description.toLowerCase().includes(searchLower) ||
         p.slug.toLowerCase().includes(searchLower) ||
+        (p.category && p.category.toLowerCase().includes(searchLower)) ||
         (p.type && p.type.toLowerCase().includes(searchLower)) ||
         (p.capacity && p.capacity.toLowerCase().includes(searchLower))
 
-      const typeLower = (p.type + ' ' + p.subtitle + ' ' + p.description + ' ' + p.title).toLowerCase()
+      let matchesCategory = true
+      if (categoryFilter !== 'all') {
+        matchesCategory = p.category === categoryFilter || p.categorySlug === categoryFilter
+      }
+
+      const typeLower = (p.type + ' ' + (p.category || '') + ' ' + p.subtitle + ' ' + p.description + ' ' + p.title).toLowerCase()
       let matchesRange = true
-      if (rangeFilter === '3wheel') {
+      if (rangeFilter === 'pallet_trucks') {
+        matchesRange = typeLower.includes('paleteira') || (p.categorySlug === 'paleteiras-eletricas')
+      } else if (rangeFilter === 'stackers') {
+        matchesRange = typeLower.includes('patolada') || typeLower.includes('stacker') || (p.categorySlug === 'empilhadeiras-patoladas')
+      } else if (rangeFilter === '3wheel') {
         matchesRange = typeLower.includes('3 roda') || typeLower.includes('3-roda') || typeLower.includes('3 wheel') ||
                        p.title.toLowerCase().startsWith('tvl') || p.title.toLowerCase().startsWith('tcl') || p.title.toLowerCase().startsWith('efs')
+      } else if (rangeFilter === '4wheel') {
+        matchesRange = (typeLower.includes('4 roda') || p.categorySlug === 'empilhadeiras-eletricas') && !typeLower.includes('3 roda')
+      } else if (rangeFilter === 'reach') {
+        matchesRange = typeLower.includes('retrátil') || typeLower.includes('reach') || (p.categorySlug === 'empilhadeiras-retrateis')
+      } else if (rangeFilter === 'pickers') {
+        matchesRange = typeLower.includes('selecionadora') || typeLower.includes('rebocador') || (p.categorySlug === 'selecionadoras-pedidos')
+      } else if (rangeFilter === 'special') {
+        matchesRange = typeLower.includes('vna') || typeLower.includes('especial') || typeLower.includes('agv') || typeLower.includes('amr') || (p.categorySlug === 'equipamentos-especiais')
       } else if (rangeFilter === 'high_hv') {
-        matchesRange = (p.batteryVoltage.includes('80') || p.title.toLowerCase().includes('hv') || p.subtitle.includes('80V')) &&
-                       (p.title.toLowerCase().startsWith('efl') || p.title.toLowerCase().startsWith('tdl') || p.title.toLowerCase().startsWith('cpd'))
-      } else if (rangeFilter === 'high_lv') {
-        matchesRange = (p.batteryVoltage.includes('48') || p.batteryVoltage.includes('24') || p.subtitle.includes('48V')) &&
-                       (p.title.toLowerCase().startsWith('efl') || p.title.toLowerCase().startsWith('tdl'))
-      } else if (rangeFilter === 'indoor_outdoor') {
-        matchesRange = typeLower.includes('4 roda') || p.title.toLowerCase().startsWith('tdl') || p.title.toLowerCase().startsWith('efl') || p.title.toLowerCase().startsWith('cpd')
-      } else if (rangeFilter === 'warehouse') {
-        matchesRange = typeLower.includes('armazém') || typeLower.includes('transpaleteira') || typeLower.includes('paleteira') || typeLower.includes('tcl') || typeLower.includes('efs')
+        matchesRange = p.batteryVoltage.includes('80') || p.title.toLowerCase().includes('hv') || p.subtitle.includes('80V')
       }
 
       const capKg = parseCapacityKg(p.capacity)
@@ -115,9 +132,9 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
         matchesVoltage = voltageClean.includes('48v') || voltageClean.includes('48 v') || voltageClean.includes('24v') || voltageClean.includes('24 v') || voltageClean.includes('leadacid')
       }
 
-      return matchesSearch && matchesRange && matchesCapacity && matchesLift && matchesVoltage
+      return matchesSearch && matchesCategory && matchesRange && matchesCapacity && matchesLift && matchesVoltage
     })
-  }, [initialProducts, search, rangeFilter, capacityFilter, liftHeightFilter, voltageFilter])
+  }, [initialProducts, search, categoryFilter, rangeFilter, capacityFilter, liftHeightFilter, voltageFilter])
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) || 1
 
@@ -128,6 +145,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
 
   const handleResetFilters = () => {
     setSearch('')
+    setCategoryFilter('all')
     setRangeFilter('all')
     setCapacityFilter('all')
     setLiftHeightFilter('all')
@@ -181,29 +199,33 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-100/80 border border-red-200 text-red-700 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
                 <Zap size={14} className="text-red-600 animate-pulse" />
-                Linha de Equipamentos Industriais
+                Linha Completa EP Equipment
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight uppercase">
-                Catálogo Completo <span className="text-red-600">de Empilhadeiras</span>
+                Catálogo Completo <span className="text-red-600">de Equipamentos</span>
               </h1>
 
               <p className="mt-3 text-base sm:text-lg text-gray-600 leading-relaxed font-normal">
-                Conheça a linha completa de empilhadeiras elétricas contrabalançadas (80V/48V), equipamentos de alta capacidade e armazém.
+                Explore a gama completa da EP Equipment: Empilhadeiras Contrabalançadas (3R e 4R), Paleteiras Elétricas, Stackers, Retráteis (Reach Trucks), Selecionadoras de Pedidos, Rebocadores e muito mais.
               </p>
               
-              <div className="mt-6 flex flex-wrap items-center gap-4 text-xs sm:text-sm text-gray-700 font-semibold">
+              <div className="mt-6 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-gray-700 font-semibold">
                 <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
                   <CheckCircle2 size={16} className="text-red-600" />
-                  <span>Baterias Íon-Lítio 80V</span>
+                  <span>Contrabalançadas 3R & 4R</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
                   <CheckCircle2 size={16} className="text-red-600" />
-                  <span>Recarga Oportuna em 1h</span>
+                  <span>Paleteiras Elétricas</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
                   <CheckCircle2 size={16} className="text-red-600" />
-                  <span>Garantia Venda Forte</span>
+                  <span>Stackers & Retráteis</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
+                  <CheckCircle2 size={16} className="text-red-600" />
+                  <span>Selecionadoras & Rebocadores</span>
                 </div>
               </div>
             </div>
@@ -217,21 +239,21 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                   </div>
                   <div>
                     <h3 className="font-extrabold text-gray-900 text-base">Venda Forte</h3>
-                    <p className="text-xs text-gray-500 font-medium">Equipamentos e Soluções Industriais</p>
+                    <p className="text-xs text-gray-500 font-medium">Distribuição & Suporte Autorizado</p>
                   </div>
                 </div>
                 <div className="space-y-2.5 text-xs text-gray-700">
                   <div className="flex justify-between py-1 border-b border-gray-100">
-                    <span className="text-gray-500 font-medium">Modelos Cadastrados</span>
-                    <span className="font-bold text-red-600">{initialProducts.length} Modelos</span>
+                    <span className="text-gray-500 font-medium">Modelos no Catálogo</span>
+                    <span className="font-bold text-red-600">{initialProducts.length} Equipamentos</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-gray-100">
-                    <span className="text-gray-500 font-medium">Capacidades</span>
-                    <span className="font-bold text-gray-900">1.000 kg até 25.000 kg</span>
+                    <span className="text-gray-500 font-medium">Linha de Produtos</span>
+                    <span className="font-bold text-gray-900">Paleteiras, Stackers e Empilhadeiras</span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-gray-500 font-medium">Elevação Máxima</span>
-                    <span className="font-bold text-gray-900">Até 6.000 mm (6m)</span>
+                    <span className="text-gray-500 font-medium">Tecnologia</span>
+                    <span className="font-bold text-gray-900">Íon-Lítio 24V / 48V / 80V</span>
                   </div>
                 </div>
               </div>
@@ -241,79 +263,91 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
         </div>
       </section>
 
-      {/* Range Category Bar */}
+      {/* Category Range Bar Tabs */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="flex items-center gap-2 overflow-x-auto pb-3 scrollbar-thin">
           <button
-            onClick={() => { setRangeFilter('all'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('all'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === 'all'
+              categoryFilter === 'all' && rangeFilter === 'all'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
             <Layers size={14} />
-            <span>Todos os Equipamentos</span>
+            <span>Todos ({initialProducts.length})</span>
+          </button>
+
+          <button
+            onClick={() => { setCategoryFilter('Paleteiras Elétricas'); setRangeFilter('all'); setCurrentPage(1); }}
+            className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
+              categoryFilter === 'Paleteiras Elétricas'
+                ? 'bg-red-600 text-white border-red-600 shadow-md'
+                : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
+            }`}
+          >
+            <Truck size={14} className="text-red-500" />
+            <span>Paleteiras</span>
           </button>
           
           <button
-            onClick={() => { setRangeFilter('3wheel'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('Empilhadeiras Patoladas (Stackers)'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === '3wheel'
+              categoryFilter === 'Empilhadeiras Patoladas (Stackers)'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
-            <span>3 Rodas (Agilidade)</span>
-            <ChevronRight size={13} className="text-red-500" />
+            <Box size={14} className="text-red-500" />
+            <span>Stackers</span>
           </button>
 
           <button
-            onClick={() => { setRangeFilter('high_hv'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('Empilhadeiras Contrabalançadas'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === 'high_hv'
+              categoryFilter === 'Empilhadeiras Contrabalançadas'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
-            <span>Alta Capacidade (80V)</span>
-            <ChevronRight size={13} className="text-red-500" />
+            <Forklift size={14} className="text-red-500" />
+            <span>Contrabalançadas</span>
           </button>
 
           <button
-            onClick={() => { setRangeFilter('high_lv'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('Empilhadeiras Retráteis (Reach Trucks)'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === 'high_lv'
+              categoryFilter === 'Empilhadeiras Retráteis (Reach Trucks)'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
-            <span>Linha Compacta (48V/24V)</span>
-            <ChevronRight size={13} className="text-red-500" />
+            <ArrowDownUp size={14} className="text-red-500" />
+            <span>Retráteis</span>
           </button>
 
           <button
-            onClick={() => { setRangeFilter('indoor_outdoor'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('Selecionadoras de Pedidos & Rebocadores'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === 'indoor_outdoor'
+              categoryFilter === 'Selecionadoras de Pedidos & Rebocadores'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
-            <span>Uso Misto (Interno/Externo)</span>
-            <ChevronRight size={13} className="text-red-500" />
+            <PackageCheck size={14} className="text-red-500" />
+            <span>Selecionadoras & Rebocadores</span>
           </button>
 
           <button
-            onClick={() => { setRangeFilter('warehouse'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('Equipamentos Especiais & VNA'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === 'warehouse'
+              categoryFilter === 'Equipamentos Especiais & VNA'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
-            <span>Armazém & Movimentação</span>
-            <ChevronRight size={13} className="text-red-500" />
+            <Cog size={14} className="text-red-500" />
+            <span>VNA & Especiais</span>
           </button>
         </div>
       </section>
@@ -346,12 +380,30 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                 <input
                   type="text"
-                  placeholder="Modelo (ex: TVL151, EFL)..."
+                  placeholder="Modelo (ex: DS3, F4, EFL302B3)..."
                   value={search}
                   onChange={e => { setSearch(e.target.value); setCurrentPage(1); }}
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-9 pr-3 py-2 text-xs text-gray-900 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all font-medium"
                 />
               </div>
+            </div>
+
+            {/* Category Filter */}
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Categoria de Equipamento</label>
+              <select
+                value={categoryFilter}
+                onChange={e => { setCategoryFilter(e.target.value); setCurrentPage(1); }}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-900 font-medium focus:outline-none focus:border-red-600"
+              >
+                <option value="all">Todas as Categorias</option>
+                <option value="Paleteiras Elétricas">Paleteiras Elétricas</option>
+                <option value="Empilhadeiras Patoladas (Stackers)">Empilhadeiras Patoladas (Stackers)</option>
+                <option value="Empilhadeiras Contrabalançadas">Empilhadeiras Contrabalançadas</option>
+                <option value="Empilhadeiras Retráteis (Reach Trucks)">Empilhadeiras Retráteis (Reach Trucks)</option>
+                <option value="Selecionadoras de Pedidos & Rebocadores">Selecionadoras & Rebocadores</option>
+                <option value="Equipamentos Especiais & VNA">Equipamentos Especiais & VNA</option>
+              </select>
             </div>
 
             {/* Load Capacity Filter */}
@@ -455,16 +507,23 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                     >
                       <div>
                         {/* Image Frame */}
-                        <div className="relative aspect-[4/3] bg-white rounded-xl p-2 flex items-center justify-center mb-4 border border-gray-100 overflow-hidden shadow-inner">
+                        <div className="relative aspect-[4/3] bg-white rounded-xl flex items-center justify-center mb-4 overflow-hidden">
                           <span className="absolute top-2 left-2 z-10 px-2.5 py-0.5 rounded bg-red-600 text-white font-bold text-[10px] uppercase shadow-sm">
                             {product.batteryVoltage} Li-Ion
                           </span>
+
+                          {product.category && (
+                            <span className="absolute bottom-2 right-2 z-10 px-2 py-0.5 rounded bg-slate-900/80 text-white font-medium text-[9px] uppercase backdrop-blur-sm shadow-sm">
+                              {product.category.replace('Empilhadeiras ', '').replace('Paleteiras ', 'Paleteira ')}
+                            </span>
+                          )}
 
                           <img
                             src={product.mainImage}
                             alt={product.title}
                             loading="lazy"
                             className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                            style={{ mixBlendMode: 'multiply' }}
                             onError={(e) => {
                               e.currentTarget.src = 'https://cdn.ep-portal.net/products/attr_5/1758185452375-2j5v1u.webp'
                             }}
@@ -476,7 +535,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                             {product.title}
                           </h3>
                           <p className="text-xs text-red-600 font-bold line-clamp-1 mt-0.5">
-                            {product.subtitle.replace(/^Empilhadeira Elétrica EP /i, 'Empilhadeira Elétrica ').replace(/^EP Equipment /i, '')}
+                            {product.subtitle.replace(/^Empilhadeira Elétrica EP /i, 'Empilhadeira Elétrica ').replace(/^Paleteira Elétrica EP /i, 'Paleteira Elétrica ').replace(/^Empilhadeira Patolada EP /i, 'Empilhadeira Patolada ').replace(/^EP Equipment /i, '')}
                           </p>
                         </div>
 
