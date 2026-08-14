@@ -50,7 +50,7 @@ export default function Services() {
       features: ['Frotas novas EP Equipment', 'Manutenção inclusa no contrato', 'Atendimento rápido em SC/RS/PR', 'Sem imobilização de capital'],
       badge: 'Frota Própria',
       ctaText: 'Solicitar Orçamento de Locação',
-      ctaHref: '#contact',
+      ctaHref: '/#contact',
       isHighlighted: false
     },
     {
@@ -60,8 +60,8 @@ export default function Services() {
       description: 'Equipe de técnicos altamente qualificados e oficinas móveis preparadas para atendimentos preventivos e corretivos urgentes.',
       features: ['Técnicos certificados EP', 'Oficinas móveis para atendimento', 'Manutenção preventiva & corretiva', 'Planos de revisão periódica'],
       badge: 'Suporte 24/7',
-      ctaText: 'Falar com a Assistência',
-      ctaHref: '#contact',
+      ctaText: 'Falar com a Assistência Técnica',
+      ctaHref: '/#contact',
       isHighlighted: false
     },
     {
@@ -72,7 +72,7 @@ export default function Services() {
       features: ['Peças originais de fábrica', 'Envio rápido para todo o Brasil', 'Baterias e módulos de recarga', 'Componentes com garantia'],
       badge: 'Peças de Fábrica',
       ctaText: 'Cotar Peças Originais',
-      ctaHref: '#contact',
+      ctaHref: '/#contact',
       isHighlighted: false
     },
     {
@@ -82,8 +82,8 @@ export default function Services() {
       description: 'Empilhadeiras à combustão preparadas para trabalhos pesados em ambientes externos, terrenos irregulares e operações contínuas.',
       features: ['Capacidades de 2.5t a 10t', 'Excelente estabilidade e tração', 'Motores de alta eficiência', 'Estrutura reforçada'],
       badge: 'Uso Intensivo',
-      ctaText: 'Solicitar Cotação',
-      ctaHref: '#contact',
+      ctaText: 'Solicitar Cotação Diesel e GLP',
+      ctaHref: '/#contact',
       isHighlighted: false
     }
   ]
@@ -211,6 +211,8 @@ export default function Services() {
                 ) : (
                   <a
                     href={product.ctaHref}
+                    aria-label={`${product.ctaText} - ${product.title}`}
+                    title={`${product.ctaText} - ${product.title}`}
                     className={`w-full py-3.5 px-4 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-md ${
                       product.isHighlighted
                         ? 'bg-red-600 hover:bg-red-700 text-white shadow-red-600/25'
@@ -271,6 +273,8 @@ export default function Services() {
                     href="https://www.youtube.com/@EPEquipment"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Acessar Canal Oficial da EP Equipment no YouTube"
+                    title="Canal EP Equipment no YouTube"
                     className="w-full py-4 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-lg shadow-red-600/20 group"
                   >
                     <YoutubeIcon size={20} className="text-white" />
@@ -279,8 +283,10 @@ export default function Services() {
                   </a>
 
                   <a
-                    href="#contact"
+                    href="/#contact"
                     onClick={() => setShowVideoModal(false)}
+                    aria-label="Solicitar Cotação de Robôs Autônomos"
+                    title="Solicitar Cotação de Equipamentos Autônomos"
                     className="w-full py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors border border-white/10"
                   >
                     <span>Solicitar Cotação de Autônomas</span>

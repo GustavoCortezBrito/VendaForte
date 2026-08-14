@@ -281,6 +281,8 @@ export default function MonthlyHighlight() {
                   <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                     <Link
                       href={`/empilhadeiras-eletricas/${currentItem.slug}`}
+                      aria-label={`Ver especificações e ficha técnica completa da ${currentItem.title}`}
+                      title={`Ficha Técnica - ${currentItem.title}`}
                       className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-gray-900 hover:bg-red-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-colors"
                     >
                       <span>Ficha Técnica {currentItem.title}</span>

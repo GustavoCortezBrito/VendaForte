@@ -46,6 +46,8 @@ export default function EPForkliftsSection() {
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
             <Link
               href="/empilhadeiras-eletricas"
+              aria-label={`Ver Catálogo Completo com todos os ${forkliftsData.length} modelos de empilhadeiras elétricas`}
+              title="Catálogo Completo de Empilhadeiras Elétricas"
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-lg shadow-red-600/25 transition-all uppercase tracking-wider group"
             >
               <span>Ver Catálogo Completo ({forkliftsData.length} Modelos)</span>
@@ -139,6 +141,8 @@ export default function EPForkliftsSection() {
 
               <Link
                 href={`/empilhadeiras-eletricas/${p.slug}`}
+                aria-label={`Ver especificações completas e ficha técnica da ${p.title}`}
+                title={`Ficha Técnica - ${p.title}`}
                 className="w-full py-3 rounded-xl bg-gray-900 hover:bg-red-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-sm uppercase tracking-wider group/btn"
               >
                 <span>Ficha Técnica {p.title.replace(/^Empilhadeira Elétrica /i, '')}</span>
@@ -157,6 +161,7 @@ export default function EPForkliftsSection() {
         >
           <Link
             href="/empilhadeiras-eletricas"
+            aria-label="Comparar todos os modelos de empilhadeiras elétricas no catálogo"
             className="inline-flex items-center gap-2 text-sm sm:text-base text-gray-600 hover:text-red-600 font-bold transition-colors group"
           >
             <span>Quer comparar todos os {forkliftsData.length} modelos de Empilhadeiras Elétricas?</span>

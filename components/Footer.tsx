@@ -53,19 +53,19 @@ export default function Footer() {
   ]
 
   const quickLinks = [
-    { label: 'Página Principal', href: '/#home' },
-    { label: 'Quem Somos', href: '/#about' },
-    { label: 'Linha de Equipamentos', href: '/#services' },
-    { label: 'Dúvidas Frequentes (FAQ)', href: '/#faq' },
-    { label: 'O que nossos clientes dizem', href: '/#testimonials' },
-    { label: 'Solicitar Orçamento', href: '/#contact' },
+    { label: 'Página Inicial', href: '/#home', ariaLabel: 'Ir para o topo da página inicial' },
+    { label: 'Sobre o Grupo Venda Forte', href: '/#about', ariaLabel: 'Conheça a história e estrutura do Grupo Venda Forte' },
+    { label: 'Soluções e Equipamentos', href: '/#services', ariaLabel: 'Veja nossa linha de produtos e serviços' },
+    { label: 'Depoimentos de Clientes', href: '/#testimonials', ariaLabel: 'Veja avaliações de clientes atendidos' },
+    { label: 'Perguntas Frequentes', href: '/#faq', ariaLabel: 'Tire suas dúvidas na seção de FAQ' },
+    { label: 'Fale com Nossa Equipe', href: '/#contact', ariaLabel: 'Entre em contato ou solicite um orçamento' },
   ]
 
-  const services = [
-    { label: 'Catálogo de Empilhadeiras Elétricas EP', href: '/empilhadeiras-eletricas' },
-    { label: 'Empilhadeiras AGV e AMR Autônomas', href: '/#services' },
-    { label: 'Empilhadeiras a Diesel e GLP', href: '/#services' },
-    { label: 'Artigos e Conteúdo sobre Empilhadeiras', href: '/blog' },
+  const usefulLinks = [
+    { label: 'Catálogo de Empilhadeiras Elétricas', href: '/empilhadeiras-eletricas', ariaLabel: 'Acessar catálogo completo de empilhadeiras elétricas' },
+    { label: 'Blog e Notícias Industriais', href: '/blog', ariaLabel: 'Ler artigos e novidades no blog do Grupo Venda Forte' },
+    { label: 'Política de Privacidade', href: '/privacidade', ariaLabel: 'Consultar política de privacidade do site' },
+    { label: 'Termos de Uso', href: '/termos', ariaLabel: 'Consultar os termos de uso do site' },
   ]
 
   return (
@@ -122,6 +122,7 @@ export default function Footer() {
                 >
                   <a
                     href={link.href}
+                    aria-label={link.ariaLabel}
                     className="text-gray-400 hover:text-red-500 transition-colors flex items-center"
                   >
                     <span className="w-1.5 h-1.5 bg-red-600 rounded-full mr-2" />
@@ -132,7 +133,7 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* Services */}
+          {/* Useful Links */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -140,7 +141,7 @@ export default function Footer() {
           >
             <div className="text-lg font-semibold mb-4">Links Úteis</div>
             <ul className="space-y-2">
-              {services.map((service, index) => (
+              {usefulLinks.map((service, index) => (
                 <motion.li
                   key={service.label}
                   initial={{ opacity: 0, x: -20 }}
@@ -149,6 +150,7 @@ export default function Footer() {
                 >
                   <a
                     href={service.href}
+                    aria-label={service.ariaLabel}
                     className="text-gray-400 hover:text-red-500 transition-colors flex items-center"
                   >
                     <span className="w-1.5 h-1.5 bg-red-600 rounded-full mr-2" />

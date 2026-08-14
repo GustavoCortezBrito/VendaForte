@@ -134,16 +134,18 @@ export default function Hero() {
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center px-2"
           >
             <a
-              href="#contact"
-              aria-label="Solicitar orçamento - Botão principal Hero"
+              href="/#contact"
+              aria-label="Peça seu orçamento personalizado de empilhadeiras"
+              title="Solicitar Orçamento de Empilhadeiras"
               className="inline-flex items-center justify-center bg-red-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-red-700 transition-all hover:scale-105 shadow-lg text-sm sm:text-base lg:text-lg"
             >
               Peça seu Orçamento
               <ArrowRight className="ml-2" size={18} />
             </a>
             <a
-              href="#services"
-              aria-label="Ver nossos produtos e serviços"
+              href="/#services"
+              aria-label="Conheça nossos produtos e soluções em empilhadeiras"
+              title="Ver Soluções e Equipamentos"
               className="inline-flex items-center justify-center border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-red-600 transition-all text-sm sm:text-base lg:text-lg"
             >
               Nossos Produtos

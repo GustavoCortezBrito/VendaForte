@@ -62,7 +62,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <Link href="/" className="flex items-center gap-3">
+            <Link href="/" aria-label="Página Inicial - Grupo Venda Forte" title="Grupo Venda Forte - Página Inicial" className="flex items-center gap-3">
               <div className="relative w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
                 {/* Logo Image */}
                 <img 
@@ -101,6 +101,7 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.05 * index }}
+                    aria-label={`Acessar seção ${item.label}`}
                     className={`font-medium relative group transition-colors duration-300 ${
                       isLightHeader 
                         ? 'text-gray-800 hover:text-red-600' 
@@ -122,12 +123,14 @@ export default function Navbar() {
                 >
                   <Link
                     href="/admin"
+                    rel="nofollow"
+                    aria-label="Acessar Painel Administrativo"
                     className={`p-2 rounded-lg transition-all ${
                       isLightHeader
                         ? 'hover:bg-gray-100 text-gray-600 hover:text-red-600'
                         : 'hover:bg-white/10 text-white'
                     }`}
-                    title="Painel Admin"
+                    title="Painel Administrativo"
                   >
                     <Settings size={20} />
                   </Link>
@@ -138,7 +141,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 }}
-                  aria-label="Solicitar orçamento de empilhadeiras"
+                  aria-label="Fale Conosco - Solicitar orçamento de empilhadeiras"
                   className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-semibold"
                 >
                   Fale Conosco
