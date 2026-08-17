@@ -74,8 +74,8 @@ export default function Footer() {
   const usefulLinks = [
     { label: 'Catálogo de Empilhadeiras Elétricas', href: '/empilhadeiras-eletricas', ariaLabel: 'Acessar catálogo completo de empilhadeiras elétricas' },
     { label: 'Blog e Notícias Industriais', href: '/blog', ariaLabel: 'Ler artigos e novidades no blog do Grupo Venda Forte' },
-    { label: 'Política de Privacidade', href: '/privacidade', ariaLabel: 'Consultar política de privacidade do site' },
-    { label: 'Termos de Uso', href: '/termos', ariaLabel: 'Consultar os termos de uso do site' },
+    { label: 'Diretrizes de Privacidade', href: '/privacidade', ariaLabel: 'Consultar política de privacidade do site' },
+    { label: 'Termos e Condições', href: '/termos', ariaLabel: 'Consultar os termos de uso do site' },
   ]
 
   return (
@@ -231,10 +231,10 @@ export default function Footer() {
               © {currentYear} Grupo Venda Forte. Todos os direitos reservados.
             </p>
             <div className="flex space-x-6 text-sm">
-              <a href="/privacidade" className="text-gray-400 hover:text-red-500 transition-colors">
+              <a href="/privacidade" aria-label="Acessar nossa Política de Privacidade" title="Política de Privacidade" className="text-gray-400 hover:text-red-500 transition-colors">
                 Política de Privacidade
               </a>
-              <a href="/termos" className="text-gray-400 hover:text-red-500 transition-colors">
+              <a href="/termos" aria-label="Acessar nossos Termos de Uso" title="Termos de Uso" className="text-gray-400 hover:text-red-500 transition-colors">
                 Termos de Uso
               </a>
             </div>

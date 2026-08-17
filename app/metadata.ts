@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 const siteUrl = "https://www.grupovendaforte.com";
 const siteName = "Grupo Venda Forte";
-const siteDescription = "Empilhadeiras em Chapecó-SC e Joinville-SC: elétrica Íon-Lítio, diesel, paleteira e autônoma. Dealer EP Equipment com venda, locação e assistência 24/7 no Sul do Brasil e São Paulo.";
+const siteDescription = "Empilhadeiras elétricas Íon-Lítio, diesel e paleteiras em Chapecó e Joinville. Dealer EP com venda, locação e assistência 24h no Sul e SP.";
 const siteKeywords = [
   // Palavras-chave principais do H1
   "soluções completas em empilhadeiras",

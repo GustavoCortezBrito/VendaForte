@@ -180,7 +180,7 @@ export default function EPForkliftsSection() {
                   title={`Ficha Técnica - ${p.title}`}
                   className="mt-3 flex items-center justify-center gap-1 text-xs font-bold text-gray-700 hover:text-red-600 transition-colors"
                 >
-                  Ver Ficha Técnica
+                  <span>Ficha Técnica {p.title.replace(/^Empilhadeira Elétrica /i, '')}</span>
                   <ChevronRight size={13} />
                 </Link>
               </div>

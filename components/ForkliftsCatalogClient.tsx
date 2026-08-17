@@ -707,9 +707,11 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                       <div className="space-y-2 mt-2">
                         <Link
                           href={`/empilhadeiras-eletricas/${product.slug}`}
+                          aria-label={`Ver especificações completas e ficha técnica da ${product.title}`}
+                          title={`Ficha Técnica - ${product.title}`}
                           className="w-full py-2.5 rounded-xl bg-gray-900 hover:bg-red-600 text-white font-bold text-xs flex items-center justify-center gap-1 transition-colors shadow-sm"
                         >
-                          <span>Ver Ficha Técnica</span>
+                          <span>Ficha Técnica {product.title.replace(/^Empilhadeira Elétrica /i, '')}</span>
                           <ChevronRight size={14} />
                         </Link>
 

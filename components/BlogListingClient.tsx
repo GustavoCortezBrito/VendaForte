@@ -422,9 +422,13 @@ export default function BlogListingClient() {
                       </span>
                       <Link
                         href={`/blog/${post.slug}`}
+                        aria-label={`Ler artigo completo: ${post.title}`}
+                        title={`Ler artigo: ${post.title}`}
                         className="text-red-600 font-bold text-sm hover:text-red-700 flex items-center gap-1 group-hover:translate-x-1 transition-transform"
                       >
-                        Ler artigo →
+                        <span>Ler artigo</span>
+                        <span className="sr-only">: {post.title}</span>
+                        <span aria-hidden="true"> →</span>
                       </Link>
                     </div>
                   </div>

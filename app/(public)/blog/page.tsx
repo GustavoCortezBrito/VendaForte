@@ -5,7 +5,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupovendaforte.com
 
 export const metadata: Metadata = {
   title: 'Blog Venda Forte | Dicas de Empilhadeiras e Movimentação de Cargas',
-  description: 'Confira artigos, tutoriais e dicas especializadas sobre manutenção preventiva, operação segura, locação e tecnologia de empilhadeiras e equipamentos industriais.',
+  description: 'Artigos, guias e dicas sobre empilhadeiras elétricas, manutenção preventiva, baterias de lítio e operação logística com a Venda Forte.',
   keywords: [
     'blog empilhadeiras',
     'manutenção de empilhadeiras',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Blog Venda Forte | Dicas de Empilhadeiras e Movimentação de Cargas',
-    description: 'Confira artigos, tutoriais e dicas especializadas sobre manutenção preventiva, operação segura, locação e tecnologia de empilhadeiras.',
+    description: 'Artigos, guias e dicas sobre empilhadeiras elétricas, manutenção preventiva, baterias de lítio e operação logística.',
     url: `${siteUrl}/blog`,
     siteName: 'Venda Forte',
     type: 'website',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Blog Venda Forte | Dicas de Empilhadeiras e Movimentação de Cargas',
-    description: 'Confira artigos, tutoriais e dicas especializadas sobre manutenção preventiva, operação segura, locação e tecnologia de empilhadeiras.',
+    description: 'Artigos, guias e dicas sobre empilhadeiras elétricas, manutenção preventiva, baterias de lítio e operação logística.',
     images: [`${siteUrl}/sede.png`],
   },
 }
