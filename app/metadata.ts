@@ -2,37 +2,53 @@ import type { Metadata } from "next";
 
 const siteUrl = "https://www.grupovendaforte.com";
 const siteName = "Grupo Venda Forte";
-const siteDescription = "Empilhadeiras elétricas, a diesel e paleteiras em Chapecó e Joinville. Venda, locação e assistência técnica em todo o Sul do Brasil.";
+const siteDescription = "Empilhadeiras em Chapecó-SC e Joinville-SC: elétrica Íon-Lítio, diesel, paleteira e autônoma. Dealer EP Equipment com venda, locação e assistência 24/7 no Sul do Brasil e São Paulo.";
 const siteKeywords = [
   // Palavras-chave principais do H1
   "soluções completas em empilhadeiras",
   "soluções completas em equipamentos",
   "empilhadeiras e equipamentos",
-  // Palavras-chave principais (rastreamento GA/GSC)
-  "empilhadeira diesel",
-  "empilhadeira elétrica",
-  "transpaleteira",
-  "paleteira",
-  "empilhadeira autônoma",
-  // Palavras-chave secundárias
+  // Localização - Foco em Chapecó e Joinville
   "empilhadeiras Chapecó",
+  "empilhadeiras Joinville",
   "empilhadeiras Santa Catarina",
+  "empilhadeiras Chapecó SC",
+  "empilhadeiras Joinville SC",
+  "venda empilhadeiras Chapecó",
+  "venda empilhadeiras Joinville",
+  "locação empilhadeiras Chapecó",
+  "locação empilhadeiras Joinville",
+  "assistência técnica empilhadeiras Chapecó",
+  "assistência técnica empilhadeiras Joinville",
+  // EP Equipment - Dealer Autorizado
+  "dealer EP Equipment",
+  "EP Equipment Chapecó",
+  "EP Equipment Joinville",
+  "EP Equipment Santa Catarina",
+  "empilhadeiras EP Equipment",
+  // Tipos de equipamentos
+  "empilhadeira elétrica",
+  "empilhadeira diesel",
+  "empilhadeira íon-lítio",
+  "transpaleteira elétrica",
+  "paleteira elétrica",
+  "empilhadeira autônoma",
+  "empilhadeira retrátil",
+  "stacker elétrico",
+  // Serviços
   "venda empilhadeiras",
   "locação empilhadeiras",
   "manutenção empilhadeiras",
-  "peças empilhadeiras",
-  "empilhadeiras elétricas",
-  "empilhadeiras a gás",
-  "equipamentos industriais",
-  "movimentação de cargas",
-  "Grupo Venda Forte",
-  "empilhadeiras Joinville",
+  "peças empilhadeiras originais",
+  "assistência técnica 24/7",
+  // Regional
   "empilhadeiras Sul do Brasil",
-  "assistência técnica empilhadeiras",
-  "transpaleteira elétrica",
-  "paleteira manual",
-  "empilhadeira autônoma inteligente",
-  "soluções em movimentação de cargas"
+  "empilhadeiras Paraná",
+  "empilhadeiras Rio Grande do Sul",
+  "empilhadeiras São Paulo",
+  "Grupo Venda Forte",
+  "equipamentos industriais",
+  "movimentação de cargas"
 ];
 
 export const metadata: Metadata = {
@@ -47,6 +63,16 @@ export const metadata: Metadata = {
   authors: [{ name: siteName }],
   creator: siteName,
   publisher: siteName,
+  
+  // Favicon e ícones
+  icons: {
+    icon: [
+      { url: '/logo.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: '/logo.png',
+    shortcut: '/logo.png',
+  },
   
   // Robots e Indexação
   robots: {
@@ -71,11 +97,11 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: `${siteUrl}/og-image.jpg`,
+        url: `${siteUrl}/sede.png`,
         width: 1200,
         height: 630,
         alt: `Empilhadeiras e Equipamentos - ${siteName}`,
-        type: 'image/jpeg',
+        type: 'image/png',
       },
       {
         url: `${siteUrl}/logo.png`,
@@ -92,7 +118,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `Empilhadeiras e Equipamentos | ${siteName}`,
     description: siteDescription,
-    images: [`${siteUrl}/og-image.jpg`],
+    images: [`${siteUrl}/sede.png`],
     creator: '@grupovendaforte',
   },
 

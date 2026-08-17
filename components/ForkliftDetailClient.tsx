@@ -66,7 +66,7 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
           
           {/* Left Column: Image Gallery */}
           <div className="lg:col-span-7 space-y-4">
-            <div className="relative aspect-[4/3] bg-white border border-gray-100 rounded-3xl p-4 sm:p-6 flex items-center justify-center overflow-hidden shadow-xl">
+            <div className="relative aspect-[4/3] bg-white rounded-3xl p-4 sm:p-6 flex items-center justify-center overflow-hidden shadow-xl" style={{ isolation: 'isolate' }}>
               
               <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-10">
                 <span className="px-3.5 py-1 bg-red-600 font-bold text-white text-xs rounded-md shadow-sm">
@@ -81,6 +81,7 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
                 src={activeImage}
                 alt={`Empilhadeira Elétrica ${product.title}`}
                 className="w-full h-full object-contain filter drop-shadow-md transition-all duration-300"
+                style={{ mixBlendMode: 'multiply' }}
                 onError={(e) => {
                   e.currentTarget.src = product.mainImage || 'https://cdn.ep-portal.net/products/attr_5/1758185452375-2j5v1u.webp'
                 }}
@@ -100,7 +101,7 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
                         : 'border-gray-200 hover:border-gray-300 opacity-70 hover:opacity-100'
                     }`}
                   >
-                    <img src={img} alt="Miniatura" className="w-full h-full object-contain" />
+                    <img src={img} alt="Miniatura" className="w-full h-full object-contain" style={{ mixBlendMode: 'multiply' }} />
                   </button>
                 ))}
               </div>

@@ -1,19 +1,23 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { 
   Zap, 
-  ShieldCheck, 
   Search, 
   ChevronRight, 
   ChevronLeft,
   CheckCircle2,
   SlidersHorizontal,
-  ArrowRight,
   RotateCcw,
-  Layers
+  Layers,
+  Truck,
+  Box,
+  Forklift,
+  PackageCheck,
+  ArrowDownUp,
+  Cog
 } from 'lucide-react'
 
 export interface ForkliftProduct {
@@ -21,6 +25,8 @@ export interface ForkliftProduct {
   slug: string
   title: string
   subtitle: string
+  category?: string
+  categorySlug?: string
   type: string
   capacity: string
   liftingHeight: string
@@ -45,6 +51,7 @@ const ITEMS_PER_PAGE = 12
 
 export default function ForkliftsCatalogClient({ initialProducts }: Props) {
   const [search, setSearch] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState('all')
   const [rangeFilter, setRangeFilter] = useState('all')
   const [capacityFilter, setCapacityFilter] = useState('all')
   const [liftHeightFilter, setLiftHeightFilter] = useState('all')
@@ -74,24 +81,34 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
         p.subtitle.toLowerCase().includes(searchLower) ||
         p.description.toLowerCase().includes(searchLower) ||
         p.slug.toLowerCase().includes(searchLower) ||
+        (p.category && p.category.toLowerCase().includes(searchLower)) ||
         (p.type && p.type.toLowerCase().includes(searchLower)) ||
         (p.capacity && p.capacity.toLowerCase().includes(searchLower))
 
-      const typeLower = (p.type + ' ' + p.subtitle + ' ' + p.description + ' ' + p.title).toLowerCase()
+      let matchesCategory = true
+      if (categoryFilter !== 'all') {
+        matchesCategory = p.category === categoryFilter || p.categorySlug === categoryFilter
+      }
+
+      const typeLower = (p.type + ' ' + (p.category || '') + ' ' + p.subtitle + ' ' + p.description + ' ' + p.title).toLowerCase()
       let matchesRange = true
-      if (rangeFilter === '3wheel') {
+      if (rangeFilter === 'pallet_trucks') {
+        matchesRange = typeLower.includes('paleteira') || (p.categorySlug === 'paleteiras-eletricas')
+      } else if (rangeFilter === 'stackers') {
+        matchesRange = typeLower.includes('patolada') || typeLower.includes('stacker') || (p.categorySlug === 'empilhadeiras-patoladas')
+      } else if (rangeFilter === '3wheel') {
         matchesRange = typeLower.includes('3 roda') || typeLower.includes('3-roda') || typeLower.includes('3 wheel') ||
                        p.title.toLowerCase().startsWith('tvl') || p.title.toLowerCase().startsWith('tcl') || p.title.toLowerCase().startsWith('efs')
+      } else if (rangeFilter === '4wheel') {
+        matchesRange = (typeLower.includes('4 roda') || p.categorySlug === 'empilhadeiras-eletricas') && !typeLower.includes('3 roda')
+      } else if (rangeFilter === 'reach') {
+        matchesRange = typeLower.includes('retrátil') || typeLower.includes('reach') || (p.categorySlug === 'empilhadeiras-retrateis')
+      } else if (rangeFilter === 'pickers') {
+        matchesRange = typeLower.includes('selecionadora') || typeLower.includes('rebocador') || (p.categorySlug === 'selecionadoras-pedidos')
+      } else if (rangeFilter === 'special') {
+        matchesRange = typeLower.includes('vna') || typeLower.includes('especial') || typeLower.includes('agv') || typeLower.includes('amr') || (p.categorySlug === 'equipamentos-especiais')
       } else if (rangeFilter === 'high_hv') {
-        matchesRange = (p.batteryVoltage.includes('80') || p.title.toLowerCase().includes('hv') || p.subtitle.includes('80V')) &&
-                       (p.title.toLowerCase().startsWith('efl') || p.title.toLowerCase().startsWith('tdl') || p.title.toLowerCase().startsWith('cpd'))
-      } else if (rangeFilter === 'high_lv') {
-        matchesRange = (p.batteryVoltage.includes('48') || p.batteryVoltage.includes('24') || p.subtitle.includes('48V')) &&
-                       (p.title.toLowerCase().startsWith('efl') || p.title.toLowerCase().startsWith('tdl'))
-      } else if (rangeFilter === 'indoor_outdoor') {
-        matchesRange = typeLower.includes('4 roda') || p.title.toLowerCase().startsWith('tdl') || p.title.toLowerCase().startsWith('efl') || p.title.toLowerCase().startsWith('cpd')
-      } else if (rangeFilter === 'warehouse') {
-        matchesRange = typeLower.includes('armazém') || typeLower.includes('transpaleteira') || typeLower.includes('paleteira') || typeLower.includes('tcl') || typeLower.includes('efs')
+        matchesRange = p.batteryVoltage.includes('80') || p.title.toLowerCase().includes('hv') || p.subtitle.includes('80V')
       }
 
       const capKg = parseCapacityKg(p.capacity)
@@ -115,9 +132,9 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
         matchesVoltage = voltageClean.includes('48v') || voltageClean.includes('48 v') || voltageClean.includes('24v') || voltageClean.includes('24 v') || voltageClean.includes('leadacid')
       }
 
-      return matchesSearch && matchesRange && matchesCapacity && matchesLift && matchesVoltage
+      return matchesSearch && matchesCategory && matchesRange && matchesCapacity && matchesLift && matchesVoltage
     })
-  }, [initialProducts, search, rangeFilter, capacityFilter, liftHeightFilter, voltageFilter])
+  }, [initialProducts, search, categoryFilter, rangeFilter, capacityFilter, liftHeightFilter, voltageFilter])
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) || 1
 
@@ -128,6 +145,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
 
   const handleResetFilters = () => {
     setSearch('')
+    setCategoryFilter('all')
     setRangeFilter('all')
     setCapacityFilter('all')
     setLiftHeightFilter('all')
@@ -171,149 +189,316 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 text-gray-900 pt-24 pb-20 font-sans">
       
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-red-50/50 via-white to-slate-50 py-12 sm:py-16 border-b border-gray-200/80">
-        <div className="hidden md:block absolute top-0 right-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Hero Section - Redesigned with Rich Content */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-red-50/30 to-white py-16 sm:py-20 border-b-2 border-gray-200/60">
+        {/* Decorative Elements */}
+        <div className="hidden md:block absolute top-0 right-0 w-[500px] h-[500px] bg-red-500/8 rounded-full blur-3xl pointer-events-none animate-pulse-slow" />
+        <div className="hidden md:block absolute bottom-0 left-0 w-[400px] h-[400px] bg-slate-400/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-start mb-12">
             
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-100/80 border border-red-200 text-red-700 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
-                <Zap size={14} className="text-red-600 animate-pulse" />
-                Linha de Equipamentos Industriais
-              </div>
+            {/* Left Content - Main Text */}
+            <div className="lg:col-span-3">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-600 to-red-700 text-white text-xs font-extrabold uppercase tracking-wider mb-5 shadow-lg shadow-red-600/30">
+                  <Zap size={16} className="animate-pulse" />
+                  Linha Completa EP Equipment
+                </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight uppercase">
-                Catálogo Completo <span className="text-red-600">de Empilhadeiras</span>
-              </h1>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-[1.1] mb-6">
+                  Catálogo Completo de{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">
+                    Equipamentos
+                  </span>
+                </h1>
 
-              <p className="mt-3 text-base sm:text-lg text-gray-600 leading-relaxed font-normal">
-                Conheça a linha completa de empilhadeiras elétricas contrabalançadas (80V/48V), equipamentos de alta capacidade e armazém.
-              </p>
-              
-              <div className="mt-6 flex flex-wrap items-center gap-4 text-xs sm:text-sm text-gray-700 font-semibold">
-                <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
-                  <CheckCircle2 size={16} className="text-red-600" />
-                  <span>Baterias Íon-Lítio 80V</span>
+                <p className="text-base sm:text-lg text-gray-600 leading-relaxed mb-8 font-normal">
+                  Descubra a linha completa de <strong className="text-gray-900 font-semibold">empilhadeiras elétricas íon-lítio</strong> da EP Equipment. Navegue por categorias, compare capacidades e elevação, e encontre o equipamento ideal para cada operação logística.
+                </p>
+
+                {/* Key Features Grid */}
+                <div className="grid sm:grid-cols-2 gap-3 mb-8">
+                  <div className="flex items-start gap-3 bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="w-10 h-10 rounded-lg bg-red-100 text-red-600 flex items-center justify-center flex-shrink-0">
+                      <Forklift size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-extrabold text-gray-900 text-sm mb-1">Contrabalançadas 3R & 4R</h3>
+                      <p className="text-xs text-gray-600">Modelos de 1.5t a 3.5t com tecnologia Li-Ion</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="w-10 h-10 rounded-lg bg-red-100 text-red-600 flex items-center justify-center flex-shrink-0">
+                      <Truck size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-extrabold text-gray-900 text-sm mb-1">Paleteiras & Stackers</h3>
+                      <p className="text-xs text-gray-600">Movimentação horizontal e vertical eficiente</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="w-10 h-10 rounded-lg bg-red-100 text-red-600 flex items-center justify-center flex-shrink-0">
+                      <ArrowDownUp size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-extrabold text-gray-900 text-sm mb-1">Retráteis (Reach Trucks)</h3>
+                      <p className="text-xs text-gray-600">Alta elevação para armazéns verticais</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="w-10 h-10 rounded-lg bg-red-100 text-red-600 flex items-center justify-center flex-shrink-0">
+                      <PackageCheck size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-extrabold text-gray-900 text-sm mb-1">Selecionadoras & Rebocadores</h3>
+                      <p className="text-xs text-gray-600">Picking vertical e transporte de cargas</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
-                  <CheckCircle2 size={16} className="text-red-600" />
-                  <span>Recarga Oportuna em 1h</span>
+
+                {/* Stats Bar */}
+                <div className="flex flex-wrap items-center gap-4 p-4 bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl text-white shadow-xl">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center">
+                      <Layers size={16} />
+                    </div>
+                    <div>
+                      <div className="text-xs text-gray-400 uppercase tracking-wider">Modelos</div>
+                      <div className="text-lg font-extrabold">{initialProducts.length}+</div>
+                    </div>
+                  </div>
+
+                  <div className="w-px h-10 bg-gray-700" />
+
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center">
+                      <Zap size={16} />
+                    </div>
+                    <div>
+                      <div className="text-xs text-gray-400 uppercase tracking-wider">Tecnologia</div>
+                      <div className="text-sm font-extrabold">Li-Ion 80V/48V/24V</div>
+                    </div>
+                  </div>
+
+                  <div className="w-px h-10 bg-gray-700" />
+
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center">
+                      <CheckCircle2 size={16} />
+                    </div>
+                    <div>
+                      <div className="text-xs text-gray-400 uppercase tracking-wider">Dealer</div>
+                      <div className="text-sm font-extrabold">Autorizado EP</div>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
-                  <CheckCircle2 size={16} className="text-red-600" />
-                  <span>Garantia Venda Forte</span>
-                </div>
-              </div>
+              </motion.div>
             </div>
 
-            {/* Summary Card */}
-            <div className="w-full lg:w-auto flex-shrink-0">
-              <div className="p-6 rounded-2xl bg-white border border-gray-200 shadow-xl max-w-sm">
-                <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
-                  <div className="w-12 h-12 rounded-xl bg-red-600 text-white flex items-center justify-center font-extrabold text-xl shadow-md">
-                    VF
+            {/* Right Content - Enhanced Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="lg:col-span-2"
+            >
+              <div className="relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-200 rounded-3xl p-8 shadow-2xl">
+                {/* Decorative corner */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-500/10 to-transparent rounded-bl-full" />
+                
+                <div className="relative z-10">
+                  {/* Header */}
+                  <div className="flex items-center gap-4 mb-6 pb-6 border-b-2 border-gray-100">
+                    <div className="relative w-16 h-16 flex items-center justify-center">
+                      <img 
+                        src="/logo.png" 
+                        alt="Venda Forte" 
+                        className="w-full h-full object-contain rounded-xl drop-shadow-md"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-extrabold text-gray-900 text-xl">Venda Forte</h3>
+                      <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Dealer Oficial EP Equipment</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-extrabold text-gray-900 text-base">Venda Forte</h3>
-                    <p className="text-xs text-gray-500 font-medium">Equipamentos e Soluções Industriais</p>
+
+                  {/* Info Blocks */}
+                  <div className="space-y-4 mb-6">
+                    <div className="bg-gradient-to-r from-red-50 to-transparent rounded-xl p-4 border border-red-100">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-500 font-bold uppercase tracking-wider">Catálogo Completo</span>
+                        <Layers size={16} className="text-red-600" />
+                      </div>
+                      <p className="text-2xl font-extrabold text-gray-900">{initialProducts.length} <span className="text-base text-gray-600 font-semibold">Equipamentos</span></p>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-gray-50 to-transparent rounded-xl p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-500 font-bold uppercase tracking-wider">Linha de Produtos</span>
+                        <Box size={16} className="text-gray-600" />
+                      </div>
+                      <p className="text-sm font-bold text-gray-900 leading-relaxed">Paleteiras • Stackers • Empilhadeiras • Retráteis</p>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-gray-50 to-transparent rounded-xl p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-500 font-bold uppercase tracking-wider">Tecnologia Avançada</span>
+                        <Zap size={16} className="text-gray-600" />
+                      </div>
+                      <p className="text-sm font-bold text-gray-900">Íon-Lítio 24V / 48V / 80V</p>
+                      <p className="text-xs text-gray-600 mt-1">Recarga rápida & Zero emissões</p>
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-2.5 text-xs text-gray-700">
-                  <div className="flex justify-between py-1 border-b border-gray-100">
-                    <span className="text-gray-500 font-medium">Modelos Cadastrados</span>
-                    <span className="font-bold text-red-600">{initialProducts.length} Modelos</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-gray-100">
-                    <span className="text-gray-500 font-medium">Capacidades</span>
-                    <span className="font-bold text-gray-900">1.000 kg até 25.000 kg</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-gray-500 font-medium">Elevação Máxima</span>
-                    <span className="font-bold text-gray-900">Até 6.000 mm (6m)</span>
+
+                  {/* CTA Section */}
+                  <div className="bg-gray-900 rounded-2xl p-5 text-center">
+                    <p className="text-xs text-gray-400 mb-3 uppercase tracking-wider font-bold">Precisa de Ajuda?</p>
+                    <a
+                      href="#contact"
+                      className="block w-full py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-sm transition-colors shadow-lg shadow-red-600/30"
+                    >
+                      Fale com Especialista
+                    </a>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
           </div>
+
+          {/* Bottom Info Banner */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg"
+          >
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-red-600 text-white flex items-center justify-center flex-shrink-0">
+                  <Search size={24} />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-gray-900 text-base mb-1">Use os Filtros Avançados</h3>
+                  <p className="text-sm text-gray-600">Filtre por categoria, capacidade, elevação máxima e voltagem da bateria</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 text-xs font-bold text-gray-600">
+                <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 px-3 py-2 rounded-lg">
+                  <CheckCircle2 size={14} className="text-red-600" />
+                  <span>Estoque Próprio</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 px-3 py-2 rounded-lg">
+                  <CheckCircle2 size={14} className="text-red-600" />
+                  <span>Assistência 24/7</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 px-3 py-2 rounded-lg">
+                  <CheckCircle2 size={14} className="text-red-600" />
+                  <span>Peças Originais</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
         </div>
       </section>
 
-      {/* Range Category Bar */}
+      {/* Category Range Bar Tabs */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="flex items-center gap-2 overflow-x-auto pb-3 scrollbar-thin">
           <button
-            onClick={() => { setRangeFilter('all'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('all'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === 'all'
+              categoryFilter === 'all' && rangeFilter === 'all'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
             <Layers size={14} />
-            <span>Todos os Equipamentos</span>
+            <span>Todos ({initialProducts.length})</span>
+          </button>
+
+          <button
+            onClick={() => { setCategoryFilter('Paleteiras Elétricas'); setRangeFilter('all'); setCurrentPage(1); }}
+            className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
+              categoryFilter === 'Paleteiras Elétricas'
+                ? 'bg-red-600 text-white border-red-600 shadow-md'
+                : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
+            }`}
+          >
+            <Truck size={14} className="text-red-500" />
+            <span>Paleteiras</span>
           </button>
           
           <button
-            onClick={() => { setRangeFilter('3wheel'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('Empilhadeiras Patoladas (Stackers)'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === '3wheel'
+              categoryFilter === 'Empilhadeiras Patoladas (Stackers)'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
-            <span>3 Rodas (Agilidade)</span>
-            <ChevronRight size={13} className="text-red-500" />
+            <Box size={14} className="text-red-500" />
+            <span>Stackers</span>
           </button>
 
           <button
-            onClick={() => { setRangeFilter('high_hv'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('Empilhadeiras Contrabalançadas'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === 'high_hv'
+              categoryFilter === 'Empilhadeiras Contrabalançadas'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
-            <span>Alta Capacidade (80V)</span>
-            <ChevronRight size={13} className="text-red-500" />
+            <Forklift size={14} className="text-red-500" />
+            <span>Contrabalançadas</span>
           </button>
 
           <button
-            onClick={() => { setRangeFilter('high_lv'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('Empilhadeiras Retráteis (Reach Trucks)'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === 'high_lv'
+              categoryFilter === 'Empilhadeiras Retráteis (Reach Trucks)'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
-            <span>Linha Compacta (48V/24V)</span>
-            <ChevronRight size={13} className="text-red-500" />
+            <ArrowDownUp size={14} className="text-red-500" />
+            <span>Retráteis</span>
           </button>
 
           <button
-            onClick={() => { setRangeFilter('indoor_outdoor'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('Selecionadoras de Pedidos & Rebocadores'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === 'indoor_outdoor'
+              categoryFilter === 'Selecionadoras de Pedidos & Rebocadores'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
-            <span>Uso Misto (Interno/Externo)</span>
-            <ChevronRight size={13} className="text-red-500" />
+            <PackageCheck size={14} className="text-red-500" />
+            <span>Selecionadoras & Rebocadores</span>
           </button>
 
           <button
-            onClick={() => { setRangeFilter('warehouse'); setCurrentPage(1); }}
+            onClick={() => { setCategoryFilter('Equipamentos Especiais & VNA'); setRangeFilter('all'); setCurrentPage(1); }}
             className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border ${
-              rangeFilter === 'warehouse'
+              categoryFilter === 'Equipamentos Especiais & VNA'
                 ? 'bg-red-600 text-white border-red-600 shadow-md'
                 : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
             }`}
           >
-            <span>Armazém & Movimentação</span>
-            <ChevronRight size={13} className="text-red-500" />
+            <Cog size={14} className="text-red-500" />
+            <span>VNA & Especiais</span>
           </button>
         </div>
       </section>
@@ -346,12 +531,30 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                 <input
                   type="text"
-                  placeholder="Modelo (ex: TVL151, EFL)..."
+                  placeholder="Modelo (ex: DS3, F4, EFL302B3)..."
                   value={search}
                   onChange={e => { setSearch(e.target.value); setCurrentPage(1); }}
                   className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-9 pr-3 py-2 text-xs text-gray-900 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all font-medium"
                 />
               </div>
+            </div>
+
+            {/* Category Filter */}
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Categoria de Equipamento</label>
+              <select
+                value={categoryFilter}
+                onChange={e => { setCategoryFilter(e.target.value); setCurrentPage(1); }}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-900 font-medium focus:outline-none focus:border-red-600"
+              >
+                <option value="all">Todas as Categorias</option>
+                <option value="Paleteiras Elétricas">Paleteiras Elétricas</option>
+                <option value="Empilhadeiras Patoladas (Stackers)">Empilhadeiras Patoladas (Stackers)</option>
+                <option value="Empilhadeiras Contrabalançadas">Empilhadeiras Contrabalançadas</option>
+                <option value="Empilhadeiras Retráteis (Reach Trucks)">Empilhadeiras Retráteis (Reach Trucks)</option>
+                <option value="Selecionadoras de Pedidos & Rebocadores">Selecionadoras & Rebocadores</option>
+                <option value="Equipamentos Especiais & VNA">Equipamentos Especiais & VNA</option>
+              </select>
             </div>
 
             {/* Load Capacity Filter */}
@@ -455,16 +658,23 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                     >
                       <div>
                         {/* Image Frame */}
-                        <div className="relative aspect-[4/3] bg-white rounded-xl p-2 flex items-center justify-center mb-4 border border-gray-100 overflow-hidden shadow-inner">
+                        <div className="relative aspect-[4/3] bg-white rounded-xl flex items-center justify-center mb-4 overflow-hidden">
                           <span className="absolute top-2 left-2 z-10 px-2.5 py-0.5 rounded bg-red-600 text-white font-bold text-[10px] uppercase shadow-sm">
                             {product.batteryVoltage} Li-Ion
                           </span>
+
+                          {product.category && (
+                            <span className="absolute bottom-2 right-2 z-10 px-2 py-0.5 rounded bg-slate-900/80 text-white font-medium text-[9px] uppercase backdrop-blur-sm shadow-sm">
+                              {product.category.replace('Empilhadeiras ', '').replace('Paleteiras ', 'Paleteira ')}
+                            </span>
+                          )}
 
                           <img
                             src={product.mainImage}
                             alt={product.title}
                             loading="lazy"
                             className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                            style={{ mixBlendMode: 'multiply' }}
                             onError={(e) => {
                               e.currentTarget.src = 'https://cdn.ep-portal.net/products/attr_5/1758185452375-2j5v1u.webp'
                             }}
@@ -476,7 +686,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                             {product.title}
                           </h3>
                           <p className="text-xs text-red-600 font-bold line-clamp-1 mt-0.5">
-                            {product.subtitle.replace(/^Empilhadeira Elétrica EP /i, 'Empilhadeira Elétrica ').replace(/^EP Equipment /i, '')}
+                            {product.subtitle.replace(/^Empilhadeira Elétrica EP /i, 'Empilhadeira Elétrica ').replace(/^Paleteira Elétrica EP /i, 'Paleteira Elétrica ').replace(/^Empilhadeira Patolada EP /i, 'Empilhadeira Patolada ').replace(/^EP Equipment /i, '')}
                           </p>
                         </div>
 
@@ -517,47 +727,164 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                   ))}
                 </div>
 
-                {/* Pagination Controls */}
+                {/* Pagination Section - Redesigned with Content */}
                 {totalPages > 1 && (
-                  <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
-                    <button
-                      onClick={() => goToPage(currentPage - 1)}
-                      disabled={currentPage === 1}
-                      className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-gray-200 text-xs font-bold text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-white flex items-center justify-center gap-1.5 transition-colors"
-                    >
-                      <ChevronLeft size={16} />
-                      <span>Anterior</span>
-                    </button>
+                  <motion.section
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.15 }}
+                    className="mt-16 relative"
+                  >
+                    {/* Decorative Background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-50/50 via-white to-slate-50 rounded-3xl -z-10" />
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full blur-3xl -z-10" />
+                    
+                    <div className="bg-white/80 backdrop-blur-sm border-2 border-gray-200/70 rounded-3xl p-8 sm:p-10 shadow-2xl">
+                      
+                      {/* Header Section */}
+                      <div className="text-center mb-8 pb-6 border-b-2 border-gray-100">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100 border border-red-200 mb-4">
+                          <Layers size={16} className="text-red-600" />
+                          <span className="text-xs font-extrabold uppercase tracking-wider text-red-700">Navegação do Catálogo</span>
+                        </div>
+                        
+                        <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3 leading-tight">
+                          Explore Mais <span className="text-red-600">Equipamentos</span>
+                        </h3>
+                        
+                        <p className="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                          Navegue pelo catálogo completo da <strong className="text-gray-900">EP Equipment</strong> com mais de <strong className="text-red-600">{initialProducts.length} modelos</strong> de empilhadeiras elétricas, paleteiras, stackers e retráteis. Use os filtros ao lado para encontrar o equipamento ideal para sua operação.
+                        </p>
 
-                    <div className="flex items-center gap-1.5 flex-wrap justify-center">
-                      {getPageNumbers().map((p, idx) => (
-                        typeof p === 'number' ? (
-                          <button
-                            key={idx}
-                            onClick={() => goToPage(p)}
-                            className={`w-9 h-9 rounded-xl text-xs font-bold transition-all ${
-                              currentPage === p
-                                ? 'bg-red-600 text-white shadow-md shadow-red-600/20'
-                                : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
-                            }`}
-                          >
-                            {p}
-                          </button>
-                        ) : (
-                          <span key={idx} className="px-2 text-xs font-bold text-gray-400">...</span>
-                        )
-                      ))}
+                        {/* Current Status */}
+                        <div className="mt-5 flex flex-wrap items-center justify-center gap-3 text-xs">
+                          <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 px-4 py-2 rounded-xl">
+                            <span className="text-gray-500 font-medium">Página Atual:</span>
+                            <span className="text-red-600 font-extrabold text-base">{currentPage}</span>
+                            <span className="text-gray-400">/</span>
+                            <span className="text-gray-900 font-bold">{totalPages}</span>
+                          </div>
+                          <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 px-4 py-2 rounded-xl">
+                            <span className="text-gray-500 font-medium">Visualizando:</span>
+                            <span className="text-gray-900 font-bold">{(currentPage - 1) * ITEMS_PER_PAGE + 1}-{Math.min(currentPage * ITEMS_PER_PAGE, filteredProducts.length)}</span>
+                            <span className="text-gray-500">de {filteredProducts.length}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Pagination Controls */}
+                      <div className="flex flex-col lg:flex-row items-center justify-between gap-6 mb-8">
+                        
+                        {/* Previous Button */}
+                        <motion.button
+                          whileHover={{ scale: currentPage === 1 ? 1 : 1.03 }}
+                          whileTap={{ scale: currentPage === 1 ? 1 : 0.97 }}
+                          onClick={() => goToPage(currentPage - 1)}
+                          disabled={currentPage === 1}
+                          className={`w-full lg:w-auto min-w-[180px] px-6 py-4 rounded-2xl text-sm font-extrabold flex items-center justify-center gap-3 transition-all duration-300 ${
+                            currentPage === 1
+                              ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-2 border-gray-200'
+                              : 'bg-gradient-to-r from-gray-900 to-gray-800 hover:from-red-600 hover:to-red-700 text-white border-2 border-gray-900 hover:border-red-600 shadow-lg shadow-gray-900/20 hover:shadow-red-600/30'
+                          }`}
+                        >
+                          <ChevronLeft size={20} className="flex-shrink-0" />
+                          <div className="text-left">
+                            <div className="text-[10px] opacity-70 uppercase tracking-wider">Página</div>
+                            <div>Anterior</div>
+                          </div>
+                        </motion.button>
+
+                        {/* Page Numbers with Enhanced Design */}
+                        <div className="flex items-center gap-2 flex-wrap justify-center">
+                          {getPageNumbers().map((p, idx) => (
+                            typeof p === 'number' ? (
+                              <motion.button
+                                key={idx}
+                                whileHover={{ scale: currentPage === p ? 1 : 1.15, y: -3 }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={() => goToPage(p)}
+                                className={`relative min-w-[52px] h-[52px] px-4 rounded-2xl text-base font-extrabold transition-all duration-300 ${
+                                  currentPage === p
+                                    ? 'bg-gradient-to-br from-red-600 to-red-700 text-white shadow-xl shadow-red-600/40 scale-110'
+                                    : 'bg-white text-gray-700 hover:bg-gradient-to-br hover:from-red-50 hover:to-red-100 hover:text-red-600 border-2 border-gray-200 hover:border-red-300 shadow-md hover:shadow-lg'
+                                }`}
+                              >
+                                {currentPage === p && (
+                                  <motion.div
+                                    layoutId="activePage"
+                                    className="absolute inset-0 rounded-2xl ring-4 ring-red-600/30 ring-offset-2"
+                                  />
+                                )}
+                                <span className="relative z-10">{p}</span>
+                              </motion.button>
+                            ) : (
+                              <span key={idx} className="px-2 text-lg font-extrabold text-gray-300">
+                                ···
+                              </span>
+                            )
+                          ))}
+                        </div>
+
+                        {/* Next Button */}
+                        <motion.button
+                          whileHover={{ scale: currentPage === totalPages ? 1 : 1.03 }}
+                          whileTap={{ scale: currentPage === totalPages ? 1 : 0.97 }}
+                          onClick={() => goToPage(currentPage + 1)}
+                          disabled={currentPage === totalPages}
+                          className={`w-full lg:w-auto min-w-[180px] px-6 py-4 rounded-2xl text-sm font-extrabold flex items-center justify-center gap-3 transition-all duration-300 ${
+                            currentPage === totalPages
+                              ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-2 border-gray-200'
+                              : 'bg-gradient-to-r from-gray-900 to-gray-800 hover:from-red-600 hover:to-red-700 text-white border-2 border-gray-900 hover:border-red-600 shadow-lg shadow-gray-900/20 hover:shadow-red-600/30'
+                          }`}
+                        >
+                          <div className="text-right">
+                            <div className="text-[10px] opacity-70 uppercase tracking-wider">Página</div>
+                            <div>Próxima</div>
+                          </div>
+                          <ChevronRight size={20} className="flex-shrink-0" />
+                        </motion.button>
+
+                      </div>
+
+                      {/* Footer Info with CTA */}
+                      <div className="pt-6 border-t-2 border-gray-100">
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          
+                          {/* Info Box */}
+                          <div className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-2xl p-5 border border-gray-200">
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center flex-shrink-0">
+                                <Zap size={20} />
+                              </div>
+                              <div>
+                                <h4 className="font-extrabold text-gray-900 text-sm mb-1">Não encontrou o modelo ideal?</h4>
+                                <p className="text-xs text-gray-600 leading-relaxed">
+                                  Use os filtros ao lado ou entre em contato para uma consultoria personalizada.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Quick Action Box */}
+                          <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-2xl p-5 border border-red-200">
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 rounded-xl bg-white text-red-600 flex items-center justify-center flex-shrink-0 shadow-sm">
+                                <CheckCircle2 size={20} />
+                              </div>
+                              <div>
+                                <h4 className="font-extrabold text-gray-900 text-sm mb-1">Suporte Especializado EP</h4>
+                                <p className="text-xs text-gray-600 leading-relaxed">
+                                  Dealer oficial com estoque, assistência técnica e peças originais.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
                     </div>
-
-                    <button
-                      onClick={() => goToPage(currentPage + 1)}
-                      disabled={currentPage === totalPages}
-                      className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-gray-200 text-xs font-bold text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-white flex items-center justify-center gap-1.5 transition-colors"
-                    >
-                      <span>Próxima</span>
-                      <ChevronRight size={16} />
-                    </button>
-                  </div>
+                  </motion.section>
                 )}
               </>
             )}

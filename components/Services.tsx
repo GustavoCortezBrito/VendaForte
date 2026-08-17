@@ -262,15 +262,15 @@ export default function Services() {
                     <div className="w-16 h-16 rounded-2xl bg-red-600/90 flex items-center justify-center shadow-xl">
                       <YoutubeIcon size={32} className="text-white" />
                     </div>
-                    <p className="text-white font-extrabold text-xl leading-tight">Canal Oficial EP Equipment</p>
-                    <p className="text-gray-300 text-xs max-w-xs leading-relaxed">Veja as demonstrações completas dos robôs autônomos AGV/AMR e toda linha de empilhadeiras elétricas EP Equipment no YouTube.</p>
+                    <p className="text-white font-extrabold text-xl leading-tight">Canais no YouTube</p>
+                    <p className="text-gray-300 text-xs max-w-xs leading-relaxed">Conheça o canal da Venda Forte e veja demonstrações da linha completa EP Equipment</p>
                   </div>
                 </div>
 
                 {/* Botões de Ação */}
                 <div className="p-6 flex flex-col gap-3">
                   <a
-                    href="https://www.youtube.com/@EPEquipment"
+                    href="https://www.youtube.com/@grupovendaforte7665"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Acessar Canal Oficial da EP Equipment no YouTube"
@@ -278,7 +278,18 @@ export default function Services() {
                     className="w-full py-4 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-lg shadow-red-600/20 group"
                   >
                     <YoutubeIcon size={20} className="text-white" />
-                    <span>Acessar Canal EP Equipment</span>
+                    <span>Canal Grupo Venda Forte</span>
+                    <ExternalLink size={14} className="opacity-70 group-hover:opacity-100" />
+                  </a>
+
+                  <a
+                    href="https://www.youtube.com/@EPEquipment"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-4 rounded-2xl bg-gray-800 hover:bg-gray-900 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-lg group"
+                  >
+                    <YoutubeIcon size={20} className="text-white" />
+                    <span>Canal EP Equipment (Fabricante)</span>
                     <ExternalLink size={14} className="opacity-70 group-hover:opacity-100" />
                   </a>
 
@@ -289,7 +300,7 @@ export default function Services() {
                     title="Solicitar Cotação de Equipamentos Autônomos"
                     className="w-full py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors border border-white/10"
                   >
-                    <span>Solicitar Cotação de Autônomas</span>
+                    <span>Solicitar Cotação</span>
                     <ArrowRight size={14} />
                   </a>
                 </div>

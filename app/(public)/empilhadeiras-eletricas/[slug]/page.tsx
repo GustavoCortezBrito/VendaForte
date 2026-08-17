@@ -44,7 +44,9 @@ export default async function ForkliftDetailPage({ params }: Props) {
   }
 
   const relatedProducts = allProducts
-    .filter(p => p.slug !== slug)
+    .filter(p => p.slug !== slug && p.categorySlug === product.categorySlug)
+    .slice(0, 3)
+    .concat(allProducts.filter(p => p.slug !== slug && p.categorySlug !== product.categorySlug).slice(0, 3))
     .slice(0, 3)
 
   return <ForkliftDetailClient product={product} relatedProducts={relatedProducts} />

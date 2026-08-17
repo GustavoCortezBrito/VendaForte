@@ -22,6 +22,44 @@ interface HighlightItem {
 
 const HIGHLIGHT_ITEMS: HighlightItem[] = [
   {
+    id: 'f4',
+    slug: 'f4',
+    title: 'Paleteira Elétrica F4',
+    subtitle: 'Paleteira Compacta Li-Ion',
+    description: 'A paleteira elétrica mais vendida da EP Equipment. Compacta, ergonômica e ideal para movimentação ágil em armazéns e centros de distribuição.',
+    capacity: '1.500 kg',
+    liftingHeight: '200 mm',
+    batteryVoltage: '24V Li-Ion',
+    chargingTime: '2 a 3 horas',
+    turningRadius: '1.370 mm',
+    image: 'https://cdn.ep-portal.net/products/attr_5/1757324457309-ket0ve.webp',
+    highlights: [
+      'Bateria Li-Ion integrada com recarga rápida de oportunidade',
+      'Design ultra-compacto para operação em espaços reduzidos',
+      'Sem manutenção de água ou ácido — 100% limpa e ecológica',
+      'Controle ergonômico com comando tiller de alta precisão'
+    ]
+  },
+  {
+    id: 'ds3',
+    slug: 'ds3',
+    title: 'Empilhadeira Patolada DS3',
+    subtitle: 'Stacker Elétrico Li-Ion',
+    description: 'Stacker elétrico compacto para estocagem vertical em corredores estreitos. Ideal para armazéns que necessitam de elevação com investimento acessível.',
+    capacity: '1.200 kg',
+    liftingHeight: '3.300 mm (3,3m)',
+    batteryVoltage: '24V Li-Ion',
+    chargingTime: '3 a 4 horas',
+    turningRadius: '1.380 mm',
+    image: 'https://cdn.ep-portal.net/products/attr_5/1760708717052-oi6361.webp',
+    highlights: [
+      'Elevação até 3,3 metros para estocagem vertical eficiente',
+      'Bateria Li-Ion de longa duração com carregador incluso',
+      'Patas ajustáveis para diferentes tamanhos de paletes',
+      'Investimento acessível com baixo custo de manutenção'
+    ]
+  },
+  {
     id: 'tvl151',
     slug: 'tvl151',
     title: 'Empilhadeira Elétrica TVL151',
@@ -58,30 +96,11 @@ const HIGHLIGHT_ITEMS: HighlightItem[] = [
       'Aceleração inteligente e frenagem regenerativa',
       'Estrutura monobloco reforçada para rotinas intensas'
     ]
-  },
-  {
-    id: 'tvl201',
-    slug: 'tvl201',
-    title: 'Empilhadeira Elétrica TVL201',
-    subtitle: 'Contrabalançada 3 Rodas Li-Ion 80V',
-    description: 'O menor raio de giro da categoria para 2.000 kg com máxima estabilidade e potência para estocagem pesada.',
-    capacity: '2.000 kg',
-    liftingHeight: '6.000 mm (6,0m)',
-    batteryVoltage: '80V Li-Ion',
-    chargingTime: '2 horas',
-    turningRadius: '1.585 mm',
-    image: 'https://cdn.ep-portal.net/products/attr_5/1762338605995-oge79k.webp',
-    highlights: [
-      'Capacidade nominal de 2.000 kg com manobrabilidade superior',
-      'Sistema de gerenciamento de bateria BMS inteligente integrado',
-      'Redução automática de velocidade em curvas para segurança',
-      'Entrega técnica inclusa com treinamento operacional'
-    ]
   }
 ]
 
 export default function MonthlyHighlight() {
-  const [selectedId, setSelectedId] = useState<string>('tvl151')
+  const [selectedId, setSelectedId] = useState<string>('f4')
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" })
   const phoneNumber = '+5549988395635'
@@ -95,7 +114,7 @@ export default function MonthlyHighlight() {
   }
 
   return (
-    <section ref={sectionRef} className="py-16 sm:py-24 bg-gradient-to-b from-white via-slate-50/50 to-white relative font-sans overflow-hidden">
+    <section ref={sectionRef} className="py-16 sm:py-24 bg-white relative font-sans overflow-hidden">
       
       {/* Glow ambiental fluido de fundo */}
       <motion.div
@@ -109,7 +128,7 @@ export default function MonthlyHighlight() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Cabeçalho Limpo com Animação de Scroll */}
+        {/* Cabeçalho */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -124,10 +143,10 @@ export default function MonthlyHighlight() {
             <span>Destaque do Mês</span>
           </motion.span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight tracking-tight">
-            Linha Elétrica <span className="text-red-600">TVL 80V</span>
+            Equipamentos em <span className="text-red-600">Destaque</span>
           </h2>
           <p className="text-sm sm:text-base text-gray-600 mt-2">
-            Modelos de alta produtividade com Bateria Íon-Lítio 80V e pronta entrega.
+            Modelos mais procurados com Bateria Íon-Lítio e pronta entrega.
           </p>
         </motion.div>
 
@@ -182,7 +201,7 @@ export default function MonthlyHighlight() {
                 <motion.div
                   whileHover={{ scale: 1.05, rotate: 1 }}
                   transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                  className="relative w-full aspect-[4/3] bg-slate-50/90 rounded-2xl p-4 flex items-center justify-center border border-gray-100 overflow-hidden cursor-pointer group"
+                  className="relative w-full aspect-[4/3] flex items-center justify-center cursor-pointer group"
                 >
                   <motion.img
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -190,7 +209,7 @@ export default function MonthlyHighlight() {
                     transition={{ duration: 0.3 }}
                     src={currentItem.image}
                     alt={currentItem.title}
-                    className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-xl transition-all"
+                    className="w-full h-full object-contain filter drop-shadow-lg group-hover:scale-105 transition-all duration-300"
                   />
                 </motion.div>
 

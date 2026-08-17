@@ -1,171 +1,210 @@
 'use client'
 
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, ChevronRight, Sparkles } from 'lucide-react'
+import { ArrowRight, ChevronRight, Layers, Package, ArrowDownUp, Truck, BoxSelect } from 'lucide-react'
 import forkliftsData from '@/lib/data/electric-forklifts.json'
 
+type ForkliftProduct = (typeof forkliftsData)[number]
+
+const HIGHLIGHT_SLUGS = new Set(['f4', 'ds3', 'tvl151', 'tvl181'])
+
+const CATALOG_PREVIEW_SLUGS = ['f4-201', 'esl122', 'efl302b3', 'cqd20lb', 'jx1']
+
+const CATALOG_CATEGORIES = [
+  {
+    label: 'Paleteiras',
+    filter: 'Paleteiras Elétricas',
+    icon: Package,
+  },
+  {
+    label: 'Stackers',
+    filter: 'Empilhadeiras Patoladas (Stackers)',
+    icon: ArrowDownUp,
+  },
+  {
+    label: 'Contrabalançadas',
+    filter: 'Empilhadeiras Contrabalançadas',
+    icon: Truck,
+  },
+  {
+    label: 'Retráteis',
+    filter: 'Empilhadeiras Retráteis (Reach Trucks)',
+    icon: Layers,
+  },
+  {
+    label: 'Order Pickers',
+    filter: 'Selecionadoras de Pedidos & Rebocadores',
+    icon: BoxSelect,
+  },
+] as const
+
+function getCategoryLabel(category?: string) {
+  if (!category) return 'Equipamento'
+  if (category.includes('Paleteira')) return 'Paleteira'
+  if (category.includes('Patolada') || category.includes('Stacker')) return 'Stacker'
+  if (category.includes('Contrabalançada')) return 'Contrabalançada'
+  if (category.includes('Retrátil') || category.includes('Reach')) return 'Retrátil'
+  if (category.includes('Selecionadora') || category.includes('Rebocador')) return 'Order Picker'
+  return category.split(' ')[0]
+}
+
 export default function EPForkliftsSection() {
-  const featured = forkliftsData.slice(0, 4)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-80px" })
 
-  return (
-    <section ref={ref} className="py-24 bg-gradient-to-br from-slate-50 via-white to-gray-50 text-gray-900 relative overflow-hidden border-t border-gray-200/80 font-sans" id="empilhadeiras-eletricas">
-      
-      {/* Background Decorative Element */}
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.04, 0.08, 0.04] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        className="hidden md:block absolute top-10 right-0 w-96 h-96 bg-red-500/10 rounded-full blur-3xl pointer-events-none"
-      />
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    forkliftsData.forEach((product) => {
+      if (product.category) {
+        counts[product.category] = (counts[product.category] || 0) + 1
+      }
+    })
+    return counts
+  }, [])
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 font-sans">
-        
-        {/* Section Header */}
+  const previewProducts = useMemo(() => {
+    const selected = CATALOG_PREVIEW_SLUGS
+      .map((slug) => forkliftsData.find((product) => product.slug === slug))
+      .filter(Boolean) as ForkliftProduct[]
+
+    if (selected.length >= 4) return selected
+
+    const fallback = forkliftsData.filter((product) => !HIGHLIGHT_SLUGS.has(product.slug))
+    return [...selected, ...fallback].slice(0, 5)
+  }, [])
+
+  return (
+    <section
+      ref={ref}
+      className="py-20 md:py-28 bg-gradient-to-b from-slate-50/80 via-white to-white relative overflow-hidden font-sans"
+      id="empilhadeiras-eletricas"
+    >
+      <div className="hidden md:block absolute top-0 right-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        {/* Header centralizado — padrão das demais sections */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16"
+          className="text-center mb-12 sm:mb-14 max-w-3xl mx-auto"
         >
-          <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-1.5 text-red-600 font-bold text-xs sm:text-sm uppercase tracking-wider mb-3 sm:mb-4 px-3 sm:px-4 py-1.5 sm:py-2 bg-red-50 rounded-full border border-red-100 shadow-sm">
-              <Sparkles size={14} className="text-red-500 animate-spin" style={{ animationDuration: '6s' }} />
-              Linha Completa de Equipamentos
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mt-2 mb-4 leading-tight tracking-tight">
-              Empilhadeiras <span className="text-red-600">Elétricas</span>
-            </h2>
-            <p className="text-gray-600 text-base sm:text-lg font-normal leading-relaxed">
-              Tecnologia de ponta em baterias de Lítio (80V/48V), motores PMSM duplos e aceleração inteligente para máxima produtividade com custo operacional mínimo.
-            </p>
-          </div>
-
-          <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-            <Link
-              href="/empilhadeiras-eletricas"
-              aria-label={`Ver Catálogo Completo com todos os ${forkliftsData.length} modelos de empilhadeiras elétricas`}
-              title="Catálogo Completo de Empilhadeiras Elétricas"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-lg shadow-red-600/25 transition-all uppercase tracking-wider group"
-            >
-              <span>Ver Catálogo Completo ({forkliftsData.length} Modelos)</span>
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
+          <span className="inline-flex items-center gap-2 text-red-600 font-bold text-xs sm:text-sm uppercase tracking-wider mb-3 px-4 py-1.5 bg-red-50 rounded-full border border-red-100 shadow-sm">
+            <Layers size={16} className="text-red-500" />
+            Catálogo EP Equipment — {forkliftsData.length} Equipamentos
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight tracking-tight mt-2 mb-4">
+            Catálogo Completo de <span className="text-red-600">Equipamentos</span>
+          </h2>
+          <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+            Navegue por categorias, compare capacidades e elevação, e encontre o equipamento ideal para cada operação logística.
+          </p>
         </motion.div>
 
-        {/* Categories / Highlights Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {[
-            {
-              code: '80V',
-              title: 'Baterias Íon-Lítio 80V',
-              desc: 'Recarga rápida em 1 hora, oportunidade de carga durante intervalos e vida útil de mais de 3.000 ciclos de operação.'
-            },
-            {
-              code: '3R',
-              title: 'Linha 3 Rodas Compacta',
-              desc: 'Raio de giro ultra reduzido a partir de 1535 mm para máxima manobrabilidade dentro de contêineres e corredores estreitos.'
-            },
-            {
-              code: '4R',
-              title: 'Linha 4 Rodas Robustez',
-              desc: 'Estabilidade máxima em pisos irregulares e pátios externos com capacidade de carga de até 2.000 kg (2.0T) e elevação de 6m.'
-            }
-          ].map((item, idx) => (
-            <motion.div
-              key={item.code}
-              initial={{ opacity: 0, y: 25 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.1 * idx, duration: 0.5 }}
-              whileHover={{ y: -6, scale: 1.02 }}
-              className="p-6 rounded-3xl bg-white border border-gray-200/90 shadow-md hover:shadow-xl transition-all group"
+        {/* Navegação por categorias */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-10 sm:mb-12"
+        >
+          {CATALOG_CATEGORIES.map(({ label, filter, icon: Icon }, idx) => (
+            <Link
+              key={filter}
+              href="/empilhadeiras-eletricas"
+              className="group rounded-2xl border border-gray-200 bg-white p-4 sm:p-5 text-center shadow-sm hover:border-red-400 hover:shadow-md transition-all"
             >
-              <div className="w-12 h-12 rounded-2xl bg-red-50 border border-red-100 text-red-600 flex items-center justify-center font-extrabold text-base mb-4 shadow-sm group-hover:bg-red-600 group-hover:text-white transition-all">
-                {item.code}
+              <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-red-50 text-red-600 group-hover:bg-red-600 group-hover:text-white transition-colors">
+                <Icon size={20} />
               </div>
-              <p className="text-lg font-extrabold text-gray-900 mb-2">{item.title}</p>
-              <p className="text-xs text-gray-600 leading-relaxed font-normal">
-                {item.desc}
+              <p className="text-sm font-extrabold text-gray-900">{label}</p>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mt-1">
+                {categoryCounts[filter] || 0} modelos
               </p>
-            </motion.div>
+            </Link>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Featured Products Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featured.map((p, idx) => (
+        {/* Amostra do catálogo — produtos diferentes do destaque mensal */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+          {previewProducts.map((p, idx) => (
             <motion.div
               key={p.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.15 + 0.08 * idx, duration: 0.5 }}
-              whileHover={{ y: -8, scale: 1.02 }}
-              className="group bg-white border border-gray-200/90 hover:border-red-500/50 rounded-3xl p-5 flex flex-col justify-between shadow-md hover:shadow-2xl transition-all duration-300"
+              transition={{ delay: 0.08 * idx, duration: 0.45 }}
+              whileHover={{ y: -6 }}
+              className="group bg-white border border-gray-200 hover:border-red-400/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
             >
-              <div>
-                <div className="relative aspect-[4/3] bg-white rounded-2xl p-3 flex items-center justify-center mb-4 border border-gray-100 overflow-hidden shadow-inner">
-                  <span className="absolute top-2 left-2 z-10 px-2.5 py-0.5 rounded bg-red-600 text-white font-bold text-[10px] uppercase shadow-sm">
-                    {p.batteryVoltage} Li-Ion
-                  </span>
-                  <img
-                    src={p.mainImage}
-                    alt={p.title}
-                    className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500"
-                    onError={(e) => {
-                      e.currentTarget.src = 'https://cdn.ep-portal.net/products/attr_5/1758185452375-2j5v1u.webp'
-                    }}
-                  />
-                </div>
-
-                <p className="font-extrabold text-gray-900 text-xl group-hover:text-red-600 transition-colors">
-                  {p.title}
-                </p>
-                <p className="text-xs text-red-600 font-bold line-clamp-1 mt-0.5 mb-3">
-                  {p.subtitle.replace(/^Empilhadeira Elétrica EP /i, 'Empilhadeira Elétrica ')}
-                </p>
-
-                <div className="grid grid-cols-2 gap-2 p-2.5 rounded-xl bg-gray-50 border border-gray-200 text-xs text-gray-700 mb-4">
-                  <div>
-                    <span className="block text-[10px] uppercase font-bold text-gray-400">Capacidade</span>
-                    <span className="font-extrabold text-gray-900">{p.capacity}</span>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] uppercase font-bold text-gray-400">Elevação</span>
-                    <span className="font-extrabold text-gray-900">{p.liftingHeight}</span>
-                  </div>
-                </div>
+              <div className="relative aspect-[4/3] bg-white flex items-center justify-center p-4 overflow-hidden" style={{ isolation: 'isolate' }}>
+                <span className="absolute top-3 left-3 z-10 px-2 py-0.5 rounded-md bg-gray-900 text-white font-bold text-[10px] uppercase">
+                  {getCategoryLabel(p.category)}
+                </span>
+                <span className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-md bg-red-600 text-white font-bold text-[10px] uppercase">
+                  {p.batteryVoltage} Li-Ion
+                </span>
+                <img
+                  src={p.mainImage}
+                  alt={p.title}
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                  style={{ mixBlendMode: 'multiply' }}
+                  onError={(e) => {
+                    e.currentTarget.src = 'https://cdn.ep-portal.net/products/attr_5/1758185452375-2j5v1u.webp'
+                  }}
+                />
               </div>
 
-              <Link
-                href={`/empilhadeiras-eletricas/${p.slug}`}
-                aria-label={`Ver especificações completas e ficha técnica da ${p.title}`}
-                title={`Ficha Técnica - ${p.title}`}
-                className="w-full py-3 rounded-xl bg-gray-900 hover:bg-red-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-sm uppercase tracking-wider group/btn"
-              >
-                <span>Ficha Técnica {p.title.replace(/^Empilhadeira Elétrica /i, '')}</span>
-                <ChevronRight size={14} className="group-hover/btn:translate-x-0.5 transition-transform" />
-              </Link>
+              <div className="p-4 border-t border-gray-100">
+                <h3 className="font-extrabold text-gray-900 text-base group-hover:text-red-600 transition-colors">
+                  {p.title}
+                </h3>
+                <p className="text-xs text-gray-400 mt-0.5 line-clamp-2 min-h-[2rem]">{p.subtitle}</p>
+
+                <div className="grid grid-cols-2 gap-3 mt-3 pt-3 border-t border-gray-100">
+                  <div>
+                    <span className="block text-[10px] text-gray-400 uppercase font-bold">Capacidade</span>
+                    <span className="text-sm font-extrabold text-gray-900">{p.capacity}</span>
+                  </div>
+                  <div>
+                    <span className="block text-[10px] text-gray-400 uppercase font-bold">Elevação</span>
+                    <span className="text-sm font-extrabold text-gray-900">{p.liftingHeight}</span>
+                  </div>
+                </div>
+
+                <Link
+                  href={`/empilhadeiras-eletricas/${p.slug}`}
+                  aria-label={`Ver especificações completas e ficha técnica da ${p.title}`}
+                  title={`Ficha Técnica - ${p.title}`}
+                  className="mt-3 flex items-center justify-center gap-1 text-xs font-bold text-gray-700 hover:text-red-600 transition-colors"
+                >
+                  Ver Ficha Técnica
+                  <ChevronRight size={13} />
+                </Link>
+              </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Bottom Banner Link */}
+        {/* CTA principal para o catálogo */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          className="mt-12 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="mt-12 sm:mt-14 text-center"
         >
+          <p className="text-sm text-gray-500 mb-4">
+            Amostra de {previewProducts.length} modelos de diferentes categorias — explore os {forkliftsData.length} equipamentos do catálogo
+          </p>
           <Link
             href="/empilhadeiras-eletricas"
-            aria-label="Comparar todos os modelos de empilhadeiras elétricas no catálogo"
-            className="inline-flex items-center gap-2 text-sm sm:text-base text-gray-600 hover:text-red-600 font-bold transition-colors group"
+            aria-label="Explorar catálogo completo de empilhadeiras elétricas EP Equipment"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm sm:text-base shadow-lg shadow-red-600/25 transition-all group"
           >
-            <span>Quer comparar todos os {forkliftsData.length} modelos de Empilhadeiras Elétricas?</span>
-            <span className="underline text-red-600 font-extrabold group-hover:translate-x-1 transition-transform inline-block">Acesse o Catálogo Completo →</span>
+            <span>Explorar Catálogo Completo</span>
+            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
 

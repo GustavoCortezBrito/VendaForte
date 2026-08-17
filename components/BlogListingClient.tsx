@@ -154,7 +154,7 @@ export default function BlogListingClient() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Header com Animações */}
-      <div className="relative bg-gradient-to-br from-red-600 via-red-700 to-red-800 text-white py-24 overflow-hidden z-0">
+      <div className="relative bg-gradient-to-br from-red-600 via-red-700 to-red-800 text-white py-32 overflow-hidden z-0">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -179,6 +179,42 @@ export default function BlogListingClient() {
             <p className="text-xl md:text-2xl text-red-50 max-w-3xl mx-auto font-medium leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
               Dicas, novidades e conteúdo especializado sobre empilhadeiras e equipamentos industriais
             </p>
+
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto pt-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all">
+                <div className="text-4xl font-black mb-2">{posts.length}</div>
+                <div className="text-red-100 font-semibold text-sm">Artigos Publicados</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all">
+                <div className="text-4xl font-black mb-2">{categories.length}</div>
+                <div className="text-red-100 font-semibold text-sm">Categorias</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all">
+                <div className="text-4xl font-black mb-2">{allTags.length}</div>
+                <div className="text-red-100 font-semibold text-sm">Tags Diferentes</div>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-6">
+              <div className="flex items-center gap-2 text-sm font-semibold text-red-100">
+                <span>📚 Tópicos Populares:</span>
+              </div>
+              {allTags.slice(0, 5).map((tag, index) => (
+                <button
+                  key={tag}
+                  onClick={() => {
+                    toggleTag(tag)
+                    window.scrollTo({ top: 400, behavior: 'smooth' })
+                  }}
+                  className="bg-white/20 hover:bg-white/30 backdrop-blur-md px-4 py-2 rounded-full text-sm font-bold border border-white/30 transition-all hover:scale-105"
+                  style={{ animationDelay: `${0.5 + index * 0.1}s` }}
+                >
+                  #{tag}
+                </button>
+              ))}
+            </div>
 
             <div className="flex items-center justify-center gap-3 pt-4">
               <div className="h-0.5 w-20 bg-white/30"></div>
@@ -396,38 +432,46 @@ export default function BlogListingClient() {
               ))}
             </div>
 
-            {/* Paginação */}
-            {totalPages > 1 && (
-              <div className="mt-12 flex justify-center items-center gap-2">
-                <button
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
-                  className="p-3 rounded-xl border border-gray-200 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                {[...Array(totalPages)].map((_, i) => (
-                  <button
-                    key={i + 1}
-                    onClick={() => setCurrentPage(i + 1)}
-                    className={`w-10 h-10 rounded-xl font-bold transition-all ${
-                      currentPage === i + 1
-                        ? 'bg-red-600 text-white shadow-md'
-                        : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
-                    }`}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
-                <button
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                  disabled={currentPage === totalPages}
-                  className="p-3 rounded-xl border border-gray-200 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
-                >
-                  <ChevronRight size={20} />
-                </button>
+            {/* Paginação e Info */}
+            <div className="mt-12 space-y-4">
+              {/* Info de Posts */}
+              <div className="text-center text-sm text-gray-600 font-medium">
+                Mostrando <span className="font-bold text-red-600">{indexOfFirstPost + 1}</span> - <span className="font-bold text-red-600">{Math.min(indexOfLastPost, filteredPosts.length)}</span> de <span className="font-bold text-red-600">{filteredPosts.length}</span> artigos
               </div>
-            )}
+
+              {/* Botões de Paginação */}
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-2">
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="p-3 rounded-xl border-2 border-gray-200 hover:bg-gray-50 hover:border-red-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  {[...Array(totalPages)].map((_, i) => (
+                    <button
+                      key={i + 1}
+                      onClick={() => setCurrentPage(i + 1)}
+                      className={`min-w-[40px] h-10 px-3 rounded-xl font-bold transition-all ${
+                        currentPage === i + 1
+                          ? 'bg-red-600 text-white shadow-md scale-110'
+                          : 'bg-white text-gray-600 border-2 border-gray-200 hover:bg-gray-50 hover:border-red-600'
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className="p-3 rounded-xl border-2 border-gray-200 hover:bg-gray-50 hover:border-red-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+              )}
+            </div>
           </>
         )}
       </div>
