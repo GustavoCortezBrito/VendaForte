@@ -224,3 +224,35 @@ a, button {
 .animate-scale-in {
   animation: scale-in 0.6s ease-out;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}
+
+/* Proportional micro-scrollbar for category chips */
+.scrollbar-proportional::-webkit-scrollbar {
+  height: 4px;
+}
+.scrollbar-proportional::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 9999px;
+  margin: 0 4px;
+}
+.scrollbar-proportional::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+.scrollbar-proportional::-webkit-scrollbar-thumb:hover {
+  background: #dc2626;
+}
+.scrollbar-proportional {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}

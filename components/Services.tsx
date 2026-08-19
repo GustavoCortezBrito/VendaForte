@@ -28,7 +28,7 @@ export default function Services() {
       features: ['Baterias Lítio EP 80V/48V', 'Capacidade de 1.5t a 3.5t', 'Recarga rápida de oportunidade', 'Alta durabilidade & 5 anos de garantia'],
       badge: 'Mais Vendido EP',
       ctaText: 'Ver Linha Elétrica',
-      ctaHref: '/empilhadeiras-eletricas',
+      ctaHref: '/produtos',
       isHighlighted: true
     },
     {

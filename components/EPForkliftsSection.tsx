@@ -1,16 +1,17 @@
 'use client'
 
-import { useMemo, useRef } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, ChevronRight, Layers, Package, ArrowDownUp, Truck, BoxSelect } from 'lucide-react'
+import { ArrowRight, ChevronRight, Layers, Package, ArrowDownUp, Truck, BoxSelect, ZoomIn, MoreHorizontal } from 'lucide-react'
+import ImageLightboxModal from '@/components/ImageLightboxModal'
 import forkliftsData from '@/lib/data/electric-forklifts.json'
 
 type ForkliftProduct = (typeof forkliftsData)[number]
 
-const HIGHLIGHT_SLUGS = new Set(['f4', 'ds3', 'tvl151', 'tvl181'])
+const HIGHLIGHT_SLUGS = new Set(['efl302b3', 'ds3', 'f4'])
 
-const CATALOG_PREVIEW_SLUGS = ['f4-201', 'esl122', 'efl302b3', 'cqd20lb', 'jx1']
+const CATALOG_PREVIEW_SLUGS = ['f4-201', 'esl122', 'tvl151', 'cqd20lb', 'jx1']
 
 const CATALOG_CATEGORIES = [
   {
@@ -38,19 +39,26 @@ const CATALOG_CATEGORIES = [
     filter: 'Selecionadoras de Pedidos & Rebocadores',
     icon: BoxSelect,
   },
+  {
+    label: 'Outros',
+    filter: 'Equipamentos Especiais & VNA',
+    icon: MoreHorizontal,
+  },
 ] as const
 
 function getCategoryLabel(category?: string) {
-  if (!category) return 'Equipamento'
+  if (!category) return 'Outros'
   if (category.includes('Paleteira')) return 'Paleteira'
   if (category.includes('Patolada') || category.includes('Stacker')) return 'Stacker'
   if (category.includes('Contrabalançada')) return 'Contrabalançada'
   if (category.includes('Retrátil') || category.includes('Reach')) return 'Retrátil'
   if (category.includes('Selecionadora') || category.includes('Rebocador')) return 'Order Picker'
+  if (category.includes('Especial') || category.includes('VNA') || category.includes('Outros')) return 'Outros'
   return category.split(' ')[0]
 }
 
 export default function EPForkliftsSection() {
+  const [activeLightboxProduct, setActiveLightboxProduct] = useState<ForkliftProduct | null>(null)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-80px" })
 
@@ -79,7 +87,7 @@ export default function EPForkliftsSection() {
     <section
       ref={ref}
       className="py-20 md:py-28 bg-gradient-to-b from-slate-50/80 via-white to-white relative overflow-hidden font-sans"
-      id="empilhadeiras-eletricas"
+      id="produtos"
     >
       <div className="hidden md:block absolute top-0 right-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -97,7 +105,7 @@ export default function EPForkliftsSection() {
             Catálogo EP Equipment — {forkliftsData.length} Equipamentos
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight tracking-tight mt-2 mb-4">
-            Catálogo Completo de <span className="text-red-600">Equipamentos</span>
+            Catálogo Completo de <span className="text-red-600">Produtos</span>
           </h2>
           <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
             Navegue por categorias, compare capacidades e elevação, e encontre o equipamento ideal para cada operação logística.
@@ -109,12 +117,12 @@ export default function EPForkliftsSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-10 sm:mb-12"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-10 sm:mb-12"
         >
           {CATALOG_CATEGORIES.map(({ label, filter, icon: Icon }, idx) => (
             <Link
               key={filter}
-              href="/empilhadeiras-eletricas"
+              href="/produtos"
               className="group rounded-2xl border border-gray-200 bg-white p-4 sm:p-5 text-center shadow-sm hover:border-red-400 hover:shadow-md transition-all"
             >
               <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-red-50 text-red-600 group-hover:bg-red-600 group-hover:text-white transition-colors">
@@ -139,7 +147,12 @@ export default function EPForkliftsSection() {
               whileHover={{ y: -6 }}
               className="group bg-white border border-gray-200 hover:border-red-400/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
             >
-              <div className="relative aspect-[4/3] bg-white flex items-center justify-center p-4 overflow-hidden" style={{ isolation: 'isolate' }}>
+              <div
+                onClick={() => setActiveLightboxProduct(p)}
+                className="relative aspect-[4/3] bg-white flex items-center justify-center p-4 overflow-hidden cursor-zoom-in group/img"
+                style={{ isolation: 'isolate' }}
+                title={`Clique para ampliar a imagem da ${p.title}`}
+              >
                 <span className="absolute top-3 left-3 z-10 px-2 py-0.5 rounded-md bg-gray-900 text-white font-bold text-[10px] uppercase">
                   {getCategoryLabel(p.category)}
                 </span>
@@ -155,6 +168,14 @@ export default function EPForkliftsSection() {
                     e.currentTarget.src = 'https://cdn.ep-portal.net/products/attr_5/1758185452375-2j5v1u.webp'
                   }}
                 />
+
+                {/* Badge hover zoom */}
+                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                  <div className="bg-gray-900/80 text-white text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-sm flex items-center gap-1 shadow-md">
+                    <ZoomIn size={12} className="text-red-400" />
+                    <span>Ampliar</span>
+                  </div>
+                </div>
               </div>
 
               <div className="p-4 border-t border-gray-100">
@@ -175,7 +196,7 @@ export default function EPForkliftsSection() {
                 </div>
 
                 <Link
-                  href={`/empilhadeiras-eletricas/${p.slug}`}
+                  href={`/produtos/${p.slug}`}
                   aria-label={`Ver especificações completas e ficha técnica da ${p.title}`}
                   title={`Ficha Técnica - ${p.title}`}
                   className="mt-3 flex items-center justify-center gap-1 text-xs font-bold text-gray-700 hover:text-red-600 transition-colors"
@@ -199,8 +220,8 @@ export default function EPForkliftsSection() {
             Amostra de {previewProducts.length} modelos de diferentes categorias — explore os {forkliftsData.length} equipamentos do catálogo
           </p>
           <Link
-            href="/empilhadeiras-eletricas"
-            aria-label="Explorar catálogo completo de empilhadeiras elétricas EP Equipment"
+            href="/produtos"
+            aria-label="Explorar catálogo completo de produtos EP Equipment"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm sm:text-base shadow-lg shadow-red-600/25 transition-all group"
           >
             <span>Explorar Catálogo Completo</span>
@@ -209,6 +230,21 @@ export default function EPForkliftsSection() {
         </motion.div>
 
       </div>
+
+      {/* Lightbox Modal */}
+      {activeLightboxProduct && (
+        <ImageLightboxModal
+          isOpen={Boolean(activeLightboxProduct)}
+          onClose={() => setActiveLightboxProduct(null)}
+          imageSrc={activeLightboxProduct.mainImage}
+          title={activeLightboxProduct.title}
+          subtitle={activeLightboxProduct.subtitle}
+          capacity={activeLightboxProduct.capacity}
+          liftingHeight={activeLightboxProduct.liftingHeight}
+          batteryVoltage={activeLightboxProduct.batteryVoltage}
+          slug={activeLightboxProduct.slug}
+        />
+      )}
     </section>
   )
 }

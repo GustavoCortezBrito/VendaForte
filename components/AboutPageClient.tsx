@@ -148,7 +148,7 @@ export default function AboutPageClient() {
                 <ArrowRight className="ml-2" size={18} />
               </a>
               <Link
-                href="/empilhadeiras-eletricas"
+                href="/produtos"
                 className="inline-flex items-center justify-center border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-red-600 transition-all text-sm sm:text-base lg:text-lg"
               >
                 Ver Catálogo

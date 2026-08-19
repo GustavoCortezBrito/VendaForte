@@ -72,7 +72,7 @@ export default function Footer() {
   ]
 
   const usefulLinks = [
-    { label: 'Catálogo de Empilhadeiras Elétricas', href: '/empilhadeiras-eletricas', ariaLabel: 'Acessar catálogo completo de empilhadeiras elétricas' },
+    { label: 'Catálogo de Produtos EP', href: '/produtos', ariaLabel: 'Acessar catálogo completo de produtos EP Equipment' },
     { label: 'Blog e Notícias Industriais', href: '/blog', ariaLabel: 'Ler artigos e novidades no blog do Grupo Venda Forte' },
     { label: 'Diretrizes de Privacidade', href: '/privacidade', ariaLabel: 'Consultar política de privacidade do site' },
     { label: 'Termos e Condições', href: '/termos', ariaLabel: 'Consultar os termos de uso do site' },

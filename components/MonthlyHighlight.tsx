@@ -3,7 +3,8 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import Link from 'next/link'
-import { CheckCircle2, ArrowRight, ChevronRight, ShieldCheck, Truck, Percent, Sparkles } from 'lucide-react'
+import { CheckCircle2, ArrowRight, ChevronRight, ShieldCheck, Truck, Percent, Sparkles, ZoomIn } from 'lucide-react'
+import ImageLightboxModal from '@/components/ImageLightboxModal'
 
 interface HighlightItem {
   id: string
@@ -22,22 +23,22 @@ interface HighlightItem {
 
 const HIGHLIGHT_ITEMS: HighlightItem[] = [
   {
-    id: 'f4',
-    slug: 'f4',
-    title: 'Paleteira Elétrica F4',
-    subtitle: 'Paleteira Compacta Li-Ion',
-    description: 'A paleteira elétrica mais vendida da EP Equipment. Compacta, ergonômica e ideal para movimentação ágil em armazéns e centros de distribuição.',
-    capacity: '1.500 kg',
-    liftingHeight: '200 mm',
-    batteryVoltage: '24V Li-Ion',
-    chargingTime: '2 a 3 horas',
-    turningRadius: '1.370 mm',
-    image: 'https://cdn.ep-portal.net/products/attr_5/1757324457309-ket0ve.webp',
+    id: 'efl302b3',
+    slug: 'efl302b3',
+    title: 'Empilhadeira Elétrica EFL302B3',
+    subtitle: 'Contrabalançada 4 Rodas Li-Ion 80V',
+    description: 'A empilhadeira contrabalançada EP EFL302B3 é projetada para entregar alta performance, máxima ergonomia e eficiência operacional com tecnologia de bateria Íon-Lítio 80V.',
+    capacity: '3.000 kg',
+    liftingHeight: '6.000 mm (6,0m)',
+    batteryVoltage: '80V Li-Ion',
+    chargingTime: '2 a 2.5 horas',
+    turningRadius: '2.437 mm',
+    image: 'https://cdn.ep-portal.net/products/attr_5/1766563537248-z8brck.webp',
     highlights: [
-      'Bateria Li-Ion integrada com recarga rápida de oportunidade',
-      'Design ultra-compacto para operação em espaços reduzidos',
-      'Sem manutenção de água ou ácido — 100% limpa e ecológica',
-      'Controle ergonômico com comando tiller de alta precisão'
+      'Capacidade industrial de 3.000 kg para operações pesadas e contínuas',
+      'Elevação de até 6 metros com mastro reforçado e excelente visibilidade',
+      'Bateria Li-Ion 80V inclusa com 5 anos de garantia de fábrica',
+      'Livre de manutenção de água/ácido e recarga rápida de oportunidade'
     ]
   },
   {
@@ -60,47 +61,29 @@ const HIGHLIGHT_ITEMS: HighlightItem[] = [
     ]
   },
   {
-    id: 'tvl151',
-    slug: 'tvl151',
-    title: 'Empilhadeira Elétrica TVL151',
-    subtitle: 'Contrabalançada 3 Rodas Li-Ion 80V',
-    description: 'O modelo mais vendido para movimentação de cargas em corredores estreitos com tecnologia de lítio 80V e zero emissões.',
+    id: 'f4',
+    slug: 'f4',
+    title: 'Paleteira Elétrica F4',
+    subtitle: 'Paleteira Compacta Li-Ion',
+    description: 'A paleteira elétrica mais vendida da EP Equipment. Compacta, ergonômica e ideal para movimentação ágil em armazéns e centros de distribuição.',
     capacity: '1.500 kg',
-    liftingHeight: '5.000 mm (5,0m)',
-    batteryVoltage: '80V Li-Ion',
-    chargingTime: '1 a 2 horas',
-    turningRadius: '1.450 mm',
-    image: 'https://cdn.ep-portal.net/products/attr_5/1758185452375-2j5v1u.webp',
+    liftingHeight: '200 mm',
+    batteryVoltage: '24V Li-Ion',
+    chargingTime: '2 a 3 horas',
+    turningRadius: '1.370 mm',
+    image: 'https://cdn.ep-portal.net/products/attr_5/1757324457309-ket0ve.webp',
     highlights: [
-      'Bateria Li-Ion 80V inclusa com 5 anos de garantia de fábrica',
-      'Tração dupla PMSM para alto desempenho em rampas industriais',
-      'Visão panorâmica ampla do operador com elevação suave',
-      'Livre de manutenção de água/ácido e 100% ecológica'
-    ]
-  },
-  {
-    id: 'tvl181',
-    slug: 'tvl181',
-    title: 'Empilhadeira Elétrica TVL181',
-    subtitle: 'Contrabalançada 3 Rodas Li-Ion 80V',
-    description: 'Combina a agilidade de 3 rodas com maior capacidade de carga e alcance vertical de até 6 metros em múltiplos turnos.',
-    capacity: '1.800 kg',
-    liftingHeight: '6.000 mm (6,0m)',
-    batteryVoltage: '80V Li-Ion',
-    chargingTime: '1.5 horas',
-    turningRadius: '1.550 mm',
-    image: 'https://cdn.ep-portal.net/products/attr_5/1762338440190-wx552t.webp',
-    highlights: [
-      'Capacidade estendida para 1.800 kg com elevação de 6 metros',
-      'Recarga de oportunidade rápida durante intervalos da operação',
-      'Aceleração inteligente e frenagem regenerativa',
-      'Estrutura monobloco reforçada para rotinas intensas'
+      'Bateria Li-Ion integrada com recarga rápida de oportunidade',
+      'Design ultra-compacto para operação em espaços reduzidos',
+      'Sem manutenção de água ou ácido — 100% limpa e ecológica',
+      'Controle ergonômico com comando tiller de alta precisão'
     ]
   }
 ]
 
 export default function MonthlyHighlight() {
-  const [selectedId, setSelectedId] = useState<string>('f4')
+  const [selectedId, setSelectedId] = useState<string>('efl302b3')
+  const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false)
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" })
   const phoneNumber = '+5549988395635'
@@ -199,9 +182,11 @@ export default function MonthlyHighlight() {
               {/* Coluna Esquerda: Imagem Animada & Especificações */}
               <div className="md:col-span-5 flex flex-col items-center">
                 <motion.div
-                  whileHover={{ scale: 1.05, rotate: 1 }}
+                  whileHover={{ scale: 1.03 }}
                   transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                  className="relative w-full aspect-[4/3] flex items-center justify-center cursor-pointer group"
+                  onClick={() => setIsLightboxOpen(true)}
+                  className="relative w-full aspect-[4/3] flex items-center justify-center cursor-zoom-in group rounded-2xl bg-white p-2"
+                  title="Clique para ampliar a imagem"
                 >
                   <motion.img
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -211,6 +196,12 @@ export default function MonthlyHighlight() {
                     alt={currentItem.title}
                     className="w-full h-full object-contain filter drop-shadow-lg group-hover:scale-105 transition-all duration-300"
                   />
+
+                  {/* Badge de zoom ao passar o mouse */}
+                  <div className="absolute bottom-3 right-3 bg-gray-900/80 hover:bg-gray-900 text-white text-[11px] font-bold px-3 py-1.5 rounded-full backdrop-blur-sm flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md transform translate-y-1 group-hover:translate-y-0">
+                    <ZoomIn size={14} className="text-red-400" />
+                    <span>Clique para ampliar</span>
+                  </div>
                 </motion.div>
 
                 {/* Especificações Rápidas em Pills */}
@@ -232,7 +223,7 @@ export default function MonthlyHighlight() {
                   <div className="h-6 w-px bg-gray-200" />
                   <div>
                     <span className="text-gray-400 block text-[10px] uppercase">Bateria</span>
-                    <span className="font-bold text-red-600 text-sm">80V Li-Ion</span>
+                    <span className="font-bold text-red-600 text-sm">{currentItem.batteryVoltage}</span>
                   </div>
                 </motion.div>
               </div>
@@ -299,7 +290,7 @@ export default function MonthlyHighlight() {
 
                   <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                     <Link
-                      href={`/empilhadeiras-eletricas/${currentItem.slug}`}
+                      href={`/produtos/${currentItem.slug}`}
                       aria-label={`Ver especificações e ficha técnica completa da ${currentItem.title}`}
                       title={`Ficha Técnica - ${currentItem.title}`}
                       className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-gray-900 hover:bg-red-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-colors"
@@ -338,6 +329,19 @@ export default function MonthlyHighlight() {
         </motion.div>
 
       </div>
+
+      {/* Lightbox Modal de Imagem Ampliada */}
+      <ImageLightboxModal
+        isOpen={isLightboxOpen}
+        onClose={() => setIsLightboxOpen(false)}
+        imageSrc={currentItem.image}
+        title={currentItem.title}
+        subtitle={currentItem.subtitle}
+        capacity={currentItem.capacity}
+        liftingHeight={currentItem.liftingHeight}
+        batteryVoltage={currentItem.batteryVoltage}
+        slug={currentItem.slug}
+      />
     </section>
   )
 }
