@@ -2,11 +2,24 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Search, ChevronLeft, ChevronRight, X,
-  BookOpen, Clock, Calendar, User, ArrowRight,
-  Tag, Layers, TrendingUp, ChevronDown
+import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { 
+  Search, 
+  ChevronLeft, 
+  ChevronRight, 
+  SlidersHorizontal, 
+  X, 
+  Calendar, 
+  Clock, 
+  ArrowRight, 
+  Sparkles, 
+  BookOpen, 
+  MessageCircle,
+  Tag,
+  ShieldCheck,
+  Truck,
+  CheckCircle2,
+  ChevronRight as ChevronIcon
 } from 'lucide-react'
 
 interface Post {
@@ -23,18 +36,6 @@ interface Post {
 
 type SortOption = 'newest' | 'oldest' | 'title-asc' | 'title-desc'
 
-const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  'Equipamentos':    { bg: 'bg-blue-50',   text: 'text-blue-700',   border: 'border-blue-200' },
-  'Tecnologia':      { bg: 'bg-violet-50', text: 'text-violet-700', border: 'border-violet-200' },
-  'Logística':       { bg: 'bg-amber-50',  text: 'text-amber-700',  border: 'border-amber-200' },
-  'Manutenção':      { bg: 'bg-emerald-50',text: 'text-emerald-700',border: 'border-emerald-200' },
-  'Segurança':       { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200' },
-}
-
-function getCategoryStyle(category: string) {
-  return CATEGORY_COLORS[category] || { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200' }
-}
-
 export default function BlogListingClient() {
   const [posts, setPosts] = useState<Post[]>([])
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([])
@@ -46,41 +47,56 @@ export default function BlogListingClient() {
   const [sortBy, setSortBy] = useState<SortOption>('newest')
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(true)
-  const [showTagsExpanded, setShowTagsExpanded] = useState(false)
-  const searchRef = useRef<HTMLInputElement>(null)
+  const [showFilters, setShowFilters] = useState(false)
+  
+  const heroRef = useRef(null)
+  const isHeroInView = useInView(heroRef, { once: true, margin: "-50px" })
+  
+  const postsPerPage = 6
 
-  const postsPerPage = 3
-
-  useEffect(() => { fetchPosts() }, [])
+  useEffect(() => {
+    fetchPosts()
+  }, [])
 
   async function fetchPosts() {
     try {
       const response = await fetch('/api/blog?published=true')
-      if (!response.ok) { setLoading(false); return }
+      
+      if (!response.ok) {
+        console.error('Erro na resposta:', response.status)
+        setLoading(false)
+        return
+      }
 
       const contentType = response.headers.get('content-type')
-      if (!contentType?.includes('application/json')) { setLoading(false); return }
+      if (!contentType || !contentType.includes('application/json')) {
+        console.error('Resposta não é JSON')
+        setLoading(false)
+        return
+      }
 
       const data = await response.json()
       const postsData = data.posts || []
-
+      
       const formattedPosts = postsData.map((p: any) => ({
         slug: p.slug,
         title: p.title,
         description: p.description,
         date: p.created_at || p.date,
-        author: p.author,
-        image: p.image,
-        category: p.category,
+        author: p.author || 'Equipe Venda Forte',
+        image: p.image || '/sede.png',
+        category: p.category || 'Geral',
         tags: p.tags || [],
         readingTime: p.reading_time || '5 min de leitura'
       }))
 
       setPosts(formattedPosts)
-      const uniqueCategories = [...new Set(formattedPosts.map((p: Post) => p.category))] as string[]
+      
+      const uniqueCategories = [...new Set(formattedPosts.map((p: Post) => p.category))].filter(Boolean) as string[]
       setCategories(uniqueCategories)
+
       const tags = formattedPosts.flatMap((p: Post) => p.tags)
-      const uniqueTags = [...new Set(tags)].sort() as string[]
+      const uniqueTags = [...new Set(tags)].filter(Boolean).sort() as string[]
       setAllTags(uniqueTags)
     } catch (error) {
       console.error('Erro ao carregar posts:', error)
@@ -90,40 +106,57 @@ export default function BlogListingClient() {
   }
 
   useEffect(() => {
-    let filtered = posts
+    filterAndSortPosts()
+  }, [posts, selectedCategory, selectedTags, searchTerm, sortBy])
+
+  function filterAndSortPosts() {
+    let filtered = [...posts]
 
     if (selectedCategory !== 'all') {
-      filtered = filtered.filter(post => post.category === selectedCategory)
+      filtered = filtered.filter(post => post.category.toLowerCase() === selectedCategory.toLowerCase())
     }
+
     if (selectedTags.length > 0) {
-      filtered = filtered.filter(post => selectedTags.some(tag => post.tags.includes(tag)))
-    }
-    if (searchTerm) {
       filtered = filtered.filter(post =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+        selectedTags.some(tag => post.tags.includes(tag))
       )
     }
 
-    const sorted = [...filtered].sort((a, b) => {
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase()
+      filtered = filtered.filter(post =>
+        post.title.toLowerCase().includes(term) ||
+        post.description.toLowerCase().includes(term) ||
+        post.tags.some(tag => tag.toLowerCase().includes(term)) ||
+        post.category.toLowerCase().includes(term)
+      )
+    }
+
+    const sorted = filtered.sort((a, b) => {
       switch (sortBy) {
-        case 'newest': return new Date(b.date).getTime() - new Date(a.date).getTime()
-        case 'oldest': return new Date(a.date).getTime() - new Date(b.date).getTime()
-        case 'title-asc': return a.title.localeCompare(b.title)
-        case 'title-desc': return b.title.localeCompare(a.title)
-        default: return 0
+        case 'newest':
+          return new Date(b.date).getTime() - new Date(a.date).getTime()
+        case 'oldest':
+          return new Date(a.date).getTime() - new Date(b.date).getTime()
+        case 'title-asc':
+          return a.title.localeCompare(b.title)
+        case 'title-desc':
+          return b.title.localeCompare(a.title)
+        default:
+          return 0
       }
     })
 
     setFilteredPosts(sorted)
-    setCurrentPage(1)
-  }, [posts, selectedCategory, selectedTags, searchTerm, sortBy])
+  }
 
   function toggleTag(tag: string) {
     setSelectedTags(prev =>
-      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+      prev.includes(tag)
+        ? prev.filter(t => t !== tag)
+        : [...prev, tag]
     )
+    setCurrentPage(1)
   }
 
   function clearFilters() {
@@ -134,492 +167,565 @@ export default function BlogListingClient() {
     setCurrentPage(1)
   }
 
+  const hasActiveFilters = selectedCategory !== 'all' || selectedTags.length > 0 || searchTerm.trim() !== ''
+  const showFeaturedPost = !hasActiveFilters && currentPage === 1 && filteredPosts.length > 0
+  
+  const featuredPost = showFeaturedPost ? filteredPosts[0] : null
+  const gridPosts = showFeaturedPost ? filteredPosts.slice(1) : filteredPosts
+
   const indexOfLastPost = currentPage * postsPerPage
   const indexOfFirstPost = indexOfLastPost - postsPerPage
-  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost)
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage)
-  const hasActiveFilters = selectedCategory !== 'all' || selectedTags.length > 0 || searchTerm !== ''
-  const featuredPost = currentPage === 1 && !hasActiveFilters && currentPosts.length > 0 ? currentPosts[0] : null
-  const remainingPosts = featuredPost ? currentPosts.slice(1) : currentPosts
+  const currentPosts = showFeaturedPost 
+    ? gridPosts.slice(0, postsPerPage) 
+    : filteredPosts.slice(indexOfFirstPost, indexOfLastPost)
+    
+  const totalPages = Math.ceil((showFeaturedPost ? gridPosts.length : filteredPosts.length) / postsPerPage) || 1
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans">
+    <div className="min-h-screen bg-slate-100/70 font-sans text-gray-900 relative">
+      
+      {/* Hero Escuro Contrastante com a Imagem da Sede - Padrão do Hero Principal */}
+      <section ref={heroRef} className="relative bg-gray-950 text-white pt-28 pb-16 sm:pt-36 sm:pb-20 overflow-hidden border-b border-gray-800">
+        
+        {/* Background com Imagem da Sede e Overlay Escuro */}
+        <div className="absolute inset-0 z-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-25 scale-105"
+            style={{ backgroundImage: 'url(/sede.png)' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-950/90 via-gray-950/95 to-gray-950" />
+          
+          {/* Glows vermelhos da identidade visual */}
+          <div className="absolute top-10 left-1/4 w-80 h-80 bg-red-600/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-red-700/15 rounded-full blur-3xl pointer-events-none" />
+        </div>
 
-      {/* ─── HERO ─────────────────────────────────────────────── */}
-      <div className="relative overflow-hidden pt-24 pb-0" style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e1b2e 40%, #7f1d1d 100%)'
-      }}>
-        {/* Diagonal stripe texture */}
-        <div className="absolute inset-0 opacity-[0.04]" style={{
-          backgroundImage: `repeating-linear-gradient(
-            -45deg,
-            #ffffff 0px,
-            #ffffff 1px,
-            transparent 1px,
-            transparent 12px
-          )`
-        }} />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto">
+            
+            {/* Badge com contraste escuro */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+            >
+              <span className="inline-flex items-center gap-1.5 text-red-400 font-bold text-xs uppercase tracking-wider mb-4 px-4 py-1.5 bg-red-950/60 rounded-full border border-red-500/30 backdrop-blur-md shadow-lg shadow-red-950/50 cursor-default">
+                <Sparkles size={14} className="text-red-400 animate-spin" style={{ animationDuration: '6s' }} />
+                <span>Conteúdo & Inteligência Logística</span>
+              </span>
+            </motion.div>
 
-        {/* Glowing orbs */}
-        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full opacity-20 blur-3xl pointer-events-none"
-          style={{ background: 'radial-gradient(circle, #dc2626 0%, transparent 70%)' }} />
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full opacity-10 blur-3xl pointer-events-none"
-          style={{ background: 'radial-gradient(circle, #dc2626 0%, transparent 70%)' }} />
+            {/* Título com alto contraste */}
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight"
+            >
+              Blog <span className="text-red-500">Venda Forte</span>
+            </motion.h1>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="pt-12 pb-20">
+            {/* Subtítulo */}
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-sm sm:text-base md:text-lg text-gray-300 mt-4 max-w-2xl mx-auto leading-relaxed"
+            >
+              Artigos práticos, guias técnicos sobre empilhadeiras elétricas Li-Ion e soluções para otimizar sua operação.
+            </motion.p>
 
-            {/* Badge */}
-            <div className="flex items-center gap-3 mb-8">
-              <div className="inline-flex items-center gap-2 bg-red-600/20 backdrop-blur-sm border border-red-500/30 text-red-300 text-[11px] font-bold uppercase tracking-[0.15em] px-4 py-2 rounded-full">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
-                Blog & Conteúdo Especializado
+            {/* Barra de Busca Dark/Glassmorphism com contraste nítido */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-8 max-w-2xl mx-auto"
+            >
+              <div className="relative group">
+                <Search 
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-red-500 transition-colors" 
+                  size={20} 
+                />
+                <input
+                  type="text"
+                  placeholder="Pesquisar por assunto ou modelo (ex: DS3, F4, Bateria de Lítio)..."
+                  value={searchTerm}
+                  onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+                  className="w-full pl-12 pr-12 py-4 rounded-2xl bg-gray-900/90 text-white placeholder-gray-400 border border-gray-700/80 shadow-2xl focus:border-red-500 focus:ring-4 focus:ring-red-500/20 backdrop-blur-xl transition-all text-sm sm:text-base outline-none hover:border-gray-600"
+                />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white p-1 transition-colors"
+                  >
+                    <X size={18} />
+                  </button>
+                )}
               </div>
-            </div>
+            </motion.div>
 
-            {/* Main headline */}
-            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-12">
-              <div className="max-w-3xl">
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.05] mb-6">
-                  Conteúdo que<br />
-                  <span className="text-transparent bg-clip-text"
-                    style={{ backgroundImage: 'linear-gradient(90deg, #f87171, #fca5a5)' }}>
-                    eleva sua operação
-                  </span>
-                </h1>
-                <p className="text-slate-400 text-lg max-w-xl leading-relaxed">
-                  Artigos técnicos, guias práticos e novidades sobre empilhadeiras elétricas, intralogística e automação industrial — da equipe Venda Forte.
-                </p>
+            {/* Tags rápidas no Hero */}
+            {allTags.length > 0 && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={isHeroInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="flex flex-wrap items-center justify-center gap-2 mt-4 text-xs font-semibold"
+              >
+                <span className="text-gray-400">Tópicos:</span>
+                {allTags.slice(0, 5).map((tag) => {
+                  const isSelected = selectedTags.includes(tag)
+                  return (
+                    <button
+                      key={tag}
+                      onClick={() => toggleTag(tag)}
+                      className={`px-3.5 py-1 rounded-full transition-all ${
+                        isSelected
+                          ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                          : 'bg-gray-900/80 text-gray-300 hover:text-white hover:bg-gray-800 border border-gray-700/70'
+                      }`}
+                    >
+                      #{tag}
+                    </button>
+                  )
+                })}
+              </motion.div>
+            )}
 
-                {/* Search shortcut */}
-                <button
-                  onClick={() => { setTimeout(() => searchRef.current?.focus(), 300); window.scrollTo({ top: 600, behavior: 'smooth' }) }}
-                  className="mt-8 inline-flex items-center gap-3 bg-white/10 hover:bg-white/15 backdrop-blur-sm border border-white/15 hover:border-white/30 text-white/80 hover:text-white text-sm font-semibold px-5 py-3 rounded-xl transition-all group"
-                >
-                  <Search size={16} className="text-red-400" />
-                  <span>Buscar um artigo...</span>
-                  <span className="ml-auto text-[10px] bg-white/10 border border-white/15 px-2 py-0.5 rounded-md font-mono tracking-wide opacity-70">↓</span>
-                </button>
-              </div>
-
-              {/* Stats column */}
-              <div className="flex lg:flex-col gap-4 shrink-0">
-                {[
-                  { label: 'Artigos Publicados', value: posts.length, icon: BookOpen, color: 'from-red-600/30 to-red-700/20', border: 'border-red-500/20' },
-                  { label: 'Categorias', value: categories.length, icon: Layers, color: 'from-violet-600/30 to-violet-700/20', border: 'border-violet-500/20' },
-                  { label: 'Tags Disponíveis', value: allTags.length, icon: Tag, color: 'from-amber-600/30 to-amber-700/20', border: 'border-amber-500/20' },
-                ].map(({ label, value, icon: Icon, color, border }) => (
-                  <div key={label}
-                    className={`flex items-center gap-4 bg-gradient-to-br ${color} backdrop-blur-sm border ${border} rounded-2xl px-5 py-4 min-w-[200px]`}>
-                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                      <Icon size={18} className="text-white/80" />
-                    </div>
-                    <div>
-                      <div className="text-2xl font-black text-white">{value}</div>
-                      <div className="text-xs text-white/50 font-semibold">{label}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
+      </section>
 
-        {/* Wave bottom */}
-        <div className="relative -mb-px">
-          <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full block">
-            <path d="M0 80L80 69C160 58 320 36 480 30C640 24 800 36 960 46C1120 58 1280 69 1360 74L1440 80V80H1360C1280 80 1120 80 960 80C800 80 640 80 480 80C320 80 160 80 80 80H0V80Z" fill="rgb(248 250 252)" />
-          </svg>
-        </div>
-      </div>
-
-
-      {/* ─── FILTERS + CONTENT ────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-
-        {/* Filter Bar */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-4 mb-8">
-          <div className="flex flex-col md:flex-row gap-3">
-            {/* Search */}
-            <div className="relative flex-1 group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-red-600 transition-colors" size={18} />
-              <input
-                ref={searchRef}
-                type="text"
-                placeholder="Buscar artigos por título, tema ou tag..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-slate-50 hover:bg-white focus:bg-white pl-11 pr-10 py-2.5 rounded-xl border border-slate-200 focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500/15 text-sm text-slate-900 placeholder:text-slate-400 transition-all font-medium"
-              />
-              {searchTerm && (
-                <button onClick={() => setSearchTerm('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition-colors">
-                  <X size={15} />
-                </button>
-              )}
+      {/* Conteúdo dos Artigos com Fundo em Alto Contraste */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
+        
+        {/* Post em Destaque com visual nítido */}
+        {featuredPost && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-14"
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse" />
+              <span className="text-xs uppercase font-extrabold tracking-wider text-gray-900">
+                Publicação em Destaque
+              </span>
             </div>
 
-            {/* Sort */}
-            <div className="relative shrink-0">
+            <article className="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl shadow-gray-300/40 hover:shadow-2xl hover:shadow-red-500/10 transition-all group overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                {/* Imagem do Destaque */}
+                <div className="lg:col-span-6 relative aspect-[16/10] rounded-2xl overflow-hidden bg-gray-900 border border-gray-100 group-hover:border-red-200 transition-colors">
+                  <img
+                    src={featuredPost.image}
+                    alt={featuredPost.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="px-3.5 py-1 rounded-full text-xs font-extrabold bg-gray-950/80 text-white backdrop-blur-md shadow-md border border-white/20">
+                      {featuredPost.category}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Conteúdo do Destaque */}
+                <div className="lg:col-span-6 flex flex-col justify-between space-y-5">
+                  <div className="space-y-3">
+                    
+                    {/* Meta info */}
+                    <div className="flex items-center gap-3 text-xs text-gray-500 font-semibold">
+                      <span className="flex items-center gap-1.5">
+                        <Calendar size={14} className="text-red-600" />
+                        {new Date(featuredPost.date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1.5">
+                        <Clock size={14} className="text-gray-400" />
+                        {featuredPost.readingTime}
+                      </span>
+                    </div>
+
+                    {/* Título */}
+                    <h2 className="text-2xl sm:text-3xl font-black text-gray-900 group-hover:text-red-600 transition-colors leading-tight tracking-tight">
+                      <Link href={`/blog/${featuredPost.slug}`}>
+                        {featuredPost.title}
+                      </Link>
+                    </h2>
+
+                    {/* Descrição */}
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed line-clamp-3">
+                      {featuredPost.description}
+                    </p>
+
+                    {/* Tags */}
+                    {featuredPost.tags && featuredPost.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {featuredPost.tags.slice(0, 3).map(tag => (
+                          <span key={tag} className="text-[11px] font-semibold text-gray-700 bg-gray-100 px-2.5 py-1 rounded-lg border border-gray-200">
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Ações */}
+                  <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-gray-700">
+                      <div className="w-7 h-7 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-xs">
+                        {featuredPost.author.charAt(0)}
+                      </div>
+                      <span>{featuredPost.author}</span>
+                    </div>
+
+                    <Link
+                      href={`/blog/${featuredPost.slug}`}
+                      className="px-5 py-3 rounded-2xl bg-gray-950 hover:bg-red-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-colors group/btn shadow-md"
+                    >
+                      <span>Ler Artigo Completo</span>
+                      <ChevronIcon size={16} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                    </Link>
+                  </div>
+
+                </div>
+
+              </div>
+            </article>
+          </motion.div>
+        )}
+
+        {/* Barra de Categorias e Ordenação */}
+        <div className="mb-10 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200/80 pb-4">
+            
+            {/* Abas de Categorias */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+              <button
+                onClick={() => { setSelectedCategory('all'); setCurrentPage(1); }}
+                className={`relative px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all ${
+                  selectedCategory === 'all'
+                    ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                    : 'bg-white text-gray-700 hover:text-gray-900 border border-gray-300 hover:bg-gray-50 shadow-sm'
+                }`}
+              >
+                <span>Todas ({posts.length})</span>
+              </button>
+
+              {categories.map(cat => {
+                const count = posts.filter(p => p.category.toLowerCase() === cat.toLowerCase()).length
+                const isSelected = selectedCategory.toLowerCase() === cat.toLowerCase()
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => { setSelectedCategory(cat); setCurrentPage(1); }}
+                    className={`relative px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
+                      isSelected
+                        ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                        : 'bg-white text-gray-700 hover:text-gray-900 border border-gray-300 hover:bg-gray-50 shadow-sm'
+                    }`}
+                  >
+                    <span>{cat} ({count})</span>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Ordenação & Tags */}
+            <div className="flex items-center gap-2 self-end sm:self-auto">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="appearance-none bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-9 text-sm font-semibold text-slate-700 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/15 cursor-pointer transition-all"
+                className="px-4 py-2.5 text-xs sm:text-sm font-bold rounded-2xl bg-white border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500 shadow-sm cursor-pointer hover:bg-gray-50"
               >
                 <option value="newest">Mais Recentes</option>
                 <option value="oldest">Mais Antigos</option>
                 <option value="title-asc">Título (A-Z)</option>
                 <option value="title-desc">Título (Z-A)</option>
               </select>
-              <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
-            </div>
 
-            {/* Clear if active */}
-            {hasActiveFilters && (
               <button
-                onClick={clearFilters}
-                className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-bold rounded-xl border border-red-200 transition-all"
-              >
-                <X size={14} />
-                Limpar Filtros
-              </button>
-            )}
-          </div>
-
-          {/* Category Chips */}
-          {categories.length > 0 && (
-            <div className="mt-3 flex items-center gap-2 flex-wrap">
-              <div className="flex items-center gap-1 text-xs text-slate-500 font-semibold mr-1 shrink-0">
-                <Layers size={13} />
-                <span>Categorias:</span>
-              </div>
-              <button
-                onClick={() => setSelectedCategory('all')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
-                  selectedCategory === 'all'
-                    ? 'bg-slate-900 text-white border-slate-900'
-                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-slate-400 hover:bg-slate-100'
+                onClick={() => setShowFilters(!showFilters)}
+                className={`px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all shadow-sm ${
+                  showFilters || hasActiveFilters
+                    ? 'bg-gray-950 text-white shadow-md'
+                    : 'bg-white text-gray-800 border border-gray-300 hover:bg-gray-50'
                 }`}
               >
-                Todos ({posts.length})
+                <SlidersHorizontal size={15} />
+                <span>Tags</span>
+                {selectedTags.length > 0 && (
+                  <span className="ml-1 w-5 h-5 rounded-full bg-red-600 text-white text-[10px] flex items-center justify-center font-bold">
+                    {selectedTags.length}
+                  </span>
+                )}
               </button>
-              {categories.map(cat => {
-                const style = getCategoryStyle(cat)
-                const isSelected = selectedCategory === cat
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(isSelected ? 'all' : cat)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
-                      isSelected
-                        ? 'bg-red-600 text-white border-red-600'
-                        : `${style.bg} ${style.text} ${style.border} hover:opacity-80`
-                    }`}
-                  >
-                    {cat} ({posts.filter(p => p.category === cat).length})
-                  </button>
-                )
-              })}
-            </div>
-          )}
 
-          {/* Tags */}
-          {allTags.length > 0 && (
-            <div className="mt-2.5 flex items-center gap-2 flex-wrap">
-              <div className="flex items-center gap-1 text-xs text-slate-500 font-semibold mr-1 shrink-0">
-                <Tag size={13} />
-                <span>Tags:</span>
-              </div>
-              {(showTagsExpanded ? allTags : allTags.slice(0, 8)).map(tag => (
+              {hasActiveFilters && (
                 <button
-                  key={tag}
-                  onClick={() => toggleTag(tag)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all ${
-                    selectedTags.includes(tag)
-                      ? 'bg-red-600 text-white border-red-600'
-                      : 'bg-white text-slate-600 border-slate-200 hover:border-red-300 hover:text-red-700'
-                  }`}
+                  onClick={clearFilters}
+                  className="px-3 py-2 text-xs font-bold text-red-600 hover:bg-red-50 rounded-xl transition-colors"
                 >
-                  #{tag}
-                </button>
-              ))}
-              {allTags.length > 8 && (
-                <button
-                  onClick={() => setShowTagsExpanded(!showTagsExpanded)}
-                  className="text-xs text-slate-500 hover:text-red-600 font-semibold underline underline-offset-2 transition-colors"
-                >
-                  {showTagsExpanded ? 'Ver menos' : `+${allTags.length - 8} tags`}
+                  Limpar
                 </button>
               )}
             </div>
-          )}
+
+          </div>
+
+          {/* Gaveta de Tags */}
+          <AnimatePresence>
+            {showFilters && allTags.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm overflow-hidden"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold uppercase tracking-wider text-gray-600 flex items-center gap-1.5">
+                    <Tag size={13} className="text-red-600" />
+                    Filtrar por Tags
+                  </span>
+                  {selectedTags.length > 0 && (
+                    <button
+                      onClick={() => setSelectedTags([])}
+                      className="text-xs text-red-600 font-bold hover:underline"
+                    >
+                      Limpar tags
+                    </button>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {allTags.map(tag => {
+                    const isSelected = selectedTags.includes(tag)
+                    return (
+                      <button
+                        key={tag}
+                        onClick={() => toggleTag(tag)}
+                        className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                          isSelected
+                            ? 'bg-red-600 text-white shadow-sm shadow-red-600/20'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'
+                        }`}
+                      >
+                        #{tag}
+                      </button>
+                    )
+                  })}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        {/* Results summary */}
-        {!loading && (
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-sm text-slate-500 font-medium">
-              {hasActiveFilters
-                ? <><span className="font-bold text-slate-800">{filteredPosts.length}</span> resultado{filteredPosts.length !== 1 ? 's' : ''} encontrado{filteredPosts.length !== 1 ? 's' : ''}</>
-                : <><span className="font-bold text-slate-800">{filteredPosts.length}</span> artigos publicados</>
-              }
-            </p>
-            {totalPages > 1 && (
-              <p className="text-xs text-slate-400 font-medium">
-                Página {currentPage} de {totalPages}
-              </p>
-            )}
-          </div>
-        )}
-
-        {/* ─── POSTS ──────────────────────────────────────────── */}
+        {/* Grid de Artigos */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-32 gap-5">
-            <div className="relative w-14 h-14">
-              <div className="absolute inset-0 rounded-full border-4 border-slate-200" />
-              <div className="absolute inset-0 rounded-full border-4 border-red-600 border-t-transparent animate-spin" />
-            </div>
-            <p className="text-slate-500 font-medium text-sm">Carregando artigos...</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map(i => (
+              <div key={i} className="bg-white rounded-3xl p-5 border border-gray-200 animate-pulse space-y-4 shadow-sm">
+                <div className="h-44 bg-gray-200 rounded-2xl" />
+                <div className="h-4 bg-gray-200 rounded w-1/3" />
+                <div className="h-6 bg-gray-200 rounded w-3/4" />
+                <div className="h-4 bg-gray-200 rounded w-full" />
+                <div className="h-4 bg-gray-200 rounded w-2/3" />
+              </div>
+            ))}
           </div>
         ) : filteredPosts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-28 gap-4 text-center">
-            <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center">
-              <BookOpen size={28} className="text-slate-400" />
+          <div className="text-center py-16 px-4 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
+            <div className="w-14 h-14 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mx-auto mb-3">
+              <BookOpen size={26} />
             </div>
-            <div>
-              <h3 className="text-lg font-bold text-slate-800 mb-1">Nenhum artigo encontrado</h3>
-              <p className="text-slate-500 text-sm">Tente outros termos ou remova os filtros aplicados.</p>
-            </div>
+            <h3 className="text-lg font-bold text-gray-900 mb-1">Nenhum artigo encontrado</h3>
+            <p className="text-gray-500 text-xs sm:text-sm mb-5">
+              Não localizamos publicações com os critérios atuais. Tente outros termos de busca.
+            </p>
             <button
               onClick={clearFilters}
-              className="mt-2 bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-xs"
+              className="px-5 py-2.5 bg-red-600 text-white font-bold text-xs sm:text-sm rounded-xl hover:bg-red-700 shadow-md shadow-red-600/20 transition-all"
             >
               Ver todos os artigos
             </button>
           </div>
         ) : (
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${currentPage}-${selectedCategory}-${searchTerm}`}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-            >
-              {/* Featured Post (first post, first page, no active filters) */}
-              {featuredPost && (
-                <Link href={`/blog/${featuredPost.slug}`} className="block group mb-8">
-                  <article className="relative bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden flex flex-col lg:flex-row hover:shadow-lg hover:border-red-200 transition-all duration-300">
-                    <div className="relative lg:w-1/2 h-64 lg:h-auto overflow-hidden bg-slate-100 shrink-0">
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {currentPosts.map((post) => (
+                <article
+                  key={post.slug}
+                  className="bg-white border border-gray-200 rounded-3xl p-5 shadow-lg shadow-gray-200/50 hover:shadow-2xl hover:shadow-red-500/10 hover:border-red-200 transition-all flex flex-col justify-between group transform hover:-translate-y-1"
+                >
+                  <div>
+                    {/* Imagem do Card */}
+                    <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-gray-900 mb-4 border border-gray-100">
                       <img
-                        src={featuredPost.image || '/sede.png'}
-                        alt={featuredPost.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/10" />
-                      <div className="absolute top-5 left-5">
-                        <span className="inline-flex items-center gap-1.5 bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
-                          <TrendingUp size={11} />
-                          Destaque
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="p-8 lg:p-10 flex flex-col justify-center flex-1">
-                      <div className="mb-4">
-                        {(() => {
-                          const s = getCategoryStyle(featuredPost.category)
-                          return (
-                            <span className={`inline-flex items-center gap-1 text-xs font-bold px-3 py-1 rounded-full border ${s.bg} ${s.text} ${s.border}`}>
-                              {featuredPost.category}
-                            </span>
-                          )
-                        })()}
-                      </div>
-
-                      <h2 className="text-2xl sm:text-3xl font-black text-slate-900 group-hover:text-red-600 transition-colors leading-tight mb-3">
-                        {featuredPost.title}
-                      </h2>
-
-                      <p className="text-slate-600 text-sm leading-relaxed line-clamp-3 mb-6">
-                        {featuredPost.description}
-                      </p>
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4 text-xs text-slate-500 font-medium">
-                          <span className="flex items-center gap-1.5">
-                            <Calendar size={13} />
-                            {new Date(featuredPost.date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
-                          </span>
-                          <span className="flex items-center gap-1.5">
-                            <Clock size={13} />
-                            {featuredPost.readingTime}
-                          </span>
-                          <span className="flex items-center gap-1.5">
-                            <User size={13} />
-                            {featuredPost.author}
-                          </span>
-                        </div>
-                        <span className="inline-flex items-center gap-1.5 text-red-600 font-bold text-sm group-hover:gap-3 transition-all">
-                          Ler artigo <ArrowRight size={15} />
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
-              )}
-
-              {/* Regular Cards Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {remainingPosts.map((post, i) => (
-                  <motion.article
-                    key={post.slug}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.06, duration: 0.3 }}
-                    className="group bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md hover:border-red-200 transition-all duration-300 flex flex-col overflow-hidden"
-                  >
-                    {/* Card Image */}
-                    <div className="relative h-48 overflow-hidden bg-slate-100 shrink-0">
-                      <img
-                        src={post.image || '/sede.png'}
+                        src={post.image}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      {(() => {
-                        const s = getCategoryStyle(post.category)
-                        return (
-                          <div className="absolute top-3.5 left-3.5">
-                            <span className={`text-[11px] font-bold px-2.5 py-1 rounded-lg border ${s.bg} ${s.text} ${s.border} backdrop-blur-sm shadow-xs`}>
-                              {post.category}
-                            </span>
-                          </div>
-                        )
-                      })()}
-                    </div>
-
-                    {/* Card Content */}
-                    <div className="p-5 flex flex-col flex-1 gap-3">
-                      {/* Meta */}
-                      <div className="flex items-center gap-3 text-[11px] text-slate-400 font-medium">
-                        <span className="flex items-center gap-1">
-                          <Calendar size={11} />
-                          {new Date(post.date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
-                        </span>
-                        <span>•</span>
-                        <span className="flex items-center gap-1">
-                          <Clock size={11} />
-                          {post.readingTime}
+                      <div className="absolute top-2.5 left-2.5">
+                        <span className="px-3 py-0.5 rounded-full text-[11px] font-extrabold bg-gray-950/80 text-white backdrop-blur-md shadow-sm border border-white/20">
+                          {post.category}
                         </span>
                       </div>
-
-                      {/* Title */}
-                      <h2 className="text-base font-bold text-slate-900 group-hover:text-red-600 transition-colors leading-snug line-clamp-2 flex-1">
-                        <Link href={`/blog/${post.slug}`}>
-                          {post.title}
-                        </Link>
-                      </h2>
-
-                      {/* Description */}
-                      <p className="text-slate-500 text-xs leading-relaxed line-clamp-2">
-                        {post.description}
-                      </p>
-
-                      {/* Tags (first 2) */}
-                      {post.tags.length > 0 && (
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          {post.tags.slice(0, 2).map(tag => (
-                            <button
-                              key={tag}
-                              onClick={(e) => { e.preventDefault(); toggleTag(tag) }}
-                              className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border transition-all ${
-                                selectedTags.includes(tag)
-                                  ? 'bg-red-600 text-white border-red-600'
-                                  : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-red-300'
-                              }`}
-                            >
-                              #{tag}
-                            </button>
-                          ))}
-                          {post.tags.length > 2 && (
-                            <span className="text-[10px] text-slate-400 font-medium">+{post.tags.length - 2}</span>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Footer */}
-                      <div className="pt-3 mt-auto border-t border-slate-100 flex items-center justify-between">
-                        <span className="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium">
-                          <User size={11} />
-                          {post.author}
-                        </span>
-                        <Link
-                          href={`/blog/${post.slug}`}
-                          aria-label={`Ler artigo: ${post.title}`}
-                          className="inline-flex items-center gap-1 text-red-600 font-bold text-xs hover:gap-2 transition-all"
-                        >
-                          Ler artigo <ArrowRight size={13} />
-                        </Link>
-                      </div>
                     </div>
-                  </motion.article>
-                ))}
-              </div>
 
-              {/* Pagination — always visible */}
-              <div className="mt-12 flex flex-col items-center gap-4">
-                <p className="text-xs text-slate-500 font-medium">
-                  Mostrando{' '}
-                  <span className="font-bold text-slate-700">{indexOfFirstPost + 1}–{Math.min(indexOfLastPost, filteredPosts.length)}</span>
-                  {' '}de{' '}
-                  <span className="font-bold text-slate-700">{filteredPosts.length}</span> artigos
-                  {totalPages > 1 && (
-                    <span className="ml-2 text-slate-400">• Página {currentPage} de {totalPages}</span>
-                  )}
+                    {/* Metadados */}
+                    <div className="flex items-center gap-2.5 text-[11px] text-gray-500 font-semibold mb-2">
+                      <span className="flex items-center gap-1">
+                        <Calendar size={12} className="text-red-600" />
+                        {new Date(post.date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1 text-gray-400">
+                        <Clock size={12} />
+                        {post.readingTime}
+                      </span>
+                    </div>
+
+                    {/* Título do Card */}
+                    <h3 className="text-base sm:text-lg font-black text-gray-900 group-hover:text-red-600 transition-colors leading-snug line-clamp-2 mb-2">
+                      <Link href={`/blog/${post.slug}`}>
+                        {post.title}
+                      </Link>
+                    </h3>
+
+                    {/* Descrição */}
+                    <p className="text-gray-600 text-xs sm:text-sm line-clamp-3 leading-relaxed mb-4">
+                      {post.description}
+                    </p>
+                  </div>
+
+                  {/* Rodapé do Card */}
+                  <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+                    <span className="text-[11px] font-semibold text-gray-500 truncate max-w-[110px]">
+                      {post.author}
+                    </span>
+
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      aria-label={`Ler artigo: ${post.title}`}
+                      className="text-xs font-extrabold text-red-600 hover:text-red-700 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
+                    >
+                      <span>Ler artigo</span>
+                      <ChevronIcon size={14} />
+                    </Link>
+                  </div>
+
+                </article>
+              ))}
+            </div>
+
+            {/* Paginação */}
+            {totalPages > 1 && (
+              <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-gray-200 pt-6">
+                <p className="text-xs font-semibold text-gray-500">
+                  Página <span className="font-bold text-gray-900">{currentPage}</span> de <span className="font-bold text-gray-900">{totalPages}</span>
                 </p>
 
                 <div className="flex items-center gap-1.5">
                   <button
-                    onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+                    onClick={() => {
+                      setCurrentPage(prev => Math.max(prev - 1, 1))
+                      window.scrollTo({ top: 400, behavior: 'smooth' })
+                    }}
                     disabled={currentPage === 1}
-                    className="p-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-red-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all text-slate-700"
+                    className="p-2 rounded-xl border border-gray-300 bg-white text-gray-800 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
                   >
-                    <ChevronLeft size={18} />
+                    <ChevronLeft size={16} />
                   </button>
 
-                  {[...Array(Math.max(totalPages, 1))].map((_, i) => {
-                    const page = i + 1
-                    if (totalPages > 7 && Math.abs(page - currentPage) > 2 && page !== 1 && page !== totalPages) {
-                      if (page === 2 || page === totalPages - 1) return <span key={i} className="px-1 text-slate-400 text-xs">…</span>
-                      return null
-                    }
-                    return (
-                      <button
-                        key={i}
-                        onClick={() => setCurrentPage(page)}
-                        className={`min-w-[38px] h-[38px] px-2 rounded-xl text-xs font-bold transition-all ${
-                          currentPage === page
-                            ? 'bg-red-600 text-white shadow-md shadow-red-600/20 ring-2 ring-red-200'
-                            : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-red-300'
-                        }`}
-                      >
-                        {page}
-                      </button>
-                    )
-                  })}
+                  {[...Array(totalPages)].map((_, i) => (
+                    <button
+                      key={i + 1}
+                      onClick={() => {
+                        setCurrentPage(i + 1)
+                        window.scrollTo({ top: 400, behavior: 'smooth' })
+                      }}
+                      className={`min-w-[34px] h-8 px-2 rounded-xl text-xs font-bold transition-all shadow-sm ${
+                        currentPage === i + 1
+                          ? 'bg-red-600 text-white shadow-red-600/30'
+                          : 'bg-white text-gray-800 border border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
 
                   <button
-                    onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+                    onClick={() => {
+                      setCurrentPage(prev => Math.min(prev + 1, totalPages))
+                      window.scrollTo({ top: 400, behavior: 'smooth' })
+                    }}
                     disabled={currentPage === totalPages}
-                    className="p-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-red-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all text-slate-700"
+                    className="p-2 rounded-xl border border-gray-300 bg-white text-gray-800 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
                   >
-                    <ChevronRight size={18} />
+                    <ChevronRight size={16} />
                   </button>
                 </div>
               </div>
-            </motion.div>
-          </AnimatePresence>
+            )}
+          </>
         )}
+
+        {/* Seção CTA com Alto Contraste (Fundo Dark Grafite + Destaques em Vermelho e Verde) */}
+        <section className="mt-16 bg-gray-950 text-white border border-gray-800 rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-red-600/20 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            
+            <div className="lg:col-span-7 space-y-3">
+              <span className="inline-flex items-center gap-1.5 text-red-400 font-bold text-xs uppercase tracking-wider px-3.5 py-1 bg-red-950/80 rounded-full border border-red-500/30 shadow-sm">
+                <CheckCircle2 size={14} className="text-red-400" />
+                <span>Atendimento Consultivo</span>
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                Precisa de auxílio para escolher o equipamento ideal?
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                Nossos consultores técnicos estão prontos para dimensionar corredores operacionais, capacidades de carga e autonomia da bateria Íon-Lítio para sua empresa.
+              </p>
+            </div>
+
+            <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
+              <a
+                href="https://wa.me/5549988395635?text=Ol%C3%A1%21%20Estava%20lendo%20o%20blog%20da%20Venda%20Forte%20e%20gostaria%20de%20falar%20com%20um%20consultor."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 transition-all flex items-center justify-center gap-2 group"
+              >
+                <span>Falar no WhatsApp Comercial</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+
+              <Link
+                href="/empilhadeiras-eletricas"
+                className="px-5 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-colors text-center border border-white/15"
+              >
+                <span>Explorar Catálogo Completo</span>
+                <ChevronIcon size={16} />
+              </Link>
+            </div>
+
+          </div>
+        </section>
+
+        {/* Rodapé com Selos */}
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-bold text-gray-600">
+          <div className="flex items-center gap-2 cursor-default">
+            <ShieldCheck size={16} className="text-red-600" />
+            <span>Conteúdo Técnico Validado por Especialistas</span>
+          </div>
+          <div className="flex items-center gap-2 cursor-default">
+            <Truck size={16} className="text-red-600" />
+            <span>Entrega Técnica em Todo o Brasil</span>
+          </div>
+        </div>
+
       </div>
     </div>
   )

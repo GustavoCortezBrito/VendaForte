@@ -47,7 +47,7 @@ const HIGHLIGHT_ITEMS: HighlightItem[] = [
     title: 'Empilhadeira Patolada DS3',
     subtitle: 'Stacker Elétrico Li-Ion',
     description: 'Stacker elétrico compacto para estocagem vertical em corredores estreitos. Ideal para armazéns que necessitam de elevação com investimento acessível.',
-    capacity: '1.200 kg',
+    capacity: '1.500 kg',
     liftingHeight: '3.300 mm (3,3m)',
     batteryVoltage: '24V Li-Ion',
     chargingTime: '3 a 4 horas',
