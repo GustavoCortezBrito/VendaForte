@@ -158,10 +158,53 @@ function HeroCopy() {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Vídeo da versão empilhada                                                  */
+/* -------------------------------------------------------------------------- */
 
-export default function PromoHero({ variant = "section" }: { variant?: "stage" | "section" }) {
+// Dissolve as quatro bordas do estúdio do vídeo no fundo da página.
+const FEATHER =
+  "linear-gradient(to right, transparent, #000 14%, #000 86%, transparent), linear-gradient(to bottom, transparent, #000 10%, #000 78%, transparent)";
+
+function HeroVideo() {
+  const ref = useRef<HTMLVideoElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    if (prefersReducedMotion) {
+      video.pause();
+      return;
+    }
+    video.muted = true;
+    video.play().catch(() => {});
+  }, [prefersReducedMotion]);
+
+  return (
+    <video
+      ref={ref}
+      src="/promo/ds3-rotacao-360.mp4"
+      poster="/promo/sequencia/ds3-000.webp"
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="metadata"
+      aria-label="Empilhadeira EP DS3 girando 360 graus"
+      className="aspect-video w-full object-cover"
+      style={{
+        maskImage: FEATHER,
+        WebkitMaskImage: FEATHER,
+        maskComposite: "intersect",
+        WebkitMaskComposite: "source-in",
+      }}
+    />
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+export default function PromoHero({ variant = "section" }: { variant?: "stage" | "section" }) {
   if (variant === "stage") return <HeroCopy />;
 
   return (
@@ -179,39 +222,17 @@ export default function PromoHero({ variant = "section" }: { variant?: "stage" |
         />
       )}
 
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-32 top-10 h-[420px] w-[420px] rounded-full bg-orange-500/20 blur-[120px]" />
-        <div className="absolute -right-20 bottom-0 h-[440px] w-[440px] rounded-full bg-red-600/20 blur-[120px]" />
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#05070B] via-[#05070B]/85 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-transparent to-[#05070B]/70" />
-      </div>
-
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-24 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
           <HeroCopy />
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
-            className="relative flex items-center justify-center"
+            className="-mx-6 lg:mx-0"
           >
-            <div className="absolute h-[380px] w-[380px] rounded-full bg-red-600/25 blur-[120px]" />
-            <motion.div
-              animate={prefersReducedMotion ? undefined : { y: [0, -10, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-              className="relative aspect-square w-full max-w-lg"
-            >
-              <PromoMediaSlot
-                media="ds3Render"
-                className="h-full w-full rounded-none border-0"
-                imageClassName="drop-shadow-[0_20px_80px_rgba(220,38,38,0.35)]"
-                sizes="(max-width: 1024px) 80vw, 520px"
-                fit="contain"
-                preload
-              />
-            </motion.div>
+            <HeroVideo />
           </motion.div>
         </div>
       </div>

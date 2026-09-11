@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk '{print \"mp4 mobile: \"$5}')",
+      "Bash(curl -s -o /dev/null -w \"frame000=%{http_code} %{size_download}B\\\\n\" http://localhost:3000/promo/sequencia/ds3-000.webp)",
+      "Bash(curl -s -o /dev/null -w \"frame144=%{http_code}\\\\n\" http://localhost:3000/promo/sequencia/ds3-144.webp)",
+      "Bash(curl -s -o /dev/null -w \"mp4=%{http_code} %{size_download}B\\\\n\" http://localhost:3000/promo/ds3-rotacao-360.mp4)",
+      "Bash(C:/Users/gujjb/AppData/Local/Temp/claude/c--Users-gujjb-OneDrive-Desktop-Dev-Freelance-GrupoForte-vendaforte-landing/aaea8841-e612-4a0e-9ee0-e82083c561d0/scratchpad/node_modules/ffmpeg-static/ffmpeg.exe -v error -y -i C:/Users/gujjb/AppData/Local/Temp/claude/c--Users-gujjb-OneDrive-Desktop-Dev-Freelance-GrupoForte-vendaforte-landing/aaea8841-e612-4a0e-9ee0-e82083c561d0/scratchpad/seedance-original-1080p.mp4 -vf 'select='\\\\''eq\\(n\\\\,0\\)+eq\\(n\\\\,36\\)+eq\\(n\\\\,42\\)+eq\\(n\\\\,54\\)+eq\\(n\\\\,72\\)+eq\\(n\\\\,78\\)+eq\\(n\\\\,96\\)+eq\\(n\\\\,110\\)+eq\\(n\\\\,120\\)'\\\\'',scale=640:-1,drawtext=text='\\\\''%{n}'\\\\'':x=8:y=8:fontsize=22:fontcolor=yellow:fontfile=C\\\\\\\\:/Windows/Fonts/arial.ttf,tile=3x3' -frames:v 1 -vsync vfr C:/Users/gujjb/AppData/Local/Temp/claude/c--Users-gujjb-OneDrive-Desktop-Dev-Freelance-GrupoForte-vendaforte-landing/aaea8841-e612-4a0e-9ee0-e82083c561d0/scratchpad/picks.png)"
+    ]
+  }
+}

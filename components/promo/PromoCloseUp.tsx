@@ -21,24 +21,13 @@ export interface CloseUpPoint {
   mediaKey: keyof typeof MEDIA;
 }
 
+// A ordem segue o giro do vídeo do palco: cada legenda entra quando a peça está à vista.
 export const CLOSE_UP_POINTS: CloseUpPoint[] = [
-  {
-    title: "Timão de comando",
-    description:
-      "Aceleração progressiva e botões de elevação ao alcance do polegar. Reduz fadiga em jornada longa.",
-    mediaKey: "detalheTimao",
-  },
   {
     title: "Bateria de lítio 24V",
     description:
       "Removível, com conector rápido. Aceita carga parcial em qualquer intervalo, sem efeito memória.",
     mediaKey: "detalheBateria",
-  },
-  {
-    title: "Patolas",
-    description:
-      "Estabilidade para carga elevada sem exigir contrapeso, o que mantém a máquina compacta.",
-    mediaKey: "detalhePatolas",
   },
   {
     title: "Mastro",
@@ -47,9 +36,21 @@ export const CLOSE_UP_POINTS: CloseUpPoint[] = [
     mediaKey: "detalheMastro",
   },
   {
+    title: "Patolas",
+    description:
+      "Estabilidade para carga elevada sem exigir contrapeso, o que mantém a máquina compacta.",
+    mediaKey: "detalhePatolas",
+  },
+  {
     title: "Rodas e chassi",
     description: "Construção para piso industrial e giro em corredor estreito.",
     mediaKey: "detalheRodas",
+  },
+  {
+    title: "Timão de comando",
+    description:
+      "Aceleração progressiva e botões de elevação ao alcance do polegar. Reduz fadiga em jornada longa.",
+    mediaKey: "detalheTimao",
   },
 ];
 

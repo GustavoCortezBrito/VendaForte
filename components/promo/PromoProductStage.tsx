@@ -1,29 +1,32 @@
 "use client";
 
-import { Component, useEffect, useRef, useState, type ReactNode } from "react";
-import dynamic from "next/dynamic";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-  type MotionValue,
-} from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import PromoHero from "./PromoHero";
 import PromoCloseUp, { CLOSE_UP_POINTS } from "./PromoCloseUp";
-import PromoMediaSlot, { hasMedia } from "./PromoMediaSlot";
-
-// three.js só existe no navegador e pesa; carrega à parte, apenas no palco desktop.
-const ProductModel3D = dynamic(() => import("./ProductModel3D"), { ssr: false });
+import ScrollSequence, { SEQUENCE_FPS, SEQUENCE_FRAMES } from "./ScrollSequence";
 
 /**
  * Palco de produto compartilhado pelas seções 01 (hero) e 02 (veja de perto).
  *
- * A DS3 entra uma única vez e permanece na tela durante as duas seções. O scroll
- * gira o modelo 3D (`public/promo/ds3.glb`) uma volta completa ao longo do palco.
+ * O vídeo de giro da DS3 é o palco inteiro. O scroll controla o tempo do vídeo:
+ * fica de frente durante o hero, gira na transição e, na fase B, para em cada
+ * peça no momento em que a legenda dela entra.
  *
  * Especificação: docs/promo/sequencia-scroll-produto.md
  */
+
+/** Cor do fundo do estúdio no vídeo. O palco usa a mesma, para não haver emenda. */
+const STUDIO = "#0D0D0D";
+
+// Progresso do palco → segundo do vídeo (giro de 360° do Seedance, 6 s). Cada
+// fatia da fase B cai no trecho em que a peça da legenda correspondente está à
+// vista, na ordem de CLOSE_UP_POINTS.
+const TIMELINE_PROGRESS = [0, 0.24, 0.42, 0.52, 0.62, 0.72, 0.82, 0.92, 1];
+const TIMELINE_SECONDS = [0, 1.2, 1.55, 1.95, 2.85, 3.45, 4.9, 5.9, 6];
+const TIMELINE_FRAMES = TIMELINE_SECONDS.map((seconds) =>
+  Math.min(seconds * SEQUENCE_FPS, SEQUENCE_FRAMES - 1)
+);
 
 export default function PromoProductStage() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -32,7 +35,7 @@ export default function PromoProductStage() {
 
   // O palco fixo só liga no desktop, depois da montagem. O servidor e a primeira
   // renderização do cliente são sempre a versão empilhada, o que evita divergência
-  // de hidratação e garante que o mobile nunca carregue a sequência pesada.
+  // de hidratação e garante que o mobile nunca baixe a sequência de quadros.
   useEffect(() => {
     if (prefersReducedMotion) {
       setStageEnabled(false);
@@ -56,24 +59,17 @@ export default function PromoProductStage() {
     offset: ["start start", "end end"],
   });
 
-  /* ---------------------------------------------------------------------- */
-  /* Coreografia. As faixas seguem a tabela da especificação.                */
-  /* ---------------------------------------------------------------------- */
+  const frame = useTransform(scrollYProgress, TIMELINE_PROGRESS, TIMELINE_FRAMES);
 
-  // Fase A, hero: sai entre 0.24 e 0.34
+  // Fase A, hero: sai entre 0.22 e 0.34
   const heroOpacity = useTransform(scrollYProgress, [0, 0.22, 0.34], [1, 1, 0]);
   const heroY = useTransform(scrollYProgress, [0.22, 0.34], [0, -40]);
 
-  // Produto: cresce na transição e migra na fase B. O giro fica com o modelo 3D.
-  const productScale = useTransform(scrollYProgress, [0.24, 0.42, 0.92, 1], [1, 1.18, 1.18, 1]);
-  const productX = useTransform(scrollYProgress, [0.34, 0.46], ["0%", "-22%"]);
-  const productY = useTransform(scrollYProgress, [0.42, 0.92], [0, -28]);
-  const productOpacity = useTransform(scrollYProgress, [0.92, 1], [1, 0]);
-
-  // Fase B, painel de legendas: entra a partir de 0.38
+  // Fase B, legendas: entram a partir de 0.36
   const panelOpacity = useTransform(scrollYProgress, [0.36, 0.44, 0.92, 0.99], [0, 1, 1, 0]);
 
-  /* ---------------------------------------------------------------------- */
+  // Saída: o vídeo se dissolve no fundo antes de o palco soltar
+  const videoOpacity = useTransform(scrollYProgress, [0.93, 1], [1, 0]);
 
   if (!stageEnabled) {
     // Versão empilhada: mobile, tablet estreito, dados economizados e movimento
@@ -87,45 +83,28 @@ export default function PromoProductStage() {
   }
 
   return (
-    <div ref={wrapperRef} className="relative h-[320vh]">
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#05070B]">
-        {/* ---------------- Camada 1, fundo estático ----------------
-            Só entra quando a arte existir. Um slot marcado em tela cheia
-            atrapalharia a leitura do palco inteiro. */}
-        {hasMedia("heroFundo") && (
-          <PromoMediaSlot
-            media="heroFundo"
-            className="absolute inset-0 h-full w-full rounded-none border-0"
-            imageClassName="opacity-40"
-            sizes="100vw"
-            preload
+    <div ref={wrapperRef} className="relative h-[360vh]">
+      <div className="sticky top-0 h-screen overflow-hidden" style={{ backgroundColor: STUDIO }}>
+        {/* Vídeo: deslocado para a direita do texto, borda esquerda dissolvida no estúdio */}
+        <motion.div
+          style={{ opacity: videoOpacity }}
+          className="absolute inset-y-0 right-0 w-[76%]"
+        >
+          <ScrollSequence
+            frame={frame}
+            className="h-full w-full"
+            label="Empilhadeira EP DS3 girando 360 graus: bateria, mastro, patolas, rodas e timão"
           />
-        )}
-
-        {/* ---------------- Camada 3, iluminação volumétrica ---------------- */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-32 top-10 h-[520px] w-[520px] rounded-full bg-orange-500/20 blur-[120px]" />
-          <div className="absolute -right-20 bottom-0 h-[560px] w-[560px] rounded-full bg-red-600/20 blur-[120px]" />
-          <div className="absolute left-1/2 top-1/3 h-[380px] w-[380px] -translate-x-1/2 rounded-full bg-amber-400/10 blur-[120px]" />
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400/60 to-transparent" />
           <div
-            className="absolute inset-0 opacity-[0.15]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
-              backgroundSize: "72px 72px",
-              maskImage: "radial-gradient(ellipse at center, black 20%, transparent 72%)",
-              WebkitMaskImage:
-                "radial-gradient(ellipse at center, black 20%, transparent 72%)",
-            }}
+            className="pointer-events-none absolute inset-y-0 left-0 w-2/5"
+            style={{ background: `linear-gradient(to right, ${STUDIO}, transparent)` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#05070B] via-[#05070B]/85 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-transparent to-[#05070B]/70" />
-        </div>
+        </motion.div>
 
-        {/* ---------------- Conteúdo ---------------- */}
+        {/* Emenda com a seção seguinte, que usa o fundo da página */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#05070B] to-transparent" />
+
         <div className="relative z-10 mx-auto grid h-full w-full max-w-7xl grid-cols-2 items-center gap-14 px-8">
-          {/* Coluna esquerda: hero na fase A, legendas na fase B */}
           <div className="relative">
             <motion.div style={{ opacity: heroOpacity, y: heroY }}>
               <PromoHero variant="stage" />
@@ -138,85 +117,15 @@ export default function PromoProductStage() {
               <PromoCloseUp variant="stage" progress={scrollYProgress} />
             </motion.div>
           </div>
-
-          {/* Coluna direita: produto */}
-          <motion.div
-            style={{
-              scale: productScale,
-              x: productX,
-              y: productY,
-              opacity: productOpacity,
-            }}
-            className="relative flex items-center justify-center"
-          >
-            <div className="absolute h-[460px] w-[460px] rounded-full bg-red-600/25 blur-[120px]" />
-            <div className="absolute h-[260px] w-[260px] translate-y-24 rounded-full bg-orange-500/20 blur-[100px]" />
-            <ProductStage3D progress={scrollYProgress} />
-          </motion.div>
         </div>
 
-        {/* Indicador de progresso da fase B */}
         <motion.div
           style={{ opacity: panelOpacity }}
-          className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2"
+          className="pointer-events-none absolute bottom-10 left-1/2 z-10 -translate-x-1/2"
         >
           <StageProgress progress={scrollYProgress} />
         </motion.div>
       </div>
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* Produto: modelo 3D da DS3                                                  */
-/* -------------------------------------------------------------------------- */
-
-/** Se o WebGL ou o GLB falharem, o palco cai para o render estático. */
-class ModelErrorBoundary extends Component<
-  { onError: () => void; children: ReactNode },
-  { failed: boolean }
-> {
-  state = { failed: false };
-
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-
-  componentDidCatch() {
-    this.props.onError();
-  }
-
-  render() {
-    return this.state.failed ? null : this.props.children;
-  }
-}
-
-function ProductStage3D({ progress }: { progress: MotionValue<number> }) {
-  const [loaded, setLoaded] = useState(false);
-  const [failed, setFailed] = useState(false);
-
-  return (
-    <div className="relative h-[min(76vh,720px)] w-full">
-      {!failed && (
-        <ModelErrorBoundary onError={() => setFailed(true)}>
-          <ProductModel3D
-            progress={progress}
-            onLoaded={() => setLoaded(true)}
-            className={`!absolute inset-0 transition-opacity duration-700 ${
-              loaded ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        </ModelErrorBoundary>
-      )}
-
-      {failed && (
-        <PromoMediaSlot
-          media="ds3Render"
-          className="absolute inset-0 h-full w-full rounded-none border-0"
-          sizes="600px"
-          fit="contain"
-        />
-      )}
     </div>
   );
 }

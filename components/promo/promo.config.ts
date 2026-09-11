@@ -64,11 +64,11 @@ export const MEDIA: Record<string, MediaAsset> = {
     kind: "image",
   },
   heroVideo: {
-    file: "/promo/higgsfield-hero.mp4",
-    src: null,
-    label: "Vídeo cinematográfico do hero",
-    spec: "1920 × 1080 · H.264 · 8 a 12 s · sem áudio",
-    alt: "",
+    file: "/promo/ds3-rotacao-360.mp4",
+    src: "/promo/ds3-rotacao-360.mp4",
+    label: "Giro 360° da DS3 (Seedance 2.5)",
+    spec: "Original 1920 × 1080 · 6 s · versão mobile 1280 × 720 H.264 · quadros em /promo/sequencia/",
+    alt: "Empilhadeira elétrica EP DS3 girando 360 graus",
     kind: "video",
   },
   ds3Render: {
@@ -209,6 +209,43 @@ export const MEDIA: Record<string, MediaAsset> = {
   },
 };
 
+/* -------------------------------------------------------------------------- */
+/* Fotos da DS3                                                                */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Quadros do giro do Seedance, recortados em 1080 × 1080 e centrados no produto.
+ * O fundo é o mesmo `ink` da página, então a foto não forma retângulo.
+ */
+export const DS3_SHOTS = {
+  frente: { src: "/promo/ds3/ds3-frente.webp", alt: "EP DS3 de frente, com o timão de comando" },
+  tresQuartos: {
+    src: "/promo/ds3/ds3-34-frente.webp",
+    alt: "EP DS3 em três quartos, com a carenagem vermelha da bateria",
+  },
+  perfil: { src: "/promo/ds3/ds3-perfil.webp", alt: "EP DS3 de perfil, com o mastro e os garfos" },
+  mastro: { src: "/promo/ds3/ds3-mastro.webp", alt: "Mastro da EP DS3 com correntes e grade de proteção" },
+  traseira: { src: "/promo/ds3/ds3-traseira.webp", alt: "Garfos e patolas da EP DS3 vistos de trás" },
+  tresQuartosTras: {
+    src: "/promo/ds3/ds3-34-traseira.webp",
+    alt: "EP DS3 em três quartos traseiro, com o mastro em primeiro plano",
+  },
+  lateral: { src: "/promo/ds3/ds3-lateral.webp", alt: "Lateral da EP DS3 com rodas e chassi" },
+  tresQuartosDir: {
+    src: "/promo/ds3/ds3-34-frente-dir.webp",
+    alt: "EP DS3 em três quartos pela direita, com o logo EP",
+  },
+} as const;
+
+export type DS3ShotKey = keyof typeof DS3_SHOTS;
+
+/** Fotos de estúdio em fundo branco, para as seções claras. */
+export const DS3_STUDIO = {
+  frente: { src: "/promo/ds3_1.webp", alt: "EP DS3 em fundo branco, vista frontal" },
+  esquerda: { src: "/promo/ds3_2.webp", alt: "EP DS3 em fundo branco, três quartos pela esquerda" },
+  direita: { src: "/promo/ds3_4.webp", alt: "EP DS3 em fundo branco, três quartos pela direita" },
+} as const;
+
 /** Catálogo de PDF. `null` esconde o botão de download, para não gerar link quebrado. */
 export const CATALOGO_PDF: string | null = null;
 
@@ -242,7 +279,7 @@ export const PROMO_PRODUCTS: PromoProduct[] = [
     shortName: "DS3",
     tagline: "Verticalização em corredor estreito",
     badge: "Destaque · 1.500 kg",
-    badgeClass: "bg-gradient-to-r from-orange-500 to-red-600 text-white",
+    badgeClass: "bg-red-600 text-white",
     capacity: "1.500 kg",
     lifting: "3,9 metros",
     battery: "24V Li-Ion",
@@ -262,7 +299,7 @@ export const PROMO_PRODUCTS: PromoProduct[] = [
     shortName: "F4",
     tagline: "A campeã de vendas do armazém",
     badge: "Mais vendida",
-    badgeClass: "bg-amber-400 text-black",
+    badgeClass: "bg-white text-ink",
     capacity: "1.500 kg",
     lifting: "200 mm",
     battery: "24V Li-Ion",
@@ -282,7 +319,7 @@ export const PROMO_PRODUCTS: PromoProduct[] = [
     shortName: "EFL302",
     tagline: "Força pesada 100% elétrica",
     badge: "3 toneladas",
-    badgeClass: "bg-sky-500 text-white",
+    badgeClass: "bg-white/10 text-white",
     capacity: "3.000 kg",
     lifting: "6 metros",
     battery: "80V Li-Ion",
