@@ -48,13 +48,13 @@ const HIGHLIGHT_ITEMS: HighlightItem[] = [
     subtitle: 'Stacker Elétrico Li-Ion',
     description: 'Stacker elétrico compacto para estocagem vertical em corredores estreitos. Ideal para armazéns que necessitam de elevação com investimento acessível.',
     capacity: '1.500 kg',
-    liftingHeight: '3.300 mm (3,3m)',
+    liftingHeight: '3.900 mm (3,9m)',
     batteryVoltage: '24V Li-Ion',
     chargingTime: '3 a 4 horas',
     turningRadius: '1.380 mm',
     image: 'https://cdn.ep-portal.net/products/attr_5/1760708717052-oi6361.webp',
     highlights: [
-      'Elevação até 3,3 metros para estocagem vertical eficiente',
+      'Elevação até 3,9 metros para estocagem vertical eficiente',
       'Bateria Li-Ion de longa duração com carregador incluso',
       'Patas ajustáveis para diferentes tamanhos de paletes',
       'Investimento acessível com baixo custo de manutenção'

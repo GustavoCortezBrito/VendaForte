@@ -32,7 +32,7 @@ Os visitantes puderam conferir de perto como a tecnologia Li-Ion elimina de vez 
 ### 2. Otimização de Espaço em Corredores Estreitos
 Com a verticalização cada vez maior dos estoques, destacamos soluções compactas e de alta ergonomia:
 * **Paleteiras Elétricas Compactas (Linha F4 - 1.500 kg):** Ágeis, fáceis de operar e perfeitas para docas e centros de distribuição.
-* **Stackers Patoladas (Linha DS3 - 1.500 kg):** Verticalização eficiente de até 3,3 metros para pequenos e médios corredores.
+* **Stackers Patoladas (Linha DS3 - 1.500 kg):** Verticalização eficiente de até 3,9 metros para pequenos e médios corredores.
 * **Empilhadeiras Contrabalançadas 80V (Linhas TVL e EFL):** Potência industrial de 80V com tração para múltiplos turnos pesados.
 
 ### 3. Consultoria Especializada e Dimensionamento de Frotas

@@ -37,7 +37,7 @@ A paleteira elétrica mais vendida do mundo. Substitui as antigas paleteiras man
 
 ### 2. Empilhadeira Patolada DS3 (1.500 kg)
 O stacker elétrico que democratizou a verticalização de estoques:
-* Elevação segura de até 3,3 metros para porta-paletes e mezaninos.
+* Elevação segura de até 3,9 metros para porta-paletes e mezaninos.
 * Operação silenciosa, livre de fumaça e com baixo custo de manutenção periódica.
 * Patas ajustáveis que comportam diferentes tipos e medidas de paletes.
 

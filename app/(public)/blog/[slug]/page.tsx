@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import { remark } from 'remark'
 import remarkHtml from 'remark-html'
+import remarkGfm from 'remark-gfm'
 
 interface BlogPost {
   id?: string
@@ -163,6 +164,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   // Converter markdown para HTML
   const processedContent = await remark()
+    .use(remarkGfm)
     .use(remarkHtml, { sanitize: false })
     .process(post.content || '')
   const contentHtml = processedContent.toString()
@@ -307,6 +309,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               prose-code:rounded prose-code:text-sm prose-code:text-red-600
               prose-img:rounded-xl prose-img:shadow-lg prose-img:my-8
               prose-img:w-full prose-img:h-auto
+              prose-table:w-full prose-table:my-8 prose-table:border-collapse prose-table:rounded-xl prose-table:overflow-hidden prose-table:shadow-sm
+              prose-thead:bg-gray-900 prose-thead:text-white
+              prose-th:p-4 prose-th:text-left prose-th:text-xs prose-th:font-bold prose-th:uppercase prose-th:tracking-wider prose-th:text-white
+              prose-td:p-4 prose-td:text-sm prose-td:border-b prose-td:border-gray-200 prose-td:text-gray-700
+              prose-tr:even:bg-gray-50
             "
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
