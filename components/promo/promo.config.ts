@@ -31,6 +31,18 @@ export const PONTOS_ATENDIMENTO = [
   "Esteio",
 ] as const;
 
+/** Âncora do hero em vídeo. O header muda de estado quando ele termina. */
+export const HERO_ID = "palco";
+
+/** Menu da campanha, usado no header e no rodapé. */
+export const PROMO_NAV = [
+  { href: "#ds3", label: "A DS3" },
+  { href: "#economia", label: "Economia" },
+  { href: "#ofertas", label: "Oferta" },
+  { href: "#ficha-tecnica", label: "Ficha técnica" },
+  { href: "#vendedores", label: "Vendedores" },
+] as const;
+
 /* -------------------------------------------------------------------------- */
 /* Registro de mídias                                                          */
 /* -------------------------------------------------------------------------- */
@@ -159,22 +171,6 @@ export const MEDIA: Record<string, MediaAsset> = {
     alt: "Empilhadeira elétrica em reposição de atacado",
     kind: "image",
   },
-  produtoF4: {
-    file: "/promo/produto-f4.webp",
-    src: "https://cdn.ep-portal.net/products/attr_5/1757324457309-ket0ve.webp",
-    label: "Paleteira F4 recortada",
-    spec: "1200 × 1200 · fundo transparente · hoje vem do CDN da EP",
-    alt: "Paleteira Elétrica EP F4 de 1.500 kg",
-    kind: "image",
-  },
-  produtoEfl302: {
-    file: "/promo/produto-efl302.webp",
-    src: "https://cdn.ep-portal.net/products/attr_5/1766563537248-z8brck.webp",
-    label: "Contrabalançada EFL302 recortada",
-    spec: "1200 × 1200 · fundo transparente · hoje vem do CDN da EP",
-    alt: "Empilhadeira Contrabalançada EP EFL302 de 3 toneladas",
-    kind: "image",
-  },
   desenhoTecnico: {
     file: "/promo/ds3-desenho-tecnico.webp",
     src: null,
@@ -214,23 +210,29 @@ export const MEDIA: Record<string, MediaAsset> = {
 /* -------------------------------------------------------------------------- */
 
 /**
- * Quadros do giro do Seedance, recortados em 1080 × 1080 e centrados no produto.
+ * Quadros do giro do Seedance, recortados em quadrado e centrados no produto.
  * O fundo é o mesmo `ink` da página, então a foto não forma retângulo.
+ *
+ * Os cinco com sufixo `-hd` aparecem com zoom de câmera em "Detalhe construtivo":
+ * foram ampliados 4× com Real-ESRGAN e salvos em 3240 px. Os demais têm 1080 px.
  */
 export const DS3_SHOTS = {
-  frente: { src: "/promo/ds3/ds3-frente.webp", alt: "EP DS3 de frente, com o timão de comando" },
+  frente: { src: "/promo/ds3/ds3-frente-hd.webp", alt: "EP DS3 de frente, com o timão de comando" },
   tresQuartos: {
-    src: "/promo/ds3/ds3-34-frente.webp",
+    src: "/promo/ds3/ds3-34-frente-hd.webp",
     alt: "EP DS3 em três quartos, com a carenagem vermelha da bateria",
   },
   perfil: { src: "/promo/ds3/ds3-perfil.webp", alt: "EP DS3 de perfil, com o mastro e os garfos" },
-  mastro: { src: "/promo/ds3/ds3-mastro.webp", alt: "Mastro da EP DS3 com correntes e grade de proteção" },
-  traseira: { src: "/promo/ds3/ds3-traseira.webp", alt: "Garfos e patolas da EP DS3 vistos de trás" },
+  mastro: {
+    src: "/promo/ds3/ds3-mastro-hd.webp",
+    alt: "Mastro da EP DS3 com correntes e grade de proteção",
+  },
+  traseira: { src: "/promo/ds3/ds3-traseira-hd.webp", alt: "Garfos e patolas da EP DS3 vistos de trás" },
   tresQuartosTras: {
     src: "/promo/ds3/ds3-34-traseira.webp",
     alt: "EP DS3 em três quartos traseiro, com o mastro em primeiro plano",
   },
-  lateral: { src: "/promo/ds3/ds3-lateral.webp", alt: "Lateral da EP DS3 com rodas e chassi" },
+  lateral: { src: "/promo/ds3/ds3-lateral-hd.webp", alt: "Lateral da EP DS3 com rodas e chassi" },
   tresQuartosDir: {
     src: "/promo/ds3/ds3-34-frente-dir.webp",
     alt: "EP DS3 em três quartos pela direita, com o logo EP",
@@ -253,7 +255,8 @@ export const CATALOGO_PDF: string | null = null;
 /* Catálogo da campanha                                                        */
 /* -------------------------------------------------------------------------- */
 
-export type PromoProductId = "ds3" | "f4" | "efl302" | "outro";
+// A campanha trabalha só a DS3; "outro" leva a conversa para consultoria de frota.
+export type PromoProductId = "ds3" | "outro";
 
 export interface PromoProduct {
   id: Exclude<PromoProductId, "outro">;
@@ -269,7 +272,6 @@ export interface PromoProduct {
   installment: string;
   mediaKey: keyof typeof MEDIA;
   highlights: string[];
-  featured: boolean;
 }
 
 export const PROMO_PRODUCTS: PromoProduct[] = [
@@ -291,47 +293,6 @@ export const PROMO_PRODUCTS: PromoProduct[] = [
       "Zero manutenção de água e ácido",
       "Timão ergonômico com comando progressivo",
     ],
-    featured: true,
-  },
-  {
-    id: "f4",
-    name: "Paleteira Elétrica EP F4",
-    shortName: "F4",
-    tagline: "A campeã de vendas do armazém",
-    badge: "Mais vendida",
-    badgeClass: "bg-white text-ink",
-    capacity: "1.500 kg",
-    lifting: "200 mm",
-    battery: "24V Li-Ion",
-    price: "A partir de R$ 14.890",
-    installment: "Até 12x no cartão CNPJ",
-    mediaKey: "produtoF4",
-    highlights: [
-      "Compacta para docas e caminhões",
-      "Bateria removível de troca rápida",
-      "Operação silenciosa para turno noturno",
-    ],
-    featured: false,
-  },
-  {
-    id: "efl302",
-    name: "Contrabalançada EP EFL302",
-    shortName: "EFL302",
-    tagline: "Força pesada 100% elétrica",
-    badge: "3 toneladas",
-    badgeClass: "bg-white/10 text-white",
-    capacity: "3.000 kg",
-    lifting: "6 metros",
-    battery: "80V Li-Ion",
-    price: "Condição de lote",
-    installment: "Faturamento direto e BNDES",
-    mediaKey: "produtoEfl302",
-    highlights: [
-      "Substitui a combustão sem perder desempenho",
-      "Cabine ampla com coluna de direção ajustável",
-      "Frenagem regenerativa que devolve carga",
-    ],
-    featured: false,
   },
 ];
 
@@ -378,7 +339,7 @@ export const SALES_TEAM: SalesConsultant[] = [
     name: "Consultor técnico",
     role: "Linha elétrica e armazenagem vertical",
     region: "Chapecó, Itajaí e Joinville",
-    specialty: "Dimensionamento da DS3 e da F4",
+    specialty: "Dimensionamento da DS3 para a sua operação",
     phoneDisplay: WHATSAPP_DISPLAY,
     whatsappNumber: WHATSAPP_CENTRAL,
     initials: "CT",

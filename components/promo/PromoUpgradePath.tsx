@@ -1,22 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { Battery, CircleCheckBig, Fuel, CalendarClock, PackageOpen } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Battery, CalendarClock, CircleCheckBig, Fuel, PackageOpen } from "lucide-react";
 import { whatsappUrl } from "./promo.config";
+import { EASE_OUT, Eyebrow, Reveal, StudioPhoto, TITLE, WhatsAppLink } from "./ui";
 
 /**
- * Seção 05 — O que você usa hoje.
+ * Seção 05 — O que você usa hoje. Seção clara.
  * Prioridade máxima da campanha: personaliza o ganho e qualifica o lead.
  * Especificação: docs/promo/05-o-que-voce-usa-hoje.md
  */
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
-
-const VIEWPORT = { once: true, margin: "-80px" } as const;
 
 interface UpgradeOption {
   id: string;
@@ -83,94 +77,86 @@ export default function PromoUpgradePath() {
   return (
     <section
       id="trocar"
-      className="relative overflow-hidden border-t border-white/[0.06] bg-[#05070B] py-28"
+      className="scroll-mt-24 border-t border-ink/[0.08] bg-paper py-24 text-ink lg:py-32"
     >
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-px w-[600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-red-500/60 to-transparent" />
-        <div className="absolute -left-32 top-1/4 h-[440px] w-[440px] rounded-full bg-red-600/10 blur-[120px]" />
-        <div className="absolute -right-32 bottom-0 h-[440px] w-[440px] rounded-full bg-orange-500/10 blur-[120px]" />
-      </div>
-
-      <div className="relative mx-auto max-w-5xl px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl sm:p-10"
-        >
-          <div className="text-center">
-            <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-red-400">
-              Caminho de troca
-            </span>
-            <h2 className="mt-3 text-3xl font-black tracking-tight text-white sm:text-4xl">
-              Nunca foi tão fácil trocar
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm text-neutral-400">
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:gap-8 lg:px-8">
+        <div className="lg:col-span-7">
+          <Reveal>
+            <Eyebrow tone="light">Caminho de troca</Eyebrow>
+            <h2 className={`mt-4 ${TITLE}`}>Nunca foi tão fácil trocar</h2>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-stone-600">
               Selecione o que a sua operação usa hoje e veja o que muda com a DS3.
             </p>
-          </div>
+          </Reveal>
 
-          {/* Seletor */}
-          <div
-            role="group"
-            aria-label="O que a sua operação usa hoje"
-            className="-mx-8 mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto px-8 pb-2 sm:mx-0 sm:grid sm:grid-cols-4 sm:overflow-visible sm:px-0 sm:pb-0"
-          >
-            {OPTIONS.map((option) => {
-              const isActive = option.id === activeId;
-              return (
-                <button
-                  key={option.id}
-                  type="button"
-                  aria-pressed={isActive}
-                  onClick={() => setActiveId(option.id)}
-                  className={`flex w-[60%] shrink-0 cursor-pointer snap-center flex-col items-center gap-2 rounded-2xl border px-4 py-4 text-center transition-all sm:w-auto ${
-                    isActive
-                      ? "border-orange-500/60 bg-gradient-to-b from-red-600/25 to-orange-600/25 text-white shadow-lg shadow-red-900/30"
-                      : "border-white/10 bg-white/[0.02] text-neutral-400 hover:border-white/25 hover:text-white"
-                  }`}
-                >
-                  <option.icon className="h-5 w-5" />
-                  <span className="text-xs font-semibold leading-tight">{option.label}</span>
-                </button>
-              );
-            })}
-          </div>
+          <Reveal delay={0.08}>
+            <div
+              role="group"
+              aria-label="O que a sua operação usa hoje"
+              className="mt-10 grid grid-cols-2 gap-1 rounded-[22px] bg-ink/[0.05] p-1 sm:grid-cols-4"
+            >
+              {OPTIONS.map((option) => {
+                const isActive = option.id === activeId;
+                return (
+                  <button
+                    key={option.id}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => setActiveId(option.id)}
+                    className={`relative flex cursor-pointer flex-col items-center gap-1.5 rounded-[18px] px-3 py-3.5 text-center text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600/50 ${
+                      isActive ? "text-ink" : "text-stone-500 hover:text-ink"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="troca-ativa"
+                        className="absolute inset-0 rounded-[18px] bg-paper-card shadow-sm"
+                        transition={{ duration: 0.45, ease: EASE_OUT }}
+                      />
+                    )}
+                    <option.icon className="relative h-5 w-5" aria-hidden="true" />
+                    <span className="relative leading-tight">{option.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </Reveal>
 
-          {/* Painel. Altura mínima reservada para o layout não pular. */}
-          <div className="mt-8 min-h-[248px] sm:min-h-[200px]">
+          {/* Altura mínima reservada para o layout não pular ao trocar de opção */}
+          <div className="mt-6 min-h-[340px] sm:min-h-[232px]">
             <AnimatePresence mode="wait">
-              <motion.div
+              <motion.ul
                 key={active.id}
-                initial={{ opacity: 0, y: 8 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 8 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="grid gap-4 sm:grid-cols-2"
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.35, ease: EASE_OUT }}
+                className="grid gap-3 sm:grid-cols-2"
               >
                 {active.gains.map((gain) => (
-                  <div
-                    key={gain}
-                    className="flex items-start gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4"
-                  >
-                    <CircleCheckBig className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-                    <p className="text-sm leading-relaxed text-neutral-300">{gain}</p>
-                  </div>
+                  <li key={gain} className="flex items-start gap-3 rounded-2xl bg-paper-card p-5">
+                    <CircleCheckBig className="mt-0.5 h-4 w-4 shrink-0 text-red-600" aria-hidden="true" />
+                    <span className="text-sm leading-relaxed text-stone-700">{gain}</span>
+                  </li>
                 ))}
-              </motion.div>
+              </motion.ul>
             </AnimatePresence>
           </div>
 
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 py-4 text-sm font-black text-white shadow-xl shadow-red-600/25 transition-all hover:from-red-500 hover:to-orange-500"
-          >
+          <WhatsAppLink href={url} className="mt-6">
             Simular a troca para a minha operação
-          </a>
-        </motion.div>
+          </WhatsAppLink>
+        </div>
+
+        <Reveal className="lg:col-span-5" delay={0.1}>
+          <div className="lg:sticky lg:top-28">
+            <StudioPhoto
+              photo="esquerda"
+              className="aspect-[4/5] w-full rounded-[28px]"
+              sizes="(max-width: 1024px) 100vw, 40vw"
+            />
+          </div>
+        </Reveal>
       </div>
     </section>
   );

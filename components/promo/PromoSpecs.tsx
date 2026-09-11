@@ -1,21 +1,14 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
-import { Download, MessageCircle } from "lucide-react";
-import PromoMediaSlot from "./PromoMediaSlot";
+import { Download } from "lucide-react";
+import PromoMediaSlot, { hasMedia } from "./PromoMediaSlot";
 import { CATALOGO_PDF, whatsappUrl } from "./promo.config";
+import { BTN_PRIMARY, Eyebrow, Reveal, Shot, TITLE, WhatsAppLink } from "./ui";
 
 /**
  * Seção 09 — Ficha técnica da EP DS3.
  * Especificação: docs/promo/09-ficha-tecnica.md
  */
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
-
-const VIEWPORT = { once: true, margin: "-80px" } as const;
 
 interface SpecRow {
   label: string;
@@ -23,8 +16,8 @@ interface SpecRow {
 }
 
 /**
- * `null` marca campo pendente do catálogo oficial EP. A linha aparece com o
- * marcador de pendência em vez de sumir, para o time saber o que falta preencher.
+ * `null` marca campo pendente do catálogo oficial EP. Pendentes aparecem como
+ * lista do que vem na ficha completa; ao preencher, sobem para a tabela.
  */
 const SPECS: SpecRow[] = [
   { label: "Capacidade nominal", value: "1.500 kg" },
@@ -47,124 +40,111 @@ const SPECS: SpecRow[] = [
   { label: "Grau de proteção", value: null },
 ];
 
+/** Anotações sobre a foto de perfil, em % do quadro. */
+const CALLOUTS = [
+  { label: "Mastro · elevação até 3,9 m", left: "40%", top: "12%" },
+  { label: "Bateria 24V de íon-lítio", left: "6%", top: "46%" },
+  { label: "Capacidade de 1.500 kg", left: "48%", top: "76%" },
+] as const;
+
 export default function PromoSpecs() {
+  const filled = SPECS.filter((row): row is { label: string; value: string } => row.value !== null);
+  const pending = SPECS.filter((row) => row.value === null).map((row) => row.label);
+
   return (
     <section
       id="ficha-tecnica"
-      className="relative overflow-hidden border-t border-white/[0.06] bg-[#05070B] py-28"
+      className="scroll-mt-24 border-t border-white/[0.06] bg-ink py-24 lg:py-32"
     >
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mb-12"
-        >
-          <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-orange-500">
-            Especificação
-          </span>
-          <h2 className="mt-3 text-4xl font-black tracking-tight text-white lg:text-5xl">
-            Ficha técnica da EP DS3
-          </h2>
-          <p className="mt-4 max-w-xl text-neutral-500">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Reveal className="max-w-3xl">
+          <Eyebrow>Especificação</Eyebrow>
+          <h2 className={`mt-4 ${TITLE} text-white`}>Ficha técnica da EP DS3</h2>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-400">
             Para quem precisa validar corredor, altura e ciclo antes de aprovar a compra.
           </p>
-        </motion.div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[55fr_45fr]">
-          {/* Tabela */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={VIEWPORT}
-            className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-xl"
-          >
-            <table className="w-full text-left">
+        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-8">
+          <Reveal className="lg:col-span-6">
+            <div className="relative">
+              <Shot shot="perfil" className="aspect-square w-full" sizes="(max-width: 1024px) 100vw, 48vw" />
+              <div aria-hidden="true">
+                {CALLOUTS.map((callout) => (
+                  <span
+                    key={callout.label}
+                    className="absolute flex items-center gap-2 whitespace-nowrap rounded-full border border-white/15 bg-ink/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md"
+                    style={{ left: callout.left, top: callout.top }}
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                    {callout.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {hasMedia("desenhoTecnico") && (
+              <PromoMediaSlot
+                media="desenhoTecnico"
+                className="mt-6 aspect-square w-full rounded-[28px]"
+                imageClassName="p-6"
+                sizes="(max-width: 1024px) 100vw, 48vw"
+                fit="contain"
+              />
+            )}
+          </Reveal>
+
+          <Reveal className="lg:col-span-6" delay={0.08}>
+            <table className="w-full border-y border-white/10 text-left">
               <caption className="sr-only">
                 Especificação técnica da empilhadeira patolada EP DS3
               </caption>
-              <tbody>
-                {SPECS.map((row, index) => (
-                  <tr
-                    key={row.label}
-                    className={`border-b border-white/[0.06] last:border-0 ${
-                      index % 2 === 1 ? "bg-white/[0.015]" : ""
-                    }`}
-                  >
-                    <th
-                      scope="row"
-                      className="p-4 text-sm font-medium text-neutral-400 sm:w-1/2"
-                    >
+              <tbody className="divide-y divide-white/10">
+                {filled.map((row) => (
+                  <tr key={row.label}>
+                    <th scope="row" className="py-5 pr-6 font-normal text-neutral-400">
                       {row.label}
                     </th>
-                    <td className="p-4 text-right text-sm sm:text-left">
-                      {row.value ? (
-                        <span className="font-bold text-white">{row.value}</span>
-                      ) : (
-                        <span className="font-mono text-[11px] uppercase tracking-wider text-orange-400/70">
-                          a preencher
-                        </span>
-                      )}
+                    <td className="py-5 text-right text-xl font-semibold tracking-tight text-white">
+                      {row.value}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </motion.div>
 
-          {/* Desenho técnico e download */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={VIEWPORT}
-            className="space-y-6 lg:sticky lg:top-28 lg:self-start"
-          >
-            <PromoMediaSlot
-              media="desenhoTecnico"
-              className="aspect-square w-full rounded-2xl"
-              imageClassName="p-6"
-              sizes="(max-width: 1024px) 100vw, 45vw"
-              fit="contain"
-            />
-
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl">
-              <h3 className="text-sm font-bold text-white">Leve para o seu time</h3>
-              <p className="mt-1.5 text-xs leading-relaxed text-neutral-500">
-                Ficha completa com desenho cotado, para enviar à sua engenharia.
+            <div className="mt-10 rounded-[28px] border border-white/10 bg-ink-raised p-8">
+              <h3 className="text-lg font-semibold text-white">Leve a ficha completa para o seu time</h3>
+              <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+                Com desenho cotado, para enviar à sua engenharia.
               </p>
 
-              <div className="mt-5 flex flex-col gap-2">
+              {pending.length > 0 && (
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {pending.map((label) => (
+                    <li
+                      key={label}
+                      className="rounded-full border border-white/10 px-3 py-1 text-xs text-neutral-300"
+                    >
+                      {label}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 {CATALOGO_PDF && (
-                  <a
-                    href={CATALOGO_PDF}
-                    className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 py-3.5 text-sm font-bold text-white transition-all hover:from-red-500 hover:to-orange-500"
-                  >
-                    <Download className="h-4 w-4" />
+                  <a href={CATALOGO_PDF} className={BTN_PRIMARY}>
+                    <Download className="h-4 w-4" aria-hidden="true" />
                     Baixar catálogo técnico em PDF
                   </a>
                 )}
-                <a
-                  href={whatsappUrl("Olá! Tenho uma dúvida técnica sobre a EP DS3.")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-xl border border-white/10 py-3.5 text-sm font-semibold text-neutral-300 transition-colors hover:border-emerald-400/40 hover:text-white"
-                >
-                  <MessageCircle className="h-4 w-4 text-emerald-400" />
-                  Tirar dúvida técnica no WhatsApp
-                </a>
+                <WhatsAppLink href={whatsappUrl("Olá! Quero a ficha técnica completa da EP DS3.")}>
+                  Pedir a ficha completa
+                </WhatsAppLink>
               </div>
-
-              {!CATALOGO_PDF && (
-                <p className="mt-4 font-mono text-[10px] leading-relaxed text-neutral-600">
-                  Slot de arquivo: /promo/ds3-catalogo.pdf
-                  <br />O botão de download aparece quando o PDF for publicado.
-                </p>
-              )}
             </div>
-          </motion.div>
+          </Reveal>
         </div>
       </div>
     </section>

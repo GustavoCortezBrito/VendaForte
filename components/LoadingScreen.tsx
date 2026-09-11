@@ -2,12 +2,16 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true)
   const [progress, setProgress] = useState(0)
+  // A campanha /promo abre direto no giro da DS3, sem tela de carregamento
+  const skip = usePathname()?.startsWith('/promo') ?? false
 
   useEffect(() => {
+    if (skip) return
     // Simulate loading progress
     const interval = setInterval(() => {
       setProgress(prev => {
@@ -21,7 +25,9 @@ export default function LoadingScreen() {
     }, 150)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [skip])
+
+  if (skip) return null
 
   return (
     <AnimatePresence>

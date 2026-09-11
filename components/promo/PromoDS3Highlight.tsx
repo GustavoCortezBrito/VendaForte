@@ -1,20 +1,13 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
-import { CircleCheckBig, MessageCircle, TrendingDown, X } from "lucide-react";
+import { CircleCheckBig, X } from "lucide-react";
 import { whatsappUrl } from "./promo.config";
+import { Eyebrow, Reveal, StudioPhoto, TITLE, WhatsAppLink } from "./ui";
 
 /**
- * Seção 04 — Prova de economia, lítio contra o convencional.
+ * Seção 04 — Prova de economia, lítio contra o convencional. Seção clara.
  * Especificação: docs/promo/04-prova-de-economia.md
  */
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
-
-const VIEWPORT = { once: true, margin: "-80px" } as const;
 
 interface RoiRow {
   label: string;
@@ -62,12 +55,24 @@ const ROI_ROWS: RoiRow[] = [
   },
 ];
 
-/**
- * Premissas do cálculo de custo mensal. Enquanto forem nulas, o bloco de barras
- * não é renderizado: a especificação proíbe publicar economia sem memória de
- * cálculo. A tabela sozinha continua sustentando o argumento.
- */
-const PREMISSAS: { turnos: number; horas: number; kwh: number; glp: number } | null = null;
+/** Os três números vêm da tabela acima, nada além dela. */
+const STATS = [
+  {
+    value: "2 a 3 h",
+    label: "de recarga, com recarga de oportunidade",
+    versus: "Chumbo-ácido: 8 a 10 h mais o resfriamento",
+  },
+  {
+    value: "3.000+",
+    label: "ciclos de vida útil da bateria",
+    versus: "Chumbo-ácido: cerca de 1.200",
+  },
+  {
+    value: "Zero",
+    label: "manutenção de água e ácido",
+    versus: "Carrega em tomada comum, sem sala de baterias",
+  },
+] as const;
 
 export default function PromoDS3Highlight() {
   const whatsappROI = whatsappUrl(
@@ -75,119 +80,87 @@ export default function PromoDS3Highlight() {
   );
 
   return (
-    <section
-      id="economia"
-      className="relative overflow-hidden border-t border-white/[0.06] bg-[#05070B] py-28"
-    >
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-px w-[600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
-        <div className="absolute left-1/2 top-1/3 h-[460px] w-[460px] -translate-x-1/2 rounded-full bg-emerald-500/[0.06] blur-[120px]" />
-      </div>
-
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Cabeçalho */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mx-auto mb-14 max-w-2xl text-center"
-        >
-          <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-emerald-400">
-            Custo total de operação
-          </span>
-          <h2 className="mt-4 text-4xl font-black tracking-tight text-white lg:text-5xl">
-            O custo que não aparece na proposta
-          </h2>
-          <p className="mt-5 text-lg leading-relaxed text-neutral-400">
-            A conta de uma empilhadeira não termina no preço de compra. Ela continua todo
-            mês, na energia, na manutenção e nas horas em que a máquina fica parada.
+    <section id="economia" className="scroll-mt-24 bg-paper py-24 text-ink lg:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Reveal className="max-w-3xl">
+          <Eyebrow tone="light">Custo total de operação</Eyebrow>
+          <h2 className={`mt-4 ${TITLE}`}>O custo que não aparece na proposta</h2>
+          <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-stone-600">
+            A conta de uma empilhadeira não termina no preço de compra. Ela continua todo mês, na
+            energia, na manutenção e nas horas em que a máquina fica parada.
           </p>
-        </motion.div>
+        </Reveal>
 
-        {/* Barras comparativas, só com premissa fechada */}
-        {PREMISSAS && (
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={VIEWPORT}
-            className="mb-10 rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl"
-          >
-            <h3 className="text-lg font-bold text-white">Custo mensal de operação</h3>
-            <p className="mt-1 text-xs text-neutral-500">
-              Cálculo considera {PREMISSAS.turnos} turnos de {PREMISSAS.horas} horas, tarifa
-              de energia de R$ {PREMISSAS.kwh} por kWh e GLP a R$ {PREMISSAS.glp} por kg.
-              Valores de referência, sujeitos a variação por região e por perfil de operação.
-            </p>
-          </motion.div>
-        )}
+        <div className="mt-14 grid gap-4 lg:grid-cols-12">
+          <Reveal className="lg:col-span-5">
+            <StudioPhoto
+              photo="direita"
+              className="aspect-[4/5] w-full rounded-[28px] lg:aspect-auto lg:h-full"
+              sizes="(max-width: 1024px) 100vw, 40vw"
+            />
+          </Reveal>
 
-        {/* Tabela comparativa */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl"
-        >
-          <div className="flex items-center gap-3 border-b border-white/10 p-6">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10">
-              <TrendingDown className="h-5 w-5 text-emerald-400" />
-            </span>
-            <div>
-              <h3 className="text-lg font-bold text-white">
-                Lítio EP contra o convencional
-              </h3>
-              <p className="text-xs text-neutral-500">
-                Comparativo para uma operação de dois turnos.
-              </p>
-            </div>
+          <div className="grid gap-4 lg:col-span-7">
+            {STATS.map((stat, index) => (
+              <Reveal
+                key={stat.value}
+                delay={index * 0.08}
+                className="rounded-[28px] bg-paper-card p-8 lg:p-10"
+              >
+                <p className="text-5xl font-bold tracking-[-0.045em] lg:text-6xl">{stat.value}</p>
+                <p className="mt-3 text-lg font-medium">{stat.label}</p>
+                <p className="mt-1 text-sm text-stone-500">{stat.versus}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+
+        <Reveal className="mt-4 overflow-hidden rounded-[28px] bg-paper-card">
+          <div className="border-b border-ink/[0.08] p-6 lg:px-8">
+            <h3 className="text-xl font-semibold tracking-tight">Lítio EP contra o convencional</h3>
+            <p className="mt-1 text-sm text-stone-500">Comparativo para uma operação de dois turnos.</p>
           </div>
 
-          {/* Desktop: tabela real */}
+          {/* Desktop: tabela */}
           <div className="hidden md:block">
             <table className="w-full border-collapse text-left">
               <thead>
-                <tr className="border-b border-white/10 text-xs uppercase tracking-[0.14em]">
-                  <th scope="col" className="p-5 font-semibold text-neutral-500">
+                <tr className="border-b border-ink/[0.08] text-xs font-semibold uppercase tracking-[0.12em] text-stone-500">
+                  <th scope="col" className="p-5 lg:pl-8">
                     Critério
                   </th>
-                  <th scope="col" className="bg-emerald-500/[0.07] p-5 font-bold text-emerald-300">
+                  <th scope="col" className="bg-red-50 p-5 text-red-700">
                     EP DS3 · lítio
                   </th>
-                  <th scope="col" className="p-5 font-semibold text-neutral-500">
+                  <th scope="col" className="p-5">
                     Chumbo-ácido
                   </th>
-                  <th scope="col" className="p-5 font-semibold text-neutral-500">
+                  <th scope="col" className="p-5 lg:pr-8">
                     Combustão GLP
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {ROI_ROWS.map((row) => (
-                  <tr
-                    key={row.label}
-                    className="border-b border-white/[0.06] transition-colors last:border-0 hover:bg-white/[0.02]"
-                  >
-                    <th scope="row" className="p-5 text-sm font-semibold text-white">
+                  <tr key={row.label} className="border-b border-ink/[0.06] last:border-0">
+                    <th scope="row" className="p-5 text-sm font-semibold lg:pl-8">
                       {row.label}
                     </th>
-                    <td className="bg-emerald-500/[0.05] p-5 text-sm text-emerald-200/90">
+                    <td className="bg-red-50 p-5 text-sm font-medium">
                       <span className="flex items-start gap-2">
-                        <CircleCheckBig className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+                        <CircleCheckBig className="mt-0.5 h-4 w-4 shrink-0 text-red-600" aria-hidden="true" />
                         {row.lithium}
                       </span>
                     </td>
-                    <td className="p-5 text-sm text-neutral-500">
+                    <td className="p-5 text-sm text-stone-500">
                       <span className="flex items-start gap-2">
-                        <X className="mt-0.5 h-4 w-4 shrink-0 text-red-500/70" />
+                        <X className="mt-0.5 h-4 w-4 shrink-0 text-stone-400" aria-hidden="true" />
                         {row.lead}
                       </span>
                     </td>
-                    <td className="p-5 text-sm text-neutral-500">
+                    <td className="p-5 text-sm text-stone-500 lg:pr-8">
                       <span className="flex items-start gap-2">
-                        <X className="mt-0.5 h-4 w-4 shrink-0 text-red-500/70" />
+                        <X className="mt-0.5 h-4 w-4 shrink-0 text-stone-400" aria-hidden="true" />
                         {row.combustion}
                       </span>
                     </td>
@@ -198,51 +171,45 @@ export default function PromoDS3Highlight() {
           </div>
 
           {/* Mobile: blocos empilhados, sem rolagem lateral */}
-          <ul className="divide-y divide-white/[0.06] md:hidden">
+          <ul className="divide-y divide-ink/[0.06] md:hidden">
             {ROI_ROWS.map((row) => (
-              <li key={row.label} className="p-5">
-                <h4 className="text-sm font-bold text-white">{row.label}</h4>
-                <div className="mt-3 space-y-2.5 text-xs">
-                  <div className="flex items-start gap-2 rounded-lg bg-emerald-500/[0.07] p-3 text-emerald-200/90">
-                    <CircleCheckBig className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" />
+              <li key={row.label} className="p-6">
+                <h4 className="text-sm font-semibold">{row.label}</h4>
+                <div className="mt-3 space-y-2 text-sm">
+                  <p className="flex items-start gap-2 rounded-xl bg-red-50 p-3 font-medium">
+                    <CircleCheckBig className="mt-0.5 h-4 w-4 shrink-0 text-red-600" aria-hidden="true" />
                     <span>
-                      <strong className="font-semibold text-emerald-300">EP DS3 · lítio.</strong>{" "}
+                      <strong className="font-semibold text-red-700">EP DS3 · lítio.</strong>{" "}
                       {row.lithium}
                     </span>
-                  </div>
-                  <div className="flex items-start gap-2 px-3 text-neutral-500">
-                    <X className="mt-0.5 h-3.5 w-3.5 shrink-0 text-red-500/70" />
+                  </p>
+                  <p className="flex items-start gap-2 px-3 text-stone-500">
+                    <X className="mt-0.5 h-4 w-4 shrink-0 text-stone-400" aria-hidden="true" />
                     <span>
                       <strong className="font-semibold">Chumbo-ácido.</strong> {row.lead}
                     </span>
-                  </div>
-                  <div className="flex items-start gap-2 px-3 text-neutral-500">
-                    <X className="mt-0.5 h-3.5 w-3.5 shrink-0 text-red-500/70" />
+                  </p>
+                  <p className="flex items-start gap-2 px-3 text-stone-500">
+                    <X className="mt-0.5 h-4 w-4 shrink-0 text-stone-400" aria-hidden="true" />
                     <span>
                       <strong className="font-semibold">Combustão GLP.</strong> {row.combustion}
                     </span>
-                  </div>
+                  </p>
                 </div>
               </li>
             ))}
           </ul>
 
-          <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 bg-white/[0.02] p-6 sm:flex-row sm:items-center">
-            <p className="text-sm text-neutral-400">
+          <div className="flex flex-col items-start justify-between gap-4 border-t border-ink/[0.08] p-6 sm:flex-row sm:items-center lg:px-8">
+            <p className="text-sm text-stone-600">
               Quer o cálculo com os números da sua operação? Enviamos a memória de cálculo do
               payback em PDF.
             </p>
-            <a
-              href={whatsappROI}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-3 text-sm font-bold text-emerald-300 transition-colors hover:bg-emerald-500/20"
-            >
-              <MessageCircle className="h-4 w-4" />
+            <WhatsAppLink href={whatsappROI} className="shrink-0">
               Receber a memória de cálculo
-            </a>
+            </WhatsAppLink>
           </div>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

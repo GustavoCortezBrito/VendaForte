@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { ChevronDown, CircleQuestionMark, MessageCircle } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Plus } from "lucide-react";
 import { whatsappUrl } from "./promo.config";
+import { EASE_OUT, Eyebrow, Reveal, TITLE, WhatsAppLink } from "./ui";
 
 /**
  * Seção 13 — FAQ.
@@ -29,7 +30,7 @@ const FAQS: FAQItem[] = [
   {
     question: "Quais são as condições de financiamento?",
     answer:
-      "Faturamos direto para pessoa jurídica com linhas BNDES Finame, parcelamento bancário em até 60 vezes e leasing. Para a linha de paleteiras também há condição no cartão de crédito em até 12 vezes.",
+      "Faturamos direto para pessoa jurídica com linhas BNDES Finame, parcelamento bancário em até 60 vezes e leasing.",
   },
   {
     question: "Vocês fornecem assistência técnica e peças?",
@@ -53,13 +54,6 @@ const FAQS: FAQItem[] = [
   },
 ];
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
-
-const VIEWPORT = { once: true, margin: "-80px" } as const;
-
 /** Dados estruturados para resultado enriquecido de FAQ. */
 const faqJsonLd = {
   "@context": "https://schema.org",
@@ -75,53 +69,38 @@ export default function PromoFAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section
-      id="faq"
-      className="relative overflow-hidden border-t border-white/[0.06] bg-[#05070B] py-24 text-white"
-    >
+    <section id="faq" className="scroll-mt-24 border-t border-white/[0.06] bg-ink py-24 lg:py-32">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-red-600/[0.07] blur-[120px]" />
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:gap-8 lg:px-8">
+        <div className="lg:col-span-4">
+          <Reveal className="lg:sticky lg:top-28">
+            <Eyebrow>Tire suas dúvidas</Eyebrow>
+            <h2 className={`mt-4 ${TITLE} text-white`}>Perguntas frequentes</h2>
+            <p className="mt-6 text-lg leading-relaxed text-neutral-400">
+              Ficou alguma dúvida sobre modelo, prazo ou financiamento? Um consultor responde em
+              minutos.
+            </p>
+            <WhatsAppLink
+              href={whatsappUrl("Olá! Tenho uma dúvida sobre os equipamentos da campanha promocional.")}
+              className="mt-8"
+            >
+              Falar com um consultor
+            </WhatsAppLink>
+          </Reveal>
+        </div>
 
-      <div className="relative mx-auto max-w-4xl px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mb-12 text-center"
-        >
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-400">
-            <CircleQuestionMark className="h-3.5 w-3.5" />
-            Tire suas dúvidas
-          </span>
-          <h2 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl">
-            Perguntas frequentes
-          </h2>
-        </motion.div>
-
-        <div className="space-y-4">
+        <ul className="border-t border-white/10 lg:col-span-8">
           {FAQS.map((faq, index) => {
             const isOpen = openIndex === index;
             const panelId = `faq-panel-${index}`;
             const buttonId = `faq-button-${index}`;
 
             return (
-              <motion.div
-                key={faq.question}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="show"
-                viewport={VIEWPORT}
-                className={`overflow-hidden rounded-2xl border backdrop-blur-xl transition-colors ${
-                  isOpen
-                    ? "border-red-500/25 bg-white/[0.04]"
-                    : "border-white/10 bg-white/[0.02] hover:border-white/20"
-                }`}
-              >
+              <li key={faq.question} className="border-b border-white/10">
                 <h3>
                   <button
                     id={buttonId}
@@ -129,14 +108,19 @@ export default function PromoFAQ() {
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
-                    className="flex w-full cursor-pointer items-center justify-between gap-4 p-5 text-left text-base font-bold text-white sm:p-6 sm:text-lg"
+                    className="flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left text-lg font-semibold tracking-tight text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50"
                   >
                     <span>{faq.question}</span>
-                    <ChevronDown
-                      className={`h-5 w-5 shrink-0 transition-transform duration-300 ${
-                        isOpen ? "rotate-180 text-red-500" : "text-neutral-500"
+                    <span
+                      aria-hidden="true"
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                        isOpen
+                          ? "rotate-45 border-white bg-white text-ink"
+                          : "border-white/15 text-neutral-400"
                       }`}
-                    />
+                    >
+                      <Plus className="h-4 w-4" />
+                    </span>
                   </button>
                 </h3>
 
@@ -149,43 +133,19 @@ export default function PromoFAQ() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: "easeOut" }}
+                      transition={{ duration: 0.4, ease: EASE_OUT }}
                       className="overflow-hidden"
                     >
-                      <p className="border-t border-white/5 px-5 pb-6 pt-4 text-sm leading-relaxed text-neutral-400 sm:px-6">
+                      <p className="max-w-2xl pb-7 text-[15px] leading-relaxed text-neutral-400">
                         {faq.answer}
                       </p>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </li>
             );
           })}
-        </div>
-
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mt-12 flex flex-col items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-center backdrop-blur-xl sm:flex-row sm:text-left"
-        >
-          <p className="text-sm text-neutral-300">
-            Ficou alguma dúvida sobre modelo, prazo ou financiamento? Um consultor responde em
-            minutos.
-          </p>
-          <a
-            href={whatsappUrl(
-              "Olá! Tenho uma dúvida sobre os equipamentos da campanha promocional."
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition-all hover:scale-[1.02] hover:bg-emerald-500"
-          >
-            <MessageCircle className="h-4 w-4" />
-            Falar com um consultor
-          </a>
-        </motion.div>
+        </ul>
       </div>
     </section>
   );

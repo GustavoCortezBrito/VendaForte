@@ -1,115 +1,116 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import type { ReactNode } from "react";
 import { ArrowUpRight, BatteryCharging, Banknote, MoveVertical, Truck, Wrench } from "lucide-react";
+import { Eyebrow, Reveal, Shot, TITLE } from "./ui";
 
 /**
- * Seção 03 — Destaques rápidos.
+ * Seção 03 — Destaques rápidos, em grade de tamanhos variados.
  * Especificação: docs/promo/03-destaques.md
  */
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
-
-const stagger: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
-};
-
-const VIEWPORT = { once: true, margin: "-80px" } as const;
-
-const HIGHLIGHTS = [
-  {
-    icon: BatteryCharging,
-    title: "Lítio sem manutenção",
-    desc: "Sem água desmineralizada, sem ácido, sem sala de baterias.",
-    href: "#economia",
-  },
-  {
-    icon: MoveVertical,
-    title: "1.500 kg a 3,9 metros",
-    desc: "Verticaliza o terceiro nível em corredor estreito.",
-    href: "#ds3",
-  },
-  {
-    icon: Truck,
-    title: "Pronta entrega",
-    desc: "Estoque com despacho e seguro de carga.",
-    href: "#ofertas",
-  },
-  {
-    icon: Banknote,
-    title: "Até 60x no BNDES",
-    desc: "Faturamento direto para CNPJ, com Finame e leasing.",
-    href: "#cotacao",
-  },
-  {
-    icon: Wrench,
-    title: "Assistência especializada",
-    desc: "Peças em estoque e equipe técnica própria.",
-    href: "#por-que-nos",
-  },
-] as const;
+function Tile({ href, className = "", children }: { href: string; className?: string; children: ReactNode }) {
+  return (
+    <Reveal className={className}>
+      <a
+        href={href}
+        className="group relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/10 bg-ink transition-colors duration-500 hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/60"
+      >
+        {children}
+        <ArrowUpRight
+          aria-hidden="true"
+          className="absolute right-6 top-6 h-5 w-5 text-neutral-600 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
+        />
+      </a>
+    </Reveal>
+  );
+}
 
 export default function PromoHighlights() {
   return (
     <section
       id="destaques"
-      className="relative overflow-hidden border-t border-white/[0.06] bg-[#05070B] py-20"
+      className="scroll-mt-24 border-t border-white/[0.06] bg-ink py-24 lg:py-32"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-500/40 to-transparent" />
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Reveal className="max-w-2xl">
+          <Eyebrow>O essencial</Eyebrow>
+          <h2 className={`mt-4 ${TITLE} text-white`}>Cinco motivos para trocar agora</h2>
+        </Reveal>
 
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mb-10"
-        >
-          <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-orange-500">
-            O essencial
-          </span>
-          <h2 className="mt-3 text-3xl font-black tracking-tight text-white lg:text-4xl">
-            Cinco motivos para trocar agora
-          </h2>
-        </motion.div>
+        <div className="mt-14 grid grid-cols-1 gap-4 lg:grid-cols-12">
+          {/* Altura de elevação, com o mastro em pé */}
+          <Tile href="#ficha-tecnica" className="lg:col-span-6 lg:row-span-2">
+            <div className="relative z-10 p-8 lg:p-10">
+              <MoveVertical className="h-6 w-6 text-red-500" aria-hidden="true" />
+              <p className="mt-8 text-6xl font-bold tracking-[-0.045em] text-white lg:text-7xl">
+                3,9 m
+              </p>
+              <h3 className="mt-3 text-lg font-semibold text-white">1.500 kg a 3,9 metros</h3>
+              <p className="mt-1 max-w-[16rem] text-sm leading-relaxed text-neutral-400">
+                Verticaliza o terceiro nível em corredor estreito.
+              </p>
+            </div>
+            <Shot
+              shot="mastro"
+              className="relative aspect-square w-full lg:absolute lg:-right-8 lg:bottom-0 lg:h-[80%] lg:w-auto"
+              sizes="(max-width: 1024px) 90vw, 40vw"
+            />
+          </Tile>
 
-        <motion.ul
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-5"
-        >
-          {HIGHLIGHTS.map((item) => (
-            <motion.li
-              key={item.title}
-              variants={fadeUp}
-              className="w-[80%] shrink-0 snap-center md:w-auto"
-            >
-              <a
-                href={item.href}
-                className="group relative flex h-full min-h-[190px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1.5"
-              >
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-orange-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <item.icon className="relative h-5 w-5 text-orange-400" />
-                <h3 className="relative mt-4 text-sm font-bold leading-snug text-white">
-                  {item.title}
-                </h3>
-                <p className="relative mt-2 text-xs leading-relaxed text-neutral-500">
-                  {item.desc}
-                </p>
-                <span className="relative mt-auto flex items-center gap-1 pt-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-500 transition-colors group-hover:text-orange-400">
-                  Ver detalhes
-                  <ArrowUpRight className="h-3 w-3" />
-                </span>
-              </a>
-            </motion.li>
-          ))}
-        </motion.ul>
+          {/* Lítio */}
+          <Tile href="#economia" className="lg:col-span-6">
+            <div className="relative z-10 p-8 lg:max-w-[58%] lg:p-10">
+              <BatteryCharging className="h-6 w-6 text-red-500" aria-hidden="true" />
+              <p className="mt-8 text-5xl font-bold tracking-[-0.045em] text-white">Zero</p>
+              <h3 className="mt-3 text-lg font-semibold text-white">Lítio sem manutenção</h3>
+              <p className="mt-1 text-sm leading-relaxed text-neutral-400">
+                Sem água desmineralizada, sem ácido, sem sala de baterias.
+              </p>
+            </div>
+            <Shot
+              shot="lateral"
+              className="relative aspect-square w-2/3 self-end lg:absolute lg:bottom-0 lg:right-0 lg:h-full lg:w-auto"
+              sizes="(max-width: 1024px) 60vw, 20vw"
+            />
+          </Tile>
+
+          {/* Financiamento */}
+          <Tile href="#cotacao" className="lg:col-span-3">
+            <div className="p-8">
+              <Banknote className="h-6 w-6 text-red-500" aria-hidden="true" />
+              <p className="mt-8 text-5xl font-bold tracking-[-0.045em] text-white">60x</p>
+              <h3 className="mt-3 text-lg font-semibold text-white">Até 60x no BNDES</h3>
+              <p className="mt-1 text-sm leading-relaxed text-neutral-400">
+                Faturamento direto para CNPJ, com Finame e leasing.
+              </p>
+            </div>
+          </Tile>
+
+          {/* Pronta entrega */}
+          <Tile href="#ofertas" className="lg:col-span-3">
+            <div className="flex h-full flex-col p-8">
+              <Truck className="h-6 w-6 text-red-500" aria-hidden="true" />
+              <h3 className="mt-auto pt-8 text-3xl font-bold tracking-[-0.035em] text-white">
+                Pronta entrega
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+                Estoque com despacho e seguro de carga.
+              </p>
+            </div>
+          </Tile>
+
+          {/* Assistência */}
+          <Tile href="#por-que-nos" className="lg:col-span-12">
+            <div className="flex flex-col gap-4 p-8 sm:flex-row sm:items-center sm:gap-6 lg:px-10">
+              <Wrench className="h-6 w-6 shrink-0 text-red-500" aria-hidden="true" />
+              <h3 className="text-xl font-semibold text-white">Assistência especializada</h3>
+              <p className="text-sm text-neutral-400 sm:pr-12">
+                Peças em estoque e equipe técnica própria.
+              </p>
+            </div>
+          </Tile>
+        </div>
       </div>
     </section>
   );

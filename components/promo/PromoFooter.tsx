@@ -1,99 +1,139 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, MessageCircle, Phone, ShieldCheck } from "lucide-react";
-import { CONTATO, WHATSAPP_CENTRAL, WHATSAPP_DISPLAY } from "./promo.config";
+import type { ReactNode } from "react";
+import { ArrowUpRight, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import {
+  CONTATO,
+  PONTOS_ATENDIMENTO,
+  PROMO_NAV,
+  WHATSAPP_CENTRAL,
+  WHATSAPP_DISPLAY,
+  WHATSAPP_GENERAL_MESSAGE,
+  whatsappUrl,
+} from "./promo.config";
 
 /**
- * Seção 14 — Rodapé e notas.
- * Sustenta juridicamente as afirmações comerciais da página.
+ * Seção 14 — Rodapé. Fecha a página com a chamada final, os links da campanha,
+ * os contatos e os pontos de atendimento.
  * Especificação: docs/promo/14-rodape.md
  */
 
-const NOTAS = [
-  "Condições válidas para o lote da campanha, enquanto durar o estoque.",
-  "Preços sujeitos a alteração sem aviso prévio e não incluem frete nem impostos quando aplicável.",
-  "Financiamento BNDES e Finame sujeito a análise de crédito da instituição financeira.",
-  "Garantia de 5 anos aplicável à bateria conforme os termos da EP Equipment. Verifique a cobertura por componente.",
-  "Imagens meramente ilustrativas. O equipamento entregue segue a configuração da proposta comercial.",
-] as const;
+const FOOTER_NAV = [
+  ...PROMO_NAV,
+  { href: "#cotacao", label: "Cotação" },
+  { href: "#faq", label: "Perguntas frequentes" },
+];
+
+const LINK_CLASS = "transition-colors hover:text-white";
+
+function Column({ title, children, className = "" }: { title: string; children: ReactNode; className?: string }) {
+  return (
+    <div className={className}>
+      <p className="text-sm font-semibold text-white">{title}</p>
+      <ul className="mt-5 space-y-3 text-sm text-neutral-400">{children}</ul>
+    </div>
+  );
+}
 
 export default function PromoFooter() {
   return (
-    <footer className="border-t border-white/[0.06] bg-[#05070B] pb-24 pt-12 md:pb-12">
+    <footer className="border-t border-white/[0.06] bg-ink pb-24 pt-20 md:pb-0 lg:pt-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Faixa 1: assinatura e contatos */}
-        <div className="flex flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
-          <div className="flex flex-col items-center gap-3 sm:flex-row">
-            <div className="relative h-9 w-32">
-              <Image
-                src="/logo.png"
-                alt="Grupo Venda Forte"
-                fill
-                sizes="128px"
-                className="object-contain"
-                loading="lazy"
-              />
-            </div>
-            <span className="text-xs text-neutral-600 sm:border-l sm:border-white/10 sm:pl-3">
-              Representante oficial EP Equipment
-            </span>
+        {/* Fechamento */}
+        <div className="flex flex-col justify-between gap-10 border-b border-white/10 pb-16 lg:flex-row lg:items-end">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold text-red-500">Lote em campanha</p>
+            <h2 className="mt-4 text-balance text-4xl font-bold leading-[1.05] tracking-[-0.035em] text-white sm:text-5xl">
+              A DS3 que você viu girando está pronta para despacho.
+            </h2>
           </div>
-
-          <div className="flex flex-col items-center gap-3 text-xs text-neutral-400 sm:flex-row sm:gap-5">
+          <div className="flex flex-col gap-3 sm:flex-row">
             <a
-              href={`https://wa.me/${WHATSAPP_CENTRAL}`}
+              href={whatsappUrl(WHATSAPP_GENERAL_MESSAGE)}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 transition-colors hover:text-emerald-400"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-green-600 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-green-500"
             >
-              <MessageCircle className="h-3.5 w-3.5 text-emerald-500" />
-              {WHATSAPP_DISPLAY}
-            </a>
-            <a href="tel:+554933239050" className="flex items-center gap-1.5 transition-colors hover:text-white">
-              <Phone className="h-3.5 w-3.5 text-neutral-500" />
-              Chapecó {CONTATO.chapeco}
-            </a>
-            <a href="tel:+554738423333" className="flex items-center gap-1.5 transition-colors hover:text-white">
-              <Phone className="h-3.5 w-3.5 text-neutral-500" />
-              Joinville {CONTATO.joinville}
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              Falar no WhatsApp
             </a>
             <a
-              href={`mailto:${CONTATO.email}`}
-              className="flex items-center gap-1.5 transition-colors hover:text-white"
+              href="#cotacao"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
             >
-              <Mail className="h-3.5 w-3.5 text-neutral-500" />
-              {CONTATO.email}
+              Pedir proposta formal
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
         </div>
 
-        {/* Faixa 2: notas obrigatórias */}
-        <div className="mt-8 border-t border-white/[0.06] pt-6">
-          <div className="mb-3 flex items-center gap-2 text-xs text-neutral-500">
-            <ShieldCheck className="h-4 w-4 text-emerald-500" />
-            Faturamento direto com nota fiscal
+        {/* Colunas */}
+        <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12 lg:pb-24">
+          <div className="sm:col-span-2 lg:col-span-4">
+            <Link href="/promo" className="inline-flex items-center gap-3">
+              <span className="relative h-11 w-11 overflow-hidden rounded-full">
+                <Image src="/logo.png" alt="" fill sizes="44px" className="object-cover" />
+              </span>
+              <span className="text-lg font-semibold tracking-tight text-white">Grupo Venda Forte</span>
+            </Link>
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-neutral-400">
+              Representante oficial EP Equipment. Importação, distribuição, peças e assistência
+              técnica no Sul do Brasil, com faturamento direto e nota fiscal.
+            </p>
           </div>
-          <ul className="grid gap-2 text-[11px] leading-relaxed text-neutral-500 md:grid-cols-2">
-            {NOTAS.map((nota) => (
-              <li key={nota}>{nota}</li>
-            ))}
-          </ul>
-        </div>
 
-        {/* Faixa 3: direitos e links */}
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/[0.04] pt-6 text-xs text-neutral-600 sm:flex-row">
-          <p>© {new Date().getFullYear()} Grupo Venda Forte. Todos os direitos reservados.</p>
-          <div className="flex gap-4">
-            <Link href="/termos" className="transition-colors hover:text-neutral-400">
-              Termos
-            </Link>
-            <Link href="/privacidade" className="transition-colors hover:text-neutral-400">
-              Privacidade
-            </Link>
-            <Link href="/" className="transition-colors hover:text-red-400">
-              Site principal
-            </Link>
-          </div>
+          <Column title="Campanha" className="lg:col-span-2">
+            {FOOTER_NAV.map((item) => (
+              <li key={item.href}>
+                <a href={item.href} className={LINK_CLASS}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </Column>
+
+          <Column title="Contato" className="lg:col-span-3">
+            <li>
+              <a
+                href={`https://wa.me/${WHATSAPP_CENTRAL}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center gap-2.5 ${LINK_CLASS}`}
+              >
+                <MessageCircle className="h-4 w-4 text-green-500" aria-hidden="true" />
+                {WHATSAPP_DISPLAY}
+              </a>
+            </li>
+            <li>
+              <a href="tel:+554933239050" className={`flex items-center gap-2.5 ${LINK_CLASS}`}>
+                <Phone className="h-4 w-4 text-neutral-500" aria-hidden="true" />
+                Chapecó {CONTATO.chapeco}
+              </a>
+            </li>
+            <li>
+              <a href="tel:+554738423333" className={`flex items-center gap-2.5 ${LINK_CLASS}`}>
+                <Phone className="h-4 w-4 text-neutral-500" aria-hidden="true" />
+                Joinville {CONTATO.joinville}
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${CONTATO.email}`} className={`flex items-center gap-2.5 break-all ${LINK_CLASS}`}>
+                <Mail className="h-4 w-4 shrink-0 text-neutral-500" aria-hidden="true" />
+                {CONTATO.email}
+              </a>
+            </li>
+          </Column>
+
+          <Column title="Pontos de atendimento" className="lg:col-span-3">
+            <li className="grid grid-cols-2 gap-x-4 gap-y-3">
+              {PONTOS_ATENDIMENTO.map((cidade) => (
+                <span key={cidade} className="flex items-center gap-2">
+                  <MapPin className="h-3.5 w-3.5 text-red-500" aria-hidden="true" />
+                  {cidade}
+                </span>
+              ))}
+            </li>
+          </Column>
         </div>
       </div>
     </footer>

@@ -1,37 +1,23 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
 import {
   ArrowUpRight,
   BatteryCharging,
   CircleCheckBig,
   Clock,
-  MessageCircle,
   MoveVertical,
   PackageCheck,
   ShieldCheck,
   Truck,
   Weight,
 } from "lucide-react";
-import PromoMediaSlot from "./PromoMediaSlot";
-import { PROMO_PRODUCTS, whatsappUrl, type PromoProduct } from "./promo.config";
+import { PROMO_PRODUCTS, whatsappUrl } from "./promo.config";
+import { BTN_GHOST, Eyebrow, Reveal, Shot, TITLE, WhatsAppLink } from "./ui";
 
 /**
- * Seção 07 — Linha completa em campanha.
+ * Seção 07 — A oferta da campanha: só a EP DS3.
  * Especificação: docs/promo/07-vitrine.md
  */
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
-
-const stagger: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
-};
-
-const VIEWPORT = { once: true, margin: "-80px" } as const;
 
 const TRUST = [
   { icon: Truck, title: "Pronta entrega", desc: "Despacho com seguro de carga" },
@@ -39,186 +25,106 @@ const TRUST = [
   { icon: PackageCheck, title: "Faturamento CNPJ", desc: "BNDES, Finame e leasing" },
 ] as const;
 
-function ProductCard({ product }: { product: PromoProduct }) {
-  const url = whatsappUrl(
+export default function PromoOffersGrid() {
+  const product = PROMO_PRODUCTS[0];
+  const specs = [
+    { icon: Weight, label: "Carga", value: product.capacity },
+    { icon: MoveVertical, label: "Elevação", value: product.lifting },
+    { icon: BatteryCharging, label: "Bateria", value: product.battery },
+  ];
+  const quoteUrl = whatsappUrl(
     `Olá! Quero cotar a ${product.name} de ${product.capacity} da campanha promocional.`
   );
 
   return (
-    <motion.article
-      variants={fadeUp}
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className={`group relative flex flex-col overflow-hidden rounded-3xl border backdrop-blur-xl ${
-        product.featured
-          ? "border-red-500/30 bg-gradient-to-b from-red-950/30 via-white/[0.03] to-white/[0.01]"
-          : "border-white/10 bg-white/[0.02]"
-      }`}
-    >
-      <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-b from-orange-500/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <div
-        className={`pointer-events-none absolute left-1/2 top-10 h-56 w-56 -translate-x-1/2 rounded-full blur-[90px] transition-opacity duration-500 ${
-          product.featured ? "bg-red-600/25" : "bg-orange-500/10 opacity-60 group-hover:opacity-100"
-        }`}
-      />
-
-      <div className="relative flex flex-1 flex-col">
-        <div className="flex items-start justify-between gap-3 px-6 pt-6">
-          <span
-            className={`inline-block rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] ${product.badgeClass}`}
-          >
-            {product.badge}
-          </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-emerald-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            Pronta entrega
-          </span>
-        </div>
-
-        <PromoMediaSlot
-          media={product.mediaKey}
-          className="mx-auto my-6 aspect-square w-48 rounded-none border-0"
-          imageClassName="transition-transform duration-500 group-hover:scale-105"
-          sizes="192px"
-          fit="contain"
-        />
-
-        <div className="flex flex-1 flex-col px-6 pb-6">
-          <h3 className="text-lg font-bold leading-snug text-white">{product.name}</h3>
-          <p className="mt-1 text-xs uppercase tracking-[0.12em] text-orange-400">
-            {product.tagline}
-          </p>
-
-          <dl className="mt-5 grid grid-cols-3 gap-2 text-xs">
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-2.5">
-              <dt className="flex items-center gap-1 text-[10px] uppercase tracking-wider text-neutral-500">
-                <Weight className="h-3 w-3" />
-                Carga
-              </dt>
-              <dd className="mt-1 font-bold text-white">{product.capacity}</dd>
-            </div>
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-2.5">
-              <dt className="flex items-center gap-1 text-[10px] uppercase tracking-wider text-neutral-500">
-                <MoveVertical className="h-3 w-3" />
-                Elevação
-              </dt>
-              <dd className="mt-1 font-bold text-white">{product.lifting}</dd>
-            </div>
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-2.5">
-              <dt className="flex items-center gap-1 text-[10px] uppercase tracking-wider text-neutral-500">
-                <BatteryCharging className="h-3 w-3" />
-                Bateria
-              </dt>
-              <dd className="mt-1 font-bold text-white">{product.battery}</dd>
-            </div>
-          </dl>
-
-          <ul className="mt-5 space-y-2">
-            {product.highlights.map((highlight) => (
-              <li key={highlight} className="flex items-start gap-2 text-xs text-neutral-400">
-                <CircleCheckBig className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" />
-                {highlight}
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-auto">
-            <div className="mt-6 border-t border-white/[0.08] pt-5">
-              <div className="text-2xl font-black tracking-tight text-white">{product.price}</div>
-              <p className="mt-1 text-[11px] text-neutral-500">{product.installment}</p>
-            </div>
-
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition-all hover:scale-[1.02] hover:bg-emerald-500 active:scale-[0.98]"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Cotar {product.shortName} no WhatsApp
-            </a>
-
-            <a
-              href="#cotacao"
-              className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-xl border border-white/10 py-2.5 text-xs font-semibold text-neutral-400 transition-colors hover:border-white/25 hover:text-white"
-            >
-              Pedir proposta formal
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
+    <section id="ofertas" className="scroll-mt-24 border-t border-white/[0.06] bg-ink py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Reveal className="mb-14 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <div>
+            <Eyebrow>Oferta da campanha</Eyebrow>
+            <h2 className={`mt-4 ${TITLE} text-white`}>A DS3 com condição de lote</h2>
           </div>
-        </div>
-      </div>
-    </motion.article>
-  );
-}
-
-export default function PromoOffersGrid() {
-  return (
-    <section
-      id="ofertas"
-      className="relative overflow-hidden border-t border-white/[0.06] bg-[#05070B] py-28"
-    >
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-px w-[600px] -translate-x-1/2 bg-gradient-to-r from-transparent via-orange-500/60 to-transparent" />
-        <div className="absolute left-1/4 top-20 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-orange-500/10 blur-[120px]" />
-        <div className="absolute bottom-10 right-0 h-[420px] w-[420px] rounded-full bg-red-600/10 blur-[120px]" />
-      </div>
-
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mb-16 text-center"
-        >
-          <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-orange-500">
-            Vitrine de campanha
-          </span>
-          <h2 className="mt-4 text-4xl font-black tracking-tight text-white lg:text-6xl">
-            Modelos em oferta
-          </h2>
-          <p className="mt-5 flex items-center justify-center gap-2 text-sm text-neutral-500">
-            <Clock className="h-4 w-4 text-red-500" />
+          <p className="flex items-center gap-2 text-sm text-neutral-400">
+            <Clock className="h-4 w-4 text-red-500" aria-hidden="true" />
             Condições válidas enquanto durar o estoque do lote.
           </p>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="grid grid-cols-1 gap-8 md:grid-cols-3"
-        >
-          {PROMO_PRODUCTS.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </motion.div>
+        <Reveal>
+          <article className="grid overflow-hidden rounded-[32px] border border-white/10 bg-ink lg:grid-cols-2">
+            <Shot
+              shot="tresQuartosDir"
+              className="aspect-square w-full"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              parallax={30}
+            />
 
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-3"
-        >
-          {TRUST.map((item) => (
-            <motion.div
-              key={item.title}
-              variants={fadeUp}
-              className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-xl transition-colors hover:border-orange-500/30"
-            >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-orange-500/20 bg-orange-500/10">
-                <item.icon className="h-5 w-5 text-orange-400" />
-              </span>
-              <div>
-                <div className="text-sm font-bold text-white">{item.title}</div>
-                <div className="text-xs text-neutral-500">{item.desc}</div>
+            <div className="flex flex-col p-8 lg:p-12">
+              <div className="flex flex-wrap items-center gap-2">
+                <span
+                  className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.1em] ${product.badgeClass}`}
+                >
+                  {product.badge}
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-300">
+                  <span className="h-1.5 w-1.5 rounded-full bg-red-500" aria-hidden="true" />
+                  Pronta entrega
+                </span>
               </div>
-            </motion.div>
+
+              <h3 className="mt-6 text-3xl font-bold tracking-[-0.03em] text-white lg:text-4xl">
+                {product.name}
+              </h3>
+              <p className="mt-2 text-neutral-400">{product.tagline}</p>
+
+              <dl className="mt-6 grid grid-cols-3 divide-x divide-white/10 border-y border-white/10">
+                {specs.map((item) => (
+                  <div key={item.label} className="flex flex-col-reverse justify-end gap-1 px-4 py-4 first:pl-0">
+                    <dt className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.1em] text-neutral-500">
+                      <item.icon className="h-3.5 w-3.5" aria-hidden="true" />
+                      {item.label}
+                    </dt>
+                    <dd className="font-semibold text-white">{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              <ul className="mt-6 space-y-2.5">
+                {product.highlights.map((highlight) => (
+                  <li key={highlight} className="flex items-start gap-2.5 text-sm text-neutral-300">
+                    <CircleCheckBig className="mt-0.5 h-4 w-4 shrink-0 text-red-500" aria-hidden="true" />
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-auto pt-10">
+                <p className="text-4xl font-bold tracking-[-0.035em] text-white">{product.price}</p>
+                <p className="mt-1 text-sm text-neutral-500">{product.installment}</p>
+
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                  <WhatsAppLink href={quoteUrl}>Cotar {product.shortName} no WhatsApp</WhatsAppLink>
+                  <a href="#cotacao" className={BTN_GHOST}>
+                    Pedir proposta formal
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </Reveal>
+
+        <ul className="mt-16 grid gap-8 border-t border-white/10 pt-10 sm:grid-cols-3">
+          {TRUST.map((item) => (
+            <li key={item.title} className="flex items-start gap-4">
+              <item.icon className="mt-0.5 h-5 w-5 shrink-0 text-red-500" aria-hidden="true" />
+              <div>
+                <p className="font-semibold text-white">{item.title}</p>
+                <p className="mt-1 text-sm text-neutral-500">{item.desc}</p>
+              </div>
+            </li>
           ))}
-        </motion.div>
+        </ul>
       </div>
     </section>
   );

@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { motion, type Variants } from "framer-motion";
 import { CLIENTES, NUMEROS } from "./promo.config";
+import { Eyebrow, Reveal, TITLE } from "./ui";
 
 /**
- * Seção 10 — Prova social.
+ * Seção 10 — Prova social. Seção clara.
  * Credencia o Grupo Venda Forte, não a EP.
  *
  * Regra da especificação: nenhum número sem lastro. Os quatro exibidos já são
@@ -15,18 +15,6 @@ import { CLIENTES, NUMEROS } from "./promo.config";
  * Especificação: docs/promo/10-prova-social.md
  */
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
-
-const stagger: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.05 } },
-};
-
-const VIEWPORT = { once: true, margin: "-80px" } as const;
-
 /** Depoimento pendente de coleta e autorização. Ver docs/promo/10-prova-social.md */
 const DEPOIMENTO: { quote: string; name: string; role: string; company: string } | null = null;
 
@@ -34,100 +22,71 @@ export default function PromoSocialProof() {
   return (
     <section
       id="clientes"
-      className="relative overflow-hidden border-t border-white/[0.06] bg-[#05070B] py-24"
+      className="scroll-mt-24 border-t border-ink/[0.08] bg-paper py-24 text-ink lg:py-32"
     >
-      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-red-600/[0.07] blur-[120px]" />
-
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mb-12 text-center"
-        >
-          <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-orange-500">
-            Quem confia
-          </span>
-          <h2 className="mt-3 text-3xl font-black tracking-tight text-white lg:text-4xl">
-            Empresas que operam com a gente
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-neutral-500">
-            Indústria alimentícia, cooperativa, frigorífico, varejo e transporte no Sul do
-            Brasil.
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Reveal className="max-w-3xl">
+          <Eyebrow tone="light">Quem confia</Eyebrow>
+          <h2 className={`mt-4 ${TITLE}`}>Empresas que operam com a gente</h2>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-stone-600">
+            Indústria alimentícia, cooperativa, frigorífico, varejo e transporte no Sul do Brasil.
           </p>
-        </motion.div>
+        </Reveal>
 
-        {/* Números */}
-        <motion.dl
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mb-14 grid grid-cols-2 gap-6 lg:grid-cols-4"
-        >
-          {NUMEROS.map((item) => (
-            <motion.div key={item.label} variants={fadeUp} className="text-center">
-              <dt className="sr-only">{item.label}</dt>
-              <dd>
-                <span className="block text-4xl font-black tabular-nums tracking-tight text-white lg:text-5xl">
+        <Reveal>
+          <dl className="mt-14 grid grid-cols-2 gap-y-10 border-y border-ink/10 py-10 lg:grid-cols-4">
+            {NUMEROS.map((item) => (
+              <div
+                key={item.label}
+                className="flex flex-col-reverse justify-end gap-2 lg:border-l lg:border-ink/10 lg:pl-8 lg:first:border-l-0 lg:first:pl-0"
+              >
+                <dt className="text-sm text-stone-500">{item.label}</dt>
+                <dd className="text-5xl font-bold tabular-nums tracking-[-0.045em] lg:text-6xl">
                   {item.value}
-                </span>
-                <span className="mt-2 block text-[11px] uppercase tracking-[0.14em] text-neutral-500">
-                  {item.label}
-                </span>
-              </dd>
-            </motion.div>
-          ))}
-        </motion.dl>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
 
-        {/* Logos */}
-        <motion.ul
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="grid grid-cols-3 items-center gap-x-8 gap-y-10 rounded-3xl border border-white/[0.08] bg-white/[0.02] p-8 backdrop-blur-xl sm:grid-cols-4 lg:grid-cols-8"
-        >
-          {CLIENTES.map((cliente) => (
-            <motion.li
-              key={cliente.name}
-              variants={fadeUp}
-              className="relative h-10 w-full opacity-70 brightness-0 invert transition-all duration-300 hover:opacity-100 md:opacity-60 md:hover:brightness-100 md:hover:invert-0"
-            >
-              <Image
-                src={cliente.file}
-                alt={cliente.name}
-                fill
-                sizes="120px"
-                className="object-contain"
-              />
-            </motion.li>
+        <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {CLIENTES.map((cliente, index) => (
+            <li key={cliente.name}>
+              <Reveal
+                delay={(index % 4) * 0.05}
+                className="group flex h-28 items-center justify-center rounded-[22px] bg-paper-card"
+              >
+                <span className="relative h-14 w-36">
+                  <Image
+                    src={cliente.file}
+                    alt={cliente.name}
+                    fill
+                    sizes="144px"
+                    className="object-contain opacity-80 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+                  />
+                </span>
+              </Reveal>
+            </li>
           ))}
-        </motion.ul>
+        </ul>
 
-        <p className="mt-4 text-center text-xs text-neutral-600">
+        <p className="mt-4 text-xs text-stone-500">
           Uso dos logos sujeito a autorização de cada cliente para peça publicitária.
         </p>
 
-        {/* Depoimento, publicado apenas quando houver citação real autorizada */}
         {DEPOIMENTO && (
-          <motion.figure
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={VIEWPORT}
-            className="mx-auto mt-14 max-w-3xl rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center backdrop-blur-xl"
-          >
-            <blockquote className="text-xl font-medium leading-relaxed text-white">
-              {DEPOIMENTO.quote}
-            </blockquote>
-            <figcaption className="mt-5 text-sm text-neutral-400">
-              <cite className="not-italic font-semibold text-white">{DEPOIMENTO.name}</cite>
-              {", "}
-              {DEPOIMENTO.role} na {DEPOIMENTO.company}
-            </figcaption>
-          </motion.figure>
+          <Reveal className="mt-14 max-w-3xl">
+            <figure className="rounded-[28px] bg-paper-card p-10">
+              <blockquote className="text-2xl font-medium leading-snug tracking-tight">
+                {DEPOIMENTO.quote}
+              </blockquote>
+              <figcaption className="mt-6 text-sm text-stone-500">
+                <cite className="font-semibold not-italic text-ink">{DEPOIMENTO.name}</cite>
+                {", "}
+                {DEPOIMENTO.role} na {DEPOIMENTO.company}
+              </figcaption>
+            </figure>
+          </Reveal>
         )}
       </div>
     </section>

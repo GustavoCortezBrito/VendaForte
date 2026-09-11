@@ -1,11 +1,12 @@
 import PromoProductStage from "@/components/promo/PromoProductStage";
+import PromoCloseUp from "@/components/promo/PromoCloseUp";
 import PromoHighlights from "@/components/promo/PromoHighlights";
 import PromoDS3Highlight from "@/components/promo/PromoDS3Highlight";
 import PromoUpgradePath from "@/components/promo/PromoUpgradePath";
 import PromoSectors from "@/components/promo/PromoSectors";
 import PromoOffersGrid from "@/components/promo/PromoOffersGrid";
-import PromoWhyUs from "@/components/promo/PromoWhyUs";
 import PromoSpecs from "@/components/promo/PromoSpecs";
+import PromoWhyUs from "@/components/promo/PromoWhyUs";
 import PromoSocialProof from "@/components/promo/PromoSocialProof";
 import PromoSalesTeam from "@/components/promo/PromoSalesTeam";
 import PromoQuoteForm from "@/components/promo/PromoQuoteForm";
@@ -14,46 +15,39 @@ import PromoFAQ from "@/components/promo/PromoFAQ";
 /**
  * Landing page de campanha — EP Equipment.
  *
- * A ordem segue docs/promo/README.md. As seções 01 e 02 compartilham um único
- * palco de produto controlado pelo scroll, por isso vêm de um componente só.
+ * Abre com o giro da DS3 sozinho na tela e segue direto para os detalhes.
+ * Seções escuras e claras se alternam para dar ritmo à leitura.
  */
 export default function PromoPage() {
   return (
     <>
-      {/* 01 e 02 — Hero e Veja a DS3 de perto, com animação compartilhada */}
+      {/* Hero: só o giro da DS3, controlado pelo scroll */}
       <PromoProductStage />
 
-      {/* 03 — Destaques rápidos */}
+      {/* A DS3 por dentro, com a câmera aproximando de cada peça */}
+      <PromoCloseUp />
+
+      {/* Destaques rápidos */}
       <PromoHighlights />
 
-      {/* 04 — Prova de economia, lítio contra o convencional */}
+      {/* Seções claras: economia e caminho de troca */}
       <PromoDS3Highlight />
-
-      {/* 05 — O que você usa hoje */}
       <PromoUpgradePath />
 
-      {/* 06 — Aplicações por setor */}
+      {/* Aplicações por setor */}
       <PromoSectors />
 
-      {/* 07 — Linha completa em campanha */}
+      {/* Vitrine e ficha técnica */}
       <PromoOffersGrid />
-
-      {/* 08 — Por que fechar com o Grupo Venda Forte */}
-      <PromoWhyUs />
-
-      {/* 09 — Ficha técnica da DS3 */}
       <PromoSpecs />
 
-      {/* 10 — Prova social */}
+      {/* Seções claras: fornecedor e prova social */}
+      <PromoWhyUs />
       <PromoSocialProof />
 
-      {/* 11 — Time comercial */}
+      {/* Conversão */}
       <PromoSalesTeam />
-
-      {/* 12 — Cotação expressa */}
       <PromoQuoteForm />
-
-      {/* 13 — FAQ */}
       <PromoFAQ />
     </>
   );
