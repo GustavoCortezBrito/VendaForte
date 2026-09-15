@@ -2,12 +2,25 @@
 
 import type { ReactNode } from "react";
 import { ArrowUpRight, BatteryCharging, Banknote, MoveVertical, Truck, Wrench } from "lucide-react";
-import { Eyebrow, Reveal, Shot, TITLE } from "./ui";
+import PromoMediaSlot, { hasMedia } from "./PromoMediaSlot";
+import { PRODUCTS } from "./promo.config";
+import { Eyebrow, PriceCard, Reveal, Shot, SpecTable, TITLE } from "./ui";
 
 /**
- * Seção 03 — Destaques rápidos, em grade de tamanhos variados.
- * Especificação: docs/promo/03-destaques.md
+ * Seção 03 — O essencial, a ficha técnica e o preço da EP DS3, numa seção só.
+ * Primeiro os cinco motivos em grade; logo abaixo, os números e a condição.
+ *
+ * Especificação: docs/promo/03-destaques.md e docs/promo/09-ficha-tecnica.md
  */
+
+const DS3 = PRODUCTS.ds3;
+
+/** Anotações sobre a foto de perfil, em % do quadro. */
+const CALLOUTS = [
+  { label: "Mastro · elevação até 3,9 m", left: "40%", top: "12%" },
+  { label: "Bateria 24V de íon-lítio", left: "6%", top: "46%" },
+  { label: "Capacidade de 1.500 kg", left: "48%", top: "76%" },
+] as const;
 
 function Tile({ href, className = "", children }: { href: string; className?: string; children: ReactNode }) {
   return (
@@ -33,6 +46,10 @@ export default function PromoHighlights() {
       className="scroll-mt-24 border-t border-white/[0.06] bg-ink py-24 lg:py-32"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        {/* ---------------- O essencial ----------------
+            Oculto por enquanto, a pedido do cliente. Para voltar, tire o `hidden`
+            e devolva à ficha técnica abaixo o espaçamento e a borda do topo. */}
+        <div hidden>
         <Reveal className="max-w-2xl">
           <Eyebrow>O essencial</Eyebrow>
           <h2 className={`mt-4 ${TITLE} text-white`}>Cinco motivos para trocar agora</h2>
@@ -88,7 +105,7 @@ export default function PromoHighlights() {
           </Tile>
 
           {/* Pronta entrega */}
-          <Tile href="#ofertas" className="lg:col-span-3">
+          <Tile href="#cotacao" className="lg:col-span-3">
             <div className="flex h-full flex-col p-8">
               <Truck className="h-6 w-6 text-red-500" aria-hidden="true" />
               <h3 className="mt-auto pt-8 text-3xl font-bold tracking-[-0.035em] text-white">
@@ -110,6 +127,55 @@ export default function PromoHighlights() {
               </p>
             </div>
           </Tile>
+        </div>
+        </div>
+
+        {/* ---------------- Ficha técnica e preço ----------------
+            Com "O essencial" visível, esta div volta a ter
+            "mt-24 border-t border-white/10 pt-16 lg:mt-32 lg:pt-24". */}
+        <div id="ficha-tecnica" className="scroll-mt-24">
+          <Reveal className="max-w-3xl">
+            <Eyebrow>Especificação e condição</Eyebrow>
+            <h2 className={`mt-4 ${TITLE} text-white`}>Ficha técnica da EP DS3</h2>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-neutral-400">
+              Para quem precisa validar corredor, altura e ciclo antes de aprovar a compra.
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-8">
+            <Reveal className="lg:col-span-6">
+              <div className="relative">
+                <Shot shot="perfil" className="aspect-square w-full" sizes="(max-width: 1024px) 100vw, 48vw" />
+                <div aria-hidden="true">
+                  {CALLOUTS.map((callout) => (
+                    <span
+                      key={callout.label}
+                      className="absolute flex items-center gap-2 whitespace-nowrap rounded-full border border-white/15 bg-ink/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md"
+                      style={{ left: callout.left, top: callout.top }}
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                      {callout.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {hasMedia("desenhoTecnico") && (
+                <PromoMediaSlot
+                  media="desenhoTecnico"
+                  className="mt-6 aspect-square w-full rounded-[28px]"
+                  imageClassName="p-6"
+                  sizes="(max-width: 1024px) 100vw, 48vw"
+                  fit="contain"
+                />
+              )}
+            </Reveal>
+
+            <Reveal className="lg:col-span-6" delay={0.08}>
+              <SpecTable specs={DS3.specs} caption={`Ficha técnica da ${DS3.name}`} />
+              <PriceCard product={DS3} className="mt-10" />
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>

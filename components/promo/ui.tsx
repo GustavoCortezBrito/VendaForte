@@ -2,9 +2,16 @@
 
 import Image from "next/image";
 import { useRef, type CSSProperties, type ReactNode } from "react";
-import { MotionConfig, motion, useScroll, useTransform } from "framer-motion";
-import { MessageCircle } from "lucide-react";
-import { DS3_SHOTS, DS3_STUDIO, type DS3ShotKey } from "./promo.config";
+import { MotionConfig, motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { ArrowUpRight, MessageCircle } from "lucide-react";
+import {
+  DS3_SHOTS,
+  whatsappUrl,
+  type DS3ShotKey,
+  type ProductSpec,
+  type PromoProduct,
+  type PromoVideo,
+} from "./promo.config";
 
 /** Curva de saída longa: o movimento chega devagar, sem freada seca. */
 export const EASE_OUT = [0.16, 1, 0.3, 1] as const;
@@ -21,12 +28,8 @@ export function PromoMotion({ children }: { children: ReactNode }) {
 export const TITLE =
   "text-balance text-4xl font-bold leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl";
 
-export function Eyebrow({ children, tone = "dark" }: { children: ReactNode; tone?: "dark" | "light" }) {
-  return (
-    <p className={`text-sm font-semibold ${tone === "dark" ? "text-red-500" : "text-red-600"}`}>
-      {children}
-    </p>
-  );
+export function Eyebrow({ children }: { children: ReactNode }) {
+  return <p className="text-sm font-semibold text-red-500">{children}</p>;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -88,6 +91,54 @@ export function Reveal({
   );
 }
 
+/** Cada letra ganha a sua fatia do intervalo: entram uma a uma, conforme o scroll. */
+export function ScrollLetters({
+  text,
+  progress,
+  range: [start, end],
+}: {
+  text: string;
+  progress: MotionValue<number>;
+  range: [number, number];
+}) {
+  const chars = [...text];
+  const step = (end - start) / chars.length;
+  return (
+    <span className="inline-block">
+      <span className="sr-only">{text}</span>
+      {chars.map((char, index) => (
+        <ScrollLetter
+          key={index}
+          char={char}
+          progress={progress}
+          from={start + step * index}
+          to={start + step * (index + 1.6)}
+        />
+      ))}
+    </span>
+  );
+}
+
+function ScrollLetter({
+  char,
+  progress,
+  from,
+  to,
+}: {
+  char: string;
+  progress: MotionValue<number>;
+  from: number;
+  to: number;
+}) {
+  const opacity = useTransform(progress, [from, to], [0, 1]);
+  const y = useTransform(progress, [from, to], ["0.45em", "0em"]);
+  return (
+    <motion.span aria-hidden="true" style={{ opacity, y }} className="inline-block whitespace-pre">
+      {char}
+    </motion.span>
+  );
+}
+
 /* -------------------------------------------------------------------------- */
 /* Fotos da DS3                                                               */
 /* -------------------------------------------------------------------------- */
@@ -102,6 +153,16 @@ export const FEATHER_STYLE: CSSProperties = {
   maskComposite: "intersect",
   WebkitMaskComposite: "source-in",
 };
+
+/** Fontes de um vídeo da campanha: AV1 primeiro, H.264 para quem não decodifica AV1. */
+export function VideoSources({ video }: { video: PromoVideo }) {
+  return (
+    <>
+      {video.av1 && <source src={video.av1} type='video/mp4; codecs="av01.0.08M.08"' />}
+      <source src={video.h264} type="video/mp4" />
+    </>
+  );
+}
 
 /** Quadro do giro em fundo `ink`, com deslocamento opcional ao rolar. */
 export function Shot({
@@ -129,20 +190,64 @@ export function Shot({
   );
 }
 
-/** Foto de estúdio em fundo branco, para as seções claras. */
-export function StudioPhoto({
-  photo,
-  className = "",
-  sizes = "(max-width: 1024px) 100vw, 40vw",
-}: {
-  photo: keyof typeof DS3_STUDIO;
-  className?: string;
-  sizes?: string;
-}) {
-  const { src, alt } = DS3_STUDIO[photo];
+/* -------------------------------------------------------------------------- */
+/* Ficha técnica e preço                                                      */
+/* -------------------------------------------------------------------------- */
+
+export function SpecTable({ specs, caption }: { specs: ProductSpec[]; caption: string }) {
   return (
-    <div className={`relative overflow-hidden bg-white ${className}`}>
-      <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
+    <table className="w-full border-y border-white/10 text-left">
+      <caption className="sr-only">{caption}</caption>
+      <tbody className="divide-y divide-white/10">
+        {specs.map((row) => (
+          <tr key={row.label}>
+            <th scope="row" className="py-4 pr-6 font-normal text-neutral-400">
+              {row.label}
+            </th>
+            <td className="py-4 text-right text-lg font-semibold tracking-tight text-white">
+              {row.value}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+export function PriceCard({ product, className = "" }: { product: PromoProduct; className?: string }) {
+  const quoteUrl = whatsappUrl(
+    `Olá! Quero cotar a ${product.name} de ${product.capacity} da campanha promocional.`
+  );
+
+  return (
+    <div className={`rounded-[28px] border border-white/10 bg-ink-raised p-8 ${className}`}>
+      {product.price ? (
+        <>
+          {product.listPrice ? (
+            <p className="text-sm text-neutral-400">
+              De{" "}
+              <s className="text-base font-semibold text-neutral-500 decoration-red-500 decoration-2">
+                {product.listPrice}
+              </s>{" "}
+              por
+            </p>
+          ) : (
+            <p className="text-sm text-neutral-400">A partir de</p>
+          )}
+          <p className="mt-1 text-5xl font-bold tracking-[-0.045em] text-white">{product.price}</p>
+        </>
+      ) : (
+        <p className="text-3xl font-bold tracking-[-0.03em] text-white">Condição especial de lote</p>
+      )}
+      <p className="mt-2 text-sm text-neutral-500">{product.installment}</p>
+
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <WhatsAppLink href={quoteUrl}>Cotar a {product.shortName}</WhatsAppLink>
+        <a href="#cotacao" className={BTN_GHOST}>
+          Pedir proposta formal
+          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        </a>
+      </div>
     </div>
   );
 }

@@ -3,24 +3,86 @@
 import { useEffect, useRef } from "react";
 import type { MotionValue } from "framer-motion";
 
-export const SEQUENCE_FPS = 24;
-export const SEQUENCE_FRAMES = 145;
+/** Larguras em que os quadros existem em AVIF. */
+export type FrameWidth = 1920 | 2560;
 
-export const sequenceFrameSrc = (index: number) =>
-  `/promo/sequencia/ds3-${String(index).padStart(3, "0")}.webp`;
+/** Uma sequência de quadros extraída de um vídeo, para desenho controlado pelo scroll. */
+export interface FrameSequence {
+  frames: number;
+  /** Quadro em AVIF, na largura pedida. */
+  avif: (index: number, width: FrameWidth) => string;
+  /** Quadro em WebP, para navegadores sem AVIF e para pôsteres. */
+  webp: (index: number) => string;
+}
 
 /**
- * Rigidez com que o quadro exibido persegue o scroll, por segundo. Quanto
- * menor, mais longa a desaceleração depois que o scroll para.
+ * Rigidez com que o quadro exibido persegue o alvo, por segundo. Quanto
+ * menor, mais longa a desaceleração depois que o movimento para.
  */
 const STIFFNESS = 5;
+/** Downloads simultâneos. */
 const CONCURRENCY = 6;
-/** Fundo do estúdio no vídeo, o mesmo `ink` da página. */
+/** Decodificações simultâneas, fora da thread principal. */
+const DECODERS = 3;
+/**
+ * Quadros decodificados guardados de uma vez. Um quadro de 2560 × 1440 ocupa
+ * cerca de 15 MB decodificado: sem limite, a sequência inteira passaria de 5 GB.
+ */
+const DECODED_LIMIT = 24;
+/** Quadros decodificados à frente, na direção do movimento. */
+const LOOKAHEAD = 10;
+/** A partir desta altura do canvas, em px reais, vale baixar os quadros de 2560. */
+const LARGE_CANVAS = 1150;
+/** Distância da tela em que o palco começa a baixar e mantém quadros decodificados. */
+const NEAR_MARGIN = "150% 0px";
+/** Densidade máxima do canvas. Acima disso o custo de desenho não compensa. */
+const MAX_PIXEL_RATIO = 1.5;
+/** Fundo do estúdio nos vídeos, o mesmo `ink` da página. */
 const STUDIO_RGB = "13, 13, 13";
 
+// Um download por URL para a página toda: o hero e o visualizador da DS3 usam os
+// mesmos quadros. Guarda só o arquivo comprimido, que é pequeno.
+const blobs = new Map<string, Promise<Blob>>();
+
+function fetchBlob(url: string): Promise<Blob> {
+  let pending = blobs.get(url);
+  if (!pending) {
+    pending = fetch(url).then((response) => {
+      if (!response.ok) throw new Error(`${url}: ${response.status}`);
+      return response.blob();
+    });
+    pending.catch(() => blobs.delete(url));
+    blobs.set(url, pending);
+  }
+  return pending;
+}
+
+// Testado uma vez, com um quadro de verdade, e compartilhado entre as sequências
+let avifSupport: Promise<boolean> | null = null;
+
+function supportsAvif(sample: string): Promise<boolean> {
+  avifSupport ??= fetchBlob(sample)
+    .then((blob) => createImageBitmap(blob))
+    .then(
+      (bitmap) => {
+        bitmap.close();
+        return true;
+      },
+      () => false
+    );
+  return avifSupport;
+}
+
 interface ScrollSequenceProps {
-  /** Índice de quadro, fracionário, já derivado do scroll. */
+  sequence: FrameSequence;
+  /** Índice de quadro, fracionário. Em `loop`, pode passar do fim ou ficar negativo. */
   frame: MotionValue<number>;
+  /** O último quadro emenda no primeiro, como num giro de 360°. */
+  loop?: boolean;
+  /** Chamado a cada desenho com a posição exibida, já dentro de `[0, frames)`. */
+  onPaint?: (position: number) => void;
+  /** Multiplica a densidade do canvas, para quando ele é ampliado por CSS. */
+  density?: number;
   className?: string;
   label: string;
 }
@@ -29,60 +91,105 @@ interface ScrollSequenceProps {
  * Desenha a sequência de quadros num canvas, encaixada pela altura.
  *
  * O quadro exibido persegue o alvo com amortecimento e, entre dois quadros
- * vizinhos, desenha a mistura dos dois na proporção da fração. Assim o giro não
- * anda em degraus nem para seco quando o scroll termina. Quadros ainda não
- * baixados são substituídos pelo vizinho carregado mais próximo.
+ * vizinhos, desenha a mistura dos dois na proporção da fração. Assim o
+ * movimento não anda em degraus nem para seco.
+ *
+ * Os quadros só começam a baixar perto da tela, em AVIF e na largura que o
+ * canvas pede. Ficam guardados comprimidos; decodificados, só os próximos da
+ * posição atual, e nenhum quando o palco está longe da tela. Enquanto um quadro
+ * não está pronto, o vizinho decodificado mais próximo ocupa o lugar.
  */
-export default function ScrollSequence({ frame, className, label }: ScrollSequenceProps) {
+export default function ScrollSequence({
+  sequence,
+  frame,
+  loop = false,
+  onPaint,
+  density = 1,
+  className,
+  label,
+}: ScrollSequenceProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // Guardado em ref para trocar o callback sem reiniciar o carregamento
+  const onPaintRef = useRef(onPaint);
+  useEffect(() => {
+    onPaintRef.current = onPaint;
+  }, [onPaint]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
+    const ctx = canvas?.getContext("2d", { alpha: false });
     if (!canvas || !ctx) return;
 
-    const lastIndex = SEQUENCE_FRAMES - 1;
-    const images: (HTMLImageElement | null)[] = new Array(SEQUENCE_FRAMES).fill(null);
-    let current = Math.min(Math.max(frame.get(), 0), lastIndex);
+    const total = sequence.frames;
+    const lastIndex = total - 1;
+    const wrap = (index: number) => ((index % total) + total) % total;
+    /** Índice válido, ou -1 fora da sequência. */
+    const normalize = (index: number) =>
+      loop ? wrap(index) : index < 0 || index > lastIndex ? -1 : index;
+    const distance = (a: number, b: number) => {
+      const gap = Math.abs(a - b);
+      return loop ? Math.min(gap, total - gap) : gap;
+    };
+    const clampTarget = (value: number) => (loop ? value : Math.min(Math.max(value, 0), lastIndex));
+    const positionOf = (value: number) => (loop ? wrap(value) : value);
+
+    const files: (Blob | null)[] = new Array(total).fill(null);
+    const decoded = new Map<number, ImageBitmap>();
+    const decoding = new Set<number>();
+
+    let current = clampTarget(frame.get());
+    let direction = 1;
     let painted = Number.NaN;
     let paintedFrom = -1;
     let raf = 0;
     let previousTime = 0;
     let disposed = false;
+    let near = false;
+    let started = false;
+    let url = (index: number) => sequence.webp(index);
 
-    const nearestLoaded = (index: number) => {
-      for (let offset = 0; offset < SEQUENCE_FRAMES; offset++) {
-        if (images[index - offset]) return index - offset;
-        if (images[index + offset]) return index + offset;
+    const nearestDecoded = (index: number) => {
+      let best = -1;
+      let bestDistance = Infinity;
+      for (const key of decoded.keys()) {
+        const gap = distance(key, index);
+        if (gap < bestDistance) {
+          best = key;
+          bestDistance = gap;
+        }
       }
-      return -1;
+      return best;
     };
 
     const paint = (force = false) => {
-      if (!force && Math.abs(current - painted) < 0.001) return;
+      const position = positionOf(current);
+      if (!force && Math.abs(position - painted) < 0.001) return;
 
-      const base = Math.floor(current);
-      const from = nearestLoaded(base);
+      const base = Math.floor(position);
+      const from = nearestDecoded(base);
       if (from < 0) return;
-      // Só mistura com o vizinho exato; um quadro distante borraria o giro
-      const to = from === base && base < lastIndex && images[base + 1] ? base + 1 : -1;
-      const mix = current - base;
+      // Só mistura com o vizinho exato; um quadro distante borraria o movimento
+      const next = normalize(base + 1);
+      const to = from === base && next >= 0 && decoded.has(next) ? next : -1;
+      const mix = position - base;
 
       const { width, height } = canvas;
-      const image = images[from]!;
-      // Encaixa pela altura para o mastro nunca ser cortado. Em tela mais larga
+      const image = decoded.get(from)!;
+      // Encaixa pela altura para a máquina nunca ser cortada. Em tela mais larga
       // que o quadro, as laterais recebem a cor do estúdio e a borda se dissolve.
-      const drawWidth = image.naturalWidth * (height / image.naturalHeight);
+      const drawWidth = image.width * (height / image.height);
       const x = (width - drawWidth) / 2;
 
       ctx.globalAlpha = 1;
-      ctx.fillStyle = `rgb(${STUDIO_RGB})`;
-      ctx.fillRect(0, 0, width, height);
+      if (x > 0) {
+        ctx.fillStyle = `rgb(${STUDIO_RGB})`;
+        ctx.fillRect(0, 0, width, height);
+      }
       ctx.drawImage(image, x, 0, drawWidth, height);
 
       if (to >= 0 && mix > 0.01) {
         ctx.globalAlpha = mix;
-        ctx.drawImage(images[to]!, x, 0, drawWidth, height);
+        ctx.drawImage(decoded.get(to)!, x, 0, drawWidth, height);
         ctx.globalAlpha = 1;
       }
 
@@ -100,8 +207,90 @@ export default function ScrollSequence({ frame, className, label }: ScrollSequen
         }
       }
 
-      painted = current;
+      painted = position;
       paintedFrom = from;
+      onPaintRef.current?.(position);
+    };
+
+    /** Libera os decodificados mais distantes da posição até caber no limite. */
+    const evict = (keep: number) => {
+      while (decoded.size > DECODED_LIMIT) {
+        let farthest = -1;
+        let farthestDistance = -1;
+        for (const key of decoded.keys()) {
+          const gap = distance(key, keep);
+          if (gap > farthestDistance) {
+            farthest = key;
+            farthestDistance = gap;
+          }
+        }
+        decoded.get(farthest)?.close();
+        decoded.delete(farthest);
+      }
+    };
+
+    const releaseAll = () => {
+      decoded.forEach((bitmap) => bitmap.close());
+      decoded.clear();
+      paintedFrom = -1;
+      painted = Number.NaN;
+    };
+
+    const decode = (index: number) => {
+      const file = files[index];
+      if (!file) return;
+      decoding.add(index);
+      createImageBitmap(file)
+        .then((bitmap) => {
+          if (disposed || !near) {
+            bitmap.close();
+            return;
+          }
+          decoded.get(index)?.close();
+          decoded.set(index, bitmap);
+          const base = Math.floor(positionOf(current));
+          evict(base);
+          // Redesenha se o recém-chegado melhora o que está na tela
+          if (
+            paintedFrom < 0 ||
+            index === normalize(base + 1) ||
+            distance(index, base) < distance(paintedFrom, base)
+          ) {
+            paint(true);
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          decoding.delete(index);
+          schedule();
+        });
+    };
+
+    /** Decodifica o quadro atual, o seguinte e alguns à frente no sentido do movimento. */
+    const schedule = () => {
+      if (!near || disposed) return;
+      const base = Math.floor(positionOf(current));
+      const wanted = [base, base + 1];
+      for (let step = 1; step <= LOOKAHEAD; step++) wanted.push(base + direction * (step + 1));
+      wanted.push(base - direction, base - direction * 2);
+
+      for (const raw of wanted) {
+        if (decoding.size >= DECODERS) return;
+        const index = normalize(raw);
+        if (index < 0 || decoded.has(index) || decoding.has(index) || !files[index]) continue;
+        decode(index);
+      }
+
+      // No começo, antes de os vizinhos baixarem: qualquer quadro próximo serve
+      if (decoded.size === 0 && decoding.size === 0) {
+        let closest = -1;
+        for (let index = 0; index < total; index++) {
+          if (files[index] && (closest < 0 || distance(index, base) < distance(closest, base))) {
+            closest = index;
+          }
+        }
+        if (closest >= 0) decode(closest);
+      }
     };
 
     // Amortecimento pelo tempo real, não por repaint: a desaceleração tem a
@@ -109,10 +298,12 @@ export default function ScrollSequence({ frame, className, label }: ScrollSequen
     const tick = (time: number) => {
       const dt = previousTime ? Math.min((time - previousTime) / 1000, 0.05) : 1 / 60;
       previousTime = time;
-      const target = frame.get();
+      const target = clampTarget(frame.get());
+      if (target !== current) direction = target > current ? 1 : -1;
       current += (target - current) * (1 - Math.exp(-STIFFNESS * dt));
       if (Math.abs(target - current) < 0.002) current = target;
       paint();
+      schedule();
       if (current === target) {
         raf = 0;
         previousTime = 0;
@@ -126,66 +317,88 @@ export default function ScrollSequence({ frame, className, label }: ScrollSequen
     };
 
     const resize = () => {
-      const ratio = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = Math.round(rect.width * ratio);
-      canvas.height = Math.round(rect.height * ratio);
+      const ratio = Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO) * density;
+      // Tamanho de layout, sem transformações: uma ampliação por CSS não muda a medida
+      canvas.width = Math.round(canvas.offsetWidth * ratio);
+      canvas.height = Math.round(canvas.offsetHeight * ratio);
       ctx.imageSmoothingQuality = "high";
       paint(true);
     };
 
-    // Primeiro o quadro inicial, depois a sequência em passadas cada vez mais
-    // finas: o scroll já funciona, grosseiro, muito antes de tudo baixar.
-    const order: number[] = [];
-    const queued = new Set<number>();
-    for (let stride = 32; stride >= 1; stride /= 2) {
-      for (let index = 0; index < SEQUENCE_FRAMES; index += stride) {
-        if (!queued.has(index)) {
-          queued.add(index);
-          order.push(index);
+    const start = async () => {
+      started = true;
+      const width: FrameWidth = canvas.height > LARGE_CANVAS ? 2560 : 1920;
+      if (await supportsAvif(sequence.avif(0, width))) {
+        url = (index) => sequence.avif(index, width);
+      }
+      if (disposed) return;
+
+      // Primeiro o quadro da posição atual e o último, depois a sequência em
+      // passadas cada vez mais finas: o movimento funciona, grosseiro, muito antes
+      // de tudo baixar.
+      const first = normalize(Math.round(positionOf(current)));
+      const order = [Math.max(first, 0)];
+      const queued = new Set(order);
+      if (!queued.has(lastIndex)) {
+        order.push(lastIndex);
+        queued.add(lastIndex);
+      }
+      for (let stride = 32; stride >= 1; stride /= 2) {
+        for (let index = 0; index < total; index += stride) {
+          if (!queued.has(index)) {
+            queued.add(index);
+            order.push(index);
+          }
         }
       }
-    }
 
-    let cursor = 0;
-    const loadNext = () => {
-      if (disposed || cursor >= order.length) return;
-      const index = order[cursor++];
-      const image = new Image();
-      image.src = sequenceFrameSrc(index);
-      image
-        .decode()
-        .then(() => {
-          if (disposed) return;
-          images[index] = image;
-          // Redesenha se o recém-chegado melhora o que está na tela
-          const base = Math.floor(current);
-          if (
-            paintedFrom < 0 ||
-            index === base + 1 ||
-            Math.abs(index - base) < Math.abs(paintedFrom - base)
-          ) {
-            paint(true);
-          }
-        })
-        .catch(() => {})
-        .finally(loadNext);
+      let cursor = 0;
+      const loadNext = () => {
+        if (disposed || cursor >= order.length) return;
+        const index = order[cursor++];
+        fetchBlob(url(index))
+          .then((file) => {
+            if (disposed) return;
+            files[index] = file;
+            schedule();
+          })
+          .catch(() => {})
+          .finally(loadNext);
+      };
+      for (let lane = 0; lane < CONCURRENCY; lane++) loadNext();
     };
 
     const observer = new ResizeObserver(resize);
     observer.observe(canvas);
     resize();
 
-    for (let lane = 0; lane < CONCURRENCY; lane++) loadNext();
+    // Longe da tela o palco não baixa nada e não segura memória decodificada
+    const visibility = new IntersectionObserver(
+      ([entry]) => {
+        near = entry.isIntersecting;
+        if (near) {
+          if (!started) void start();
+          schedule();
+          wake();
+        } else {
+          releaseAll();
+        }
+      },
+      { rootMargin: NEAR_MARGIN }
+    );
+    visibility.observe(canvas);
+
     const unsubscribe = frame.on("change", wake);
 
     return () => {
       disposed = true;
       unsubscribe();
       observer.disconnect();
+      visibility.disconnect();
       cancelAnimationFrame(raf);
+      releaseAll();
     };
-  }, [frame]);
+  }, [frame, sequence, loop, density]);
 
   return <canvas ref={canvasRef} role="img" aria-label={label} className={className} />;
 }

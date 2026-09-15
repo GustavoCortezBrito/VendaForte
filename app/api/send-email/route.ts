@@ -4,6 +4,16 @@ import { Resend } from 'resend'
 // Inicializar Resend apenas se a API key existir
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
+// O conteúdo vem do formulário: escapado para não virar HTML no email
+const escapeHtml = (value: unknown) =>
+  String(value ?? '').replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  }[char]!))
+
 export async function POST(request: NextRequest) {
   try {
     // Verificar se Resend está configurado
@@ -15,7 +25,8 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { nome, email, telefone, empresa, cidade, equipamento, mensagem } = body
+    // `origem` identifica formulários fora da página principal, como a campanha /promo
+    const { nome, email, telefone, empresa, cidade, equipamento, mensagem, origem } = body
 
     // Validação básica
     if (!nome || !email || !telefone || !mensagem) {
@@ -28,9 +39,9 @@ export async function POST(request: NextRequest) {
     // Enviar email usando Resend
     const data = await resend.emails.send({
       from: 'Venda Forte <onboarding@resend.dev>',
-      to: ['gustavocortezdebrito@gmail.com'],
+      to: ['rodrigo@grupovendaforte.com'],
       replyTo: email,
-      subject: `🔴 Nova Solicitação - ${nome}`,
+      subject: `🔴 Nova Solicitação${origem ? ` (${origem})` : ''} - ${nome}`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -101,55 +112,55 @@ export async function POST(request: NextRequest) {
           <body>
             <div class="email-container">
               <div class="header">
-                <h1>Nova Solicitação do Site</h1>
+                <h1>${origem ? `Nova Solicitação · ${escapeHtml(origem)}` : 'Nova Solicitação do Site'}</h1>
               </div>
-              
+
               <div class="content">
                 <div class="field">
                   <div class="label">Nome</div>
-                  <div class="value">${nome}</div>
+                  <div class="value">${escapeHtml(nome)}</div>
                 </div>
-                
+
                 <div class="field">
                   <div class="label">E-mail</div>
-                  <div class="value"><a href="mailto:${email}">${email}</a></div>
+                  <div class="value"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></div>
                 </div>
-                
+
                 <div class="field">
                   <div class="label">Telefone</div>
-                  <div class="value"><a href="tel:${telefone}">${telefone}</a></div>
+                  <div class="value"><a href="tel:${escapeHtml(telefone)}">${escapeHtml(telefone)}</a></div>
                 </div>
-                
+
                 ${empresa ? `
                 <div class="field">
                   <div class="label">Empresa</div>
-                  <div class="value">${empresa}</div>
+                  <div class="value">${escapeHtml(empresa)}</div>
                 </div>
                 ` : ''}
-                
+
                 ${cidade ? `
                 <div class="field">
                   <div class="label">Cidade</div>
-                  <div class="value">${cidade}</div>
+                  <div class="value">${escapeHtml(cidade)}</div>
                 </div>
                 ` : ''}
-                
+
                 ${equipamento ? `
                 <div class="field">
                   <div class="label">Tipo de Equipamento</div>
-                  <div class="value">${equipamento}</div>
+                  <div class="value">${escapeHtml(equipamento)}</div>
                 </div>
                 ` : ''}
-                
+
                 <div class="field">
                   <div class="label">Mensagem</div>
-                  <div class="value">${mensagem.replace(/\n/g, '<br>')}</div>
+                  <div class="value">${escapeHtml(mensagem).replace(/\n/g, '<br>')}</div>
                 </div>
               </div>
-              
+
               <div class="footer">
                 Enviado através do formulário de contato<br>
-                <strong>www.grupovendaforte.com</strong>
+                <strong>www.grupovendaforte.com${origem ? ' · campanha promocional' : ''}</strong>
               </div>
             </div>
           </body>
@@ -158,10 +169,10 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ success: true, data })
-  } catch (error: any) {
+  } catch (error) {
     console.error('Erro ao enviar email:', error)
     return NextResponse.json(
-      { error: error.message || 'Erro ao enviar email' },
+      { error: (error instanceof Error && error.message) || 'Erro ao enviar email' },
       { status: 500 }
     )
   }

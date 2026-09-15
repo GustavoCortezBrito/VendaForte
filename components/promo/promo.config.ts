@@ -1,3 +1,5 @@
+import type { FrameSequence } from "./ScrollSequence";
+
 /**
  * Configuração central da campanha promocional (promo.grupovendaforte.com).
  *
@@ -22,26 +24,22 @@ export const CONTATO = {
 } as const;
 
 /** Pontos de atendimento reais. A campanha não promete cobertura nacional. */
-export const PONTOS_ATENDIMENTO = [
-  "Chapecó",
-  "Itajaí",
-  "Joinville",
-  "Maringá",
-  "Seberi",
-  "Esteio",
-] as const;
+export const PONTOS_ATENDIMENTO = ["Chapecó", "Joinville", "Itajaí"] as const;
 
 /** Âncora do hero em vídeo. O header muda de estado quando ele termina. */
 export const HERO_ID = "palco";
 
 /** Menu da campanha, usado no header e no rodapé. */
 export const PROMO_NAV = [
-  { href: "#ds3", label: "A DS3" },
+  { href: "#ds3", label: "DS3" },
+  { href: "#efl302b3", label: "EFL302 B3" },
+  { href: "#f4", label: "F4" },
   { href: "#economia", label: "Economia" },
-  { href: "#ofertas", label: "Oferta" },
-  { href: "#ficha-tecnica", label: "Ficha técnica" },
-  { href: "#vendedores", label: "Vendedores" },
+  { href: "#cotacao", label: "Cotação" },
 ] as const;
+
+/** Site principal. A LP roda num subdomínio próprio, então o link é absoluto. */
+export const MAIN_SITE_URL = "https://www.grupovendaforte.com";
 
 /* -------------------------------------------------------------------------- */
 /* Registro de mídias                                                          */
@@ -76,10 +74,10 @@ export const MEDIA: Record<string, MediaAsset> = {
     kind: "image",
   },
   heroVideo: {
-    file: "/promo/ds3-rotacao-360.mp4",
-    src: "/promo/ds3-rotacao-360.mp4",
+    file: "/promo/ds3-giro-15s.mp4",
+    src: "/promo/ds3-giro-15s.mp4",
     label: "Giro 360° da DS3 (Seedance 2.5)",
-    spec: "Original 1920 × 1080 · 6 s · versão mobile 1280 × 720 H.264 · quadros em /promo/sequencia/",
+    spec: "Original 1920 × 1080 · 15 s · 361 quadros em /promo/giro/ · versão mobile 1280 × 720 H.264",
     alt: "Empilhadeira elétrica EP DS3 girando 360 graus",
     kind: "video",
   },
@@ -131,76 +129,12 @@ export const MEDIA: Record<string, MediaAsset> = {
     alt: "Rodas e chassi da EP DS3 em piso industrial",
     kind: "image",
   },
-  setorArmazem: {
-    file: "/promo/setor-armazem.webp",
-    src: null,
-    label: "Armazém e centro de distribuição",
-    spec: "1600 × 1200 · WebP",
-    alt: "Empilhadeira elétrica posicionando pallet em porta-pallets de armazém",
-    kind: "image",
-  },
-  setorFrigorifico: {
-    file: "/promo/setor-frigorifico.webp",
-    src: null,
-    label: "Frigorífico e câmara fria",
-    spec: "1600 × 1200 · WebP",
-    alt: "Empilhadeira elétrica operando em câmara fria",
-    kind: "image",
-  },
-  setorIndustria: {
-    file: "/promo/setor-industria.webp",
-    src: null,
-    label: "Indústria alimentícia",
-    spec: "1600 × 1200 · WebP",
-    alt: "Empilhadeira elétrica abastecendo linha de produção",
-    kind: "image",
-  },
-  setorAgro: {
-    file: "/promo/setor-agro.webp",
-    src: null,
-    label: "Agronegócio e cooperativa",
-    spec: "1600 × 1200 · WebP",
-    alt: "Empilhadeira elétrica em armazém de insumos agrícolas",
-    kind: "image",
-  },
-  setorVarejo: {
-    file: "/promo/setor-varejo.webp",
-    src: null,
-    label: "Varejo e atacado",
-    spec: "1600 × 1200 · WebP",
-    alt: "Empilhadeira elétrica em reposição de atacado",
-    kind: "image",
-  },
   desenhoTecnico: {
     file: "/promo/ds3-desenho-tecnico.webp",
     src: null,
     label: "Desenho técnico cotado da DS3",
     spec: "1600 × 1600 · traço claro sobre fundo escuro",
     alt: "Desenho técnico cotado da EP DS3, vistas lateral e superior",
-    kind: "image",
-  },
-  consultorRodrigo: {
-    file: "/promo/consultor-rodrigo.webp",
-    src: null,
-    label: "Retrato de Rodrigo Schilke",
-    spec: "800 × 800 · ombros para cima · fundo escuro",
-    alt: "Rodrigo Schilke, gestão comercial do Grupo Venda Forte",
-    kind: "image",
-  },
-  consultorTecnico: {
-    file: "/promo/consultor-tecnico.webp",
-    src: null,
-    label: "Retrato do consultor técnico",
-    spec: "800 × 800 · ombros para cima · fundo escuro",
-    alt: "Consultor técnico do Grupo Venda Forte",
-    kind: "image",
-  },
-  consultorFinanciamento: {
-    file: "/promo/consultor-financiamento.webp",
-    src: null,
-    label: "Retrato do consultor de financiamento",
-    spec: "800 × 800 · ombros para cima · fundo escuro",
-    alt: "Consultor de financiamento do Grupo Venda Forte",
     kind: "image",
   },
 };
@@ -228,73 +162,233 @@ export const DS3_SHOTS = {
     alt: "Mastro da EP DS3 com correntes e grade de proteção",
   },
   traseira: { src: "/promo/ds3/ds3-traseira-hd.webp", alt: "Garfos e patolas da EP DS3 vistos de trás" },
-  tresQuartosTras: {
-    src: "/promo/ds3/ds3-34-traseira.webp",
-    alt: "EP DS3 em três quartos traseiro, com o mastro em primeiro plano",
-  },
   lateral: { src: "/promo/ds3/ds3-lateral-hd.webp", alt: "Lateral da EP DS3 com rodas e chassi" },
-  tresQuartosDir: {
-    src: "/promo/ds3/ds3-34-frente-dir.webp",
-    alt: "EP DS3 em três quartos pela direita, com o logo EP",
+  // Do giro de 15 s, ampliados 4× com Real-ESRGAN e salvos em 2160 px
+  tresQuartosGarfos: {
+    src: "/promo/ds3/ds3-34-garfos-hd.webp",
+    alt: "EP DS3 em três quartos, com a carenagem vermelha e os garfos",
+  },
+  tresQuartosLogo: {
+    src: "/promo/ds3/ds3-34-logo-hd.webp",
+    alt: "EP DS3 em três quartos pela direita, com o logo EP na carenagem",
   },
 } as const;
 
 export type DS3ShotKey = keyof typeof DS3_SHOTS;
 
-/** Fotos de estúdio em fundo branco, para as seções claras. */
-export const DS3_STUDIO = {
-  frente: { src: "/promo/ds3_1.webp", alt: "EP DS3 em fundo branco, vista frontal" },
-  esquerda: { src: "/promo/ds3_2.webp", alt: "EP DS3 em fundo branco, três quartos pela esquerda" },
-  direita: { src: "/promo/ds3_4.webp", alt: "EP DS3 em fundo branco, três quartos pela direita" },
-} as const;
-
-/** Catálogo de PDF. `null` esconde o botão de download, para não gerar link quebrado. */
-export const CATALOGO_PDF: string | null = null;
 
 /* -------------------------------------------------------------------------- */
 /* Catálogo da campanha                                                        */
 /* -------------------------------------------------------------------------- */
 
-// A campanha trabalha só a DS3; "outro" leva a conversa para consultoria de frota.
-export type PromoProductId = "ds3" | "outro";
+export type ProductId = "ds3" | "efl302b3" | "f4";
+// "outro" leva a conversa do formulário para consultoria de frota.
+export type PromoProductId = ProductId | "outro";
 
-export interface PromoProduct {
-  id: Exclude<PromoProductId, "outro">;
-  name: string;
-  shortName: string;
-  tagline: string;
-  badge: string;
-  badgeClass: string;
-  capacity: string;
-  lifting: string;
-  battery: string;
-  price: string;
-  installment: string;
-  mediaKey: keyof typeof MEDIA;
-  highlights: string[];
+export interface ProductSpec {
+  label: string;
+  value: string;
 }
 
-export const PROMO_PRODUCTS: PromoProduct[] = [
-  {
+export interface PromoProduct {
+  id: ProductId;
+  name: string;
+  shortName: string;
+  category: string;
+  tagline: string;
+  capacity: string;
+  /** `null` enquanto o valor não estiver aprovado: a página mostra a condição de lote. */
+  price: string | null;
+  /** Preço anterior, mostrado riscado antes do preço da campanha. */
+  listPrice?: string;
+  installment: string;
+  highlights: string[];
+  /** Ficha técnica do catálogo EP (`lib/data/electric-forklifts.json`). */
+  specs: ProductSpec[];
+}
+
+export const PRODUCTS: Record<ProductId, PromoProduct> = {
+  ds3: {
     id: "ds3",
     name: "Empilhadeira Patolada EP DS3",
     shortName: "DS3",
+    category: "Empilhadeira patolada",
     tagline: "Verticalização em corredor estreito",
-    badge: "Destaque · 1.500 kg",
-    badgeClass: "bg-red-600 text-white",
     capacity: "1.500 kg",
-    lifting: "3,9 metros",
-    battery: "24V Li-Ion",
-    price: "A partir de R$ 39.900",
+    price: "R$ 19.900",
+    listPrice: "R$ 29.900",
     installment: "Até 48x via BNDES e Finame",
-    mediaKey: "ds3Render",
     highlights: [
       "Recarga de oportunidade em qualquer tomada",
       "Zero manutenção de água e ácido",
       "Timão ergonômico com comando progressivo",
     ],
+    specs: [
+      { label: "Capacidade nominal", value: "1.500 kg" },
+      { label: "Altura de elevação", value: "3,9 metros" },
+      { label: "Bateria", value: "24 V de íon-lítio" },
+      { label: "Garantia da bateria", value: "Até 5 anos de fábrica" },
+      { label: "Raio de giro", value: "1.470 mm" },
+      { label: "Velocidade com/sem carga", value: "4,0/4,5 km/h" },
+      { label: "Peso do equipamento", value: "540 kg" },
+      { label: "Comprimento × largura", value: "1.727 × 834 mm" },
+    ],
   },
-];
+  efl302b3: {
+    id: "efl302b3",
+    name: "Empilhadeira Contrabalançada EP EFL302 B3",
+    shortName: "EFL302 B3",
+    category: "Empilhadeira contrabalançada",
+    tagline: "Força de 3 toneladas, 100% elétrica",
+    capacity: "3.000 kg",
+    price: null,
+    installment: "Faturamento direto, BNDES e Finame",
+    highlights: [
+      "3 toneladas com bateria de lítio de 80 V",
+      "Até 12 km/h e rampa de até 15%",
+      "Pneus pneumáticos para pátio e piso irregular",
+    ],
+    specs: [
+      { label: "Capacidade nominal", value: "3.000 kg" },
+      { label: "Altura máxima de elevação", value: "6.000 mm" },
+      { label: "Bateria", value: "80 V de íon-lítio, 205 Ah" },
+      { label: "Velocidade com/sem carga", value: "11/12 km/h" },
+      { label: "Rampa máxima", value: "15%" },
+      { label: "Raio de giro", value: "2.437 mm" },
+      { label: "Peso do equipamento", value: "4.100 kg" },
+      { label: "Comprimento × largura", value: "3.735 × 1.230 mm" },
+    ],
+  },
+  f4: {
+    id: "f4",
+    name: "Paleteira Elétrica EP F4",
+    shortName: "F4",
+    category: "Paleteira elétrica",
+    tagline: "Compacta para o giro do dia a dia",
+    capacity: "1.500 kg",
+    price: "R$ 14.890",
+    installment: "Até 12x no cartão CNPJ",
+    highlights: [
+      "Compacta para docas, caminhões e corredores",
+      "Bateria de lítio de 24 V sem manutenção",
+      "Apenas 120 kg e raio de giro de 1.360 mm",
+    ],
+    specs: [
+      { label: "Capacidade nominal", value: "1.500 kg" },
+      { label: "Elevação", value: "105 mm" },
+      { label: "Bateria", value: "24 V de íon-lítio, 20 Ah" },
+      { label: "Velocidade com/sem carga", value: "4/4,5 km/h" },
+      { label: "Raio de giro", value: "1.360 mm" },
+      { label: "Peso do equipamento", value: "120 kg" },
+      { label: "Garfos", value: "55 × 150 × 1.150 mm" },
+      { label: "Comprimento × largura", value: "1.550 × 590 mm" },
+    ],
+  },
+};
+
+export const PROMO_PRODUCTS: PromoProduct[] = [PRODUCTS.ds3, PRODUCTS.efl302b3, PRODUCTS.f4];
+
+/* -------------------------------------------------------------------------- */
+/* Sequências de quadros                                                       */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Versão dos arquivos das animações, na URL. O next.config.ts manda o navegador
+ * guardá-los por um ano: ao trocar quadros ou vídeos, suba este número.
+ */
+export const ASSET_VERSION = "3";
+
+const pad3 = (index: number) => String(index).padStart(3, "0");
+
+/**
+ * Quadros tirados do upscale 4K do vídeo: AVIF de 1920 e 2560 px nas pastas
+ * `avif-<largura>` e WebP de 2560 px como reserva.
+ */
+const frameSequence = (
+  dir: string,
+  frames: number,
+  webpName: (index: number) => string = pad3
+): FrameSequence => ({
+  frames,
+  avif: (index, width) => `/promo/${dir}/avif-${width}/${pad3(index)}.avif?v=${ASSET_VERSION}`,
+  webp: (index) => `/promo/${dir}/${webpName(index)}.webp?v=${ASSET_VERSION}`,
+});
+
+/** Giro de 360° da DS3 em 15 s a 24 fps: 1° por quadro. */
+export const DS3_SEQUENCE = frameSequence("giro", 361, (index) => `ds3-${pad3(index)}`);
+
+/** Vídeo do mobile: AV1 para quem decodifica, H.264 como reserva. */
+export interface PromoVideo {
+  av1?: string;
+  h264: string;
+}
+
+const promoVideo = (name: string, { av1 }: { av1: boolean }): PromoVideo => ({
+  ...(av1 && { av1: `/promo/${name}-av1.mp4?v=${ASSET_VERSION}` }),
+  h264: `/promo/${name}.mp4?v=${ASSET_VERSION}`,
+});
+
+/** Giro da DS3 em loop, para o mobile. */
+export const DS3_VIDEO = promoVideo("ds3-giro-15s", { av1: true });
+
+/** Produtos que ganham uma animação própria depois da DS3. */
+export type MotionProductId = Exclude<ProductId, "ds3">;
+
+export interface ProductMotion {
+  sequence: FrameSequence;
+  /** A mesma animação em vídeo, para o mobile. */
+  video: PromoVideo;
+  label: string;
+  /** Frase curta que acompanha o nome no fim do movimento. */
+  line: string;
+}
+
+export const PRODUCT_MOTION: Record<MotionProductId, ProductMotion> = {
+  efl302b3: {
+    sequence: frameSequence("movimento-efl302b3", 241),
+    video: promoVideo("efl302b3-movimento", { av1: true }),
+    label: "Empilhadeira EP EFL302 B3 chegando de perfil e parando no centro",
+    line: "3.000 kg · 6 m de elevação · lítio 80 V",
+  },
+  f4: {
+    sequence: frameSequence("revelacao-f4", 241),
+    video: promoVideo("f4-revelacao", { av1: true }),
+    label: "Paleteira elétrica EP F4 revelada por uma faixa de luz",
+    line: "1.500 kg · 120 kg de peso · lítio 24 V",
+  },
+};
+
+export interface ProductPhoto {
+  src: string;
+  alt: string;
+}
+
+/**
+ * Fotos das seções de informações. As da EFL302 B3 têm fundo transparente
+ * (`contain`); as da F4 são de operação real em armazém (`cover`).
+ */
+export const PRODUCT_PHOTOS: Record<MotionProductId, { fit: "contain" | "cover"; photos: ProductPhoto[] }> = {
+  efl302b3: {
+    fit: "contain",
+    photos: [
+      { src: "/promo/EFL302B3/recorte/2.webp", alt: "EP EFL302 B3 em três quartos pela frente, lado esquerdo" },
+      { src: "/promo/EFL302B3/recorte/3.webp", alt: "EP EFL302 B3 em três quartos pela frente, lado direito" },
+      { src: "/promo/EFL302B3/recorte/8.webp", alt: "EP EFL302 B3 de perfil" },
+      { src: "/promo/EFL302B3/recorte/1.webp", alt: "EP EFL302 B3 em três quartos por trás, com o contrapeso" },
+      { src: "/promo/EFL302B3/recorte/4.webp", alt: "EP EFL302 B3 de frente, com o mastro e os garfos" },
+    ],
+  },
+  f4: {
+    fit: "cover",
+    photos: [
+      { src: "/promo/F4/1.webp", alt: "EP F4 em três quartos no corredor do armazém" },
+      { src: "/promo/F4/2.webp", alt: "EP F4 de frente, com o timão" },
+      { src: "/promo/F4/4.webp", alt: "EP F4 entre os porta-pallets" },
+      { src: "/promo/F4/3.webp", alt: "Timão da EP F4 na mão do operador" },
+      { src: "/promo/F4/5.webp", alt: "Técnico conferindo a bateria da EP F4" },
+    ],
+  },
+};
 
 export const MODEL_OPTIONS: { id: PromoProductId; label: string }[] = [
   ...PROMO_PRODUCTS.map((product) => ({
@@ -308,81 +402,8 @@ export const MODEL_OPTIONS: { id: PromoProductId; label: string }[] = [
 /* Time comercial                                                              */
 /* -------------------------------------------------------------------------- */
 
-export interface SalesConsultant {
-  id: string;
-  name: string;
-  role: string;
-  region: string;
-  specialty: string;
-  phoneDisplay: string;
-  whatsappNumber: string;
-  initials: string;
-  mediaKey: keyof typeof MEDIA;
-  accent: "red" | "orange" | "emerald";
-}
-
-export const SALES_TEAM: SalesConsultant[] = [
-  {
-    id: "rodrigo",
-    name: "Rodrigo Schilke",
-    role: "Gestão comercial e grandes frotas",
-    region: "Atendimento corporativo no Sul do Brasil",
-    specialty: "Contratos de frota e locação",
-    phoneDisplay: WHATSAPP_DISPLAY,
-    whatsappNumber: WHATSAPP_CENTRAL,
-    initials: "RS",
-    mediaKey: "consultorRodrigo",
-    accent: "red",
-  },
-  {
-    id: "tecnico",
-    name: "Consultor técnico",
-    role: "Linha elétrica e armazenagem vertical",
-    region: "Chapecó, Itajaí e Joinville",
-    specialty: "Dimensionamento da DS3 para a sua operação",
-    phoneDisplay: WHATSAPP_DISPLAY,
-    whatsappNumber: WHATSAPP_CENTRAL,
-    initials: "CT",
-    mediaKey: "consultorTecnico",
-    accent: "orange",
-  },
-  {
-    id: "financiamento",
-    name: "Consultor de financiamento",
-    role: "Faturamento CNPJ, leasing e Finame",
-    region: "Maringá, Seberi e Esteio",
-    specialty: "Simulação BNDES em até 60x",
-    phoneDisplay: WHATSAPP_DISPLAY,
-    whatsappNumber: WHATSAPP_CENTRAL,
-    initials: "CF",
-    mediaKey: "consultorFinanciamento",
-    accent: "emerald",
-  },
-];
-
-/* -------------------------------------------------------------------------- */
-/* Prova social                                                                */
-/* -------------------------------------------------------------------------- */
-
-/** Logos já presentes em `public/images/clients/`. */
-export const CLIENTES = [
-  { name: "Adami", file: "/images/clients/adami.png" },
-  { name: "BRF", file: "/images/clients/brf.png" },
-  { name: "Copacol", file: "/images/clients/copacol.png" },
-  { name: "GT Foods", file: "/images/clients/gtfoods.png" },
-  { name: "JBS", file: "/images/clients/jbs.png" },
-  { name: "Muffato", file: "/images/clients/muffato.png" },
-  { name: "Randon", file: "/images/clients/randon.png" },
-  { name: "Seara", file: "/images/clients/seara.png" },
-] as const;
-
-/** Somente números já publicados e assumidos pela empresa no site principal. */
-export const NUMEROS = [
-  { value: "1000+", label: "Equipamentos vendidos" },
-  { value: "20+", label: "Anos de mercado" },
-  { value: "6", label: "Pontos de atendimento" },
-  { value: "3", label: "Estados no Sul do Brasil" },
-] as const;
+/** Horário de atendimento comercial, o mesmo do site principal. */
+export const HORARIO_ATENDIMENTO = ["Segunda a sexta, 8h às 18h", "Sábado, 8h às 12h"] as const;
 
 /* -------------------------------------------------------------------------- */
 /* Helpers                                                                     */

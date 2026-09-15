@@ -1,54 +1,48 @@
 import PromoProductStage from "@/components/promo/PromoProductStage";
 import PromoCloseUp from "@/components/promo/PromoCloseUp";
 import PromoHighlights from "@/components/promo/PromoHighlights";
+import PromoProductMotion from "@/components/promo/PromoProductMotion";
+import PromoProductDetails from "@/components/promo/PromoProductDetails";
 import PromoDS3Highlight from "@/components/promo/PromoDS3Highlight";
-import PromoUpgradePath from "@/components/promo/PromoUpgradePath";
-import PromoSectors from "@/components/promo/PromoSectors";
-import PromoOffersGrid from "@/components/promo/PromoOffersGrid";
-import PromoSpecs from "@/components/promo/PromoSpecs";
 import PromoWhyUs from "@/components/promo/PromoWhyUs";
-import PromoSocialProof from "@/components/promo/PromoSocialProof";
-import PromoSalesTeam from "@/components/promo/PromoSalesTeam";
 import PromoQuoteForm from "@/components/promo/PromoQuoteForm";
 import PromoFAQ from "@/components/promo/PromoFAQ";
+import PromoMainSite from "@/components/promo/PromoMainSite";
 
 /**
  * Landing page de campanha — EP Equipment.
  *
- * Abre com o giro da DS3 sozinho na tela e segue direto para os detalhes.
- * Seções escuras e claras se alternam para dar ritmo à leitura.
+ * Três máquinas em sequência, cada uma com a sua animação controlada pelo scroll
+ * seguida de informações, ficha técnica e preço: a DS3 gira, a EFL302 B3 chega
+ * andando e a F4 é revelada pela luz. Depois vêm economia, fornecedor, cotação,
+ * perguntas frequentes e o site principal.
  */
 export default function PromoPage() {
   return (
     <>
-      {/* Hero: só o giro da DS3, controlado pelo scroll */}
+      {/* 1 e 2 — DS3: giro com o preço letra a letra, detalhes, ficha e preço */}
       <PromoProductStage />
-
-      {/* A DS3 por dentro, com a câmera aproximando de cada peça */}
       <PromoCloseUp />
-
-      {/* Destaques rápidos */}
       <PromoHighlights />
 
-      {/* Seções claras: economia e caminho de troca */}
+      {/* 3 e 4 — EFL302 B3: chegada de perfil, informações, ficha e preço */}
+      <div id="efl302b3" className="scroll-mt-24">
+        <PromoProductMotion productId="efl302b3" />
+        <PromoProductDetails productId="efl302b3" />
+      </div>
+
+      {/* 5 e 6 — F4: revelação pela luz, informações, ficha e preço */}
+      <div id="f4" className="scroll-mt-24">
+        <PromoProductMotion productId="f4" />
+        <PromoProductDetails productId="f4" />
+      </div>
+
+      {/* 7 — Demais seções */}
       <PromoDS3Highlight />
-      <PromoUpgradePath />
-
-      {/* Aplicações por setor */}
-      <PromoSectors />
-
-      {/* Vitrine e ficha técnica */}
-      <PromoOffersGrid />
-      <PromoSpecs />
-
-      {/* Seções claras: fornecedor e prova social */}
       <PromoWhyUs />
-      <PromoSocialProof />
-
-      {/* Conversão */}
-      <PromoSalesTeam />
       <PromoQuoteForm />
       <PromoFAQ />
+      <PromoMainSite />
     </>
   );
 }
