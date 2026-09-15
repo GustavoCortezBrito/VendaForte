@@ -36,6 +36,7 @@ export const PROMO_NAV = [
   { href: "#f4", label: "F4" },
   { href: "#economia", label: "Economia" },
   { href: "#cotacao", label: "Cotação" },
+  { href: "#faq", label: "FAQ" },
 ] as const;
 
 /** Site principal. A LP roda num subdomínio próprio, então o link é absoluto. */

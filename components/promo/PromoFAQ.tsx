@@ -2,18 +2,20 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Mail, Phone } from "lucide-react";
-import { CONTATO, whatsappUrl } from "./promo.config";
+import { ChevronDown } from "lucide-react";
+import { whatsappUrl } from "./promo.config";
 import { EASE_OUT, Eyebrow, Reveal, TITLE, WhatsAppLink } from "./ui";
 
 /**
  * Seção 13 — FAQ.
- * Perguntas agrupadas por assunto, com filtro e um cartão de contato ao lado.
+ * Perguntas por máquina, com os números das fichas oficiais da EP Equipment,
+ * e as dúvidas de compra. Filtro por assunto e cartão de contato ao lado.
  *
+ * Fontes: ep-equipment.com/product/ds3, /br/product/efl302b3 e /br/product/f4
  * Especificação: docs/promo/13-faq.md
  */
 
-const TOPICS = ["Compra e entrega", "Bateria e recarga", "Assistência"] as const;
+const TOPICS = ["DS3", "EFL302 B3", "F4", "Compra e suporte"] as const;
 type Topic = (typeof TOPICS)[number];
 
 interface FAQItem {
@@ -23,47 +25,114 @@ interface FAQItem {
 }
 
 const FAQS: FAQItem[] = [
+  /* ---------------- DS3 ---------------- */
   {
-    topic: "Compra e entrega",
-    question: "Como funciona a entrega das empilhadeiras e paleteiras?",
+    topic: "DS3",
+    question: "Quanto a DS3 levanta e até que altura?",
+    answer:
+      "Capacidade nominal de 1.500 kg com centro de carga de 600 mm e mastro de corrente dupla que chega a até 3,9 m de elevação. Quando o mastro sobe, a velocidade de deslocamento é reduzida automaticamente para manter a estabilidade.",
+  },
+  {
+    topic: "DS3",
+    question: "A DS3 trabalha em corredor estreito?",
+    answer:
+      "Sim. O chassi é curto (1.727 × 834 mm) e o raio de giro é de 1.470 mm. O corredor mínimo é de 2.302 mm para pallet 1.000 × 1.200 atravessado e de 2.235 mm para pallet 800 × 1.200 no sentido longitudinal.",
+  },
+  {
+    topic: "DS3",
+    question: "Como é a recarga da bateria da DS3?",
+    answer:
+      "O carregador é embarcado: basta conectar a máquina na tomada, sem sala de baterias. A versão de lítio usa bateria de 24 V / 40 Ah com carregador de 15 A, e o sistema dispensa manutenção.",
+  },
+  {
+    topic: "DS3",
+    question: "A DS3 sobe rampa carregada?",
+    answer:
+      "Ela vence rampas de até 3% com carga e 10% sem carga, então é indicada para piso plano de armazém, loja e área de produção. Para rampas mais íngremes ou pátio externo, a EFL302 B3 é a escolha.",
+  },
+  {
+    topic: "DS3",
+    question: "Quais recursos de segurança a DS3 tem?",
+    answer:
+      "Redução automática de velocidade com o mastro elevado, grade de proteção em malha de aço, modo tartaruga para manobras precisas, freio eletromagnético e timão grande com comandos na ponta dos dedos. O ruído no posto do operador fica abaixo de 74 dB(A).",
+  },
+
+  /* ---------------- EFL302 B3 ---------------- */
+  {
+    topic: "EFL302 B3",
+    question: "A EFL302 B3 pode trabalhar em área externa e na chuva?",
+    answer:
+      "Sim. Ela tem proteção contra água IPX4, pneus pneumáticos grandes e 150 mm de vão livre ao solo. Foi desenvolvida para aplicações exigentes em ambientes internos e externos, como pátios logísticos, canteiros de obras e fábricas, sob chuva ou sol.",
+  },
+  {
+    topic: "EFL302 B3",
+    question: "Qual a capacidade e a altura de elevação da EFL302 B3?",
+    answer:
+      "Capacidade de 3.000 kg com centro de carga de 500 mm e mastro de até 6.000 mm, com inclinação de 6° para a frente e 10° para trás. Com carga, eleva a 0,29 m/s.",
+  },
+  {
+    topic: "EFL302 B3",
+    question: "Qual é a bateria e o carregador da EFL302 B3?",
+    answer:
+      "Bateria de lítio de 80 V / 205 Ah, instalada na parte de baixo para dar mais estabilidade, com carregador de 35 A ou 60 A. Os motores são AC: 10 kW de tração e 16 kW no sistema hidráulico.",
+  },
+  {
+    topic: "EFL302 B3",
+    question: "Qual a velocidade e quanto de rampa ela vence?",
+    answer:
+      "Anda a 11 km/h com carga e 12 km/h sem carga, e vence rampas de 15% nas duas condições. O raio de giro é de 2.437 mm e o corredor mínimo é de 4.118 mm para pallet 1.000 × 1.200.",
+  },
+
+  /* ---------------- F4 ---------------- */
+  {
+    topic: "F4",
+    question: "Dá para trocar a bateria da F4 durante o turno?",
+    answer:
+      "Sim. A bateria de lítio de 24 V / 20 Ah é removível e pesa só 5 kg, e a F4 aceita até duas baterias para estender a autonomia. O carregador é de 5 A.",
+  },
+  {
+    topic: "F4",
+    question: "A F4 serve para empilhar pallets?",
+    answer:
+      "Não. A F4 é uma paleteira para transporte no nível do chão: os garfos sobem 105 mm, o suficiente para tirar o pallet do piso e levar até 1.500 kg. Para empilhar em altura, a indicada é a DS3.",
+  },
+  {
+    topic: "F4",
+    question: "Em que tipo de operação a F4 se encaixa?",
+    answer:
+      "Varejo, armazéns e centros de transporte, em manuseio ocasional e operações gerais. Com 120 kg, largura de 560 ou 685 mm e raio de giro de 1.360 mm, circula bem em corredores estreitos. Vence rampas de 6% com carga e 16% sem carga.",
+  },
+  {
+    topic: "F4",
+    question: "Quais opções de configuração a F4 oferece?",
+    answer:
+      "Rodas estabilizadoras opcionais, que reduzem o risco de tombamento em piso irregular, garfos em vários comprimentos e larguras e timão com altura de 645 a 1.145 mm. O botão tartaruga permite andar mesmo com o timão na posição vertical, útil em espaços apertados.",
+  },
+
+  /* ---------------- Compra e suporte ---------------- */
+  {
+    topic: "Compra e suporte",
+    question: "Como funciona a entrega das máquinas da campanha?",
     answer:
       "Trabalhamos com pronta entrega para os modelos em campanha. O despacho é feito por transportadoras especializadas em maquinário pesado, com seguro total da carga.",
   },
   {
-    topic: "Compra e entrega",
+    topic: "Compra e suporte",
     question: "Quais são as condições de financiamento?",
     answer:
-      "Faturamos direto para pessoa jurídica com linhas BNDES Finame, parcelamento bancário em até 60 vezes e leasing.",
+      "Faturamos direto para pessoa jurídica com linhas BNDES Finame, parcelamento bancário e leasing. O consultor monta a simulação junto com a proposta.",
   },
   {
-    topic: "Compra e entrega",
+    topic: "Compra e suporte",
     question: "Consigo testar o equipamento antes de fechar?",
     answer:
       "Sim. Agendamos demonstração técnica na sua operação para validar altura de elevação, largura de corredor e ciclo de trabalho antes do pedido.",
   },
   {
-    topic: "Bateria e recarga",
-    question: "Como funciona a garantia da bateria de lítio?",
-    answer:
-      "A tecnologia de íon-lítio da EP Equipment tem até 5 anos de garantia de fábrica na bateria. Não exige água desmineralizada nem manutenção de ácido, e entrega vida útil acima de 3.000 ciclos com recarga de oportunidade.",
-  },
-  {
-    topic: "Bateria e recarga",
-    question: "A bateria de lítio funciona em câmara fria?",
-    answer:
-      "Sim. A bateria de lítio mantém desempenho em baixa temperatura, situação em que o chumbo-ácido perde capacidade de forma acentuada. Confirme a faixa exata com o consultor técnico conforme a temperatura da sua câmara.",
-  },
-  {
-    topic: "Bateria e recarga",
-    question: "Preciso de instalação elétrica especial para carregar?",
-    answer:
-      "Não. A DS3 recarrega em tomada comum no próprio setor, o que dispensa a sala de baterias exigida pelo chumbo-ácido. Confirme a bitola e o ponto disponível com o nosso técnico.",
-  },
-  {
-    topic: "Assistência",
+    topic: "Compra e suporte",
     question: "Vocês fornecem assistência técnica e peças?",
     answer:
-      "Sim. Somos representantes oficiais da EP Equipment, com estoque de peças multimarcas e equipe técnica especializada em manutenção preventiva e corretiva.",
+      "Sim. Somos representantes oficiais da EP Equipment, com estoque de peças e equipe técnica especializada em manutenção preventiva e corretiva.",
   },
 ];
 
@@ -81,10 +150,16 @@ const faqJsonLd = {
 const QUESTION_URL = whatsappUrl("Olá! Tenho uma dúvida sobre os equipamentos da campanha promocional.");
 
 export default function PromoFAQ() {
-  const [topic, setTopic] = useState<Topic | null>(null);
+  const [topic, setTopic] = useState<Topic>(TOPICS[0]);
   const [open, setOpen] = useState<string | null>(FAQS[0].question);
 
-  const visible = topic ? FAQS.filter((faq) => faq.topic === topic) : FAQS;
+  const visible = FAQS.filter((faq) => faq.topic === topic);
+
+  const selectTopic = (next: Topic) => {
+    setTopic(next);
+    // Abre a primeira pergunta do assunto, para a troca mostrar conteúdo na hora
+    setOpen(FAQS.find((faq) => faq.topic === next)?.question ?? null);
+  };
 
   return (
     <section id="faq" className="scroll-mt-24 border-t border-white/[0.06] bg-ink py-24 lg:py-32">
@@ -99,7 +174,8 @@ export default function PromoFAQ() {
             <Eyebrow>Tire suas dúvidas</Eyebrow>
             <h2 className={`mt-4 ${TITLE} text-white`}>Perguntas frequentes</h2>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-neutral-400">
-              Modelo, prazo, bateria ou financiamento: as respostas que mais pedem antes de fechar.
+              Capacidade, bateria, corredor e rampa de cada máquina, com os números da ficha oficial
+              da EP Equipment.
             </p>
 
             <div className="mt-10 max-w-md rounded-[28px] border border-white/10 bg-ink-raised p-7">
@@ -110,35 +186,20 @@ export default function PromoFAQ() {
               <WhatsAppLink href={QUESTION_URL} className="mt-6 w-full">
                 Perguntar no WhatsApp
               </WhatsAppLink>
-              <div className="mt-6 grid gap-3 border-t border-white/10 pt-6 text-sm text-neutral-400">
-                <a
-                  href="tel:+554933239050"
-                  className="flex items-center gap-3 transition-colors hover:text-white"
-                >
-                  <Phone className="h-4 w-4 text-neutral-500" aria-hidden="true" />
-                  Chapecó {CONTATO.chapeco}
-                </a>
-                <a
-                  href={`mailto:${CONTATO.email}`}
-                  className="flex items-center gap-3 break-all transition-colors hover:text-white"
-                >
-                  <Mail className="h-4 w-4 shrink-0 text-neutral-500" aria-hidden="true" />
-                  {CONTATO.email}
-                </a>
-              </div>
+              {/* Telefones e e-mail ficam no formulário de cotação e no rodapé */}
             </div>
           </Reveal>
         </div>
 
         <div className="lg:col-span-7">
           <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrar perguntas por assunto">
-            {[null, ...TOPICS].map((item) => {
+            {TOPICS.map((item) => {
               const isActive = topic === item;
               return (
                 <button
-                  key={item ?? "todas"}
+                  key={item}
                   type="button"
-                  onClick={() => setTopic(item)}
+                  onClick={() => selectTopic(item)}
                   aria-pressed={isActive}
                   className={`cursor-pointer rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50 ${
                     isActive
@@ -146,7 +207,7 @@ export default function PromoFAQ() {
                       : "border-white/10 text-neutral-400 hover:border-white/25 hover:text-white"
                   }`}
                 >
-                  {item ?? "Todas"}
+                  {item}
                 </button>
               );
             })}
@@ -162,6 +223,8 @@ export default function PromoFAQ() {
                 <motion.li
                   key={faq.question}
                   layout="position"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, ease: EASE_OUT }}
                   className={`rounded-3xl border transition-colors duration-300 ${
                     isOpen
@@ -217,6 +280,11 @@ export default function PromoFAQ() {
               );
             })}
           </ul>
+
+          <p className="mt-6 text-xs text-neutral-600">
+            Especificações conforme as fichas oficiais da EP Equipment. Configurações e opcionais
+            podem variar por lote; confirme com o consultor.
+          </p>
         </div>
       </div>
     </section>

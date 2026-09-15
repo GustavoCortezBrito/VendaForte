@@ -351,27 +351,39 @@ function ContactPanel() {
         </p>
 
         <ul className="mt-10 space-y-7">
+          {/* Os textos dos links diferem dos do rodapé, que lista os mesmos contatos */}
           <ContactItem icon={Phone} title="Telefones">
-            <a href="tel:+554933239050" className="block transition-colors hover:text-white">
-              Chapecó {CONTATO.chapeco}
-            </a>
-            <a href="tel:+554738423333" className="block transition-colors hover:text-white">
-              Joinville {CONTATO.joinville}
-            </a>
+            <span className="block">
+              Matriz em Chapecó:{" "}
+              <a href="tel:+554933239050" className="transition-colors hover:text-white">
+                {CONTATO.chapeco}
+              </a>
+            </span>
+            <span className="block">
+              Joinville:{" "}
+              <a href="tel:+554738423333" className="transition-colors hover:text-white">
+                {CONTATO.joinville}
+              </a>
+            </span>
           </ContactItem>
           <ContactItem icon={MessageCircle} title="WhatsApp">
+            <span className="block">{WHATSAPP_DISPLAY}</span>
             <a
               href={`https://wa.me/${WHATSAPP_CENTRAL}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-colors hover:text-white"
+              className="font-medium text-white underline-offset-4 transition-colors hover:underline"
             >
-              {WHATSAPP_DISPLAY}
+              Iniciar conversa
             </a>
           </ContactItem>
           <ContactItem icon={Mail} title="E-mail">
-            <a href={`mailto:${CONTATO.email}`} className="break-all transition-colors hover:text-white">
-              {CONTATO.email}
+            <span className="block break-all">{CONTATO.email}</span>
+            <a
+              href={`mailto:${CONTATO.email}`}
+              className="font-medium text-white underline-offset-4 transition-colors hover:underline"
+            >
+              Enviar e-mail
             </a>
           </ContactItem>
           <ContactItem icon={MapPin} title="Cobertura">

@@ -86,7 +86,7 @@ export default function PromoHeader() {
               className="flex items-center gap-3 rounded-2xl py-1 pl-1 pr-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
             >
               <span className="relative h-10 w-10 overflow-hidden rounded-xl">
-                <Image src="/logo.png" alt="" fill sizes="40px" loading="eager" className="object-cover" />
+                <Image src="/logo.png" alt="Logo do Grupo Venda Forte" fill sizes="40px" loading="eager" className="object-cover" />
               </span>
               <span className="leading-none">
                 <span className="block text-[15px] font-semibold tracking-tight text-white">
@@ -98,7 +98,7 @@ export default function PromoHeader() {
               </span>
             </Link>
 
-            <nav aria-label="Seções da campanha" className="hidden items-center md:flex">
+            <nav aria-label="Seções da campanha" className="hidden items-center lg:flex">
               {PROMO_NAV.map((item) => {
                 const isActive = active === item.href;
                 return (
@@ -126,7 +126,7 @@ export default function PromoHeader() {
             <div className="flex items-center gap-2">
               <a
                 href="#cotacao"
-                className="hidden h-10 items-center rounded-full border border-white/15 px-4 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:inline-flex"
+                className="hidden h-10 items-center rounded-full border border-white/15 px-4 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 xl:inline-flex"
               >
                 Pedir cotação
               </a>
@@ -146,7 +146,7 @@ export default function PromoHeader() {
                 aria-expanded={menuOpen}
                 aria-controls="promo-menu"
                 aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-                className="grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-white/[0.08] text-white transition-colors hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 md:hidden"
+                className="grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-white/[0.08] text-white transition-colors hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:hidden"
               >
                 {menuOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
               </button>
@@ -162,10 +162,10 @@ export default function PromoHeader() {
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.4, ease: EASE_OUT }}
-                className="overflow-hidden md:hidden"
+                className="overflow-hidden lg:hidden"
               >
                 <ul className="border-t border-white/10 px-2 pb-2 pt-2">
-                  {[...PROMO_NAV, { href: "#faq", label: "Perguntas frequentes" }].map((item) => (
+                  {PROMO_NAV.map((item) => (
                     <li key={item.href}>
                       <a
                         href={item.href}

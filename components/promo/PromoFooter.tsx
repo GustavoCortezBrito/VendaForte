@@ -22,7 +22,17 @@ import { WhatsAppLink } from "./ui";
  * Especificação: docs/promo/14-rodape.md
  */
 
-const FOOTER_NAV = [...PROMO_NAV, { href: "#faq", label: "Perguntas frequentes" }];
+// Nomes por extenso: além de caberem no rodapé, não repetem o texto dos links do header
+const FOOTER_LABELS: Record<string, string> = {
+  "#ds3": "Empilhadeira EP DS3",
+  "#efl302b3": "Empilhadeira EP EFL302 B3",
+  "#f4": "Paleteira EP F4",
+  "#economia": "Economia com lítio",
+  "#cotacao": "Formulário de cotação",
+  "#faq": "Perguntas frequentes",
+};
+
+const FOOTER_NAV = PROMO_NAV.map((item) => ({ ...item, label: FOOTER_LABELS[item.href] ?? item.label }));
 
 const LINK_CLASS = "transition-colors hover:text-white";
 
@@ -66,7 +76,7 @@ export default function PromoFooter() {
         {/* ---------------- Chamada final ---------------- */}
         <div className="flex flex-col gap-8 border-b border-white/10 py-14 lg:flex-row lg:items-end lg:justify-between lg:py-20">
           <div>
-            <p className="text-sm font-semibold text-red-500">Campanha EP Equipment</p>
+            <p className="text-sm font-semibold text-red-500">Promoção EP Equipment</p>
             <p className="mt-3 max-w-xl text-balance text-3xl font-bold leading-[1.05] tracking-[-0.035em] text-white sm:text-4xl">
               Pronta entrega no Sul do Brasil, com faturamento direto.
             </p>
@@ -77,17 +87,17 @@ export default function PromoFooter() {
               href="#cotacao"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              Pedir cotação
+              Montar minha cotação
             </a>
           </div>
         </div>
 
         {/* ---------------- Colunas ---------------- */}
         <div className="grid gap-12 py-14 sm:grid-cols-2 lg:grid-cols-12 lg:py-16">
-          <div className="sm:col-span-2 lg:col-span-4">
+          <div className="sm:col-span-2 lg:col-span-3">
             <Link href="/promo" className="inline-flex items-center gap-3">
               <span className="relative h-11 w-11 overflow-hidden rounded-xl">
-                <Image src="/logo.png" alt="" fill sizes="44px" className="object-cover" />
+                <Image src="/logo.png" alt="Logo do Grupo Venda Forte" fill sizes="44px" className="object-cover" />
               </span>
               <span className="leading-none">
                 <span className="block text-lg font-semibold tracking-tight text-white">Venda Forte</span>
@@ -123,12 +133,12 @@ export default function PromoFooter() {
               rel="noopener noreferrer"
               className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-white transition-colors hover:text-red-400"
             >
-              grupovendaforte.com
+              Site principal do Grupo Venda Forte
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
 
-          <Column title="Campanha" className="lg:col-span-2">
+          <Column title="Campanha" className="lg:col-span-3">
             {FOOTER_NAV.map((item) => (
               <li key={item.href}>
                 <a href={item.href} className={LINK_CLASS}>

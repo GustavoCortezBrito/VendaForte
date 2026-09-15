@@ -42,11 +42,17 @@ const REASONS = [
   },
 ] as const;
 
+/**
+ * Seção fora da página por enquanto, a pedido do cliente. Para voltar, mude
+ * para true. Não basta `hidden`: buscadores leem o HTML e contariam o conteúdo.
+ */
+const VISIBLE: boolean = false;
+
 export default function PromoWhyUs() {
+  if (!VISIBLE) return null;
+
   return (
-    // Oculta por enquanto, a pedido do cliente. Para voltar, tire o `hidden`.
     <section
-      hidden
       id="por-que-nos"
       className="scroll-mt-24 border-t border-white/[0.06] bg-ink py-24 lg:py-32"
     >

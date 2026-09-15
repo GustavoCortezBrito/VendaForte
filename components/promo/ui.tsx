@@ -244,7 +244,7 @@ export function PriceCard({ product, className = "" }: { product: PromoProduct; 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <WhatsAppLink href={quoteUrl}>Cotar a {product.shortName}</WhatsAppLink>
         <a href="#cotacao" className={BTN_GHOST}>
-          Pedir proposta formal
+          Proposta formal da {product.shortName}
           <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
         </a>
       </div>

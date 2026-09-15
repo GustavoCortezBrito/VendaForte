@@ -4,9 +4,11 @@ import PromoFooter from "@/components/promo/PromoFooter";
 import { PromoMotion } from "@/components/promo/ui";
 
 export const metadata: Metadata = {
-  title: "Campanha Promocional EP Equipment | Grupo Venda Forte",
+  // `absolute` ignora o template "%s | Grupo Venda Forte" do layout raiz, que
+  // repetia o nome da empresa e passava do limite de 580 px dos buscadores
+  title: { absolute: "Promoção EP DS3, EFL302 B3 e F4 | Venda Forte" },
   description:
-    "Empilhadeira elétrica EP DS3 de 1.500 kg com bateria de lítio, pronta entrega e faturamento BNDES e Finame.",
+    "Promoção Venda Forte: empilhadeira EP DS3 de 1.500 kg, EFL302 B3 de 3.000 kg e paleteira F4, todas de lítio, com pronta entrega e BNDES/Finame.",
 };
 
 export default function PromoLayout({ children }: { children: React.ReactNode }) {

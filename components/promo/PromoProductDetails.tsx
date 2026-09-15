@@ -61,7 +61,7 @@ export default function PromoProductDetails({ productId }: { productId: MotionPr
                   >
                     <Image
                       src={item.src}
-                      alt=""
+                      alt={`Miniatura: ${item.alt}`}
                       fill
                       sizes="(max-width: 1024px) 20vw, 140px"
                       className={contain ? "object-contain p-1.5" : "object-cover"}

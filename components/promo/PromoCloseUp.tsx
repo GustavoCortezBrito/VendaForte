@@ -315,7 +315,7 @@ export default function PromoCloseUp() {
               </motion.div>
             )}
             <WhatsAppLink href={DEMO_URL} className="mt-10 w-full">
-              Agendar demonstração na minha operação
+              Agendar demonstração pelo WhatsApp
             </WhatsAppLink>
           </div>
         </div>
@@ -539,17 +539,14 @@ function Marker({ number, active, large = false }: { number: number; active: boo
 function PointDetail({ point, className = "" }: { point: CloseUpPoint; className?: string }) {
   return (
     <span className={`flex items-start gap-4 ${className}`}>
-      <span
-        className="relative block aspect-square w-24 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-ink-raised"
-        aria-hidden="true"
-      >
+      <span className="relative block aspect-square w-24 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-ink-raised">
         <span
           className="absolute inset-0 block"
           style={{ transform: `scale(${point.zoom})`, transformOrigin: point.focus }}
         >
           <Image
             src={DS3_SHOTS[point.shot].src}
-            alt=""
+            alt={`${point.title} da empilhadeira EP DS3 em detalhe`}
             fill
             sizes={`${Math.round(96 * point.zoom)}px`}
             className="object-cover"

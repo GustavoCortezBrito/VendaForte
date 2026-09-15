@@ -158,14 +158,14 @@ export default function PromoDS3Highlight() {
                   <p className="flex items-start gap-2 rounded-xl bg-red-500/[0.08] p-3 font-medium text-white">
                     <CircleCheckBig className="mt-0.5 h-4 w-4 shrink-0 text-red-500" aria-hidden="true" />
                     <span>
-                      <strong className="font-semibold text-red-400">EP DS3 · lítio.</strong>{" "}
+                      <span className="font-semibold text-red-400">EP DS3 · lítio.</span>{" "}
                       {row.lithium}
                     </span>
                   </p>
                   <p className="flex items-start gap-2 px-3 text-neutral-500">
                     <X className="mt-0.5 h-4 w-4 shrink-0 text-neutral-600" aria-hidden="true" />
                     <span>
-                      <strong className="font-semibold text-neutral-400">Chumbo-ácido.</strong> {row.lead}
+                      <span className="font-semibold text-neutral-400">Chumbo-ácido.</span> {row.lead}
                     </span>
                   </p>
                 </div>

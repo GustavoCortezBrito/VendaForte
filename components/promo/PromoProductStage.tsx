@@ -32,9 +32,9 @@ const TIMELINE_FRAMES = [0, 0, DS3_SEQUENCE.frames - 1, DS3_SEQUENCE.frames - 1]
 const LABEL = "Empilhadeira elétrica EP DS3 girando 360 graus";
 
 // O título da página existe para leitor de tela e busca; o visível entra com o scroll.
-const HEADLINE = DS3.listPrice
-  ? `Empilhadeira elétrica EP DS3 de lítio, ${DS3.capacity}, de ${DS3.listPrice} por ${PRICE}`
-  : `Empilhadeira elétrica EP DS3 de lítio, ${DS3.capacity}, a partir de ${PRICE}`;
+// Cobre as três máquinas da página, com as palavras do título
+const DS3_OFFER = DS3.listPrice ? `de ${DS3.listPrice} por ${PRICE}` : `a partir de ${PRICE}`;
+const HEADLINE = `Promoção Venda Forte: empilhadeira elétrica EP DS3 ${DS3_OFFER}, EFL302 B3 e paleteira F4`;
 
 // Dissolve o piso do estúdio no fundo da página.
 const FLOOR_FADE = "linear-gradient(to bottom, #000 80%, transparent)";

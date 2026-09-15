@@ -15,6 +15,12 @@ import { Eyebrow, PriceCard, Reveal, Shot, SpecTable, TITLE } from "./ui";
 
 const DS3 = PRODUCTS.ds3;
 
+/**
+ * "O essencial" fica fora da página por enquanto. Não basta esconder com
+ * `hidden`: buscadores leem o HTML e contariam os links e textos ocultos.
+ */
+const SHOW_ESSENTIALS: boolean = false;
+
 /** Anotações sobre a foto de perfil, em % do quadro. */
 const CALLOUTS = [
   { label: "Mastro · elevação até 3,9 m", left: "40%", top: "12%" },
@@ -47,9 +53,11 @@ export default function PromoHighlights() {
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* ---------------- O essencial ----------------
-            Oculto por enquanto, a pedido do cliente. Para voltar, tire o `hidden`
-            e devolva à ficha técnica abaixo o espaçamento e a borda do topo. */}
-        <div hidden>
+            Oculto por enquanto, a pedido do cliente. Para voltar, mude
+            SHOW_ESSENTIALS para true e devolva à ficha técnica abaixo o
+            espaçamento e a borda do topo. */}
+        {SHOW_ESSENTIALS && (
+        <div>
         <Reveal className="max-w-2xl">
           <Eyebrow>O essencial</Eyebrow>
           <h2 className={`mt-4 ${TITLE} text-white`}>Cinco motivos para trocar agora</h2>
@@ -129,6 +137,7 @@ export default function PromoHighlights() {
           </Tile>
         </div>
         </div>
+        )}
 
         {/* ---------------- Ficha técnica e preço ----------------
             Com "O essencial" visível, esta div volta a ter
