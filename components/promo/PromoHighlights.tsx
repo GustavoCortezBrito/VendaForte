@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { ArrowUpRight, BatteryCharging, Banknote, MoveVertical, Truck, Wrench } from "lucide-react";
 import PromoMediaSlot, { hasMedia } from "./PromoMediaSlot";
-import { PRODUCTS } from "./promo.config";
+import { DS3_MASTRO_36, PRODUCTS } from "./promo.config";
 import { Eyebrow, PriceCard, Reveal, Shot, SpecTable, TITLE } from "./ui";
 
 /**
@@ -23,7 +23,7 @@ const SHOW_ESSENTIALS: boolean = false;
 
 /** Anotações sobre a foto de perfil, em % do quadro. */
 const CALLOUTS = [
-  { label: "Mastro · elevação até 3,9 m", left: "40%", top: "12%" },
+  { label: "Mastro · elevação de 3 a 3,9 m", left: "40%", top: "12%" },
   { label: "Bateria 24V de íon-lítio", left: "6%", top: "46%" },
   { label: "Capacidade de 1.500 kg", left: "48%", top: "76%" },
 ] as const;
@@ -104,10 +104,10 @@ export default function PromoHighlights() {
           <Tile href="#cotacao" className="lg:col-span-3">
             <div className="p-8">
               <Banknote className="h-6 w-6 text-red-500" aria-hidden="true" />
-              <p className="mt-8 text-5xl font-bold tracking-[-0.045em] text-white">60x</p>
-              <h3 className="mt-3 text-lg font-semibold text-white">Até 60x no BNDES</h3>
+              <p className="mt-8 text-5xl font-bold tracking-[-0.045em] text-white">CNPJ</p>
+              <h3 className="mt-3 text-lg font-semibold text-white">Faturamento direto</h3>
               <p className="mt-1 text-sm leading-relaxed text-neutral-400">
-                Faturamento direto para CNPJ, com Finame e leasing.
+                Nota fiscal e formas de pagamento combinadas com o consultor.
               </p>
             </div>
           </Tile>
@@ -182,7 +182,7 @@ export default function PromoHighlights() {
 
             <Reveal className="lg:col-span-6" delay={0.08}>
               <SpecTable specs={DS3.specs} caption={`Ficha técnica da ${DS3.name}`} />
-              <PriceCard product={DS3} className="mt-10" />
+              <PriceCard product={DS3_MASTRO_36} className="mt-10" />
             </Reveal>
           </div>
         </div>

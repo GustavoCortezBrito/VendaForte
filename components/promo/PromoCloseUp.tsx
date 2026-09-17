@@ -77,7 +77,7 @@ export const CLOSE_UP_POINTS: CloseUpPoint[] = [
   {
     title: "Mastro",
     description:
-      "Elevação até 3,9 metros com visibilidade frontal preservada para o posicionamento do pallet.",
+      "Elevação de 3 a 3,9 metros conforme a configuração, com visibilidade frontal preservada para o posicionamento do pallet.",
     shot: "mastro",
     focus: "50% 22%",
     zoom: 1.6,

@@ -1,17 +1,31 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import ScrollSequence from "./ScrollSequence";
-import { PRODUCT_MOTION, PRODUCTS, type MotionProductId } from "./promo.config";
-import { FEATHER_STYLE, ScrollLetters, VideoSources } from "./ui";
+import {
+  COMPACT_QUERY,
+  PRODUCT_MOTION,
+  PRODUCTS,
+  STAGE_MIN_HEIGHT,
+  type MotionProductId,
+} from "./promo.config";
+import {
+  FEATHER_STYLE,
+  savesData,
+  ScrollLetters,
+  useMediaQuery,
+  useMounted,
+  VideoSources,
+} from "./ui";
 
 /**
  * Animação de apresentação de um produto, controlada pelo scroll.
  *
- * Desktop: palco fixo de 300vh; o vídeo avança quadro a quadro e, no fim do
- * movimento, a categoria e o nome entram letra a letra. Mobile, movimento
- * reduzido ou economia de dados: o vídeo toca uma vez quando entra na tela.
+ * Palco fixo no celular e no desktop: o movimento avança quadro a quadro e, no
+ * fim, a categoria e o nome entram letra a letra — no canto superior esquerdo
+ * no desktop, no rodapé da tela no celular. Com movimento reduzido ou economia
+ * de dados, o vídeo toca uma vez quando entra na tela.
  */
 
 // Segura o primeiro quadro no começo e o último no fim do palco.
@@ -19,21 +33,12 @@ const TIMELINE_PROGRESS = [0, 0.06, 0.86, 1];
 
 export default function PromoProductMotion({ productId }: { productId: MotionProductId }) {
   const prefersReducedMotion = useReducedMotion();
-  const [stageEnabled, setStageEnabled] = useState(false);
+  const mounted = useMounted();
+  const tallEnough = useMediaQuery(STAGE_MIN_HEIGHT);
 
-  useEffect(() => {
-    const query = window.matchMedia("(min-width: 1024px)");
-    const connection = (
-      navigator as Navigator & { connection?: { saveData?: boolean } }
-    ).connection;
-
-    const update = () =>
-      setStageEnabled(!prefersReducedMotion && query.matches && !connection?.saveData);
-    update();
-
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, [prefersReducedMotion]);
+  // Só depois da montagem: no servidor sai o vídeo, que também é a saída de
+  // quem pediu movimento reduzido, economiza dados ou está em tela muito baixa.
+  const stageEnabled = mounted && tallEnough && !prefersReducedMotion && !savesData();
 
   // Cada variante tem o próprio ref e o próprio useScroll, para o scroll nunca
   // ficar medindo a seção desmontada na troca de variante.
@@ -46,6 +51,7 @@ function Stage({ productId }: { productId: MotionProductId }) {
   const lastFrame = sequence.frames - 1;
 
   const wrapperRef = useRef<HTMLElement>(null);
+  const compact = useMediaQuery(COMPACT_QUERY);
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
     offset: ["start start", "end end"],
@@ -58,21 +64,46 @@ function Stage({ productId }: { productId: MotionProductId }) {
   const lineOpacity = useTransform(progress, [0.74, 0.86], [0, 1]);
   const lineY = useTransform(progress, [0.74, 0.86], [12, 0]);
 
-  return (
-    <section ref={wrapperRef} className="relative h-[300vh] border-t border-white/[0.06] bg-ink">
-      <div className="sticky top-0 h-screen overflow-hidden">
-        <div className="absolute inset-x-0 bottom-0 top-20">
-          <ScrollSequence sequence={sequence} frame={frame} className="h-full w-full" label={label} />
-        </div>
+  // No celular a máquina sobe e encolhe quando o nome entra, para não se cruzarem
+  const machineY = useTransform(progress, [0.34, 0.62], ["0%", compact ? "-11%" : "0%"]);
+  const machineScale = useTransform(progress, [0.34, 0.62], [1, compact ? 0.86 : 1]);
+  // O véu do celular entra junto com o texto, e não antes dele
+  const scrimOpacity = useTransform(progress, [0.4, 0.6], [0, 1]);
 
-        <div className="pointer-events-none absolute left-[6vw] top-[16vh] z-10 xl:left-[7vw]">
-          <p className="text-lg font-semibold text-red-500">
+  return (
+    // `svh` no celular: a altura não muda quando a barra do navegador some
+    <section
+      ref={wrapperRef}
+      className="relative h-[260svh] border-t border-white/[0.06] bg-ink lg:h-[300vh]"
+    >
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
+        <motion.div
+          // Ao encolher no celular, a borda do quadro entraria na tela: a máscara
+          // dissolve o piso do estúdio no fundo da página.
+          style={{ y: machineY, scale: machineScale, ...(compact ? FEATHER_STYLE : null) }}
+          className="absolute inset-x-0 bottom-0 top-16 lg:top-20"
+        >
+          <ScrollSequence sequence={sequence} frame={frame} className="h-full w-full" label={label} />
+        </motion.div>
+
+        <motion.span
+          aria-hidden="true"
+          style={{ opacity: scrimOpacity }}
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-ink via-ink/90 to-transparent lg:hidden"
+        />
+
+        {/* Celular: rodapé da tela, sobre o véu. Desktop: canto superior esquerdo. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 px-6 pb-28 lg:inset-x-auto lg:bottom-auto lg:left-[6vw] lg:top-[16vh] lg:px-0 lg:pb-0 xl:left-[7vw]">
+          <p className="text-base font-semibold text-red-500 lg:text-lg">
             <ScrollLetters text={product.category} progress={progress} range={[0.46, 0.6]} />
           </p>
-          <p className="mt-2 whitespace-nowrap text-[clamp(3rem,6vw,7rem)] font-bold leading-[0.95] tracking-[-0.05em] text-white">
+          <p className="mt-2 whitespace-nowrap text-[clamp(2.25rem,11vw,3.5rem)] font-bold leading-[0.95] tracking-[-0.05em] text-white lg:text-[clamp(3rem,6vw,7rem)]">
             <ScrollLetters text={`EP ${product.shortName}`} progress={progress} range={[0.56, 0.8]} />
           </p>
-          <motion.p style={{ opacity: lineOpacity, y: lineY }} className="mt-4 text-lg text-neutral-400">
+          <motion.p
+            style={{ opacity: lineOpacity, y: lineY }}
+            className="mt-3 text-[13px] text-neutral-400 lg:mt-4 lg:text-lg"
+          >
             {line}
           </motion.p>
         </div>

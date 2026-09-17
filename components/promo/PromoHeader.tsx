@@ -214,7 +214,7 @@ export default function PromoHeader() {
         }`}
       >
         <p className="mb-2 text-center text-[11px] font-medium text-white/60">
-          Pronta entrega · Faturamento BNDES e Finame
+          Pronta entrega · Faturamento direto para CNPJ
         </p>
         <a
           href={url}

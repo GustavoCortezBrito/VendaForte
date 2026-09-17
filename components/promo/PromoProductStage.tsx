@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import {
   motion,
   useReducedMotion,
@@ -9,16 +9,33 @@ import {
   type MotionValue,
 } from "framer-motion";
 import ScrollSequence from "./ScrollSequence";
-import { DS3_SEQUENCE, DS3_VIDEO, HERO_ID, PRODUCTS, whatsappUrl } from "./promo.config";
-import { ScrollLetters, VideoSources, WhatsAppLink } from "./ui";
+import {
+  COMPACT_QUERY,
+  DS3_SEQUENCE,
+  DS3_VIDEO,
+  HERO_ID,
+  PRODUCTS,
+  STAGE_MIN_HEIGHT,
+  whatsappUrl,
+} from "./promo.config";
+import {
+  FEATHER_STYLE,
+  savesData,
+  ScrollLetters,
+  useMediaQuery,
+  useMounted,
+  VideoSources,
+  WhatsAppLink,
+} from "./ui";
 
 /**
  * Hero da campanha: o giro da DS3.
  *
- * No desktop o scroll controla o vídeo quadro a quadro, num palco fixo de 400vh.
- * Em repouso a tela é só a máquina; conforme a volta avança, o nome e o preço
- * entram letra a letra à esquerda. No mobile, com movimento reduzido ou economia
- * de dados, o giro roda em loop com o preço fixo embaixo.
+ * O scroll controla o giro quadro a quadro, num palco fixo, tanto no desktop
+ * quanto no celular. Em repouso a tela é só a máquina; conforme a volta avança,
+ * o nome e o preço entram letra a letra — à esquerda no desktop, no rodapé da
+ * tela no celular, onde a máquina sobe e encolhe para abrir espaço. Com
+ * movimento reduzido ou economia de dados, o giro roda em loop no vídeo.
  */
 
 const DS3 = PRODUCTS.ds3;
@@ -45,24 +62,13 @@ const QUOTE_URL = whatsappUrl(
 
 export default function PromoProductStage() {
   const prefersReducedMotion = useReducedMotion();
-  const [stageEnabled, setStageEnabled] = useState(false);
+  const mounted = useMounted();
+  const tallEnough = useMediaQuery(STAGE_MIN_HEIGHT);
 
-  // O palco fixo só liga no desktop, depois da montagem. O servidor e a primeira
-  // renderização do cliente são sempre o loop, o que evita divergência de
-  // hidratação e garante que o mobile nunca baixe a sequência de quadros.
-  useEffect(() => {
-    const query = window.matchMedia("(min-width: 1024px)");
-    const connection = (
-      navigator as Navigator & { connection?: { saveData?: boolean } }
-    ).connection;
-
-    const update = () =>
-      setStageEnabled(!prefersReducedMotion && query.matches && !connection?.saveData);
-    update();
-
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, [prefersReducedMotion]);
+  // O palco liga depois da montagem. O servidor e a primeira renderização do
+  // cliente são sempre o loop em vídeo, que também atende quem pediu movimento
+  // reduzido, economiza dados ou está numa tela muito baixa.
+  const stageEnabled = mounted && tallEnough && !prefersReducedMotion && !savesData();
 
   // Cada variante tem o próprio ref e o próprio useScroll. Com um ref só, o
   // scroll continuaria medindo a seção desmontada na troca de variante.
@@ -71,6 +77,7 @@ export default function PromoProductStage() {
 
 function Stage() {
   const wrapperRef = useRef<HTMLElement>(null);
+  const compact = useMediaQuery(COMPACT_QUERY);
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
     offset: ["start start", "end end"],
@@ -83,20 +90,43 @@ function Stage() {
   const frame = useTransform(progress, TIMELINE_PROGRESS, TIMELINE_FRAMES);
   const cueOpacity = useTransform(progress, [0, 0.03], [1, 0]);
 
+  // No celular a máquina sobe e encolhe, abrindo espaço para o preço embaixo
+  const machineY = useTransform(progress, [0.08, 0.36], ["0%", compact ? "-13%" : "0%"]);
+  const machineScale = useTransform(progress, [0.08, 0.36], [1, compact ? 0.84 : 1]);
+  // O véu do celular entra junto com o texto: em repouso o hero é só a máquina
+  const scrimOpacity = useTransform(progress, [0.04, 0.26], [0, 1]);
+
   return (
-    // 400vh: três telas de rolagem para a volta inteira, cerca de 1° a cada 7 px
-    <section ref={wrapperRef} id={HERO_ID} data-hero="stage" className="relative h-[400vh] bg-ink">
+    // Telas de rolagem para a volta inteira. `svh` no celular: a altura não muda
+    // quando a barra do navegador some, então o palco fixo não dá salto.
+    <section
+      ref={wrapperRef}
+      id={HERO_ID}
+      data-hero="stage"
+      className="relative h-[320svh] bg-ink lg:h-[400vh]"
+    >
       <h1 className="sr-only">{HEADLINE}</h1>
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
         {/* Começa abaixo da cápsula do header, para o mastro não passar sob o menu */}
-        <div className="absolute inset-x-0 bottom-0 top-20">
+        <motion.div
+          // Ao encolher no celular, a borda do quadro entraria na tela: a máscara
+          // dissolve o piso do estúdio no fundo da página.
+          style={{ y: machineY, scale: machineScale, ...(compact ? FEATHER_STYLE : null) }}
+          className="absolute inset-x-0 bottom-0 top-16 lg:top-20"
+        >
           <ScrollSequence
             sequence={DS3_SEQUENCE}
             frame={frame}
             className="h-full w-full"
             label={LABEL}
           />
-        </div>
+        </motion.div>
+
+        <motion.span
+          aria-hidden="true"
+          style={{ opacity: scrimOpacity }}
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[75%] bg-gradient-to-t from-ink via-ink/90 to-transparent lg:hidden"
+        />
 
         <PriceReveal progress={progress} />
 
@@ -136,7 +166,10 @@ function Loop() {
           DS3.price && <p className="mt-3 text-sm text-neutral-400">A partir de</p>
         )}
         <p className="text-5xl font-bold tracking-[-0.045em] text-white">{PRICE}</p>
-        <p className="mt-2 text-sm text-neutral-400">{DS3.installment}</p>
+        {DS3.priceNote && (
+          <p className="mt-2 text-sm font-medium text-neutral-300">{DS3.priceNote}</p>
+        )}
+        <p className="mt-1 text-sm text-neutral-400">{DS3.installment}</p>
       </div>
     </section>
   );
@@ -147,8 +180,8 @@ function Loop() {
 /* -------------------------------------------------------------------------- */
 
 /**
- * Com preço anterior: entra "De R$ 29.900", uma linha vermelha risca o valor e
- * aparece "Por R$ 19.900" embaixo. Sem preço anterior: "A partir de" e o preço.
+ * Com preço anterior: entra o "De", uma linha vermelha risca o valor e aparece
+ * o "Por" com o preço da campanha embaixo. Sem preço anterior: "A partir de".
  */
 function PriceReveal({ progress }: { progress: MotionValue<number> }) {
   const lineOpacity = useTransform(progress, [0.2, 0.28], [0, 1]);
@@ -159,22 +192,27 @@ function PriceReveal({ progress }: { progress: MotionValue<number> }) {
   const ctaY = useTransform(progress, [0.86, 0.92], [16, 0]);
 
   return (
-    <div className="pointer-events-none absolute inset-y-0 left-0 z-10 flex w-[40vw] flex-col justify-center pl-[6vw] xl:pl-[7vw]">
-      <p className="text-[clamp(3.25rem,6vw,7rem)] font-bold leading-[0.95] tracking-[-0.05em] text-white">
+    // Celular: rodapé da tela, sobre um véu que separa o texto da máquina.
+    // Desktop: coluna à esquerda, centrada na altura.
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col px-6 pb-28 lg:inset-y-0 lg:right-auto lg:w-[40vw] lg:justify-center lg:px-0 lg:pb-0 lg:pl-[6vw] xl:pl-[7vw]">
+      <p className="text-[clamp(2.75rem,13vw,4rem)] font-bold leading-[0.95] tracking-[-0.05em] text-white lg:text-[clamp(3.25rem,6vw,7rem)]">
         <ScrollLetters text={`EP ${DS3.shortName}`} progress={progress} range={[0.06, 0.18]} />
       </p>
-      <motion.p style={{ opacity: lineOpacity, y: lineY }} className="mt-4 text-lg text-neutral-400">
-        {DS3.category} · {DS3.capacity} · lítio 24 V
+      <motion.p
+        style={{ opacity: lineOpacity, y: lineY }}
+        className="mt-3 text-[13px] text-neutral-400 lg:mt-4 lg:text-lg"
+      >
+        {DS3.category} · {DS3.capacity} · 3,0 a 3,9 m de elevação · lítio 24 V
       </motion.p>
 
       {DS3.listPrice ? (
         <>
-          <p className="mt-12 text-base font-medium text-neutral-400">
+          <p className="mt-6 text-sm font-medium text-neutral-400 lg:mt-12 lg:text-base">
             <ScrollLetters text="De" progress={progress} range={[0.32, 0.38]} />
           </p>
           <motion.p
             style={{ opacity: oldPriceOpacity }}
-            className="relative mt-1 self-start whitespace-nowrap text-[clamp(2.25rem,3.8vw,4.25rem)] font-bold leading-none tracking-[-0.045em] text-white"
+            className="relative mt-1 self-start whitespace-nowrap text-[clamp(1.75rem,8vw,2.5rem)] font-bold leading-none tracking-[-0.045em] text-white lg:text-[clamp(2.25rem,3.8vw,4.25rem)]"
           >
             <span className="sr-only">Preço anterior: </span>
             <ScrollLetters text={DS3.listPrice} progress={progress} range={[0.38, 0.56]} />
@@ -184,18 +222,18 @@ function PriceReveal({ progress }: { progress: MotionValue<number> }) {
               className="absolute -inset-x-[0.06em] top-[52%] h-[0.09em] origin-left rounded-full bg-red-500"
             />
           </motion.p>
-          <p className="mt-6 text-base font-medium text-red-500">
+          <p className="mt-4 text-sm font-medium text-red-500 lg:mt-6 lg:text-base">
             <ScrollLetters text="Por" progress={progress} range={[0.66, 0.7]} />
           </p>
         </>
       ) : (
         DS3.price && (
-          <p className="mt-14 text-base font-medium text-red-500">
+          <p className="mt-8 text-sm font-medium text-red-500 lg:mt-14 lg:text-base">
             <ScrollLetters text="A partir de" progress={progress} range={[0.44, 0.54]} />
           </p>
         )
       )}
-      <p className="mt-1 whitespace-nowrap text-[clamp(3rem,5.6vw,6.5rem)] font-bold leading-none tracking-[-0.05em] text-white">
+      <p className="mt-1 whitespace-nowrap text-[clamp(2.5rem,12vw,3.5rem)] font-bold leading-none tracking-[-0.05em] text-white lg:text-[clamp(3rem,5.6vw,6.5rem)]">
         <ScrollLetters
           text={PRICE}
           progress={progress}
@@ -203,9 +241,12 @@ function PriceReveal({ progress }: { progress: MotionValue<number> }) {
         />
       </p>
 
-      <motion.div style={{ opacity: ctaOpacity, y: ctaY }} className="pointer-events-auto mt-6">
-        <p className="text-neutral-400">{DS3.installment}</p>
-        <WhatsAppLink href={QUOTE_URL} className="mt-6">
+      <motion.div style={{ opacity: ctaOpacity, y: ctaY }} className="pointer-events-auto mt-5 lg:mt-6">
+        {DS3.priceNote && (
+          <p className="text-sm font-medium text-neutral-300 lg:text-base">{DS3.priceNote}</p>
+        )}
+        <p className="mt-1 text-sm text-neutral-400 lg:text-base">{DS3.installment}</p>
+        <WhatsAppLink href={QUOTE_URL} className="mt-5 w-full lg:mt-6 lg:w-auto">
           Cotar a {DS3.shortName} no WhatsApp
         </WhatsAppLink>
       </motion.div>

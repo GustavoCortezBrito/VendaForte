@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, type CSSProperties, type ReactNode } from "react";
+import { useCallback, useRef, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
 import { MotionConfig, motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import {
@@ -19,6 +19,42 @@ export const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 /** Respeita `prefers-reduced-motion` em todas as animações da campanha. */
 export function PromoMotion({ children }: { children: ReactNode }) {
   return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
+}
+
+/** `false` no servidor e na primeira renderização, para não divergir na hidratação. */
+export function useMediaQuery(query: string): boolean {
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      const media = window.matchMedia(query);
+      media.addEventListener("change", onChange);
+      return () => media.removeEventListener("change", onChange);
+    },
+    [query]
+  );
+
+  return useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(query).matches,
+    () => false
+  );
+}
+
+/** Nunca muda: `useMounted` só precisa da diferença entre servidor e cliente. */
+const noSubscription = () => () => {};
+
+/** `true` a partir da montagem. Serve para ligar o que depende do navegador. */
+export function useMounted(): boolean {
+  return useSyncExternalStore(
+    noSubscription,
+    () => true,
+    () => false
+  );
+}
+
+/** `true` quando o navegador está em modo de economia de dados. */
+export function savesData(): boolean {
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  return connection?.saveData === true;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -215,8 +251,9 @@ export function SpecTable({ specs, caption }: { specs: ProductSpec[]; caption: s
 }
 
 export function PriceCard({ product, className = "" }: { product: PromoProduct; className?: string }) {
+  const setup = product.priceNote ? ` (${product.priceNote})` : "";
   const quoteUrl = whatsappUrl(
-    `Olá! Quero cotar a ${product.name} de ${product.capacity} da campanha promocional.`
+    `Olá! Quero cotar a ${product.name} de ${product.capacity}${setup} da campanha promocional.`
   );
 
   return (
@@ -235,6 +272,9 @@ export function PriceCard({ product, className = "" }: { product: PromoProduct; 
             <p className="text-sm text-neutral-400">A partir de</p>
           )}
           <p className="mt-1 text-5xl font-bold tracking-[-0.045em] text-white">{product.price}</p>
+          {product.priceNote && (
+            <p className="mt-2 text-sm font-medium text-neutral-300">{product.priceNote}</p>
+          )}
         </>
       ) : (
         <p className="text-3xl font-bold tracking-[-0.03em] text-white">Condição especial de lote</p>

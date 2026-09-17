@@ -22,8 +22,8 @@ const REASONS = [
   },
   {
     icon: Banknote,
-    title: "BNDES, Finame e leasing",
-    desc: "Até 60 vezes, com apoio do nosso consultor na documentação.",
+    title: "Formas de pagamento flexíveis",
+    desc: "Condições combinadas caso a caso, com apoio do nosso consultor.",
   },
   {
     icon: Truck,

@@ -29,6 +29,19 @@ export const PONTOS_ATENDIMENTO = ["Chapecó", "Joinville", "Itajaí"] as const;
 /** Âncora do hero em vídeo. O header muda de estado quando ele termina. */
 export const HERO_ID = "palco";
 
+/**
+ * Tela estreita: os palcos trocam a coluna lateral por texto no rodapé da tela
+ * e os quadros passam a usar um tamanho só, compartilhado entre eles.
+ */
+export const COMPACT_QUERY = "(max-width: 1023px)";
+
+/**
+ * Altura mínima para o palco fixo. Abaixo disso — celular deitado, por exemplo —
+ * o texto e o botão não caberiam na tela junto com a máquina, então entra o
+ * vídeo, que rola normalmente.
+ */
+export const STAGE_MIN_HEIGHT = "(min-height: 600px)";
+
 /** Menu da campanha, usado no header e no rodapé. */
 export const PROMO_NAV = [
   { href: "#ds3", label: "DS3" },
@@ -202,6 +215,8 @@ export interface PromoProduct {
   price: string | null;
   /** Preço anterior, mostrado riscado antes do preço da campanha. */
   listPrice?: string;
+  /** Configuração a que o preço se refere, como a altura do mastro. */
+  priceNote?: string;
   installment: string;
   highlights: string[];
   /** Ficha técnica do catálogo EP (`lib/data/electric-forklifts.json`). */
@@ -217,8 +232,9 @@ export const PRODUCTS: Record<ProductId, PromoProduct> = {
     tagline: "Verticalização em corredor estreito",
     capacity: "1.500 kg",
     price: "R$ 19.900",
-    listPrice: "R$ 29.900",
-    installment: "Até 48x via BNDES e Finame",
+    listPrice: "R$ 24.900",
+    priceNote: "DS3 com 3 m de elevação",
+    installment: "Consulte as formas de pagamento",
     highlights: [
       "Recarga de oportunidade em qualquer tomada",
       "Zero manutenção de água e ácido",
@@ -226,7 +242,7 @@ export const PRODUCTS: Record<ProductId, PromoProduct> = {
     ],
     specs: [
       { label: "Capacidade nominal", value: "1.500 kg" },
-      { label: "Altura de elevação", value: "3,9 metros" },
+      { label: "Altura de elevação", value: "3,0 a 3,9 metros" },
       { label: "Bateria", value: "24 V de íon-lítio" },
       { label: "Garantia da bateria", value: "Até 5 anos de fábrica" },
       { label: "Raio de giro", value: "1.470 mm" },
@@ -243,7 +259,7 @@ export const PRODUCTS: Record<ProductId, PromoProduct> = {
     tagline: "Força de 3 toneladas, 100% elétrica",
     capacity: "3.000 kg",
     price: null,
-    installment: "Faturamento direto, BNDES e Finame",
+    installment: "Consulte as formas de pagamento",
     highlights: [
       "3 toneladas com bateria de lítio de 80 V",
       "Até 12 km/h e rampa de até 15%",
@@ -251,7 +267,7 @@ export const PRODUCTS: Record<ProductId, PromoProduct> = {
     ],
     specs: [
       { label: "Capacidade nominal", value: "3.000 kg" },
-      { label: "Altura máxima de elevação", value: "6.000 mm" },
+      { label: "Altura de elevação", value: "3.000 a 6.000 mm" },
       { label: "Bateria", value: "80 V de íon-lítio, 205 Ah" },
       { label: "Velocidade com/sem carga", value: "11/12 km/h" },
       { label: "Rampa máxima", value: "15%" },
@@ -267,8 +283,8 @@ export const PRODUCTS: Record<ProductId, PromoProduct> = {
     category: "Paleteira elétrica",
     tagline: "Compacta para o giro do dia a dia",
     capacity: "1.500 kg",
-    price: "R$ 14.890",
-    installment: "Até 12x no cartão CNPJ",
+    price: "R$ 7.900",
+    installment: "Consulte as formas de pagamento",
     highlights: [
       "Compacta para docas, caminhões e corredores",
       "Bateria de lítio de 24 V sem manutenção",
@@ -288,6 +304,17 @@ export const PRODUCTS: Record<ProductId, PromoProduct> = {
 };
 
 export const PROMO_PRODUCTS: PromoProduct[] = [PRODUCTS.ds3, PRODUCTS.efl302b3, PRODUCTS.f4];
+
+/**
+ * A mesma DS3 com mastro de 3,6 m: é a configuração ofertada na ficha técnica.
+ * No hero fica a de 3 m, mais barata.
+ */
+export const DS3_MASTRO_36: PromoProduct = {
+  ...PRODUCTS.ds3,
+  price: "R$ 21.900",
+  listPrice: "R$ 27.900",
+  priceNote: "DS3 com 3,6 m de elevação",
+};
 
 /* -------------------------------------------------------------------------- */
 /* Sequências de quadros                                                       */
@@ -349,7 +376,7 @@ export const PRODUCT_MOTION: Record<MotionProductId, ProductMotion> = {
     sequence: frameSequence("movimento-efl302b3", 241),
     video: promoVideo("efl302b3-movimento", { av1: true }),
     label: "Empilhadeira EP EFL302 B3 chegando de perfil e parando no centro",
-    line: "3.000 kg · 6 m de elevação · lítio 80 V",
+    line: "3.000 kg · 3 a 6 m de elevação · lítio 80 V",
   },
   f4: {
     sequence: frameSequence("revelacao-f4", 241),

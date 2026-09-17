@@ -30,7 +30,7 @@ const FAQS: FAQItem[] = [
     topic: "DS3",
     question: "Quanto a DS3 levanta e até que altura?",
     answer:
-      "Capacidade nominal de 1.500 kg com centro de carga de 600 mm e mastro de corrente dupla que chega a até 3,9 m de elevação. Quando o mastro sobe, a velocidade de deslocamento é reduzida automaticamente para manter a estabilidade.",
+      "Capacidade nominal de 1.500 kg com centro de carga de 600 mm e mastro de corrente dupla de 3 m a 3,9 m de elevação, conforme a configuração. Quando o mastro sobe, a velocidade de deslocamento é reduzida automaticamente para manter a estabilidade.",
   },
   {
     topic: "DS3",
@@ -68,7 +68,7 @@ const FAQS: FAQItem[] = [
     topic: "EFL302 B3",
     question: "Qual a capacidade e a altura de elevação da EFL302 B3?",
     answer:
-      "Capacidade de 3.000 kg com centro de carga de 500 mm e mastro de até 6.000 mm, com inclinação de 6° para a frente e 10° para trás. Com carga, eleva a 0,29 m/s.",
+      "Capacidade de 3.000 kg com centro de carga de 500 mm e mastro de 3.000 a 6.000 mm, com inclinação de 6° para a frente e 10° para trás. Com carga, eleva a 0,29 m/s.",
   },
   {
     topic: "EFL302 B3",
@@ -118,9 +118,9 @@ const FAQS: FAQItem[] = [
   },
   {
     topic: "Compra e suporte",
-    question: "Quais são as condições de financiamento?",
+    question: "Quais são as formas de pagamento?",
     answer:
-      "Faturamos direto para pessoa jurídica com linhas BNDES Finame, parcelamento bancário e leasing. O consultor monta a simulação junto com a proposta.",
+      "Faturamos direto para pessoa jurídica, com nota fiscal. As condições são combinadas caso a caso: o consultor envia as opções junto com a proposta formal.",
   },
   {
     topic: "Compra e suporte",

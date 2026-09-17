@@ -2,9 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import type { MotionValue } from "framer-motion";
+import { COMPACT_QUERY } from "./promo.config";
 
 /** Larguras em que os quadros existem em AVIF. */
-export type FrameWidth = 1920 | 2560;
+export type FrameWidth = 1280 | 1920 | 2560;
 
 /** Uma sequência de quadros extraída de um vídeo, para desenho controlado pelo scroll. */
 export interface FrameSequence {
@@ -31,8 +32,13 @@ const DECODERS = 3;
 const DECODED_LIMIT = 24;
 /** Quadros decodificados à frente, na direção do movimento. */
 const LOOKAHEAD = 10;
-/** A partir desta altura do canvas, em px reais, vale baixar os quadros de 2560. */
+/**
+ * Alturas do canvas, em px reais, que separam os três tamanhos de quadro. O
+ * quadro é encaixado pela altura, então é ela que decide: acima de 1150 vale o
+ * de 2560; até 800, o de 1280 já cobre a tela sem esticar.
+ */
 const LARGE_CANVAS = 1150;
+const SMALL_CANVAS = 800;
 /** Distância da tela em que o palco começa a baixar e mantém quadros decodificados. */
 const NEAR_MARGIN = "150% 0px";
 /** Densidade máxima do canvas. Acima disso o custo de desenho não compensa. */
@@ -327,7 +333,16 @@ export default function ScrollSequence({
 
     const start = async () => {
       started = true;
-      const width: FrameWidth = canvas.height > LARGE_CANVAS ? 2560 : 1920;
+      // Em tela pequena todos os palcos e o visualizador 360° pedem o mesmo
+      // tamanho: os arquivos da DS3 servem ao hero e ao visualizador sem baixar
+      // duas vezes, e 1080 px de altura cobrem a tela do celular sem esticar.
+      const width: FrameWidth = window.matchMedia(COMPACT_QUERY).matches
+        ? 1920
+        : canvas.height > LARGE_CANVAS
+          ? 2560
+          : canvas.height > SMALL_CANVAS
+            ? 1920
+            : 1280;
       if (await supportsAvif(sequence.avif(0, width))) {
         url = (index) => sequence.avif(index, width);
       }

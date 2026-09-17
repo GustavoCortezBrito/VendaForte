@@ -103,7 +103,7 @@ export default function PromoQuoteForm() {
       `*Prazo de compra:* ${deadline}`,
       ...(message ? ["", `*Mensagem:* ${message}`] : []),
       "",
-      "Por favor, envie a proposta formal com preço de lote, prazo de entrega e simulação de financiamento BNDES/Finame.",
+      "Por favor, envie a proposta formal com preço de lote, prazo de entrega e as formas de pagamento.",
     ].join("\n");
 
     // Abre antes de qualquer espera, ainda dentro do clique, para o navegador
@@ -148,8 +148,8 @@ export default function PromoQuoteForm() {
           <Eyebrow>Proposta expressa</Eyebrow>
           <h2 className={`mt-4 ${TITLE} text-white`}>Receba uma cotação em minutos</h2>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-400">
-            Preencha os dados e enviamos a proposta com o valor de lote, o prazo de entrega e a
-            simulação de financiamento.
+            Preencha os dados e enviamos a proposta com o valor de lote, o prazo de entrega e as
+            formas de pagamento.
           </p>
         </Reveal>
 
