@@ -8,7 +8,11 @@ export const metadata: Metadata = {
   // repetia o nome da empresa e passava do limite de 580 px dos buscadores
   title: { absolute: "Promoção EP DS3, EFL302 B3 e F4 | Venda Forte" },
   description:
-    "Promoção Venda Forte: empilhadeira EP DS3 de 1.500 kg, EFL302 B3 de 3.000 kg e paleteira F4, todas de lítio, com pronta entrega e faturamento direto para CNPJ.",
+    "Promoção Venda Forte: empilhadeira EP DS3 1.500 kg, EFL302 B3 3.000 kg e paleteira F4, lítio, pronta entrega e faturamento direto para CNPJ.",
+  // Sobrescreve o canonical da homepage herdado do layout raiz
+  alternates: {
+    canonical: "https://www.grupovendaforte.com/promo",
+  },
 };
 
 export default function PromoLayout({ children }: { children: React.ReactNode }) {
