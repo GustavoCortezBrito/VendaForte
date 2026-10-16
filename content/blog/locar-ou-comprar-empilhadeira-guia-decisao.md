@@ -1,10 +1,10 @@
 ---
-title: 'Locar ou Comprar Empilhadeira? Guia Financeiro e Operacional para Decisão no Brasil'
+title: 'Locar ou comprar empilhadeira?'
 description: 'Descubra se vale a pena comprar ou alugar empilhadeira industrial. Análise completa de Capex vs. Opex, impacto tributário e fluxo de caixa para sua empresa.'
 date: '2026-09-04'
 author: 'Engenharia de Aplicação Grupo Venda Forte'
-image: 'https://cdn.ep-portal.net/products/attr_5/1762338440190-wx552t.webp'
-category: 'Gestão & Custos'
+image: '/blog/covers/f4-locar.webp'
+category: 'Custos e financiamento'
 tags: ['Locação vs Compra', 'Financiamento', 'BNDES', 'Gestão de Frotas', 'Custos Operacionais']
 ---
 

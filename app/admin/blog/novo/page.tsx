@@ -6,29 +6,31 @@ import Link from 'next/link'
 import { Save, Plus, X, Truck, FileText, ChevronRight, Eye, LogOut } from 'lucide-react'
 import RichTextEditor from '@/components/RichTextEditor'
 
-// Categorias padrão
+// Categorias do blog: as mesmas das abas da listagem (/blog). Novas categorias criadas
+// no formulário também viram aba, ordenadas das mais cheias às mais vazias.
 const DEFAULT_CATEGORIES = [
-  'Novidades',
-  'Manutenção',
-  'Dicas',
-  'Cases de Sucesso',
-  'Segurança',
+  'Custos e financiamento',
+  'Máquinas EP',
   'Tecnologia',
-  'Produtos'
+  'Empresa',
+  'Guia de compra',
+  'Aplicações'
 ]
+
+// Tags de máquina: ligam o artigo ao cartão "Na campanha" e a "Guias por máquina" no blog
+const MACHINE_TAGS = ['DS3', 'F4', 'EFL302 B3']
 
 // Tags mais usadas como sugestões
 const SUGGESTED_TAGS = [
-  'empilhadeira',
-  'manutenção',
-  'segurança',
-  'dicas',
-  'equipamentos',
-  'produtividade',
-  'logística',
+  ...MACHINE_TAGS,
+  'lítio',
+  'bateria',
+  'ficha técnica',
+  'custos',
+  'financiamento',
   'armazém',
-  'operação',
-  'tecnologia'
+  'logística',
+  'segurança'
 ]
 
 export default function NovoPostPage() {
@@ -52,7 +54,7 @@ export default function NovoPostPage() {
     title: '',
     description: '',
     author: 'Equipe Venda Forte',
-    category: 'Novidades',
+    category: 'Guia de compra',
     image: '/sede.png',
     content: ''
   })
@@ -486,7 +488,8 @@ export default function NovoPostPage() {
               </button>
             </div>
             <p className="text-xs text-gray-500 mt-2">
-              Clique nas sugestões ou adicione tags personalizadas
+              Clique nas sugestões ou adicione tags personalizadas.
+              As tags <strong>DS3</strong>, <strong>F4</strong> e <strong>EFL302 B3</strong> ligam o artigo à máquina: aparece o cartão “Na campanha” e ele entra em “Guias por máquina”. Use só uma por artigo: com mais de uma tag de máquina, o cartão “Na campanha” não aparece.
             </p>
           </div>
 
@@ -550,7 +553,7 @@ export default function NovoPostPage() {
                 </div>
                 
                 <p className="text-xs text-gray-500 mt-2">
-                  Esta imagem aparecerá como capa do post na listagem do blog
+                  É a capa do artigo, do cartão na listagem e do compartilhamento. Use uma imagem horizontal 16:9 (ex.: 1600 × 900 px); imagens quadradas ou verticais são cortadas.
                 </p>
               </div>
             </div>

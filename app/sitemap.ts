@@ -1,6 +1,9 @@
 import { MetadataRoute } from 'next'
 import { supabaseAdmin } from '@/lib/supabase'
 import { getAllPosts as getAllPostsFromFiles } from '@/lib/blog'
+import { listPosts } from '@/lib/blog-data'
+import { blogHref, categoryList } from '@/lib/blog-format'
+import { totalPagesFor } from '@/lib/blog-listing'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupovendaforte.com'
@@ -95,5 +98,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Erro ao listar posts para o sitemap:', error)
   }
 
-  return [...staticUrls, ...blogUrls]
+  // Páginas da listagem: categorias e páginas numeradas, todas com link próprio
+  let listingUrls: MetadataRoute.Sitemap = []
+  try {
+    const posts = await listPosts()
+    const lists: { category?: string; pages: number }[] = [
+      { pages: totalPagesFor(posts) },
+      ...categoryList(posts).map((category) => ({
+        category: category.slug,
+        pages: totalPagesFor(posts, category.name),
+      })),
+    ]
+
+    listingUrls = lists
+      .flatMap(({ category, pages }) =>
+        Array.from({ length: pages }, (_, index) => ({
+          url: `${baseUrl}${blogHref({ category, page: index + 1 })}`,
+          lastModified: currentDate,
+          changeFrequency: 'weekly' as const,
+          priority: category ? 0.6 : 0.7,
+        }))
+      )
+      // A primeira página da listagem geral já consta nas páginas principais
+      .filter((entry) => entry.url !== `${baseUrl}/blog`)
+  } catch (error) {
+    console.error('Erro ao listar as páginas do blog para o sitemap:', error)
+  }
+
+  return [...staticUrls, ...listingUrls, ...blogUrls]
 }

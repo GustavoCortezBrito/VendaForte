@@ -1,94 +1,46 @@
-import { Metadata } from 'next'
-import BlogListingClient from '@/components/BlogListingClient'
+import BlogListing from '@/components/blog/BlogListing'
+import { loadListing, listingMetadata, SITE_URL } from '@/lib/blog-listing'
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupovendaforte.com'
+/**
+ * Os posts são lidos no servidor, então o HTML já sai com todos os artigos (o
+ * Google vê a listagem pronta). Revalida a cada 10 minutos, e o admin força a
+ * atualização na hora ao publicar.
+ */
+export const revalidate = 600
 
-export const metadata: Metadata = {
-  title: 'Blog Venda Forte | Dicas de Empilhadeiras e Movimentação de Cargas',
-  description: 'Artigos, guias e dicas sobre empilhadeiras elétricas, manutenção preventiva, baterias de lítio e operação logística com a Venda Forte.',
-  keywords: [
-    'blog empilhadeiras',
-    'manutenção de empilhadeiras',
-    'operação segura empilhadeira',
-    'equipamentos industriais',
-    'locação de empilhadeiras',
-    'movimentação de cargas',
-    'Venda Forte blog',
-    'Chapecó empilhadeiras'
-  ],
-  alternates: {
-    canonical: `${siteUrl}/blog`,
-  },
-  openGraph: {
-    title: 'Blog Venda Forte | Dicas de Empilhadeiras e Movimentação de Cargas',
-    description: 'Artigos, guias e dicas sobre empilhadeiras elétricas, manutenção preventiva, baterias de lítio e operação logística.',
-    url: `${siteUrl}/blog`,
-    siteName: 'Venda Forte',
-    type: 'website',
-    images: [
-      {
-        url: `${siteUrl}/sede.png`,
-        width: 1200,
-        height: 630,
-        alt: 'Blog Venda Forte',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Blog Venda Forte | Dicas de Empilhadeiras e Movimentação de Cargas',
-    description: 'Artigos, guias e dicas sobre empilhadeiras elétricas, manutenção preventiva, baterias de lítio e operação logística.',
-    images: [`${siteUrl}/sede.png`],
-  },
+export async function generateMetadata() {
+  const listing = await loadListing(undefined, 1)
+  return listing ? listingMetadata(listing) : {}
 }
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const listing = await loadListing(undefined, 1)
+  if (!listing) return null
+
   const blogJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    'name': 'Blog Venda Forte',
-    'description': 'Dicas, novidades e conteúdo especializado sobre empilhadeiras e equipamentos industriais.',
-    'url': `${siteUrl}/blog`,
-    'publisher': {
+    name: 'Blog Venda Forte',
+    description:
+      'Fichas técnicas explicadas, comparativos e guias de decisão sobre empilhadeiras elétricas de lítio EP Equipment.',
+    url: `${SITE_URL}/blog`,
+    publisher: {
       '@type': 'Organization',
-      'name': 'Grupo Venda Forte',
-      'logo': {
-        '@type': 'ImageObject',
-        'url': `${siteUrl}/logo.png`
-      }
-    }
-  }
-
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Início',
-        'item': siteUrl
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Blog',
-        'item': `${siteUrl}/blog`
-      }
-    ]
+      name: 'Grupo Venda Forte',
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo.png` },
+    },
+    blogPost: listing.posts.map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      url: `${SITE_URL}/blog/${post.slug}`,
+      datePublished: post.date,
+    })),
   }
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <BlogListingClient />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }} />
+      <BlogListing posts={listing.posts} />
     </>
   )
 }

@@ -1,10 +1,10 @@
 ---
-title: 'Empilhadeiras para Câmaras Frias e Frigoríficos: Cuidados com Temperatura Negativa e Condensação'
-description: 'Guia técnico para escolha e operação de empilhadeiras elétricas em câmaras frias e frigoríficos (-25°C a -30°C). Proteção contra condensação e baterias de lítio.'
+title: 'Empilhadeiras em câmaras frias e frigoríficos'
+description: 'Como escolher e operar empilhadeiras elétricas em câmaras frias e frigoríficos: temperatura negativa, condensação e baterias de lítio.'
 date: '2026-09-04'
 author: 'Engenharia de Aplicação Grupo Venda Forte'
-image: 'https://cdn.ep-portal.net/products/attr_5/1757324457309-ket0ve.webp'
-category: 'Setores & Aplicações'
+image: '/blog/covers/efl-camara.webp'
+category: 'Aplicações'
 tags: ['Frigorífico', 'Câmara Fria', 'Temperatura Negativa', 'Empilhadeira Elétrica', 'Armazenagem Congelada']
 ---
 

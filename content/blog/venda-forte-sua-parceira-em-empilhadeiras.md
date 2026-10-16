@@ -1,74 +1,62 @@
 ---
-title: 'Venda Forte: Sua Parceira em Empilhadeiras Elétricas no Sul do Brasil'
-excerpt: 'Conheça a história da Venda Forte, dealer oficial EP Equipment em Santa Catarina, e descubra como nos tornamos referência em empilhadeiras elétricas na região.'
+title: 'Venda Forte: dealer EP Equipment no Sul do Brasil'
+description: 'A história da Venda Forte, dealer oficial EP Equipment em Santa Catarina, com bases em Chapecó e Joinville, e como atendemos a região.'
 date: '2026-08-10'
 author: 'Rodrigo Schilke'
 image: '/sede.png'
+category: 'Empresa'
 tags: ['Venda Forte', 'EP Equipment', 'Empilhadeiras', 'Santa Catarina']
 ---
 
-## Quem Somos
+## Quem somos
 
-A **Venda Forte** é o dealer oficial da EP Equipment para Santa Catarina, com bases estratégicas em **Chapecó** e **Joinville**. Nossa história começou em 2014, quando iniciamos no ramo de Representação Comercial Corporativa em parceria com a RAC Empilhadeiras de Itajaí-SC, na época autorizado Linde Empilhadeiras do grupo Kion/Still.
+A **Venda Forte** é dealer oficial da EP Equipment para Santa Catarina, com bases em **Chapecó** e **Joinville**. Nossa história começou em 2014, no ramo de Representação Comercial Corporativa, em parceria com a RAC Empilhadeiras, de Itajaí-SC, na época autorizada Linde Empilhadeiras, do grupo Kion/Still.
 
-Com o tempo, ganhamos experiência na área comercial e novos horizontes começaram a se abrir. O network e o aprofundado estudo na área comercial fizeram com que hoje a Venda Forte se posicione no mercado como uma empresa que tem em sua essência a **estratégia**, **gestão comercial** e a **busca incessante pela excelência no atendimento** aos nossos clientes.
+Com o tempo, ganhamos experiência na área comercial e novos caminhos se abriram. O network e o estudo aprofundado do mercado fizeram da Venda Forte uma empresa que tem na essência a **estratégia**, a **gestão comercial** e a busca pela excelência no atendimento.
 
-## Nossa Parceria com a EP Equipment
+## A parceria com a EP Equipment
 
-Em julho de 2021, em contato com a SDO Empilhadeiras de Campinas-SP, fechamos a parceria com a **EP Equipment** para ser **distribuidor autorizado para Santa Catarina**. Um desafio que nos move a cada dia, sempre em direção à evolução!
+Em julho de 2021, em contato com a SDO Empilhadeiras, de Campinas-SP, fechamos a parceria com a **EP Equipment** para ser **distribuidor autorizado em Santa Catarina**. A EP é uma fabricante de equipamentos de movimentação de cargas com foco em baterias de lítio, e a nossa linha acompanha essa proposta: paleteiras, empilhadeiras patoladas e contrabalançadas elétricas.
 
-A EP Equipment é uma das maiores fabricantes de empilhadeiras elétricas do mundo, com mais de 30 anos de experiência e presença em mais de 100 países. Especializada em equipamentos movidos a bateria de lítio, a marca oferece soluções inovadoras, sustentáveis e de alta performance.
+## Nossa metodologia
 
-## Nossa Metodologia
-
-> "Possuímos uma metodologia de vendas inteligente, com foco na estratégia, qualidade no atendimento e na capacitação da equipe. O resultado disso é uma parceria sólida e duradoura com nossos clientes. Acreditamos que o setor comercial é o que dita a velocidade de crescimento das empresas…"
+> Possuímos uma metodologia de vendas inteligente, com foco na estratégia, qualidade no atendimento e na capacitação da equipe. O resultado disso é uma parceria sólida e duradoura com nossos clientes. Acreditamos que o setor comercial é o que dita a velocidade de crescimento das empresas…
 >
-> **Rodrigo Schilke** — CEO Venda Forte
+> **Rodrigo Schilke**, CEO da Venda Forte
 
-## Nossa Estrutura
+## Onde estamos
 
-### Chapecó - Matriz
-Nossa sede em Chapecó-SC é equipada com showroom completo, oficina técnica e estoque de peças multimarcas. Atendemos toda a região Oeste de Santa Catarina e estados vizinhos.
+**Chapecó (matriz).** Showroom, oficina técnica e estoque de peças multimarcas, atendendo o Oeste de Santa Catarina e os estados vizinhos.
 
-### Joinville - Filial
-Nossa filial em Joinville estrategicamente localizada para atender o Norte de SC, Vale do Itajaí e região metropolitana de Florianópolis, garantindo suporte rápido e eficiente.
+**Joinville (filial).** Posicionada para atender o Norte de SC, o Vale do Itajaí e a região de Florianópolis.
 
-## O Que Oferecemos
+**Itajaí.** Ponto de atendimento no litoral catarinense.
 
-- **Venda de Empilhadeiras Elétricas**: Linha completa EP Equipment com tecnologia Li-Ion
-- **Locação Operacional**: Contratos flexíveis de aluguel de curto e longo prazo
-- **Assistência Técnica 24/7**: Equipe técnica especializada em múltiplas marcas
-- **Peças Multimarcas**: Estoque completo de peças originais e alternativas
-- **Consultoria em Logística**: Análise de operação e recomendação de equipamentos
+Telefones: Chapecó (49) 3323-9050 e Joinville (47) 3842-3333. WhatsApp: (49) 98839-5635.
 
-## Nossa Área de Atuação
+## O que oferecemos
 
-Apesar do foco principal em **Santa Catarina** (especialmente Chapecó e Joinville), atendemos todo o **Sul do Brasil** (SC, PR, RS) e também o estado de **São Paulo**, levando soluções em empilhadeiras elétricas para empresas de diversos segmentos.
+- **Venda de empilhadeiras elétricas:** a linha EP Equipment com tecnologia de íon-lítio.
+- **Locação operacional:** contratos de curto e de longo prazo.
+- **Assistência técnica:** equipe especializada em várias marcas.
+- **Peças multimarcas:** originais e alternativas.
+- **Consultoria em logística:** análise da operação e indicação do equipamento.
 
-## Clientes que Confiam
+## Área de atuação
 
-Grandes empresas já escolheram a Venda Forte como parceira:
-- **BRF** - Indústria alimentícia
-- **JBS/Seara** - Frigoríficos
-- **Copacol** - Cooperativa agroindustrial
-- **Muffato** - Supermercados
-- **Randon** - Metalúrgica
-- **Adami S.A.** - Embalagens
-- **GT Foods** - Alimentos
+O foco é Santa Catarina, mas atendemos todo o **Sul do Brasil** (SC, PR e RS) e também o estado de **São Paulo**, para empresas de segmentos variados.
 
-## Por Que Escolher a Venda Forte?
+## Clientes
 
-✅ **Dealer Oficial EP Equipment** - Garantia de fábrica e suporte direto  
-✅ **10+ Anos de Experiência** - Expertise consolidada no mercado  
-✅ **Atendimento Regional** - Bases em Chapecó e Joinville para suporte rápido  
-✅ **Assistência 24/7** - Equipe técnica disponível a qualquer momento  
-✅ **Financiamento Facilitado** - Parcerias com bancos e linhas BNDES  
-✅ **Estoque Local** - Peças e equipamentos disponíveis para pronta entrega  
+Empresas de diferentes setores já escolheram a Venda Forte, entre elas BRF, JBS/Seara, Copacol, Muffato, Randon, Adami e GT Foods.
 
-## Entre em Contato
+## Por que escolher a Venda Forte
 
-**WhatsApp**: +55 49 98839-5635  
-**Instagram**: [@vendaforte](https://www.instagram.com/vendaforte/)  
-**YouTube**: [@grupovendaforte7665](https://www.youtube.com/@grupovendaforte7665)  
+- **Dealer oficial EP Equipment**, com garantia de fábrica e suporte direto.
+- **Mais de 10 anos de mercado**, desde 2014.
+- **Atendimento regional**, com bases em Chapecó e Joinville.
+- **Formas de pagamento** combinadas caso a caso, com nota fiscal.
 
-Estamos prontos para atender sua empresa com as melhores soluções em empilhadeiras elétricas!
+## Fale com a equipe
+
+[Peça uma cotação](/promo#cotacao) ou fale pelo WhatsApp: +55 49 98839-5635. Acompanhe também no [Instagram](https://www.instagram.com/vendaforte/) e no [YouTube](https://www.youtube.com/@grupovendaforte7665).

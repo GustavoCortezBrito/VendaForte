@@ -11,6 +11,7 @@ import { Color } from '@tiptap/extension-color'
 import { Heading } from '@tiptap/extension-heading'
 import { Dropcursor } from '@tiptap/extension-dropcursor'
 import { Gapcursor } from '@tiptap/extension-gapcursor'
+import { Table, TableCell, TableHeader, TableRow } from '@tiptap/extension-table'
 import {
   Bold,
   Italic,
@@ -28,7 +29,8 @@ import {
   Heading1,
   Heading2,
   Heading3,
-  Code
+  Code,
+  Table2
 } from 'lucide-react'
 import { useCallback, useEffect } from 'react'
 
@@ -78,6 +80,11 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
         width: 3,
       }),
       Gapcursor,
+      // Sem isso, abrir um post com tabela no editor e salvar a transformava em texto solto
+      Table.configure({ resizable: false }),
+      TableRow,
+      TableHeader,
+      TableCell,
     ],
     content,
     editorProps: {
@@ -135,6 +142,8 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
         return false
       },
     },
+    // A barra de ferramentas reflete onde o cursor está (negrito ativo, botões da tabela)
+    shouldRerenderOnTransaction: true,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML())
     },
@@ -421,6 +430,39 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           >
             <ImageIcon size={20} />
           </button>
+        </div>
+
+        {/* Tabela: inserir e, com o cursor dentro dela, editar linhas e colunas */}
+        <div className="flex flex-wrap items-center gap-1 border-r border-gray-300 pr-2">
+          <button
+            onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}
+            className="p-2 rounded hover:bg-gray-200 transition-colors"
+            title="Inserir tabela (3 × 3, com linha de título)"
+            type="button"
+          >
+            <Table2 size={20} />
+          </button>
+          {editor.isActive('table') && (
+            <>
+              {[
+                { label: '+ linha', title: 'Adicionar linha abaixo', run: () => editor.chain().focus().addRowAfter().run() },
+                { label: '+ coluna', title: 'Adicionar coluna à direita', run: () => editor.chain().focus().addColumnAfter().run() },
+                { label: '− linha', title: 'Excluir a linha', run: () => editor.chain().focus().deleteRow().run() },
+                { label: '− coluna', title: 'Excluir a coluna', run: () => editor.chain().focus().deleteColumn().run() },
+                { label: 'Excluir tabela', title: 'Excluir a tabela inteira', run: () => editor.chain().focus().deleteTable().run() },
+              ].map(({ label, title, run }) => (
+                <button
+                  key={label}
+                  onClick={run}
+                  className="rounded px-2 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-200 transition-colors"
+                  title={title}
+                  type="button"
+                >
+                  {label}
+                </button>
+              ))}
+            </>
+          )}
         </div>
 
         {/* Desfazer/Refazer */}

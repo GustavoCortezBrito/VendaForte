@@ -1,10 +1,10 @@
 ---
-title: 'EP Equipment: A Gigante Global que Revolucionou as Empilhadeiras Elétricas de Íon-Lítio'
+title: 'EP Equipment: fabricante de empilhadeiras de lítio'
 description: 'Conheça a história e os diferenciais da EP Equipment, líder global no desenvolvimento de empilhadeiras e paleteiras com baterias de lítio nativas.'
 date: '2026-08-27'
 author: 'Equipe Venda Forte'
-image: 'https://cdn.ep-portal.net/products/attr_5/1758185452375-2j5v1u.webp'
-category: 'Tecnologia & Inovação'
+image: '/blog/covers/ds3-marca.webp'
+category: 'Tecnologia'
 tags: ['EP Equipment', 'Empilhadeiras Elétricas', 'Bateria de Lítio', 'Intralogística', 'Venda Forte']
 ---
 

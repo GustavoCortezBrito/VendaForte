@@ -1,10 +1,10 @@
 ---
-title: 'Como Escolher a Empilhadeira Ideal para seu Armazém: Guia Técnico Definitivo'
-description: 'Guia completo para dimensionar empilhadeiras em armazéns e centros de distribuição. Aprenda a calcular corredor operacional (AST), altura de elevação e capacidade residual.'
+title: 'Como escolher a empilhadeira para o seu armazém'
+description: 'Como dimensionar uma empilhadeira para armazéns e centros de distribuição: corredor operacional, altura de elevação e capacidade residual.'
 date: '2026-09-04'
 author: 'Engenharia de Aplicação Grupo Venda Forte'
-image: 'https://cdn.ep-portal.net/products/attr_5/1757324457309-ket0ve.webp'
-category: 'Guia Técnico'
+image: '/blog/covers/f4-armazem.webp'
+category: 'Guia de compra'
 tags: ['Armazém', 'Tipos de Empilhadeira', 'Corredor Operacional', 'Retrátil', 'Patolada', 'Contrabalançada']
 ---
 

@@ -1,10 +1,10 @@
 ---
-title: 'Financiamento de Empilhadeiras pelo BNDES Finame: Como Funciona o Passo a Passo'
+title: 'Financiamento de empilhadeiras pelo BNDES Finame'
 description: 'Guia completo para financiar empilhadeiras elétricas e industriais pelo BNDES Finame. Prazos, taxas de juros, exigências de CNPJ e modelos elegíveis.'
 date: '2026-09-04'
 author: 'Consultoria Financeira Grupo Venda Forte'
-image: 'https://cdn.ep-portal.net/products/attr_5/1766563537248-z8brck.webp'
-category: 'Financiamento & Negócios'
+image: '/blog/covers/f4-financiamento.webp'
+category: 'Custos e financiamento'
 tags: ['BNDES', 'Finame', 'Financiamento', 'Empilhadeira Elétrica', 'CNPJ']
 ---
 

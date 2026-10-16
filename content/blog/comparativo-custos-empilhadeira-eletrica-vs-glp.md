@@ -1,10 +1,10 @@
 ---
-title: 'Empilhadeira Elétrica Li-Ion vs. GLP a Combustão: Comparativo Real de Custos em 5 Anos'
-description: 'Confira a planilha comparativa entre empilhadeira elétrica com bateria de lítio e empilhadeira a gás GLP. Calcule a economia real de combustível e manutenção.'
+title: 'Empilhadeira elétrica de lítio vs. GLP: custos em 5 anos'
+description: 'Comparativo de custos entre empilhadeira elétrica de lítio e a gás GLP: energia, manutenção e economia acumulada em 5 anos.'
 date: '2026-08-26'
 author: 'Equipe Venda Forte'
-image: 'https://cdn.ep-portal.net/products/attr_5/1762338440190-wx552t.webp'
-category: 'Gestão & Custos'
+image: '/blog/covers/efl-custos.webp'
+category: 'Custos e financiamento'
 tags: ['Comparativo', 'Custos', 'GLP vs Elétrica', 'Íon-Lítio', 'TCO']
 ---
 

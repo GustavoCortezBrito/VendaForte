@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { supabase, supabaseAdmin } from '@/lib/supabase'
 import { getUserFromRequest } from '@/lib/auth'
 
@@ -8,6 +9,18 @@ import { getAllPosts as getAllPostsFromFiles, getPostBySlug as getPostBySlugFrom
 // Verificar se Supabase está configurado
 const isSupabaseConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL && 
                              process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+// Tempo máximo de espera pelo Supabase nas leituras. Sem ele, um banco fora do
+// ar deixava cada chamada esperando ~7 s antes de cair nos arquivos locais.
+const SUPABASE_READ_TIMEOUT_MS = 3000
+
+// As páginas públicas do blog são geradas no servidor e ficam em cache. Ao criar,
+// editar ou apagar um post, marca-as para atualizar na próxima visita: a listagem,
+// as páginas numeradas, as categorias, a busca e os artigos ficam todos sob /blog.
+function refreshPublicBlog() {
+  revalidatePath('/blog', 'layout')
+  revalidatePath('/sitemap.xml')
+}
 
 // GET - Listar todos os posts OU buscar um post específico por slug
 export async function GET(request: NextRequest) {
@@ -35,6 +48,7 @@ export async function GET(request: NextRequest) {
             .from('posts')
             .select('*')
             .eq('slug', slug)
+            .abortSignal(AbortSignal.timeout(SUPABASE_READ_TIMEOUT_MS))
             .single()
 
           if (!error && post) {
@@ -74,7 +88,7 @@ export async function GET(request: NextRequest) {
           query = query.eq('published', true)
         }
 
-        const { data: posts, error } = await query
+        const { data: posts, error } = await query.abortSignal(AbortSignal.timeout(SUPABASE_READ_TIMEOUT_MS))
 
         if (!error && posts && posts.length > 0) {
           return NextResponse.json({ posts })
@@ -147,6 +161,7 @@ export async function POST(request: NextRequest) {
         if (!error && post) {
           // Criar também cópia local de segurança
           createPost(slug, { title, description, content, image, category, tags, author, date: new Date().toISOString() })
+          refreshPublicBlog()
           return NextResponse.json({ success: true, post })
         }
       } catch (err) {
@@ -173,6 +188,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    refreshPublicBlog()
     return NextResponse.json({
       success: true,
       post: {
@@ -244,6 +260,7 @@ export async function PUT(request: NextRequest) {
 
         if (!error && post) {
           updatePost(slug, { title, description, content, image, category, tags, author, date: new Date().toISOString() })
+          refreshPublicBlog()
           return NextResponse.json({ success: true, post })
         }
       } catch (err) {
@@ -263,6 +280,7 @@ export async function PUT(request: NextRequest) {
       date: new Date().toISOString()
     })
 
+    refreshPublicBlog()
     return NextResponse.json({ success: true })
   } catch (error: any) {
     console.error('Erro ao atualizar post:', error)
@@ -315,6 +333,7 @@ export async function DELETE(request: NextRequest) {
     // Deletar também localmente
     deletePost(slug)
 
+    refreshPublicBlog()
     return NextResponse.json({ success: true })
   } catch (error: any) {
     console.error('Erro ao deletar post:', error)

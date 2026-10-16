@@ -1,365 +1,272 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { Metadata } from 'next'
-import { remark } from 'remark'
-import remarkHtml from 'remark-html'
-import remarkGfm from 'remark-gfm'
+import { ArrowUpRight, ChevronRight } from 'lucide-react'
+import BlogCta from '@/components/blog/BlogCta'
+import PostCard from '@/components/blog/PostCard'
+import PostImage from '@/components/blog/PostImage'
+import TableOfContents from '@/components/blog/TableOfContents'
+import { BTN_LINE, CONTAINER } from '@/components/blog/styles'
+import { whatsappUrl } from '@/components/promo/promo.config'
+import { getPost, listPosts } from '@/lib/blog-data'
+import { categoryOf, formatPostDate, postDateTime, relatedPosts, slugifyText } from '@/lib/blog-format'
+import { productForPost } from '@/lib/blog-products'
 
-interface BlogPost {
-  id?: string
-  slug: string
-  title: string
-  description: string
-  content: string
-  image: string
-  category: string
-  tags?: string[]
-  author: string
-  published?: boolean
-  reading_time: string
-  created_at: string
-  published_at?: string
-}
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupovendaforte.com'
 
-import { supabaseAdmin } from '@/lib/supabase'
-import { getPostBySlug as getPostBySlugFromFiles, getAllPosts as getAllPostsFromFiles } from '@/lib/blog'
-
-// Função para buscar post do banco (ou fallback de arquivos)
-async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  try {
-    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      const { data: post, error } = await supabaseAdmin
-        .from('posts')
-        .select('*')
-        .eq('slug', slug)
-        .single()
-
-      if (!error && post) {
-        return post as BlogPost
-      }
-    }
-
-    const filePost = await getPostBySlugFromFiles(slug)
-    if (filePost) {
-      return {
-        slug: filePost.slug,
-        title: filePost.title,
-        description: filePost.description,
-        content: filePost.content,
-        image: filePost.image,
-        category: filePost.category,
-        tags: filePost.tags,
-        author: filePost.author,
-        reading_time: filePost.readingTime,
-        created_at: filePost.date
-      }
-    }
-
-    return null
-  } catch (error) {
-    console.error('Erro ao buscar post por slug:', error)
-    return null
-  }
-}
-
-// Função para buscar todos os posts (para generateStaticParams)
-async function getAllPosts(): Promise<BlogPost[]> {
-  try {
-    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      const { data: posts, error } = await supabaseAdmin
-        .from('posts')
-        .select('*')
-        .eq('published', true)
-
-      if (!error && posts && posts.length > 0) {
-        return posts as BlogPost[]
-      }
-    }
-
-    const filePosts = getAllPostsFromFiles()
-    return filePosts.map(p => ({
-      slug: p.slug,
-      title: p.title,
-      description: p.description,
-      content: '',
-      image: p.image,
-      category: p.category,
-      tags: p.tags,
-      author: p.author,
-      reading_time: p.readingTime,
-      created_at: p.date
-    }))
-  } catch (error) {
-    console.error('Erro ao buscar todos os posts:', error)
-    return []
-  }
-}
+/** Revalida a cada 10 minutos; o admin força a atualização na hora ao publicar. */
+export const revalidate = 600
 
 export async function generateStaticParams() {
-  const posts = await getAllPosts()
-  return posts.map((post: BlogPost) => ({
-    slug: post.slug,
-  }))
+  const posts = await listPosts()
+  return posts.map((post) => ({ slug: post.slug }))
 }
+
+const absoluteUrl = (path: string) => (path.startsWith('http') ? path : `${siteUrl}${path}`)
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const post = await getPostBySlug(slug)
-  
+  const post = await getPost(slug)
+
   if (!post) {
     return {
-      title: 'Post não encontrado | Blog Venda Forte',
-      description: 'O artigo que você procura não foi encontrado.'
+      title: { absolute: 'Artigo não encontrado | Venda Forte' },
+      description: 'O artigo que você procura não foi encontrado.',
+      robots: { index: false },
     }
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupovendaforte.com'
-  const canonicalUrl = `${siteUrl}/blog/${post.slug}`
-  const imageUrl = post.image?.startsWith('http') ? post.image : `${siteUrl}${post.image || '/sede.png'}`
-  const keywords = (post.tags && post.tags.length > 0) ? post.tags : ['empilhadeira', 'manutenção', 'equipamentos industriais', 'Venda Forte']
+  // `absolute` ignora o modelo "%s | Grupo Venda Forte" do layout raiz, que
+  // somava o nome da empresa duas vezes ao título. A marca só entra se o título
+  // couber nos cerca de 58 caracteres que os buscadores exibem.
+  const withBrand = `${post.title} | Venda Forte`
+  const title = [...withBrand].length <= 58 ? withBrand : post.title
+  const canonical = `${siteUrl}/blog/${post.slug}`
+  const image = absoluteUrl(post.image || '/sede.png')
 
   return {
-    title: `${post.title} | Blog Venda Forte`,
+    title: { absolute: title },
     description: post.description,
-    keywords: keywords,
+    keywords: post.tags.length > 0 ? post.tags : ['empilhadeira', 'EP Equipment', 'Venda Forte'],
     authors: [{ name: post.author }],
-    alternates: {
-      canonical: canonicalUrl,
-    },
+    alternates: { canonical },
     openGraph: {
-      title: `${post.title} | Blog Venda Forte`,
+      title,
       description: post.description,
-      url: canonicalUrl,
+      url: canonical,
       siteName: 'Venda Forte',
       type: 'article',
-      publishedTime: post.created_at,
-      modifiedTime: post.published_at || post.created_at,
+      publishedTime: post.date,
       authors: [post.author],
-      tags: post.tags || [],
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
+      tags: post.tags,
+      images: [{ url: image, width: 1200, height: 630, alt: post.title }],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${post.title} | Blog Venda Forte`,
-      description: post.description,
-      images: [imageUrl],
-    },
+    twitter: { card: 'summary_large_image', title, description: post.description, images: [image] },
   }
 }
 
+const PROSE = [
+  'prose prose-lg max-w-none',
+  'prose-headings:scroll-mt-28 prose-headings:font-extrabold prose-headings:tracking-tight prose-headings:text-gray-900',
+  'prose-h2:mb-5 prose-h2:mt-14 prose-h2:text-3xl prose-h3:mt-10 prose-h3:text-2xl',
+  'prose-p:leading-relaxed prose-p:text-gray-700',
+  'prose-a:font-semibold prose-a:text-red-600 prose-a:no-underline hover:prose-a:underline',
+  'prose-strong:font-semibold prose-strong:text-gray-900',
+  'prose-li:text-gray-700 prose-li:marker:text-gray-400',
+  'prose-hr:my-12 prose-hr:border-gray-200',
+  'prose-blockquote:rounded-r-2xl prose-blockquote:border-l-4 prose-blockquote:border-red-600 prose-blockquote:bg-red-50/60 prose-blockquote:px-6 prose-blockquote:py-1 prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:text-gray-800',
+  // Sem as aspas decorativas que o plugin acrescenta antes e depois do parágrafo
+  '[&_blockquote_p]:before:content-none [&_blockquote_p]:after:content-none',
+  'prose-img:rounded-2xl prose-img:shadow-lg',
+  'prose-thead:border-0 prose-th:bg-gray-900 prose-th:px-4 prose-th:py-3 prose-th:text-white prose-td:px-4 prose-td:py-3 prose-td:text-gray-700',
+  '[&_tbody_tr:nth-child(even)]:bg-gray-50',
+  // Tabelas feitas no editor do admin guardam o texto das células dentro de <p>
+  '[&_td_p]:m-0 [&_th_p]:m-0 [&_th_p]:text-white',
+  // Tabelas dentro de um contêiner que rola na horizontal (ver `enhanceHtml`)
+  '[&_.blog-table]:my-8 [&_.blog-table]:overflow-x-auto [&_.blog-table]:rounded-2xl [&_.blog-table]:border [&_.blog-table]:border-gray-200 [&_.blog-table]:shadow-sm [&_.blog-table_table]:my-0 [&_.blog-table_table]:min-w-[34rem]',
+  // Checklists do Markdown (- [ ] item)
+  '[&_.contains-task-list]:list-none [&_.contains-task-list]:pl-0 [&_.task-list-item]:flex [&_.task-list-item]:items-start [&_.task-list-item]:gap-3 [&_.task-list-item_input]:mt-2 [&_.task-list-item_input]:accent-red-600',
+].join(' ')
+
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const post = await getPostBySlug(slug)
+  const post = await getPost(slug)
+  if (!post) notFound()
 
-  if (!post) {
-    notFound()
-  }
+  const all = await listPosts()
+  const related = relatedPosts(all, post, 3)
+  const product = productForPost(post)
+  const category = categoryOf(post)
+  const categoryHref = `/blog/categoria/${slugifyText(category) || 'geral'}`
+  const canonical = `${siteUrl}/blog/${post.slug}`
+  // Só os títulos principais: subtítulos repetidos ("O problema", "Como evitar") poluem o índice
+  const tocHeadings = post.headings.filter((heading) => heading.level === 2)
+  const showToc = tocHeadings.length >= 3
+  const quoteUrl = whatsappUrl(`Olá! Li o artigo "${post.title}" no blog da Venda Forte e quero falar com um consultor.`)
 
-  // Converter markdown para HTML
-  const processedContent = await remark()
-    .use(remarkGfm)
-    .use(remarkHtml, { sanitize: false })
-    .process(post.content || '')
-  const contentHtml = processedContent.toString()
-
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupovendaforte.com'
-  const canonicalUrl = `${siteUrl}/blog/${post.slug}`
-  const imageUrl = post.image?.startsWith('http') ? post.image : `${siteUrl}${post.image || '/sede.png'}`
-
-  // Schema.org Article JSON-LD
-  const articleJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    'headline': post.title,
-    'description': post.description,
-    'image': [imageUrl],
-    'datePublished': post.created_at,
-    'dateModified': post.published_at || post.created_at,
-    'author': {
-      '@type': 'Person',
-      'name': post.author
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.description,
+      image: [absoluteUrl(post.image || '/sede.png')],
+      datePublished: post.date,
+      dateModified: post.date,
+      author: { '@type': 'Organization', name: post.author },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Grupo Venda Forte',
+        logo: { '@type': 'ImageObject', url: `${siteUrl}/logo.png` },
+      },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
     },
-    'publisher': {
-      '@type': 'Organization',
-      'name': 'Grupo Venda Forte',
-      'logo': {
-        '@type': 'ImageObject',
-        'url': `${siteUrl}/logo.png`
-      }
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Blog', item: `${siteUrl}/blog` },
+        { '@type': 'ListItem', position: 2, name: category, item: `${siteUrl}${categoryHref}` },
+        { '@type': 'ListItem', position: 3, name: post.title, item: canonical },
+      ],
     },
-    'mainEntityOfPage': {
-      '@type': 'WebPage',
-      '@id': canonicalUrl
-    }
-  }
-
-  const tagsList = post.tags || []
+  ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* JSON-LD Schema.org */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
+    <div className="bg-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      {/* Hero com imagem */}
-      <div className="relative min-h-[500px] bg-gray-900 flex flex-col">
-        <img
-          src={post.image || '/sede.png'}
-          alt={post.title}
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-        
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-between pt-24 pb-12">
-          {/* Link voltar no topo */}
-          <div className="mb-6">
-            <Link 
-              href="/blog"
-              className="inline-flex items-center gap-2 text-white/90 hover:text-white text-sm font-medium bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg hover:bg-white/20 transition-all"
+      {/* ---------------- Cabeçalho do artigo ---------------- */}
+      <header className={`${CONTAINER} pt-32 lg:pt-36`}>
+        <nav aria-label="Você está em" className="flex flex-wrap items-center gap-1.5 text-sm text-gray-500">
+          <Link href="/blog" className="transition-colors hover:text-red-600">
+            Blog Venda Forte
+          </Link>
+          <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
+          <Link href={categoryHref} className="transition-colors hover:text-red-600">
+            {category}
+          </Link>
+        </nav>
+
+        <div className="mt-8 max-w-4xl">
+          <h1 className="text-balance text-4xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+            {post.title}
+          </h1>
+          {post.description && (
+            <p className="mt-6 max-w-3xl text-pretty text-xl leading-relaxed text-gray-600">{post.description}</p>
+          )}
+          <div className="mt-8 flex items-center gap-3 text-sm text-gray-500">
+            <span
+              aria-hidden="true"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-red-600 font-bold text-white"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Voltar para o blog
-            </Link>
-          </div>
-          
-          {/* Conteúdo centralizado */}
-          <div className="space-y-6">
-            {/* Categoria */}
-            <div>
-              <span className="inline-block bg-red-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-                {post.category}
-              </span>
-            </div>
-            
-            {/* Título */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight drop-shadow-lg">
-              {post.title}
-            </h1>
-            
-            {/* Meta informações */}
-            <div className="flex items-center gap-4 text-white/90 text-sm bg-black/40 backdrop-blur-md inline-flex px-6 py-3 rounded-full border border-white/10 flex-wrap">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center font-bold text-xs">
-                  {post.author ? post.author.charAt(0).toUpperCase() : 'V'}
-                </div>
-                <span className="font-medium">{post.author}</span>
-              </div>
-              <span>•</span>
-              <time className="flex items-center gap-1.5">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                {new Date(post.created_at).toLocaleDateString('pt-BR')}
-              </time>
-              <span>•</span>
-              <span className="flex items-center gap-1.5">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {post.reading_time}
-              </span>
-            </div>
+              {post.author.charAt(0).toUpperCase()}
+            </span>
+            <p>
+              <span className="block font-semibold text-gray-900">{post.author}</span>
+              <time dateTime={postDateTime(post.date)}>{formatPostDate(post.date)}</time>
+              <span aria-hidden="true"> · </span>
+              {post.readingTime}
+            </p>
           </div>
         </div>
+
+        <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-3xl border border-gray-200 bg-gray-900 shadow-xl">
+          <PostImage src={post.image || '/sede.png'} alt={post.title} sizes="(max-width: 1280px) 100vw, 1216px" priority />
+        </div>
+      </header>
+
+      {/* ---------------- Corpo ---------------- */}
+      <div className={`${CONTAINER} grid gap-x-12 py-14 lg:grid-cols-12 lg:py-20`}>
+        {showToc && (
+          <aside className="lg:col-span-3">
+            <div className="lg:sticky lg:top-28">
+              <TableOfContents headings={tocHeadings} />
+            </div>
+          </aside>
+        )}
+
+        <article className={showToc ? 'min-w-0 lg:col-span-9' : 'mx-auto max-w-3xl lg:col-span-12'}>
+          {/* Largura de leitura confortável, centrada no espaço ao lado do índice */}
+          <div className={showToc ? 'max-w-3xl lg:mx-auto' : undefined}>
+            <div className={PROSE} dangerouslySetInnerHTML={{ __html: post.html }} />
+
+            {post.tags.length > 0 && (
+              <ul className="mt-12 flex flex-wrap gap-2 border-t border-gray-200 pt-8" aria-label="Assuntos">
+                {post.tags.map((tag) => (
+                  <li key={tag} className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* Máquina de que o artigo trata */}
+            {product && (
+              <aside className="mt-12 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm sm:flex">
+                <div className="relative aspect-[16/9] bg-gray-900 sm:aspect-auto sm:w-2/5">
+                  <Image
+                    src={product.image}
+                    alt={product.imageAlt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 280px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col justify-center p-7">
+                  <p className="text-xs font-bold uppercase tracking-wider text-red-600">Na campanha</p>
+                  <p className="mt-2 text-2xl font-extrabold tracking-tight text-gray-900">EP {product.shortName}</p>
+                  <p className="mt-1 text-sm text-gray-600">
+                    {product.category} · {product.capacity}
+                  </p>
+                  <Link
+                    href={product.href}
+                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-red-600 transition-colors hover:text-red-700"
+                  >
+                    Ver preço e ficha na campanha
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </div>
+              </aside>
+            )}
+
+            {/* Chamada para falar com um consultor */}
+            <div className="mt-8">
+              <BlogCta
+                variant="compact"
+                title="Quer aplicar isso na sua operação?"
+                text="Um consultor da Venda Forte avalia o seu corredor, a sua carga e o seu turno e indica a máquina certa."
+                primary={{ href: '/promo#cotacao', label: 'Pedir cotação' }}
+                whatsappHref={quoteUrl}
+              />
+            </div>
+          </div>
+        </article>
       </div>
 
-      {/* Conteúdo */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white rounded-lg shadow-sm p-8 md:p-12">
-          {/* Tags */}
-          {tagsList.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-8">
-              {tagsList.map((tag: string) => (
-                <span 
-                  key={tag}
-                  className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm"
-                >
-                  #{tag}
-                </span>
+      {/* ---------------- Continue lendo ---------------- */}
+      {related.length > 0 && (
+        <section className="bg-gray-50 py-16 lg:py-24" aria-labelledby="continue-lendo">
+          <div className={CONTAINER}>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <h2 id="continue-lendo" className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                Continue <span className="text-red-600">lendo</span>
+              </h2>
+              <Link href="/blog" className={BTN_LINE}>
+                Ver todos os artigos
+              </Link>
+            </div>
+            <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((item) => (
+                <li key={item.slug}>
+                  <PostCard post={item} />
+                </li>
               ))}
-            </div>
-          )}
-
-          {/* Conteúdo do post */}
-          <div 
-            className="prose prose-lg max-w-none
-              prose-headings:font-bold prose-headings:text-gray-900
-              prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4
-              prose-h3:text-2xl prose-h3:mt-6 prose-h3:mb-3
-              prose-p:text-gray-600 prose-p:leading-relaxed prose-p:mb-4
-              prose-a:text-red-600 prose-a:no-underline hover:prose-a:underline
-              prose-strong:text-gray-900 prose-strong:font-semibold
-              prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
-              prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
-              prose-li:text-gray-600 prose-li:mb-2
-              prose-blockquote:border-l-4 prose-blockquote:border-red-600 
-              prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-600
-              prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 
-              prose-code:rounded prose-code:text-sm prose-code:text-red-600
-              prose-img:rounded-xl prose-img:shadow-lg prose-img:my-8
-              prose-img:w-full prose-img:h-auto
-              prose-table:w-full prose-table:my-8 prose-table:border-collapse prose-table:rounded-xl prose-table:overflow-hidden prose-table:shadow-sm
-              prose-thead:bg-gray-900 prose-thead:text-white
-              prose-th:p-4 prose-th:text-left prose-th:text-xs prose-th:font-bold prose-th:uppercase prose-th:tracking-wider prose-th:text-white
-              prose-td:p-4 prose-td:text-sm prose-td:border-b prose-td:border-gray-200 prose-td:text-gray-700
-              prose-tr:even:bg-gray-50
-            "
-            dangerouslySetInnerHTML={{ __html: contentHtml }}
-          />
-
-          {/* Autor e data no final */}
-          <div className="mt-12 pt-8 border-t border-gray-200">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
-                {post.author ? post.author.charAt(0).toUpperCase() : 'V'}
-              </div>
-              <div>
-                <div className="font-semibold text-gray-900">{post.author}</div>
-                <div className="text-sm text-gray-500">
-                  Publicado em {new Date(post.created_at).toLocaleDateString('pt-BR', { 
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                  })}
-                </div>
-              </div>
-            </div>
+            </ul>
           </div>
-
-          {/* Botões de ação */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <Link
-              href="/blog"
-              className="flex-1 bg-gray-100 text-gray-700 text-center py-4 sm:py-3 rounded-xl hover:bg-gray-200 active:scale-95 transition-all font-semibold text-base sm:text-sm flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Ver todos os posts
-            </Link>
-            <a
-              href="https://vendaforte.com.br/#contact"
-              className="flex-1 bg-gradient-to-r from-red-600 to-red-700 text-white text-center py-4 sm:py-3 rounded-xl hover:from-red-700 hover:to-red-800 active:scale-95 transition-all font-bold text-base sm:text-sm flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              Entre em Contato
-            </a>
-          </div>
-        </div>
-      </article>
+        </section>
+      )}
     </div>
   )
 }

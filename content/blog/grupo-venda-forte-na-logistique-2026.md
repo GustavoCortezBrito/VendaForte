@@ -1,10 +1,10 @@
 ---
-title: 'Grupo Venda Forte na Logistique: Destaque em Inovação e Eletrificação de Frotas Industriais'
-description: 'Confira os principais destaques da participação do Grupo Venda Forte na Logistique em Joinville. Apresentação de empilhadeiras elétricas Li-Ion e soluções para armazéns.'
+title: 'Grupo Venda Forte na Logistique 2026'
+description: 'Os destaques da participação do Grupo Venda Forte na Logistique, em Joinville, com empilhadeiras elétricas de lítio e soluções para armazéns.'
 date: '2026-08-28'
 author: 'Equipe Venda Forte'
-image: '/sede.png'
-category: 'Eventos & Mercado'
+image: '/blog/covers/efl-evento.webp'
+category: 'Empresa'
 tags: ['Logistique', 'Eventos', 'Intralogística', 'Empilhadeiras Elétricas', 'Santa Catarina']
 ---
 

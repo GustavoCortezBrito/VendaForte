@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { remark } from 'remark'
+import remarkGfm from 'remark-gfm'
 import html from 'remark-html'
 
 const postsDirectory = path.join(process.cwd(), 'content/blog')
@@ -91,7 +92,9 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     // Senão, converter markdown para HTML
     let contentHtml = content
     if (!content.trim().startsWith('<')) {
+      // GFM: sem ele, tabelas e checklists dos posts saíam como texto cru
       const processedContent = await remark()
+        .use(remarkGfm)
         .use(html)
         .process(content)
       contentHtml = processedContent.toString()

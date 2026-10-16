@@ -1,10 +1,10 @@
 ---
-title: 'Bateria de Íon-Lítio vs. Chumbo-Ácido em Empilhadeiras: O Comparativo Definitivo de Eficiência e ROI'
-description: 'Entenda por que as baterias de lítio substituíram o chumbo-ácido na intralogística. Comparativo de tempo de recarga, ciclos úteis, segurança e custo operacional.'
+title: 'Bateria de lítio vs. chumbo-ácido em empilhadeiras'
+description: 'Por que as baterias de lítio substituem o chumbo-ácido na intralogística: recarga, ciclos, segurança e custo de operação.'
 date: '2026-09-04'
 author: 'Especialistas em Energia EP Equipment'
-image: 'https://cdn.ep-portal.net/products/attr_5/1762338440190-wx552t.webp'
-category: 'Tecnologia & Baterias'
+image: '/blog/covers/ds3-bateria.webp'
+category: 'Tecnologia'
 tags: ['Bateria de Lítio', 'Chumbo-Ácido', 'Eficiência Energética', 'LiFePO4', 'Manutenção']
 ---
 
