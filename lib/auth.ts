@@ -3,7 +3,9 @@ import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 import { supabaseAdmin } from './supabase'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-this'
+// Em produção o segredo é obrigatório. Com um valor padrão público no código, qualquer pessoa
+// poderia assinar um token de admin; sem JWT_SECRET o login falha em vez de ficar aberto.
+const JWT_SECRET = process.env.JWT_SECRET || (process.env.NODE_ENV === 'production' ? '' : 'dev-only-secret')
 const TOKEN_NAME = 'vendaforte_auth_token'
 
 export interface AuthUser {
@@ -22,6 +24,7 @@ export interface TokenPayload extends AuthUser {
  * Gera um token JWT para o usuário
  */
 export function generateToken(user: AuthUser): string {
+  if (!JWT_SECRET) throw new Error('JWT_SECRET não configurado')
   return jwt.sign(
     {
       id: user.id,
