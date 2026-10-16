@@ -53,23 +53,8 @@ export function verifyToken(token: string): TokenPayload | null {
  */
 export async function authenticateUser(email: string, password: string) {
   try {
-    // Credencial padrão de fallback para desenvolvimento/painel
-    if (email === 'admin@vendaforte.com' && password === 'vendaforte2026') {
-      const authUser: AuthUser = {
-        id: 'admin-default-id',
-        email: 'admin@vendaforte.com',
-        name: 'Administrador',
-        role: 'admin'
-      }
-      const token = generateToken(authUser)
-      return {
-        success: true,
-        user: authUser,
-        token
-      }
-    }
-
-    // Buscar usuário no banco
+    // Buscar usuário no banco. Não há mais login "padrão" no código: ele aceitava uma senha
+    // escrita no repositório sem consultar o banco, então valia para qualquer pessoa.
     const { data: user, error } = await supabaseAdmin
       .from('users')
       .select('*')
