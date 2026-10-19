@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { 
   Zap, 
   Search, 
@@ -27,6 +28,7 @@ import {
   Gauge
 } from 'lucide-react'
 import ImageLightboxModal from '@/components/ImageLightboxModal'
+import { useDragScroll } from '@/components/useDragScroll'
 
 export interface ForkliftProduct {
   id: string
@@ -63,9 +65,28 @@ const CATEGORIES_CONFIG = [
   { id: 'Empilhadeiras Patoladas (Stackers)', label: 'Stackers', icon: Box },
   { id: 'Empilhadeiras Contrabalançadas', label: 'Contrabalançadas', icon: Forklift },
   { id: 'Empilhadeiras Retráteis (Reach Trucks)', label: 'Retráteis', icon: ArrowDownUp },
-  { id: 'Selecionadoras de Pedidos & Rebocadores', label: 'Order Pickers & Rebocadores', icon: PackageCheck },
+  { id: 'Selecionadoras de Pedidos & Rebocadores', label: 'Selecionadoras', icon: PackageCheck },
   { id: 'Equipamentos Especiais & VNA', label: 'Outros (VNA & Especiais)', icon: Cog },
 ]
+
+/** Nome do tipo em português, mostrado abaixo do modelo no cartão. */
+const TYPE_LABELS: Record<string, string> = {
+  'Paleteira Elétrica': 'Paleteira elétrica',
+  'Empilhadeira Patolada (Stacker)': 'Empilhadeira patolada',
+  '3 Rodas Li-Ion': 'Contrabalançada de 3 rodas',
+  '4 Rodas Li-Ion': 'Contrabalançada de 4 rodas',
+  'Empilhadeira Retrátil (Reach Truck)': 'Empilhadeira retrátil',
+  'Selecionadora de Pedidos': 'Selecionadora de pedidos',
+  'Empilhadeira VNA / Especial': 'Corredor estreito (VNA)',
+  'Rebocador Elétrico': 'Rebocador elétrico',
+}
+
+/** "7.500 mm" vira "7,5 m"; alturas pequenas (paleteiras) seguem em mm. */
+function formatLift(value: string): string {
+  const mm = parseInt((value || '').replace(/./g, '').match(/d+/)?.[0] ?? '', 10)
+  if (!mm) return value
+  return mm >= 1000 ? `${(mm / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} m` : `${mm} mm`
+}
 
 export default function ForkliftsCatalogClient({ initialProducts }: Props) {
   const [activeLightboxProduct, setActiveLightboxProduct] = useState<ForkliftProduct | null>(null)
@@ -77,39 +98,8 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
   const [voltageFilter, setVoltageFilter] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
   const [showMobileFilters, setShowMobileFilters] = useState(false)
-  const categoriesRef = useRef<HTMLDivElement>(null)
-  const [canScrollLeft, setCanScrollLeft] = useState(false)
-  const [canScrollRight, setCanScrollRight] = useState(false)
-
-  const checkScroll = () => {
-    if (!categoriesRef.current) return
-    const { scrollLeft, scrollWidth, clientWidth } = categoriesRef.current
-    setCanScrollLeft(scrollLeft > 10)
-    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10)
-  }
-
-  useEffect(() => {
-    checkScroll()
-    const el = categoriesRef.current
-    if (el) {
-      el.addEventListener('scroll', checkScroll)
-      window.addEventListener('resize', checkScroll)
-    }
-    return () => {
-      if (el) el.removeEventListener('scroll', checkScroll)
-      window.removeEventListener('resize', checkScroll)
-    }
-  }, [])
-
-  const scrollCategories = (direction: 'left' | 'right') => {
-    if (!categoriesRef.current) return
-    const amount = 240
-    categoriesRef.current.scrollBy({
-      left: direction === 'left' ? -amount : amount,
-      behavior: 'smooth'
-    })
-  }
-
+  // Fileira de categorias: também rola arrastando com o mouse
+  const { ref: categoriesRef, dragging, handlers: dragHandlers } = useDragScroll<HTMLDivElement>()
   const phoneNumber = '+5549988395635'
 
   const parseCapacityKg = (capacityStr: string): number => {
@@ -304,26 +294,16 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
       </div>
 
       {/* STICKY TOOLBAR (Categories & Search Bar that follow on scroll) */}
-      <div className="sticky top-[64px] sm:top-[70px] z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs transition-all">
+      <div className="sticky top-20 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
           
-          {/* Horizontal Category Navigation Bar with Proportional Scroll and Arrows */}
+          {/* Barra de categorias: rola arrastando, pela roda ou pela barra fina embaixo */}
           <div className="relative flex items-center flex-1 min-w-0">
-            {/* Left Scroll Button */}
-            <button
-              onClick={() => scrollCategories('left')}
-              className={`hidden sm:flex absolute left-0 z-10 w-7 h-7 -ml-2 rounded-full bg-white/95 hover:bg-white text-slate-700 hover:text-red-600 shadow-md border border-slate-200 items-center justify-center transition-all ${
-                canScrollLeft ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
-              }`}
-              title="Rolar para a esquerda"
-            >
-              <ChevronLeft size={16} />
-            </button>
-
             {/* Scrollable Container with Proportional Micro-Scrollbar */}
             <div
               ref={categoriesRef}
-              className="flex items-center gap-2 overflow-x-auto pb-1.5 pt-0.5 px-0.5 scrollbar-proportional flex-1 min-w-0"
+              {...dragHandlers}
+              className={`flex items-center gap-2 overflow-x-auto pb-1.5 pt-0.5 px-0.5 scrollbar-proportional flex-1 min-w-0 ${dragging ? 'cursor-grabbing select-none' : 'sm:cursor-grab'}`}
             >
               {CATEGORIES_CONFIG.map((cat) => {
                 const Icon = cat.icon
@@ -356,16 +336,6 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
               })}
             </div>
 
-            {/* Right Scroll Button */}
-            <button
-              onClick={() => scrollCategories('right')}
-              className={`hidden sm:flex absolute right-0 z-10 w-7 h-7 -mr-2 rounded-full bg-white/95 hover:bg-white text-slate-700 hover:text-red-600 shadow-md border border-slate-200 items-center justify-center transition-all ${
-                canScrollRight ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
-              }`}
-              title="Rolar para a direita"
-            >
-              <ChevronRight size={16} />
-            </button>
           </div>
 
           {/* Quick Search Box inside Sticky Bar */}
@@ -420,7 +390,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
             {/* Categories Selection */}
             <div className="space-y-1.5">
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                Categoria (Categories)
+                Categoria
               </label>
               <select
                 value={categoryFilter}
@@ -440,7 +410,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
             {/* Range / Série (EP Filter) */}
             <div className="space-y-1.5">
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                Linha / Série (Range)
+                Linha / série
               </label>
               <select
                 value={rangeFilter}
@@ -448,10 +418,10 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-medium focus:outline-none focus:border-red-600 focus:bg-white transition-all"
               >
                 <option value="all">Todas as Séries</option>
-                <option value="3wheel">3 Rodas (3-Wheel Forklift)</option>
-                <option value="4wheel">4 Rodas (4-Wheel Forklift)</option>
-                <option value="pedestrian">Operador a Pé (Pedestrian / Walkie)</option>
-                <option value="rider">Operador Embarcado (Rider / Stand-on)</option>
+                <option value="3wheel">3 rodas</option>
+                <option value="4wheel">4 rodas</option>
+                <option value="pedestrian">Operador a pé</option>
+                <option value="rider">Operador embarcado</option>
                 <option value="high_voltage">Alta Voltagem Li-Ion (80V+)</option>
               </select>
             </div>
@@ -459,7 +429,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
             {/* Capacity Filter (Load Capacity) */}
             <div className="space-y-1.5">
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                Capacidade de Carga (Load Capacity)
+                Capacidade de carga
               </label>
               <select
                 value={capacityFilter}
@@ -478,7 +448,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
             {/* Max Lift Height Filter */}
             <div className="space-y-1.5">
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                Elevação Máxima (Max. Lift Height)
+                Elevação máxima
               </label>
               <select
                 value={liftHeightFilter}
@@ -496,7 +466,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
             {/* Battery Voltage Filter (Battery Capacity) */}
             <div className="space-y-1.5">
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                Bateria & Voltagem (Battery Capacity)
+                Bateria e voltagem
               </label>
               <select
                 value={voltageFilter}
@@ -506,27 +476,20 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                 <option value="all">Todas as Voltagens</option>
                 <option value="24V">24V Li-Ion</option>
                 <option value="48V">48V Li-Ion</option>
-                <option value="80V">80V Li-Ion (High Voltage)</option>
+                <option value="80V">80V Li-Ion</option>
                 <option value="high_voltage">Alta Tensão (+80V / 309V)</option>
               </select>
             </div>
 
-            {/* FILTER & RESET Buttons */}
-            <div className="pt-2 flex gap-2">
-              <button
-                onClick={() => setCurrentPage(1)}
-                className="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs uppercase tracking-wider shadow-sm transition-all text-center"
-              >
-                Filtrar
-              </button>
-
+            {/* Os filtros se aplicam na hora; aqui só o atalho para limpar */}
+            <div className="pt-2">
               <button
                 onClick={handleResetFilters}
-                className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1"
-                title="Resetar todos os filtros"
+                disabled={!hasActiveFilters}
+                className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-red-600 text-white font-extrabold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed"
               >
                 <RotateCcw size={12} />
-                <span>Reset</span>
+                <span>Limpar filtros</span>
               </button>
             </div>
 
@@ -746,6 +709,8 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                       .replace(/^Empilhadeira Patolada EP /i, '')
                       .replace(/^EP Equipment /i, '')
 
+                    const typeLabel = TYPE_LABELS[product.type] ?? product.type
+
                     const categoryClean = product.category
                       ? product.category.replace('Empilhadeiras ', '').replace('Paleteiras ', 'Paleteira ')
                       : 'Equipamento'
@@ -768,7 +733,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                             {/* Battery Badge */}
                             <div className="absolute top-2.5 left-2.5 z-10">
                               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900/90 text-white text-[10px] font-black uppercase tracking-wider backdrop-blur-md shadow-xs border border-white/10">
-                                <Zap size={10} className="text-amber-400 fill-amber-400 animate-pulse" />
+                                <Zap size={10} className="text-amber-400 fill-amber-400" />
                                 <span>{product.batteryVoltage}</span>
                               </span>
                             </div>
@@ -789,15 +754,13 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                             </div>
 
                             {/* Product Image */}
-                            <img
+                            <Image
                               src={product.mainImage}
                               alt={product.title}
-                              loading="lazy"
-                              className="w-full h-full object-contain filter drop-shadow-xs group-hover:scale-110 transition-transform duration-500 ease-out"
+                              fill
+                              sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 280px"
+                              className="object-contain p-4 filter drop-shadow-xs group-hover:scale-110 transition-transform duration-500 ease-out"
                               style={{ mixBlendMode: 'multiply' }}
-                              onError={(e) => {
-                                e.currentTarget.src = 'https://cdn.ep-portal.net/products/attr_5/1758185452375-2j5v1u.webp'
-                              }}
                             />
                           </div>
 
@@ -807,7 +770,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                               {product.title}
                             </h3>
                             <p className="text-xs text-slate-500 font-medium line-clamp-1 mt-1" title={cleanSubtitle}>
-                              {cleanSubtitle}
+                              {typeLabel}
                             </p>
                           </div>
 
@@ -829,7 +792,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                                 <span>Elevação</span>
                               </div>
                               <span className="block font-black text-slate-900 text-sm mt-0.5 truncate">
-                                {product.liftingHeight}
+                                {formatLift(product.liftingHeight)}
                               </span>
                             </div>
                           </div>
