@@ -3,15 +3,14 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { X } from 'lucide-react'
-import { blogHref, type BlogPostSummary } from '@/lib/blog-format'
+import type { BlogPostSummary } from '@/lib/blog-format'
 import { buildListing, listingTitle, parseBlogPath } from '@/lib/blog-list'
-import CategoryTabs from './CategoryTabs'
+import CategoryFilter from './CategoryFilter'
 import FeaturedPost from './FeaturedPost'
 import GuideCards, { type Guide } from './GuideCards'
 import Pagination from './Pagination'
 import PostCard from './PostCard'
-import { softNavigate, isPlainClick } from './soft-nav'
+import { softNavigate } from './soft-nav'
 import { CONTAINER } from './styles'
 
 interface BlogExplorerProps {
@@ -71,9 +70,9 @@ export default function BlogExplorer({ posts, guides }: BlogExplorerProps) {
     <>
       <div>
         {/* Cola abaixo do cabeçalho fixo do site (h-20) ao rolar */}
-        <div className="sticky top-20 z-20 border-y border-gray-200 bg-white/90 backdrop-blur-md">
-          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <CategoryTabs categories={categories} total={posts.length} activeSlug={category?.slug} onNavigate={navigate} />
+        <div className="sticky top-20 z-20 border-y border-gray-200 bg-white max-sm:has-[[data-open=true]]:z-[70] sm:bg-white/90 sm:backdrop-blur-md">
+          <div className={CONTAINER}>
+            <CategoryFilter categories={categories} total={posts.length} active={category} onNavigate={navigate} />
           </div>
         </div>
 
@@ -89,21 +88,6 @@ export default function BlogExplorer({ posts, guides }: BlogExplorerProps) {
                   {totalPages > 1 && ` · página ${page} de ${totalPages}`}
                 </p>
               </div>
-
-              {category && (
-                <a
-                  href={blogHref()}
-                  onClick={(event) => {
-                    if (!isPlainClick(event)) return
-                    event.preventDefault()
-                    navigate(blogHref())
-                  }}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3.5 py-1.5 text-sm font-semibold text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                >
-                  Limpar filtro
-                  <X className="h-3.5 w-3.5" aria-hidden="true" />
-                </a>
-              )}
             </div>
 
             {/* Avisa leitores de tela da troca, já que nada na página recarrega */}
