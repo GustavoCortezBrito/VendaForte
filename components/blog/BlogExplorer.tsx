@@ -3,14 +3,15 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import type { BlogPostSummary } from '@/lib/blog-format'
+import { X } from 'lucide-react'
+import { blogHref, categoryOf, type BlogPostSummary } from '@/lib/blog-format'
 import { buildListing, listingTitle, parseBlogPath } from '@/lib/blog-list'
-import CategoryFilter from './CategoryFilter'
+import CategoryTiles from './CategoryTiles'
 import FeaturedPost from './FeaturedPost'
 import GuideCards, { type Guide } from './GuideCards'
 import Pagination from './Pagination'
 import PostCard from './PostCard'
-import { softNavigate } from './soft-nav'
+import { softNavigate, isPlainClick } from './soft-nav'
 import { CONTAINER } from './styles'
 
 interface BlogExplorerProps {
@@ -19,11 +20,8 @@ interface BlogExplorerProps {
   guides: Guide[]
 }
 
-/**
- * Altura que o cabeçalho do site e a barra de categorias ocupam no topo. Se a
- * lista começar acima disso, a troca de página a traz de volta para baixo da barra.
- */
-const STICKY_OFFSET = 160
+/** Altura do menu fixo do site: a lista não deve ficar escondida atrás dele. */
+const MENU_HEIGHT = 96
 
 /**
  * Filtros, lista e paginação da listagem do blog. O servidor entrega o HTML
@@ -52,15 +50,26 @@ export default function BlogExplorer({ posts, guides }: BlogExplorerProps) {
   const navigate = useCallback(
     (href: string) => {
       softNavigate(href)
+      // Depois de trocar, mantém o começo da lista à vista: sobe se ficou atrás do menu
+      // (paginação) e desce se ficou fora da tela (escolha de tema, lá em cima)
       requestAnimationFrame(() => {
         const results = resultsRef.current
-        if (results && results.getBoundingClientRect().top < STICKY_OFFSET) {
-          results.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' })
-        }
+        if (!results) return
+        const top = results.getBoundingClientRect().top
+        const behavior = reduceMotion ? 'auto' : 'smooth'
+        if (top < MENU_HEIGHT) results.scrollIntoView({ block: 'start', behavior })
+        else if (top > window.innerHeight - 200) window.scrollBy({ top: top - window.innerHeight * 0.5, behavior })
       })
     },
     [reduceMotion]
   )
+
+  // Capa de cada tema: a do artigo mais recente dele
+  const covers: Record<string, string> = {}
+  for (const item of categories) {
+    const newest = posts.find((post) => categoryOf(post) === item.name)
+    if (newest?.image) covers[item.slug] = newest.image
+  }
 
   const heading = category ? category.name : 'Todos os artigos'
   const countText = `${range.total} ${range.total === 1 ? 'artigo' : 'artigos'}`
@@ -69,16 +78,15 @@ export default function BlogExplorer({ posts, guides }: BlogExplorerProps) {
   return (
     <>
       <div>
-        {/* Cola abaixo do cabeçalho fixo do site (h-20) ao rolar */}
-        <div className="sticky top-20 z-20 border-y border-gray-200 bg-white max-sm:has-[[data-open=true]]:z-[70] sm:bg-white/90 sm:backdrop-blur-md">
+        <section aria-label="Temas do blog" className="border-b border-gray-100 bg-white pb-8 pt-4 lg:pb-10">
           <div className={CONTAINER}>
-            <CategoryFilter categories={categories} total={posts.length} active={category} onNavigate={navigate} />
+            <CategoryTiles categories={categories} total={posts.length} covers={covers} activeSlug={category?.slug} onNavigate={navigate} />
           </div>
-        </div>
+        </section>
 
         <section className="bg-gray-50 py-12 lg:py-16" aria-labelledby="artigos">
           <div className={CONTAINER}>
-            <div ref={resultsRef} className="mb-8 flex scroll-mt-40 flex-wrap items-end justify-between gap-x-6 gap-y-3">
+            <div ref={resultsRef} className="mb-8 flex scroll-mt-28 flex-wrap items-end justify-between gap-x-6 gap-y-3">
               <div>
                 <h2 id="artigos" className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
                   {heading}
@@ -88,6 +96,21 @@ export default function BlogExplorer({ posts, guides }: BlogExplorerProps) {
                   {totalPages > 1 && ` · página ${page} de ${totalPages}`}
                 </p>
               </div>
+
+              {category && (
+                <a
+                  href={blogHref()}
+                  onClick={(event) => {
+                    if (!isPlainClick(event)) return
+                    event.preventDefault()
+                    navigate(blogHref())
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3.5 py-1.5 text-sm font-semibold text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                >
+                  Limpar filtro
+                  <X className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              )}
             </div>
 
             {/* Avisa leitores de tela da troca, já que nada na página recarrega */}
