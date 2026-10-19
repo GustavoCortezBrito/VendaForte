@@ -13,6 +13,8 @@ interface PaginationProps {
   range: { from: number; to: number; total: number }
   /** Troca de página no lugar. Sem ele, os links recarregam a página normalmente. */
   onNavigate?: (href: string) => void
+  /** Trecho somado a cada endereço para manter a ordem escolhida (`?ordem=antigos`). */
+  hrefSuffix?: string
 }
 
 const BOX =
@@ -26,10 +28,10 @@ const OFF = 'cursor-not-allowed border-gray-100 bg-gray-50 text-gray-300'
  * (/blog/page/2…), que o Google consegue seguir; com JavaScript a troca é feita
  * no lugar, sem recarregar. A página atual leva `aria-current`.
  */
-export default function Pagination({ page, totalPages, category, range, onNavigate }: PaginationProps) {
+export default function Pagination({ page, totalPages, category, range, onNavigate, hrefSuffix = '' }: PaginationProps) {
   if (totalPages <= 1) return null
 
-  const href = (target: number) => blogHref({ category, page: target })
+  const href = (target: number) => blogHref({ category, page: target }) + hrefSuffix
 
   // Links comuns de propósito: o `Link` do Next buscaria antecipadamente todas as páginas
   const go = (target: number) => (event: MouseEvent) => {

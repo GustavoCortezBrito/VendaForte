@@ -3,8 +3,8 @@ import { ArrowRight } from 'lucide-react'
 import { categoryOf, formatPostDate, postDateTime, type BlogPostSummary } from '@/lib/blog-format'
 import PostImage from './PostImage'
 
-/** O post mais recente, em destaque no topo da primeira página. */
-export default function FeaturedPost({ post }: { post: BlogPostSummary }) {
+/** O primeiro post da ordem escolhida, em destaque no topo da primeira página. */
+export default function FeaturedPost({ post, label = 'Mais recente' }: { post: BlogPostSummary; label?: string }) {
   return (
     <article className="group relative grid overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg transition-shadow duration-300 hover:shadow-2xl lg:grid-cols-12">
       <div className="relative aspect-[16/10] bg-gray-900 lg:col-span-7 lg:aspect-auto lg:min-h-[420px]">
@@ -18,7 +18,7 @@ export default function FeaturedPost({ post }: { post: BlogPostSummary }) {
       </div>
       <div className="flex flex-col justify-center p-8 lg:col-span-5 lg:p-12">
         <p className="text-xs font-bold uppercase tracking-wider text-red-600">
-          Mais recente <span aria-hidden="true">·</span> {categoryOf(post)}
+          {label} <span aria-hidden="true">·</span> {categoryOf(post)}
         </p>
         <h3 className="mt-3 text-balance text-3xl font-extrabold leading-tight tracking-tight text-gray-900 transition-colors group-hover:text-red-600 lg:text-4xl">
           <Link

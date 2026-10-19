@@ -19,15 +19,20 @@ interface BlogHeaderProps {
 export default function BlogHeader({ eyebrow, title, intro, children, borderless = false }: BlogHeaderProps) {
   return (
     <header
-      className={`bg-gradient-to-b from-gray-50 to-white pb-10 pt-32 lg:pb-14 lg:pt-40 ${borderless ? '' : 'border-b border-gray-100'}`}
+      className={`relative bg-gradient-to-b from-gray-50 to-white pb-8 pt-28 lg:pb-10 lg:pt-32 ${borderless ? '' : 'border-b border-gray-100'}`}
     >
-      <div className={CONTAINER}>
-        <div className="mx-auto max-w-3xl text-center">
+      {/* Brilho vermelho bem suave atrás do título: dá profundidade sem competir com o texto */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(48%_70%_at_50%_0%,rgba(220,38,38,0.09),transparent)]"
+      />
+      <div className={`${CONTAINER} relative`}>
+        <div className="mx-auto max-w-4xl text-center">
           <span className={EYEBROW}>{eyebrow}</span>
-          <h1 className="mt-5 text-balance text-4xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+          <h1 className="mt-5 text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-gray-900 sm:text-5xl lg:text-[3.5rem]">
             {title}
           </h1>
-          {intro && <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-gray-600">{intro}</p>}
+          {intro && <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-gray-600 sm:text-lg">{intro}</p>}
         </div>
         {children}
       </div>

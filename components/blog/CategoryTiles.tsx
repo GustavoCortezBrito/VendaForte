@@ -17,6 +17,8 @@ interface CategoryTilesProps {
   activeSlug?: string
   /** Troca de categoria no lugar. Sem ele, os links recarregam a página normalmente. */
   onNavigate?: (href: string) => void
+  /** Trecho somado a cada endereço para manter a ordem escolhida (`?ordem=antigos`). */
+  hrefSuffix?: string
 }
 
 const TILE =
@@ -30,7 +32,7 @@ const TILE =
  * próprias (/blog/categoria/…), então funcionam sem JavaScript e o Google os
  * encontra.
  */
-export default function CategoryTiles({ categories, total, covers, activeSlug, onNavigate }: CategoryTilesProps) {
+export default function CategoryTiles({ categories, total, covers, activeSlug, onNavigate, hrefSuffix = '' }: CategoryTilesProps) {
   const reduceMotion = useReducedMotion()
   const scrollerRef = useRef<HTMLDivElement>(null)
   const [edge, setEdge] = useState({ start: true, end: false })
@@ -75,7 +77,7 @@ export default function CategoryTiles({ categories, total, covers, activeSlug, o
   const click = (slug: string | undefined, active: boolean) => (event: React.MouseEvent) => {
     if (!onNavigate || !isPlainClick(event)) return
     event.preventDefault()
-    if (!active) onNavigate(blogHref({ category: slug }))
+    if (!active) onNavigate(blogHref({ category: slug }) + hrefSuffix)
   }
 
   const arrow =
@@ -100,10 +102,10 @@ export default function CategoryTiles({ categories, total, covers, activeSlug, o
       {/* O respiro (p-2 -m-2) deixa o contorno e a sombra dos cartões aparecerem sem serem cortados */}
       <div
         ref={scrollerRef}
-        className="-m-2 flex snap-x gap-3 overflow-x-auto scroll-smooth p-2 [scrollbar-width:none] sm:gap-4 [&::-webkit-scrollbar]:hidden"
+        className="-m-2 flex snap-x scroll-px-2 gap-3 overflow-x-auto scroll-smooth p-2 [scrollbar-width:none] sm:gap-4 [&::-webkit-scrollbar]:hidden"
       >
         <a
-          href={blogHref()}
+          href={blogHref() + hrefSuffix}
           aria-current={allActive ? 'page' : undefined}
           onClick={click(undefined, allActive)}
           className={`${TILE} bg-gradient-to-br from-ink via-gray-900 to-red-900 text-white ${
@@ -124,7 +126,7 @@ export default function CategoryTiles({ categories, total, covers, activeSlug, o
           return (
             <a
               key={category.slug}
-              href={blogHref({ category: category.slug })}
+              href={blogHref({ category: category.slug }) + hrefSuffix}
               aria-current={active ? 'page' : undefined}
               onClick={click(category.slug, active)}
               className={`${TILE} bg-ink ${active ? 'ring-2 ring-red-600 ring-offset-2' : 'hover:-translate-y-0.5 hover:shadow-xl'}`}
