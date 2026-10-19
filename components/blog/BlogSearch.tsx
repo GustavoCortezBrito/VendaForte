@@ -9,8 +9,8 @@ import { highlightRanges, queryTerms, searchPosts, type SearchEntry } from '@/li
 /** Sugestões exibidas antes de "ver todos os resultados". */
 const MAX_SUGGESTIONS = 6
 
-/** Buscas sugeridas com o campo vazio: as três máquinas e os assuntos mais procurados. */
-const POPULAR = ['DS3', 'F4', 'EFL302 B3', 'Bateria de lítio', 'Corredor', 'Financiamento']
+/** Buscas sugeridas com o campo vazio: as três máquinas e os temas dos guias do blog. */
+const POPULAR = ['DS3', 'F4', 'EFL302 B3', 'Lítio', 'Câmara fria', 'NR-11', 'Retrátil', 'Capacidade', 'TCO']
 
 /** Texto com os trechos que bateram com a busca em destaque. */
 function Highlighted({ text, terms }: { text: string; terms: string[] }) {

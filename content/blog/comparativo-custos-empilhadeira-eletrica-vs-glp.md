@@ -5,7 +5,7 @@ date: '2026-08-26'
 author: 'Equipe Venda Forte'
 image: '/blog/covers/efl-custos.webp'
 category: 'Custos e financiamento'
-tags: ['Comparativo', 'Custos', 'GLP vs Elétrica', 'Íon-Lítio', 'TCO']
+tags: ['Comparativo', 'Custos', 'GLP vs Elétrica', 'Diesel', 'Íon-Lítio', 'TCO']
 ---
 
 Na hora de renovar ou expandir a frota de movimentação de cargas, uma das dúvidas mais frequentes entre diretores financeiros e gestores de logística é: **vale a pena pagar mais pelo investimento inicial de uma empilhadeira elétrica Li-Ion em vez de uma tradicional a combustão GLP?**
@@ -58,8 +58,18 @@ Considerando uma operação média de **1 turno (8h/dia - 22 dias/mês)**:
 
 ---
 
+## E o diesel?
+
+A comparação acima usa o GLP, o combustível mais comum em operação interna. A empilhadeira a diesel segue a mesma lógica de custo, com combustível, motor e escapamento, e soma emissão e ruído maiores, o que limita o uso em ambiente fechado. O diesel aparece mais em pátio e em serviço externo pesado.
+
 ## Solicite uma Simulação com os Dados da Sua Empresa
 
 Cada operação tem tarifas energéticas e intensidades de turno diferentes. A equipe técnica do **Grupo Venda Forte** calcula o comparativo exato de Payback para o seu negócio sem compromisso.
 
 👉 **[Clique aqui para solicitar um comparativo gratuito de TCO no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20uma%20simula%C3%A7%C3%A3o%20de%20custos%20GLP%20vs%20El%C3%A9trica.)** e descubra o potencial de economia da sua frota!
+
+## Leia também
+
+- [TCO de empilhadeira: como calcular o custo total](/blog/tco-empilhadeira-eletrica-como-calcular)
+- [Bateria de lítio vs. chumbo-ácido em empilhadeiras](/blog/bateria-litio-vs-chumbo-acido-empilhadeiras)
+- [Locar ou comprar empilhadeira?](/blog/locar-ou-comprar-empilhadeira-guia-decisao)

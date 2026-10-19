@@ -1,7 +1,7 @@
 ---
 title: 'EP EFL302 B3: a ficha técnica explicada'
 description: 'Empilhadeira contrabalançada elétrica de lítio de 3.000 kg: mastro, bateria de 80 V, corredor mínimo, rampa e uso externo, segundo a ficha oficial da EP.'
-date: '2026-10-16'
+date: '2026-10-16T12:00:00-03:00'
 author: 'Equipe Venda Forte'
 image: '/blog/covers/efl302b3-guia.webp'
 category: 'Máquinas EP'
@@ -64,3 +64,9 @@ Ela é uma boa escolha para quem precisa levantar até 3 toneladas, trabalha em 
 ## Preço e condições
 
 O valor e as condições da campanha são tratados direto com o consultor. [Veja a EFL302 B3 na campanha](/promo#efl302b3) ou [peça uma cotação](/promo#cotacao).
+
+## Leia também
+
+- [Empilhadeira retrátil ou contrabalançada: qual escolher?](/blog/empilhadeira-retratil-ou-contrabalancada)
+- [Capacidade da empilhadeira: centro de carga e altura](/blog/capacidade-empilhadeira-centro-de-carga)
+- [Tipos de empilhadeira: qual usar em cada operação](/blog/tipos-de-empilhadeira)

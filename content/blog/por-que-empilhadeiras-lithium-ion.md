@@ -5,7 +5,7 @@ date: '2026-08-09'
 author: 'Equipe Venda Forte'
 image: '/blog/covers/efl-lition.webp'
 category: 'Tecnologia'
-tags: ['Tecnologia', 'Lítio-Íon', 'Sustentabilidade', 'EP Equipment']
+tags: ['Tecnologia', 'Bateria de lítio', 'Lítio-Íon', 'Sustentabilidade', 'EP Equipment']
 ---
 
 A bateria de íon-lítio mudou o dia a dia de quem opera empilhadeiras elétricas. Não é uma questão de modismo: ela troca uma rotina de cuidados e de paradas por uma bem mais simples. Veja o que muda na prática e em que casos a troca compensa.
@@ -44,3 +44,9 @@ Para uma operação de um turno, com pouco uso e uma bateria de chumbo-ácido qu
 ## Fale com a equipe
 
 Para saber se o lítio compensa na sua operação, [peça uma cotação](/promo#cotacao) ou [fale com um consultor no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20l%C3%ADtio%20e%20quero%20avaliar%20a%20minha%20opera%C3%A7%C3%A3o.).
+
+## Leia também
+
+- [Bateria de lítio vs. chumbo-ácido em empilhadeiras](/blog/bateria-litio-vs-chumbo-acido-empilhadeiras)
+- [TCO de empilhadeira: como calcular o custo total](/blog/tco-empilhadeira-eletrica-como-calcular)
+- [EP Equipment: fabricante de empilhadeiras de lítio](/blog/ep-equipment-revolucao-empilhadeiras-litio)

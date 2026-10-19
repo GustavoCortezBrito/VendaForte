@@ -1,7 +1,7 @@
 ---
 title: 'EP DS3: a ficha técnica explicada'
 description: 'Capacidade, mastro, bateria, raio de giro e corredor mínimo da empilhadeira patolada EP DS3 de 1.500 kg, com os números da ficha oficial da EP Equipment.'
-date: '2026-10-16'
+date: '2026-10-16T12:00:00-03:00'
 author: 'Equipe Venda Forte'
 image: '/blog/covers/ds3-guia.webp'
 category: 'Máquinas EP'
@@ -67,3 +67,9 @@ Ela não é a máquina certa para vencer rampas com carga, para rodar longas dis
 ## Preço e condições
 
 Os valores e as condições da campanha ficam na página da DS3. [Veja a DS3 na campanha](/promo#ds3) ou [peça uma cotação](/promo#cotacao).
+
+## Leia também
+
+- [Capacidade da empilhadeira: centro de carga e altura](/blog/capacidade-empilhadeira-centro-de-carga)
+- [Tipos de empilhadeira: qual usar em cada operação](/blog/tipos-de-empilhadeira)
+- [Empilhadeira retrátil ou contrabalançada: qual escolher?](/blog/empilhadeira-retratil-ou-contrabalancada)

@@ -63,3 +63,9 @@ Comprar um equipamento industrial exige a certeza de um pós-venda confiável. O
 Descubra como os modelos da EP Equipment podem transformar a rotina do seu armazém:
 
 👉 **[Converse com um consultor Venda Forte no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20gostaria%20de%20receber%20informa%C3%A7%C3%B5es%20sobre%20a%20linha%20EP%20Equipment.)** e solicite uma proposta comercial sob medida.
+
+## Leia também
+
+- [Tipos de empilhadeira: qual usar em cada operação](/blog/tipos-de-empilhadeira)
+- [Bateria de lítio vs. chumbo-ácido em empilhadeiras](/blog/bateria-litio-vs-chumbo-acido-empilhadeiras)
+- [Por que migrar para empilhadeiras de lítio](/blog/por-que-empilhadeiras-lithium-ion)

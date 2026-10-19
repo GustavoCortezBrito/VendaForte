@@ -5,7 +5,7 @@ date: '2026-08-08'
 author: 'Equipe Venda Forte'
 image: '/blog/covers/f4-erros.webp'
 category: 'Guia de compra'
-tags: ['Dicas', 'Compra', 'Consultoria', 'Empilhadeiras']
+tags: ['Como escolher', 'Capacidade de carga', 'Corredor', 'Compra', 'Checklist']
 ---
 
 Quase toda empilhadeira que não rende o esperado foi escolhida com base em pouca informação: o preço, a foto, a indicação de alguém. Estes são os cinco erros que mais vemos na hora da compra e o que fazer em cada um.
@@ -72,3 +72,9 @@ Junte estas informações e a proposta sai mais rápida e mais precisa:
 ## Fale com a equipe
 
 A Venda Forte é dealer oficial da EP Equipment e faz o dimensionamento junto com você. [Peça uma cotação](/promo#cotacao) ou [fale com um consultor no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20erros%20ao%20escolher%20empilhadeira%20e%20quero%20ajuda%20para%20dimensionar.).
+
+## Leia também
+
+- [Capacidade da empilhadeira: centro de carga e altura](/blog/capacidade-empilhadeira-centro-de-carga)
+- [Empilhadeira retrátil ou contrabalançada: qual escolher?](/blog/empilhadeira-retratil-ou-contrabalancada)
+- [Tipos de empilhadeira: qual usar em cada operação](/blog/tipos-de-empilhadeira)

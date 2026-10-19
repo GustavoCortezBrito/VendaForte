@@ -14,7 +14,8 @@ const DEFAULT_CATEGORIES = [
   'Tecnologia',
   'Empresa',
   'Guia de compra',
-  'Aplicações'
+  'Aplicações',
+  'Segurança e normas'
 ]
 
 // Tags de máquina: ligam o artigo ao cartão "Na campanha" e a "Guias por máquina" no blog

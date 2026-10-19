@@ -99,3 +99,9 @@ Ao direcionar esse recurso economizado para amortizar a parcela do Finame, o equ
 A equipe de consultoria do **Grupo Venda Forte** fornece todo o suporte documental e os códigos de enquadramento para agilizar sua aprovação no banco.
 
 👉 **[Solicite agora sua Proposta Formal BNDES Finame no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20quero%20uma%20proposta%20t%C3%A9cnica%20de%20empilhadeira%20com%20c%C3%B3digo%20BNDES%20Finame.)** e receba os dados técnicos em minutos.
+
+## Leia também
+
+- [TCO de empilhadeira: como calcular o custo total](/blog/tco-empilhadeira-eletrica-como-calcular)
+- [Locar ou comprar empilhadeira?](/blog/locar-ou-comprar-empilhadeira-guia-decisao)
+- [Empilhadeira elétrica de lítio vs. GLP: custos em 5 anos](/blog/comparativo-custos-empilhadeira-eletrica-vs-glp)

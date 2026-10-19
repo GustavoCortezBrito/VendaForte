@@ -1,7 +1,7 @@
 ---
 title: 'EP F4: a ficha técnica explicada'
 description: 'Paleteira elétrica de 1.500 kg com bateria de lítio removível de 5 kg: dimensões, raio de giro, rampa, corredor e opcionais, segundo a ficha oficial da EP.'
-date: '2026-10-16'
+date: '2026-10-16T12:00:00-03:00'
 author: 'Equipe Venda Forte'
 image: '/blog/covers/f4-guia.webp'
 category: 'Máquinas EP'
@@ -63,3 +63,9 @@ Com 6% de rampa carregada, ela não é a máquina para trajetos inclinados. Para
 ## Preço e condições
 
 Os valores e as condições da campanha ficam na página da F4. [Veja a F4 na campanha](/promo#f4) ou [peça uma cotação](/promo#cotacao).
+
+## Leia também
+
+- [Tipos de empilhadeira: qual usar em cada operação](/blog/tipos-de-empilhadeira)
+- [Capacidade da empilhadeira: centro de carga e altura](/blog/capacidade-empilhadeira-centro-de-carga)
+- [Como escolher a empilhadeira para o seu armazém](/blog/como-escolher-empilhadeira-para-armazem-guia-completo)
