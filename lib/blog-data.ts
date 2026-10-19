@@ -13,6 +13,7 @@ import remarkHtml from 'remark-html'
 import { supabaseAdmin } from '@/lib/supabase'
 import { getAllPosts as getFilePosts, getPostBySlug as getFilePost } from '@/lib/blog'
 import { slugifyText, type BlogPostSummary, type Heading } from '@/lib/blog-format'
+import photoDims from '@/lib/data/blog-photo-dims.json'
 
 export interface BlogPost extends BlogPostSummary {
   /** Corpo em HTML, com ids nos títulos e tabelas dentro de um contêiner rolável. */
@@ -135,6 +136,11 @@ export function enhanceHtml(html: string): { html: string; headings: Heading[] }
   const wrapped = withIds
     .replace(/<table/g, '<div class="blog-table"><table')
     .replace(/<\/table>/g, '</table></div>')
+    // Fotos do artigo: carregam sob demanda e já reservam o espaço (width/height), sem pular a página
+    .replace(/<img src="([^"]+)"/g, (_tag, src: string) => {
+      const dims = (photoDims as Record<string, number[]>)[src]
+      return `<img loading="lazy" decoding="async"${dims ? ` width="${dims[0]}" height="${dims[1]}"` : ''} src="${src}"`
+    })
 
   return { html: wrapped, headings }
 }

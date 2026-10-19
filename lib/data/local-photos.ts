@@ -1,0 +1,38 @@
+/**
+ * Fotos reais (fábrica EP e uso em armazém) por modelo do catálogo, já otimizadas em /public/fotos/produtos.
+ * Gerado a partir do material do Drive; entram na galeria da página de cada modelo.
+ */
+export const LOCAL_PHOTOS: Record<string, string[]> = {
+  'f4': ["/fotos/produtos/f4/01.webp","/fotos/produtos/f4/02.webp","/fotos/produtos/f4/03.webp","/fotos/produtos/f4/04.webp","/fotos/produtos/f4/05.webp","/fotos/produtos/f4/06.webp"],
+  'f4-201': ["/fotos/produtos/f4-201/01.webp","/fotos/produtos/f4-201/02.webp","/fotos/produtos/f4-201/03.webp","/fotos/produtos/f4-201/04.webp"],
+  'ds3': ["/fotos/produtos/ds3/01.webp","/fotos/produtos/ds3/02.webp","/fotos/produtos/ds3/03.webp"],
+  'efl302b3': ["/fotos/produtos/efl302b3/01.webp","/fotos/produtos/efl302b3/02.webp","/fotos/produtos/efl302b3/03.webp","/fotos/produtos/efl302b3/04.webp","/fotos/produtos/efl302b3/05.webp","/fotos/produtos/efl302b3/06.webp"],
+  'esl122': ["/fotos/produtos/esl122/01.webp","/fotos/produtos/esl122/02.webp","/fotos/produtos/esl122/03.webp","/fotos/produtos/esl122/04.webp"],
+  'wsa161': ["/fotos/produtos/wsa161/01.webp","/fotos/produtos/wsa161/02.webp","/fotos/produtos/wsa161/03.webp","/fotos/produtos/wsa161/04.webp","/fotos/produtos/wsa161/05.webp","/fotos/produtos/wsa161/06.webp"],
+  'cqd20lb': ["/fotos/produtos/cqd20lb/01.webp","/fotos/produtos/cqd20lb/02.webp","/fotos/produtos/cqd20lb/03.webp","/fotos/produtos/cqd20lb/04.webp","/fotos/produtos/cqd20lb/05.webp","/fotos/produtos/cqd20lb/06.webp"],
+  'ctl15': ["/fotos/produtos/vna/01.webp","/fotos/produtos/vna/02.webp","/fotos/produtos/vna/03.webp","/fotos/produtos/vna/04.webp","/fotos/produtos/vna/05.webp","/fotos/produtos/vna/06.webp"],
+  'efl25-pro': ["/fotos/produtos/efl-pro/01.webp","/fotos/produtos/efl-pro/02.webp","/fotos/produtos/efl-pro/03.webp","/fotos/produtos/efl-pro/04.webp","/fotos/produtos/efl-pro/05.webp","/fotos/produtos/efl-pro/06.webp"],
+  'efl30-pro': ["/fotos/produtos/efl-pro/01.webp","/fotos/produtos/efl-pro/02.webp","/fotos/produtos/efl-pro/03.webp","/fotos/produtos/efl-pro/04.webp","/fotos/produtos/efl-pro/05.webp","/fotos/produtos/efl-pro/06.webp"],
+  'efl35-pro': ["/fotos/produtos/efl-pro/01.webp","/fotos/produtos/efl-pro/02.webp","/fotos/produtos/efl-pro/03.webp","/fotos/produtos/efl-pro/04.webp","/fotos/produtos/efl-pro/05.webp","/fotos/produtos/efl-pro/06.webp"],
+  'rpl20-pro': ["/fotos/produtos/rpl20-pro/01.webp","/fotos/produtos/rpl20-pro/02.webp","/fotos/produtos/rpl20-pro/03.webp","/fotos/produtos/rpl20-pro/04.webp","/fotos/produtos/rpl20-pro/05.webp","/fotos/produtos/rpl20-pro/06.webp"],
+  'wal20-pro': ["/fotos/produtos/wal20-pro/01.webp","/fotos/produtos/wal20-pro/02.webp","/fotos/produtos/wal20-pro/03.webp","/fotos/produtos/wal20-pro/04.webp","/fotos/produtos/wal20-pro/05.webp","/fotos/produtos/wal20-pro/06.webp"],
+  'rsl16-pro': ["/fotos/produtos/rsl16-pro/01.webp","/fotos/produtos/rsl16-pro/02.webp","/fotos/produtos/rsl16-pro/03.webp"],
+  'rsl16i-pro': ["/fotos/produtos/rsl16i-pro/01.webp","/fotos/produtos/rsl16i-pro/02.webp","/fotos/produtos/rsl16i-pro/03.webp"],
+  'wpl202': ["/fotos/produtos/wpl202/01.webp","/fotos/produtos/wpl202/02.webp","/fotos/produtos/wpl202/03.webp","/fotos/produtos/wpl202/04.webp","/fotos/produtos/wpl202/05.webp","/fotos/produtos/wpl202/06.webp"],
+  'kpl201': ["/fotos/produtos/kpl/01.webp","/fotos/produtos/kpl/02.webp","/fotos/produtos/kpl/03.webp","/fotos/produtos/kpl/04.webp","/fotos/produtos/kpl/05.webp","/fotos/produtos/kpl/06.webp"],
+  'kpl201h': ["/fotos/produtos/kpl/01.webp","/fotos/produtos/kpl/02.webp","/fotos/produtos/kpl/03.webp","/fotos/produtos/kpl/04.webp","/fotos/produtos/kpl/05.webp","/fotos/produtos/kpl/06.webp"],
+  'rpl201': ["/fotos/produtos/rpl/01.webp","/fotos/produtos/rpl/02.webp","/fotos/produtos/rpl/03.webp","/fotos/produtos/rpl/04.webp","/fotos/produtos/rpl/05.webp","/fotos/produtos/rpl/06.webp"],
+  'rpl201e': ["/fotos/produtos/rpl/01.webp","/fotos/produtos/rpl/02.webp","/fotos/produtos/rpl/03.webp","/fotos/produtos/rpl/04.webp","/fotos/produtos/rpl/05.webp","/fotos/produtos/rpl/06.webp"],
+  'rpl201h': ["/fotos/produtos/rpl/01.webp","/fotos/produtos/rpl/02.webp","/fotos/produtos/rpl/03.webp","/fotos/produtos/rpl/04.webp","/fotos/produtos/rpl/05.webp","/fotos/produtos/rpl/06.webp"],
+  'tpl251': ["/fotos/produtos/tpl251/01.webp","/fotos/produtos/tpl251/02.webp","/fotos/produtos/tpl251/03.webp","/fotos/produtos/tpl251/04.webp","/fotos/produtos/tpl251/05.webp","/fotos/produtos/tpl251/06.webp"],
+  'qdd601t': ["/fotos/produtos/qdd60/01.webp","/fotos/produtos/qdd60/02.webp","/fotos/produtos/qdd60/03.webp","/fotos/produtos/qdd60/04.webp","/fotos/produtos/qdd60/05.webp","/fotos/produtos/qdd60/06.webp"],
+  'efl253': ["/fotos/produtos/efl253/01.webp","/fotos/produtos/efl253/02.webp","/fotos/produtos/efl253/03.webp","/fotos/produtos/efl253/04.webp","/fotos/produtos/efl253/05.webp","/fotos/produtos/efl253/06.webp"],
+  'efl303': ["/fotos/produtos/efl253/01.webp","/fotos/produtos/efl253/02.webp","/fotos/produtos/efl253/03.webp","/fotos/produtos/efl253/04.webp","/fotos/produtos/efl253/05.webp","/fotos/produtos/efl253/06.webp"],
+  'efl353': ["/fotos/produtos/efl253/01.webp","/fotos/produtos/efl253/02.webp","/fotos/produtos/efl253/03.webp","/fotos/produtos/efl253/04.webp","/fotos/produtos/efl253/05.webp","/fotos/produtos/efl253/06.webp"],
+  'tcl101': ["/fotos/produtos/tcl/01.webp","/fotos/produtos/tcl/02.webp","/fotos/produtos/tcl/03.webp","/fotos/produtos/tcl/04.webp","/fotos/produtos/tcl/05.webp","/fotos/produtos/tcl/06.webp"],
+  'tcl152': ["/fotos/produtos/tcl/01.webp","/fotos/produtos/tcl/02.webp","/fotos/produtos/tcl/03.webp","/fotos/produtos/tcl/04.webp","/fotos/produtos/tcl/05.webp","/fotos/produtos/tcl/06.webp"],
+  'tcl122': ["/fotos/produtos/tcl/01.webp","/fotos/produtos/tcl/02.webp","/fotos/produtos/tcl/03.webp","/fotos/produtos/tcl/04.webp","/fotos/produtos/tcl/05.webp","/fotos/produtos/tcl/06.webp"],
+  'tvl151': ["/fotos/produtos/tvl/01.webp","/fotos/produtos/tvl/02.webp","/fotos/produtos/tvl/03.webp","/fotos/produtos/tvl/04.webp","/fotos/produtos/tvl/05.webp","/fotos/produtos/tvl/06.webp"],
+  'tvl181': ["/fotos/produtos/tvl/01.webp","/fotos/produtos/tvl/02.webp","/fotos/produtos/tvl/03.webp","/fotos/produtos/tvl/04.webp","/fotos/produtos/tvl/05.webp","/fotos/produtos/tvl/06.webp"],
+  'tvl201': ["/fotos/produtos/tvl/01.webp","/fotos/produtos/tvl/02.webp","/fotos/produtos/tvl/03.webp","/fotos/produtos/tvl/04.webp","/fotos/produtos/tvl/05.webp","/fotos/produtos/tvl/06.webp"],
+}

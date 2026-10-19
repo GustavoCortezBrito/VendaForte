@@ -3,7 +3,7 @@ title: 'Capacidade da empilhadeira: centro de carga e altura'
 description: 'Por que 1.500 kg na placa nem sempre são 1.500 kg: centro de carga, altura de elevação e implementos. Como dimensionar sem errar para menos.'
 date: '2026-10-16T09:30:00-03:00'
 author: 'Equipe Venda Forte'
-image: '/blog/covers/capacidade-carga.webp'
+image: '/blog/covers/capacidade-retratil-carga.webp'
 category: 'Guia de compra'
 tags: ['Capacidade de carga', 'Centro de carga', 'Como escolher', 'Placa de capacidade', 'Empilhadeira elétrica']
 ---
@@ -37,6 +37,8 @@ Caixas longas, bobinas, tubos e cargas que passam do pallet deslocam o centro de
 ## A altura também reduz a capacidade
 
 Em muitas máquinas a capacidade diminui conforme o mastro sobe. É a chamada **capacidade residual**: o peso que ela levanta na altura que você realmente usa. Dois cuidados:
+
+![Empilhadeira contrabalançada EP elevando uma carga pesada](/blog/fotos/carga-elevada.webp)
 
 - Olhe a capacidade **na altura do seu último nível**, e não só a nominal.
 - Implementos como garfos mais longos, deslocador lateral ou rotador pesam e mudam o equilíbrio. Depois de instalar um, a placa precisa ser atualizada pelo fabricante.

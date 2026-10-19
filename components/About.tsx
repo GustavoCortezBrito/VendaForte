@@ -5,6 +5,7 @@ import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { Award, Lightbulb, Shield, Zap } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function About() {
   const ref = useRef(null)
@@ -118,7 +119,8 @@ export default function About() {
             </motion.div>
           </motion.div>
 
-          {/* Right Content - Values Grid */}
+          {/* Right Content - Values Grid + foto */}
+          <div className="space-y-4 sm:space-y-6">
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -177,6 +179,25 @@ export default function About() {
               </motion.div>
             ))}
           </motion.div>
+
+          <motion.figure
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.5, duration: 0.7 }}
+            className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-lg"
+          >
+            <Image
+              src="/fotos/home/sobre-entrega.webp"
+              alt="Cinco pessoas ao lado de uma empilhadeira EP a gás GLP, na entrega do equipamento"
+              fill
+              sizes="(max-width: 768px) 100vw, 560px"
+              className="object-cover"
+            />
+            <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-4 pt-10 text-xs font-semibold text-white sm:text-sm">
+              Entrega técnica de empilhadeira EP.
+            </figcaption>
+          </motion.figure>
+          </div>
         </div>
       </div>
     </section>

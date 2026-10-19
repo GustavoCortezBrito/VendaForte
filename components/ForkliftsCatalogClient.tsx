@@ -83,7 +83,8 @@ const TYPE_LABELS: Record<string, string> = {
 
 /** "7.500 mm" vira "7,5 m"; alturas pequenas (paleteiras) seguem em mm. */
 function formatLift(value: string): string {
-  const mm = parseInt((value || '').replace(/./g, '').match(/d+/)?.[0] ?? '', 10)
+  // Tira o ponto de milhar ("7.500") antes de ler o número
+  const mm = parseInt((value || '').split('.').join('').match(/[0-9]+/)?.[0] ?? '', 10)
   if (!mm) return value
   return mm >= 1000 ? `${(mm / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} m` : `${mm} mm`
 }

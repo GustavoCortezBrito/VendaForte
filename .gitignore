@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# material bruto do Drive (3,9 GB): não vai para o repositório; o que for usado entra otimizado
+/public/drive/

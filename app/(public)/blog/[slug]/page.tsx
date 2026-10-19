@@ -78,7 +78,7 @@ const PROSE = [
   'prose-blockquote:rounded-r-2xl prose-blockquote:border-l-4 prose-blockquote:border-red-600 prose-blockquote:bg-red-50/60 prose-blockquote:px-6 prose-blockquote:py-1 prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:text-gray-800',
   // Sem as aspas decorativas que o plugin acrescenta antes e depois do parágrafo
   '[&_blockquote_p]:before:content-none [&_blockquote_p]:after:content-none',
-  'prose-img:rounded-2xl prose-img:shadow-lg',
+  'prose-img:my-8 prose-img:h-auto prose-img:w-full prose-img:rounded-2xl prose-img:shadow-lg',
   'prose-thead:border-0 prose-th:bg-gray-900 prose-th:px-4 prose-th:py-3 prose-th:text-white prose-td:px-4 prose-td:py-3 prose-td:text-gray-700',
   '[&_tbody_tr:nth-child(even)]:bg-gray-50',
   // Tabelas feitas no editor do admin guardam o texto das células dentro de <p>

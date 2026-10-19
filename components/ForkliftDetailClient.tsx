@@ -117,11 +117,14 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
                 </span>
               </div>
 
+              {/* Fotos reais (arquivos locais) preenchem o quadro; os recortes do catálogo ficam inteiros sobre o fundo claro */}
               <img
                 src={activeImage}
-                alt={`Empilhadeira Elétrica ${product.title}`}
-                className="w-full h-full object-contain filter drop-shadow-md transition-all duration-300 group-hover/mainimg:scale-105"
-                style={{ mixBlendMode: 'multiply' }}
+                alt={`${product.type} EP ${product.title}`}
+                className={`transition-all duration-300 group-hover/mainimg:scale-105 ${
+                  activeImage.startsWith('/') ? 'absolute inset-0 w-full h-full object-cover' : 'w-full h-full object-contain filter drop-shadow-md'
+                }`}
+                style={activeImage.startsWith('/') ? undefined : { mixBlendMode: 'multiply' }}
                 onError={(e) => {
                   e.currentTarget.src = product.mainImage || 'https://cdn.ep-portal.net/products/attr_5/1758185452375-2j5v1u.webp'
                 }}
@@ -141,13 +144,19 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
                   <button
                     key={i}
                     onClick={() => setActiveImage(img)}
-                    className={`relative w-20 h-20 rounded-xl bg-white border flex-shrink-0 p-2 overflow-hidden transition-all shadow-sm ${
+                    className={`relative w-20 h-20 rounded-xl bg-white border flex-shrink-0 ${img.startsWith('/') ? 'p-0.5' : 'p-2'} overflow-hidden transition-all shadow-sm ${
                       activeImage === img
                         ? 'border-red-600 ring-2 ring-red-600/30'
                         : 'border-gray-200 hover:border-gray-300 opacity-70 hover:opacity-100'
                     }`}
                   >
-                    <img src={img} alt="Miniatura" className="w-full h-full object-contain" style={{ mixBlendMode: 'multiply' }} />
+                    <img
+                      src={img}
+                      alt="Miniatura"
+                      loading="lazy"
+                      className={`w-full h-full ${img.startsWith('/') ? 'object-cover rounded-lg' : 'object-contain'}`}
+                      style={img.startsWith('/') ? undefined : { mixBlendMode: 'multiply' }}
+                    />
                   </button>
                 ))}
               </div>

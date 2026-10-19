@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
+import Image from 'next/image'
 import { Truck, Wrench, Package, Zap, Fuel, Play, Sparkles, ExternalLink, X, Bot, ShieldCheck, ArrowRight } from 'lucide-react'
 
 // Componente SVG para o ícone do YouTube
@@ -23,6 +24,8 @@ export default function Services() {
     {
       icon: <Zap size={32} />,
       title: 'Empilhadeiras Elétricas Íon-Lítio',
+      image: '/fotos/home/servico-eletrica.webp',
+      imageAlt: 'Empilhadeira elétrica EP de lítio em um armazém, com luz de segurança vermelha no chão',
       subtitle: 'Tecnologia Li-Ion EP Equipment',
       description: 'Linha completa de empilhadeiras elétricas com baterias Íon-Lítio 80V/48V. Recarga em 1 hora, zero emissões e baixíssimo custo operacional.',
       features: ['Baterias Lítio EP 80V/48V', 'Capacidade de 1.5t a 3.5t', 'Recarga rápida de oportunidade', 'Alta durabilidade & 5 anos de garantia'],
@@ -34,6 +37,8 @@ export default function Services() {
     {
       icon: <Bot size={32} />,
       title: 'Equipamentos Autônomos (AGVs/AMRs)',
+      image: '/fotos/home/servico-autonomos.webp',
+      imageAlt: 'Robô móvel autônomo EP transportando caixas dentro de uma fábrica',
       subtitle: 'Robótica Logística Inteligente',
       description: 'Robôs e empilhadeiras autônomas para movimentação industrial 24/7. Automação com navegação laser/SLAM sem necessidade de operador.',
       features: ['Navegação Laser & SLAM', 'Operação Ininterrupta 24/7', 'Integração WMS/ERP de fábrica', 'Retorno de Investimento (ROI) rápido'],
@@ -45,6 +50,8 @@ export default function Services() {
     {
       icon: <Truck size={32} />,
       title: 'Locação de Empilhadeiras & Frotas',
+      image: '/fotos/home/servico-locacao.webp',
+      imageAlt: 'Paleteira elétrica EP com operador movimentando pallets no armazém',
       subtitle: 'Contratos Flexíveis para a Região Sul',
       description: 'Locação por dia, mês ou contratos de longo prazo com frota nova e renovada. Manutenção e assistência técnica inclusas para zero parada.',
       features: ['Frotas novas EP Equipment', 'Manutenção inclusa no contrato', 'Atendimento rápido em SC/RS/PR', 'Sem imobilização de capital'],
@@ -56,6 +63,8 @@ export default function Services() {
     {
       icon: <Wrench size={32} />,
       title: 'Assistência Técnica & Manutenção',
+      image: '/fotos/home/servico-assistencia.webp',
+      imageAlt: 'Manutenção no compartimento de uma empilhadeira retrátil EP',
       subtitle: 'Suporte Especializado Multimarca',
       description: 'Equipe de técnicos altamente qualificados e oficinas móveis preparadas para atendimentos preventivos e corretivos urgentes.',
       features: ['Técnicos certificados EP', 'Oficinas móveis para atendimento', 'Manutenção preventiva & corretiva', 'Planos de revisão periódica'],
@@ -67,6 +76,8 @@ export default function Services() {
     {
       icon: <Package size={32} />,
       title: 'Peças Originais EP Equipment',
+      image: '/fotos/home/servico-pecas.webp',
+      imageAlt: 'Módulo de bateria de lítio EP no compartimento de uma paleteira',
       subtitle: 'Estoque de Reposição Imediata',
       description: 'Garantia de operação contínua com estoque completo de peças originais, carregadores, baterias de lítio e componentes de reposição.',
       features: ['Peças originais de fábrica', 'Envio rápido para todo o Brasil', 'Baterias e módulos de recarga', 'Componentes com garantia'],
@@ -78,6 +89,8 @@ export default function Services() {
     {
       icon: <Fuel size={32} />,
       title: 'Empilhadeiras a Diesel & GLP',
+      image: '/fotos/home/servico-diesel.webp',
+      imageAlt: 'Empilhadeira EP a combustão, para diesel e GLP',
       subtitle: 'Robustez para Pátios e Uso Intensivo',
       description: 'Empilhadeiras à combustão preparadas para trabalhos pesados em ambientes externos, terrenos irregulares e operações contínuas.',
       features: ['Capacidades de 2.5t a 10t', 'Excelente estabilidade e tração', 'Motores de alta eficiência', 'Estrutura reforçada'],
@@ -149,6 +162,17 @@ export default function Services() {
               }`}
             >
               <div>
+                {/* Foto do serviço, de ponta a ponta no topo do cartão */}
+                <div className="relative -mx-6 -mt-6 sm:-mx-8 sm:-mt-8 mb-6 aspect-[16/10] overflow-hidden rounded-t-3xl bg-gray-100">
+                  <Image
+                    src={product.image}
+                    alt={product.imageAlt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+
                 {/* Badge Topo */}
                 <div className="flex items-center justify-between mb-5">
                   <motion.div

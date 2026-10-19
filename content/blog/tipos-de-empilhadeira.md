@@ -25,25 +25,39 @@ O catálogo da Venda Forte reúne 222 modelos da EP Equipment, todos elétricos.
 
 A empilhadeira que a maioria imagina: garfos na frente, contrapeso atrás, operador sentado. Faz de tudo: descarrega caminhão, sobe rampa, atravessa o pátio e empilha. É a que mais carrega e a que mais corredor pede. Exemplo: a [EP EFL302 B3](/blog/ep-efl302-b3-ficha-tecnica-explicada), de 3 toneladas, que trabalha também em área externa.
 
+![Empilhadeira contrabalançada elétrica EP levantando uma carga junto a contêineres](/blog/fotos/tipo-contrabalancada.webp)
+
 ## Retrátil
 
 Avança o mastro para pegar a carga e por isso trabalha em corredor mais estreito e sobe mais alto que a contrabalançada. Pede piso liso e uso interno. Veja o comparativo em [retrátil ou contrabalançada](/blog/empilhadeira-retratil-ou-contrabalancada).
+
+![Empilhadeira retrátil EP trabalhando em um corredor de estantes altas](/blog/fotos/tipo-retratil.webp)
 
 ## Patolada (stacker)
 
 Máquina compacta, normalmente conduzida a pé, com patolas (pernas) que abraçam o pallet. Empilha em níveis baixos e médios com pouco espaço e bateria pequena. Exemplo: a [EP DS3](/blog/ep-ds3-ficha-tecnica-explicada), de 1.500 kg.
 
+![Empilhadeira patolada EP WSA161 em um corredor de armazém](/blog/fotos/tipo-patolada.webp)
+
 ## Paleteira elétrica
 
 Levanta o pallet do chão só o suficiente para transportá-lo na horizontal. Não empilha. É a escolha para descarga, expedição e trajetos planos, no lugar do carrinho manual. Exemplo: a [EP F4](/blog/ep-f4-ficha-tecnica-explicada), de 1.500 kg.
+
+![Paleteira elétrica EP F4 em um corredor de armazém](/blog/fotos/tipo-paleteira.webp)
 
 ## Selecionadora de pedidos e rebocador
 
 A **selecionadora** sobe junto com o operador para separar itens em vários níveis da estante, sem precisar descer o pallet inteiro. O **rebocador** puxa carrinhos e trens de carga em fábricas e centros de distribuição. Servem a operações específicas de separação e abastecimento de linha.
 
+![Selecionadora de pedidos EP TPL251 entre estantes](/blog/fotos/tipo-selecionadora.webp)
+
+![Rebocador elétrico EP QDD 60 circulando em um armazém](/blog/fotos/tipo-rebocador.webp)
+
 ## Corredor muito estreito (VNA)
 
 Para armazéns em que cada metro de corredor conta. O catálogo traz a EP CTL15, que trabalha em corredor de 1.740 mm e eleva a 13 m. É uma solução de projeto, com piso e estantes planejados junto com a máquina.
+
+![Empilhadeira de corredor muito estreito EP, entre estantes altas](/blog/fotos/tipo-vna.webp)
 
 ## Qual usar em cada situação
 

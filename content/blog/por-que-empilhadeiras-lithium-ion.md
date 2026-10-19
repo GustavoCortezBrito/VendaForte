@@ -3,7 +3,7 @@ title: 'Por que migrar para empilhadeiras de lítio'
 description: 'O que muda na operação com bateria de íon-lítio: manutenção, recarga, desempenho e quando a troca compensa. Com os dados das máquinas EP.'
 date: '2026-08-09'
 author: 'Equipe Venda Forte'
-image: '/blog/covers/efl-lition.webp'
+image: '/blog/covers/litio-efl-armazem.webp'
 category: 'Tecnologia'
 tags: ['Tecnologia', 'Bateria de lítio', 'Lítio-Íon', 'Sustentabilidade', 'EP Equipment']
 ---

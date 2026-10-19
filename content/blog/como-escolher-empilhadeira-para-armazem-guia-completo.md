@@ -3,7 +3,7 @@ title: 'Como escolher a empilhadeira para o seu armazém'
 description: 'Como dimensionar uma empilhadeira para armazéns e centros de distribuição: corredor operacional, altura de elevação e capacidade residual.'
 date: '2026-09-04'
 author: 'Engenharia de Aplicação Grupo Venda Forte'
-image: '/blog/covers/f4-armazem.webp'
+image: '/blog/covers/armazem-corredor-alto.webp'
 category: 'Guia de compra'
 tags: ['Como escolher', 'Armazém', 'Tipos de empilhadeira', 'Corredor operacional', 'Retrátil', 'Patolada', 'Contrabalançada']
 ---

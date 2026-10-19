@@ -3,7 +3,7 @@ title: 'Bateria de lítio vs. chumbo-ácido em empilhadeiras'
 description: 'Por que as baterias de lítio substituem o chumbo-ácido na intralogística: recarga, ciclos, segurança e custo de operação.'
 date: '2026-09-04'
 author: 'Especialistas em Energia EP Equipment'
-image: '/blog/covers/ds3-bateria.webp'
+image: '/blog/covers/bateria-litio-modulo.webp'
 category: 'Tecnologia'
 tags: ['Bateria de Lítio', 'Chumbo-Ácido', 'Eficiência Energética', 'LiFePO4', 'Manutenção']
 ---

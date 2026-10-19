@@ -3,7 +3,7 @@ title: 'Empilhadeiras em câmaras frias e frigoríficos'
 description: 'Como escolher e operar empilhadeiras elétricas em câmaras frias e frigoríficos: temperatura negativa, condensação e baterias de lítio.'
 date: '2026-09-04'
 author: 'Engenharia de Aplicação Grupo Venda Forte'
-image: '/blog/covers/efl-camara.webp'
+image: '/blog/covers/camara-fria-wpl202.webp'
 category: 'Aplicações'
 tags: ['Frigorífico', 'Câmara Fria', 'Temperatura Negativa', 'Empilhadeira Elétrica', 'Armazenagem Congelada']
 ---

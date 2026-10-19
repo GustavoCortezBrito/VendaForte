@@ -3,7 +3,7 @@ title: 'NR-11 e empilhadeira: o que a norma exige'
 description: 'O que a NR-11 diz sobre operador de empilhadeira: treinamento, cartão de identificação, carga máxima visível e inspeção. Com checklist diário.'
 date: '2026-10-16T08:30:00-03:00'
 author: 'Equipe Venda Forte'
-image: '/blog/covers/nr11-seguranca.webp'
+image: '/blog/covers/nr11-vna-operador.webp'
 category: 'Segurança e normas'
 tags: ['NR-11', 'Segurança', 'Operador de empilhadeira', 'Treinamento', 'Checklist']
 ---
@@ -20,6 +20,8 @@ A NR-11 é a norma regulamentadora de **transporte, movimentação, armazenagem 
 - **CNH é outra coisa.** A habilitação da NR-11 vem do treinamento da empresa. A carteira de motorista não a substitui, e o treinamento não substitui a carteira onde ela for exigida.
 
 **E a carga horária?** Os cursos oferecidos no mercado têm cargas diferentes (de 8 a 16 horas, nos que consultamos). Pergunte ao responsável pela segurança da sua empresa qual conteúdo e carga mínima ela adota, e guarde o certificado de cada operador.
+
+![Operador de capacete na cabine de uma empilhadeira retrátil EP](/blog/fotos/operador-cabine.webp)
 
 ## O que a norma pede da máquina
 

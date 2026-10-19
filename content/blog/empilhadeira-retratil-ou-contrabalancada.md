@@ -14,7 +14,11 @@ A diferença mais prática entre as duas é o corredor. A retrátil trabalha em 
 
 A **contrabalançada** leva a carga à frente das rodas dianteiras e usa o próprio peso da máquina, com a bateria atrás, como contrapeso. Anda e faz curva como um carro, entra em docas, sobe rampas e circula no pátio.
 
+![Empilhadeira contrabalançada elétrica EP manobrando em um pátio](/blog/fotos/contrabalancada-patio.webp)
+
 A **retrátil** avança o mastro (ou os garfos) para pegar a carga entre as pernas da máquina. Como a carga fica dentro do corpo da máquina, o conjunto é compacto e precisa de menos corredor. O preço dessa compactação são rodas pequenas e a exigência de piso regular e de uso interno.
+
+![Empilhadeira retrátil EP trabalhando entre estantes altas](/blog/fotos/retratil-corredor.webp)
 
 ## Corredor e altura, em números
 
@@ -49,6 +53,8 @@ Duas leituras da tabela:
 ## E o corredor muito estreito?
 
 Abaixo de 2 m de corredor entram as máquinas de corredor muito estreito (VNA, na sigla em inglês). Na tabela, a EP CTL15 trabalha em 1.740 mm e eleva a 13.000 mm. É uma solução de projeto: pede piso muito plano, estantes e treinamento pensados em conjunto com a máquina. Se o seu corredor está perto desse limite, vale falar com a equipe antes de fechar a estante.
+
+![Empilhadeira de corredor muito estreito EP em um armazém com estantes altas](/blog/fotos/vna-prateleira.webp)
 
 ## Cinco perguntas antes de decidir
 
