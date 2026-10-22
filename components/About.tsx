@@ -187,14 +187,14 @@ export default function About() {
             className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-lg"
           >
             <Image
-              src="/fotos/home/sobre-entrega.webp"
-              alt="Cinco pessoas ao lado de uma empilhadeira EP a gás GLP, na entrega do equipamento"
+              src="/fotos/home/sobre-fabrica.webp"
+              alt="Vista de cima de uma linha de montagem de empilhadeiras e paleteiras, em um galpão industrial"
               fill
               sizes="(max-width: 768px) 100vw, 560px"
               className="object-cover"
             />
             <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-4 pt-10 text-xs font-semibold text-white sm:text-sm">
-              Entrega técnica de empilhadeira EP.
+              Linha de montagem de empilhadeiras.
             </figcaption>
           </motion.figure>
           </div>
