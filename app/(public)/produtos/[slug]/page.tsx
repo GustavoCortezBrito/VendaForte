@@ -4,6 +4,7 @@ import ForkliftDetailClient from '@/components/ForkliftDetailClient'
 import forkliftsData from '@/lib/data/electric-forklifts.json'
 import { ForkliftProduct } from '@/components/ForkliftsCatalogClient'
 import { LOCAL_PHOTOS } from '@/lib/data/local-photos'
+import { productDescription, productJsonLd, productTitle } from '@/lib/product-seo'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -28,17 +29,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = allProducts.find(p => p.slug === slug)
 
   if (!product) {
-    return { title: 'Produto não encontrado | VendaForte' }
+    return { title: 'Produto não encontrado', robots: { index: false } }
   }
 
+  const image = LOCAL_PHOTOS[product.slug]?.[0] ?? product.mainImage
+  const title = productTitle(product)
+  const description = productDescription(product)
+
   return {
-    title: `${product.title} (${product.capacity}) — EP Equipment | VendaForte`,
-    description: `Ficha técnica e especificações completas do equipamento ${product.title}. Bateria ${product.batteryVoltage} Lítio-Íon, elevação de ${product.liftingHeight} e capacidade para ${product.capacity}.`,
+    title: { absolute: title },
+    description,
+    // Sem isto, cada produto herdaria o canonical da página inicial e o Google trataria todos como cópia dela
+    alternates: { canonical: `/produtos/${product.slug}` },
     openGraph: {
-      title: `${product.title} — EP Equipment`,
-      description: product.description,
-      images: [LOCAL_PHOTOS[product.slug]?.[0] ?? product.mainImage],
-    }
+      title,
+      description,
+      type: 'website',
+      url: `/produtos/${product.slug}`,
+      images: [image],
+    },
   }
 }
 
@@ -56,5 +65,13 @@ export default async function ProductDetailPage({ params }: Props) {
     .concat(allProducts.filter(p => p.slug !== slug && p.categorySlug !== product.categorySlug).slice(0, 3))
     .slice(0, 3)
 
-  return <ForkliftDetailClient product={withLocalPhotos(product)} relatedProducts={relatedProducts} />
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(product, LOCAL_PHOTOS[product.slug])) }}
+      />
+      <ForkliftDetailClient product={withLocalPhotos(product)} relatedProducts={relatedProducts} />
+    </>
+  )
 }

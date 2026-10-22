@@ -12,8 +12,9 @@ import { whatsappUrl } from '@/components/promo/promo.config'
 import { getPost, listPosts } from '@/lib/blog-data'
 import { categoryOf, formatPostDate, postDateTime, relatedPosts, slugifyText } from '@/lib/blog-format'
 import { productForPost } from '@/lib/blog-products'
+import { SITE_URL } from '@/lib/site'
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupovendaforte.com'
+const siteUrl = SITE_URL
 
 /** Revalida a cada 10 minutos; o admin força a atualização na hora ao publicar. */
 export const revalidate = 600

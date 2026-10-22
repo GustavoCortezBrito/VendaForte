@@ -11,10 +11,11 @@ import type { Metadata } from 'next'
 import { listPosts } from '@/lib/blog-data'
 import { blogHref } from '@/lib/blog-format'
 import { buildListing, listingTitle, type Listing } from '@/lib/blog-list'
+import { SITE_URL } from '@/lib/site'
 
 export { totalPagesFor, type Listing } from '@/lib/blog-list'
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupovendaforte.com'
+export { SITE_URL }
 
 /** Carrega uma página da listagem, ou `null` se a categoria ou a página não existirem. */
 export async function loadListing(categorySlug: string | undefined, page: number): Promise<Listing | null> {

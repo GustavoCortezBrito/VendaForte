@@ -29,6 +29,7 @@ import {
 } from 'lucide-react'
 import ImageLightboxModal from '@/components/ImageLightboxModal'
 import { useDragScroll } from '@/components/useDragScroll'
+import { TYPE_LABELS, formatLift } from '@/lib/product-seo'
 
 export interface ForkliftProduct {
   id: string
@@ -68,26 +69,6 @@ const CATEGORIES_CONFIG = [
   { id: 'Selecionadoras de Pedidos & Rebocadores', label: 'Selecionadoras', icon: PackageCheck },
   { id: 'Equipamentos Especiais & VNA', label: 'Outros (VNA & Especiais)', icon: Cog },
 ]
-
-/** Nome do tipo em português, mostrado abaixo do modelo no cartão. */
-const TYPE_LABELS: Record<string, string> = {
-  'Paleteira Elétrica': 'Paleteira elétrica',
-  'Empilhadeira Patolada (Stacker)': 'Empilhadeira patolada',
-  '3 Rodas Li-Ion': 'Contrabalançada de 3 rodas',
-  '4 Rodas Li-Ion': 'Contrabalançada de 4 rodas',
-  'Empilhadeira Retrátil (Reach Truck)': 'Empilhadeira retrátil',
-  'Selecionadora de Pedidos': 'Selecionadora de pedidos',
-  'Empilhadeira VNA / Especial': 'Corredor estreito (VNA)',
-  'Rebocador Elétrico': 'Rebocador elétrico',
-}
-
-/** "7.500 mm" vira "7,5 m"; alturas pequenas (paleteiras) seguem em mm. */
-function formatLift(value: string): string {
-  // Tira o ponto de milhar ("7.500") antes de ler o número
-  const mm = parseInt((value || '').split('.').join('').match(/[0-9]+/)?.[0] ?? '', 10)
-  if (!mm) return value
-  return mm >= 1000 ? `${(mm / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} m` : `${mm} mm`
-}
 
 export default function ForkliftsCatalogClient({ initialProducts }: Props) {
   const [activeLightboxProduct, setActiveLightboxProduct] = useState<ForkliftProduct | null>(null)

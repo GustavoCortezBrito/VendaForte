@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import LoadingScreen from "@/components/LoadingScreen";
 import { metadata as siteMetadata, jsonLdOrganization, jsonLdLocalBusiness, jsonLdWebSite } from "./metadata";
-import { productsSchema, servicesSchema, breadcrumbSchema, webPageSchema } from "./additional-schemas";
 import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -45,22 +44,6 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebSite) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(productsSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
         />
         
         {/* Favicons */}

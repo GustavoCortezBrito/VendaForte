@@ -1,10 +1,11 @@
 import { Metadata } from 'next'
+import { SITE_URL } from '@/lib/site'
 import PrivacidadeClient from '@/components/PrivacidadeClient'
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupovendaforte.com'
+const siteUrl = SITE_URL
 
 export const metadata: Metadata = {
-  title: 'Política de Privacidade | Grupo Venda Forte',
+  title: 'Política de Privacidade',
   description: 'Conheça nossa Política de Privacidade e saiba como o Grupo Venda Forte protege seus dados pessoais de acordo com a LGPD.',
   alternates: {
     canonical: `${siteUrl}/privacidade`,

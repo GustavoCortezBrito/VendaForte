@@ -33,6 +33,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Posts antigos removidos do blog: 301 para o conteúdo mais próximo, em vez de 404
+      { source: "/blog/primeiro-post", destination: "/blog", permanent: true },
+      { source: "/blog/manutencao-preventiva-empilhadeiras", destination: "/blog", permanent: true },
+      { source: "/blog/seguranca-operacao-empilhadeiras", destination: "/blog/nr-11-empilhadeira-o-que-a-norma-exige", permanent: true },
       // Redireciona grupovendaforte.com.br → grupovendaforte.com (301 permanente)
       {
         source: "/:path*",

@@ -4,7 +4,6 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /_next/
 Disallow: /admin/
 
 # Permitir crawlers de IA
@@ -32,12 +31,13 @@ Allow: /
 # Crawlers tradicionais
 User-agent: Googlebot
 Allow: /
+Disallow: /api/
+Disallow: /admin/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /api/
+Disallow: /admin/
 
 # Sitemap
-Sitemap: https://grupovendaforte.com/sitemap.xml
-
-# Crawl-delay para bots específicos
-Crawl-delay: 1
+Sitemap: https://www.grupovendaforte.com/sitemap.xml

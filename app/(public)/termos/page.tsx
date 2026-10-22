@@ -1,10 +1,11 @@
 import { Metadata } from 'next'
+import { SITE_URL } from '@/lib/site'
 import TermosClient from '@/components/TermosClient'
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://grupovendaforte.com'
+const siteUrl = SITE_URL
 
 export const metadata: Metadata = {
-  title: 'Termos de Uso | Grupo Venda Forte',
+  title: 'Termos de Uso',
   description: 'Leia os Termos de Uso do site e serviços do Grupo Venda Forte, especialistas em venda, locação e manutenção de empilhadeiras.',
   alternates: {
     canonical: `${siteUrl}/termos`,

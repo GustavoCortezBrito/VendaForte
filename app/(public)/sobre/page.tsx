@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import AboutPageClient from '@/components/AboutPageClient'
 
 export const metadata: Metadata = {
-  title: 'Sobre a Venda Forte - Dealer EP Equipment em Chapecó e Joinville | Empilhadeiras SC',
+  title: { absolute: 'Sobre a Venda Forte | Dealer EP em Chapecó e Joinville' },
   description: 'Conheça a Venda Forte, Dealer EP Equipment em Chapecó e Joinville. Mais de 20 anos em empilhadeiras elétricas, locação e assistência no Sul e SP.',
   keywords: 'venda forte chapecó, empilhadeiras joinville, dealer ep equipment sc, empilhadeiras elétricas chapecó, assistência técnica joinville, locação empilhadeiras santa catarina, empilhadeiras sul do brasil',
   openGraph: {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
   },
   alternates: {
-    canonical: 'https://www.grupovendaforte.com/sobre'
+    canonical: '/sobre'
   }
 }
 

@@ -3,8 +3,9 @@ import ForkliftsCatalogClient, { ForkliftProduct } from '@/components/ForkliftsC
 import forkliftsData from '@/lib/data/electric-forklifts.json'
 
 export const metadata: Metadata = {
-  title: 'Produtos & Equipamentos EP Equipment | VendaForte',
-  description: 'Catálogo completo de produtos EP Equipment: empilhadeiras elétricas, transpaleteiras, stackers, retráteis e equipamentos industriais com bateria Íon-Lítio.',
+  title: { absolute: `Catálogo EP: ${forkliftsData.length} empilhadeiras e paleteiras | Venda Forte` },
+  description: 'Catálogo EP Equipment: empilhadeiras contrabalançadas, retráteis e patoladas, paleteiras, selecionadoras e rebocadores. Veja a ficha técnica e peça cotação.',
+  alternates: { canonical: '/produtos' },
   openGraph: {
     title: 'Catálogo de Produtos EP Equipment | VendaForte',
     description: 'Empilhadeiras elétricas, transpaleteiras, stackers, retráteis e equipamentos industriais EP Equipment de 1.0T a 25.0T com tecnologia Íon-Lítio.',
