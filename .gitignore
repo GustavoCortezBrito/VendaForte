@@ -42,3 +42,6 @@ next-env.d.ts
 
 # material bruto do Drive (3,9 GB): não vai para o repositório; o que for usado entra otimizado
 /public/drive/
+
+# dados de pesquisa (AnswerThePublic, SEMrush): material de trabalho, não vai para o repositório
+/dados-seo/
