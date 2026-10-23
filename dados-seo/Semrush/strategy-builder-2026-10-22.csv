@@ -1,0 +1,59 @@
+topico,volume_total_topico,kd_medio_topico,tipo,pagina,palavras_chave,kd_pct,volume_cluster,etiqueta,relevante
+operação e segurança de empilhadeiras,49600,17.42,base,operador de empilhadeira,5,24,10500,,parcial
+operação e segurança de empilhadeiras,49600,17.42,sub,curso de empilhadeira,20,17,23900,potencial alto,parcial
+operação e segurança de empilhadeiras,49600,17.42,sub,salario operador de empilhadeira,14,22,11200,,não
+operação e segurança de empilhadeiras,49600,17.42,sub,curso de empilhadeira precisa de cnh,3,8,460,perguntas,não
+operação e segurança de empilhadeiras,49600,17.42,sub,nr11 empilhadeira,7,17,2000,relevância alta,sim
+operação e segurança de empilhadeiras,49600,17.42,sub,curso nr 11,2,14,1400,,parcial
+operação e segurança de empilhadeiras,49600,17.42,sub,vagas operador de empilhadeira sem experiência,2,20,200,,não
+empilhadeiras elétricas,20220,12.45,base,empilhadeira elétrica,12,17,5800,,sim
+empilhadeiras elétricas,20220,12.45,sub,o que é empilhadeira,2,6,710,potencial alto,sim
+empilhadeiras elétricas,20220,12.45,sub,empilhadeira retrátil,6,15,5100,potencial alto,sim
+empilhadeiras elétricas,20220,12.45,sub,tipos de empilhadeira,3,10,1100,potencial alto,sim
+empilhadeiras elétricas,20220,12.45,sub,empilhadeira patolada,4,11,2000,,sim
+empilhadeiras elétricas,20220,12.45,sub,empilhadeira usada,8,13,1700,,sim
+empilhadeiras elétricas,20220,12.45,sub,empilhadeira eletrica still,6,10,1200,,sim
+empilhadeiras elétricas,20220,12.45,sub,empilhadeira contrabalançada,2,9,620,,sim
+empilhadeiras elétricas,20220,12.45,sub,empilhadeira yale,2,13,1400,,sim
+empilhadeiras elétricas,20220,12.45,sub,empilhadeira eletrica tracionaria,2,6,220,,sim
+empilhadeiras elétricas,20220,12.45,sub,imagens de empilhadeiras,2,27,310,relevância alta,sim
+locação de empilhadeiras,4280,19,base,aluguel de empilhadeira,9,19,4300,,sim
+equipamentos de movimentação de cargas,4630,9.71,base,empilhadeira e paleteira,2,4,370,,sim
+equipamentos de movimentação de cargas,4630,9.71,sub,paleteira manual 2500 kg,2,6,700,potencial alto,sim
+equipamentos de movimentação de cargas,4630,9.71,sub,paleteira manual 2000 kg,2,4,590,,sim
+equipamentos de movimentação de cargas,4630,9.71,sub,empilhadeira selecionadora,4,9,570,,sim
+equipamentos de movimentação de cargas,4630,9.71,sub,movimentação de equipamentos,2,11,250,relevância alta,parcial
+equipamentos de movimentação de cargas,4630,9.71,sub,nr movimentação de carga,2,16,430,,parcial
+equipamentos de movimentação de cargas,4630,9.71,sub,movimentacao de cargas,2,18,1700,,parcial
+empilhadeiras a combustão,6090,10.16,base,empilhadeira a gas,5,17,3300,,sim
+empilhadeiras a combustão,6090,10.16,sub,empilhadeira a diesel,2,7,810,potencial alto,sim
+empilhadeiras a combustão,6090,10.16,sub,empilhadeira toyota 2500 kg preço nova,5,12,1100,,sim
+empilhadeiras a combustão,6090,10.16,sub,empilhadeira a combustão,2,10,430,relevância alta,sim
+empilhadeiras a combustão,6090,10.16,sub,empilhadeira 5 ton,2,5,280,,sim
+empilhadeiras a combustão,6090,10.16,sub,empilhadeira 4 toneladas,2,10,220,,sim
+paleteiras elétricas,33570,12.71,base,paleteira elétrica,9,15,12600,,sim
+paleteiras elétricas,33570,12.71,sub,transpaleteira elétrica,2,9,7300,potencial alto,sim
+paleteiras elétricas,33570,12.71,sub,paleteira manual,4,15,8700,,sim
+paleteiras elétricas,33570,12.71,sub,paleteira hidraulica,6,14,4100,,sim
+paleteiras elétricas,33570,12.71,sub,locação de paleteira,2,5,200,relevância alta,sim
+paleteiras elétricas,33570,12.71,sub,paleteira eletrica toyota,3,8,420,,sim
+paleteiras elétricas,33570,12.71,sub,paleteira usada,2,23,280,,sim
+manutenção de empilhadeiras,178230,26.27,base,manutenção empilhadeira,3,14,940,,sim
+manutenção de empilhadeiras,178230,26.27,sub,manutenção corretiva,10,18,5100,potencial alto,parcial
+manutenção de empilhadeiras,178230,26.27,sub,assistencia tecnica,30,41,142700,potencial alto,não
+manutenção de empilhadeiras,178230,26.27,sub,assistencia tecnica ponta grossa,2,12,300,potencial alto,não
+manutenção de empilhadeiras,178230,26.27,sub,assistência tecnica,7,35,12400,relevância alta,não
+manutenção de empilhadeiras,178230,26.27,sub,assistencia tecnica são paulo,2,22,480,,não
+manutenção de empilhadeiras,178230,26.27,sub,conserto de aspirador de pó perto de mim,3,31,1400,relevância alta,não
+manutenção de empilhadeiras,178230,26.27,sub,loja de conserto de maquina de lavar,2,29,760,,não
+manutenção de empilhadeiras,178230,26.27,sub,manutençao celular,3,33,1500,,não
+manutenção de empilhadeiras,178230,26.27,sub,o que manutenção,2,19,650,perguntas,não
+manutenção de empilhadeiras,178230,26.27,sub,manutenção preventiva,9,35,12100,perguntas,parcial
+baterias e carregadores para equipamentos de movimentação,39970,11.5,base,bateria tracionaria,3,6,910,,sim
+baterias e carregadores para equipamentos de movimentação,39970,11.5,sub,bateria empilhadeira elétrica,6,6,1300,potencial alto,sim
+baterias e carregadores para equipamentos de movimentação,39970,11.5,sub,bateria de lítio,17,14,12800,,parcial
+baterias e carregadores para equipamentos de movimentação,39970,11.5,sub,baterias 200 amp,6,8,2000,,não
+baterias e carregadores para equipamentos de movimentação,39970,11.5,sub,bateria lifepo4,5,14,5300,,não
+baterias e carregadores para equipamentos de movimentação,39970,11.5,sub,bateria de lítio para motorhome,2,3,230,,não
+baterias e carregadores para equipamentos de movimentação,39970,11.5,sub,baterias para energia solar,2,20,760,,não
+baterias e carregadores para equipamentos de movimentação,39970,11.5,sub,bateria de lítio,10,21,16700,,não

@@ -1,0 +1,22 @@
+termo,volume,kd_pct,cpc_usd,intencao,pkd_pct
+empilhadeira,33100,29,0.63,C,45
+paleteira,14800,15,0.58,I,
+empilhadeira eletrica,9900,16,0.82,I+C,
+paleteira eletrica,9900,16,0.64,I,
+curso de empilhadeira,9900,21,0.18,I,38
+operador de empilhadeira,9900,26,,I+C,
+paleteira manual,8100,15,0.30,I+C,
+transpaleteira,8100,14,0.89,I+C,
+empilhadeira manual,5400,13,0.48,I,
+transpaleteira eletrica,2900,16,0.68,I,
+empilhadeira a gás,2400,14,0.51,I,35
+empilhadeira retratil,2400,11,0.57,I,
+empilhadeiras,2400,22,0.57,C,38
+paleteira hidraulica,2400,9,0.48,I,
+salario de operador de empilhadeira,3600,33,0.00,I,56
+salario operador de empilhadeira,3600,28,0.54,I,56
+operador de empilhadeira salario,2900,25,0.00,I,55
+quanto ganha um operador de empilhadeira,2400,28,0.00,I,59
+curso de operador de empilhadeira,2900,20,0.18,I,35
+curso empilhadeira,2900,17,0.17,I,39
+empilhadeira curso,2400,15,0.17,I,

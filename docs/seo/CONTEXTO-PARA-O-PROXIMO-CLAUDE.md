@@ -14,7 +14,7 @@ Escrito em 23/10/2026, ao fim de uma sessão longa. Leia este arquivo inteiro an
 - Responder em português do Brasil. Quando o usuário pede para "melhorar" algo, melhorar o que existe: ele já rejeitou redesenhos completos.
 - Nunca publicar foto de pessoa identificável sem consentimento confirmado, nem inventar fato, preço ou número. Só usar dados do catálogo, das fichas oficiais da EP, do cliente ou de norma.
 - Antes de escrever código Next.js, ler `node_modules/next/dist/docs/` (regra do `AGENTS.md`: esta versão tem mudanças que quebram o que se sabia).
-- **O repositório é público** (conferido em 23/10/2026 pela API do GitHub). Nada de segredo, e os dados brutos do SEMrush e do AnswerThePublic ficam fora (`/dados-seo/` está no `.gitignore`). Uma senha antiga do painel admin ainda aparece em README e docs do repositório: varrer se o usuário pedir, sem repetir o valor.
+- **O repositório é público** (conferido em 23/10/2026 pela API do GitHub). Nunca colocar segredo nele. Em 23/10/2026 o usuário autorizou subir também os dados brutos do SEMrush e do AnswerThePublic (`dados-seo/`), sabendo que o repositório é público. A senha antiga do painel admin foi apagada dos documentos e do `scripts/migrate-posts.ts` (que agora lê `ADMIN_PASSWORD`), mas continua no histórico antigo do Git; a senha vigente foi trocada no banco e não está em lugar nenhum do repositório.
 - Windows: parar o dev server deste projeto (porta 3000) antes de `next build`; se o Turbopack falhar com `0xc0000142`, usar `next build --webpack`; para testar o fallback em markdown, construir com `SUPABASE_SERVICE_ROLE_KEY=invalid-key-for-local-test`; evitar laços de espera, que o usuário interrompe.
 
 ## 3. Respostas do Paulo (WhatsApp, 22/10/2026)
@@ -33,7 +33,7 @@ Reunião do Paulo com o Rodrigo marcada para 23/10 para alinhar o resto. Os deta
 - **Fotos reais** no catálogo, no blog e na home (commit `e803840`), otimizadas em WebP; foto da seção Sobre trocada (`967d6a0`).
 - **SEO técnico** (commit `79cd43c`): endereço único `https://www.grupovendaforte.com` (apex redireciona com 308), canonicals, sitemap com datas reais, robots sem bloqueios, título e Product por modelo.
 - **Segurança:** senha do admin trocada no banco e porta dos fundos de login removida.
-- **Nesta rodada (23/10):** pesquisa, análise e documentos. **Nenhum código do site foi alterado.** Foram adicionados apenas `docs/seo/`, `scripts/seo/` e uma linha no `CLAUDE.md`.
+- **Nesta rodada (23/10):** pesquisa, análise e documentos. **Nenhum código do site foi alterado.** Foram adicionados `docs/seo/`, `scripts/seo/`, `dados-seo/` e uma linha no `CLAUDE.md`, e a senha antiga do admin foi apagada dos documentos.
 
 ## 5. Diagnóstico (números de 21 a 23/10/2026)
 
@@ -111,7 +111,7 @@ Posts às terças e quintas, 9h. Pausa de 24/12 a 04/01. Feriados sem publicaç�
 
 ## 10. Dados brutos e ferramentas
 
-- **`dados-seo/`** (fora do git, no computador do Gustavo): `AnswerthePublic/` (12 CSV de 22/10/2026) e `Semrush/` (análise em lote de 60 termos, Keyword Magic Tool, Strategy Builder, Search Console importado, ideias do On Page SEO Checker em xlsx, mega export e PDF da auditoria de 22/10/2026, e resumos em CSV feitos à mão).
+- **`dados-seo/`** (no repositório desde 23/10/2026): `AnswerthePublic/` (12 CSV de 22/10/2026) e `Semrush/` (análise em lote de 60 termos, Keyword Magic Tool, Strategy Builder, Search Console importado, ideias do On Page SEO Checker em xlsx, mega export e PDF da auditoria de 22/10/2026, e resumos em CSV feitos à mão).
 - **`scripts/seo/`:** `atp-load.cjs` (lê os CSV do AnswerThePublic), `sb-sync.cjs` (sincroniza `content/blog` com o Supabase; simula por padrão, grava com `--apply`; precisa de `.env.local`), `xlsx-read.cjs` (lê planilha .xlsx descompactada).
 - Não funcionou nesta sessão: API do PageSpeed Insights (sem cota; usar `npx lighthouse@12`), DuckDuckGo (bloqueia) e a busca da ferramenta WebSearch (só resultados dos EUA, inútil para concorrentes locais).
 - Concorrentes diretos ficaram sem análise: pedir ao cliente de 5 a 10 domínios.
