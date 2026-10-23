@@ -81,7 +81,7 @@ Acesse: http://localhost:3000/admin/login
 
 ```
 Email: admin@vendaforte.com
-Senha: vendaforte2026
+Senha: <senha-do-admin>
 ```
 
 ---
@@ -150,7 +150,7 @@ Você poderá:
 
 ```
 🔑 Email: admin@vendaforte.com
-🔒 Senha: vendaforte2026
+🔒 Senha: <senha-do-admin>
 ```
 
 ⚠️ **IMPORTANTE**: Troque a senha após o primeiro login!

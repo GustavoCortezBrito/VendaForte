@@ -74,8 +74,8 @@ CREATE TRIGGER set_post_published_at
   FOR EACH ROW
   EXECUTE FUNCTION set_published_at();
 
--- Inserir usuário admin padrão (senha: vendaforte2026)
--- Hash bcrypt da senha "vendaforte2026": $2a$10$xYZ...
+-- Inserir usuário admin padrão (senha: <senha-do-admin>)
+-- Hash bcrypt da senha "<senha-do-admin>": $2a$10$xYZ...
 -- IMPORTANTE: Altere a senha após o primeiro login!
 INSERT INTO users (email, password_hash, name, role)
 VALUES (

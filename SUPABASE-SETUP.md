@@ -96,7 +96,7 @@ Agora vamos migrar os posts dos arquivos `.md` para o banco de dados:
 2. Acesse: http://localhost:3000/admin/login
 3. Use as credenciais:
    - **Email**: admin@vendaforte.com
-   - **Senha**: vendaforte2026
+   - **Senha**: <senha-do-admin>
 4. Se tudo estiver correto, você será redirecionado para `/admin/blog`
 
 ## ⚠️ IMPORTANTE: Segurança

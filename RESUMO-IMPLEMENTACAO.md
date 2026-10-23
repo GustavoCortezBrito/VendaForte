@@ -85,7 +85,7 @@ Acesse: http://localhost:3000/admin/login
 
 **Login:**
 - Email: `admin@vendaforte.com`
-- Senha: `vendaforte2026`
+- Senha: `<senha-do-admin>`
 
 ---
 
@@ -136,7 +136,7 @@ npm run db:migrate
 
 ```
 Email: admin@vendaforte.com
-Senha: vendaforte2026
+Senha: <senha-do-admin>
 ```
 
 ⚠️ **IMPORTANTE**: Altere a senha após o primeiro login!

@@ -87,7 +87,7 @@ Use este checklist para garantir que tudo está configurado corretamente.
 - [ ] Acessou: http://localhost:3000/admin/login
 - [ ] Página de login carregou
 - [ ] Preencheu email: `admin@vendaforte.com`
-- [ ] Preencheu senha: `vendaforte2026`
+- [ ] Preencheu senha: `<senha-do-admin>`
 - [ ] Clicou "Entrar"
 - [ ] Foi redirecionado para `/admin/blog`
 - [ ] Viu os 3 posts listados no painel admin
@@ -118,7 +118,7 @@ Use este checklist para garantir que tudo está configurado corretamente.
 - [ ] Service Role Key não foi exposta
 
 ### Ações de Segurança Recomendadas
-- [ ] Planejar trocar senha padrão `vendaforte2026`
+- [ ] Planejar trocar senha padrão `<senha-do-admin>`
 - [ ] Ativar 2FA no Supabase (Settings > Account)
 - [ ] Documentar credenciais em gerenciador de senhas
 - [ ] Não compartilhar chaves em mensagens/email
@@ -164,7 +164,7 @@ Se tudo estiver ✅, você deve ter:
 - [ ] Executei `npm run migrate` novamente
 - [ ] Verifiquei se usuário existe na tabela `users`
 - [ ] Email está correto: `admin@vendaforte.com`
-- [ ] Senha está correta: `vendaforte2026`
+- [ ] Senha está correta: `<senha-do-admin>`
 
 ### Posts não aparecem no /blog
 - [ ] Executei `npm run migrate`

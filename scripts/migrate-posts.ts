@@ -60,7 +60,12 @@ async function createAdminUser() {
   console.log('\n📝 Criando usuário admin...')
   
   const email = 'admin@vendaforte.com'
-  const password = 'vendaforte2026'
+  // A senha vem do ambiente: nunca escreva a senha do admin neste arquivo
+  const password = process.env.ADMIN_PASSWORD
+  if (!password) {
+    console.error('❌ Defina ADMIN_PASSWORD no ambiente antes de rodar este script')
+    process.exit(1)
+  }
   const passwordHash = await bcrypt.hash(password, 10)
 
   const { data, error } = await supabase
@@ -162,7 +167,7 @@ async function main() {
   console.log('\n📌 Próximos passos:')
   console.log('   1. Acesse: http://localhost:3000/admin/login')
   console.log('   2. Login: admin@vendaforte.com')
-  console.log('   3. Senha: vendaforte2026')
+  console.log('   3. Senha: a que você definiu em ADMIN_PASSWORD')
   console.log('   4. ⚠️  IMPORTANTE: Altere a senha após o primeiro login!\n')
 }
 

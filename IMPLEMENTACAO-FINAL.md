@@ -313,7 +313,7 @@ npm run dev
 ```
 Acesse: http://localhost:3000/admin/login
 - Email: `admin@vendaforte.com`
-- Senha: `vendaforte2026`
+- Senha: `<senha-do-admin>`
 
 ### 4️⃣ Deploy (quando pronto)
 ```bash

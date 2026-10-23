@@ -63,7 +63,7 @@ Acesse: http://localhost:3000
 
 ```
 Email: admin@vendaforte.com
-Senha: vendaforte2026
+Senha: <senha-do-admin>
 ```
 
 ⚠️ **IMPORTANTE**: Altere a senha após o primeiro login!

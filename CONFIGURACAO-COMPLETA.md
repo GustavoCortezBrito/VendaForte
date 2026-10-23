@@ -120,7 +120,7 @@ npm run dev
 
 3. Faça login com:
    - **Email**: `admin@vendaforte.com`
-   - **Senha**: `vendaforte2026`
+   - **Senha**: `<senha-do-admin>`
 
 4. Você deve ser redirecionado para: `/admin/blog`
 
@@ -182,7 +182,7 @@ npm run dev
 - JWT_SECRET
 
 ### 🔒 Após Primeiro Login:
-- Altere a senha padrão `vendaforte2026`
+- Altere a senha padrão `<senha-do-admin>`
 - Crie usuários adicionais se necessário
 
 ### 🛡️ Em Produção:
