@@ -155,8 +155,8 @@ export const jsonLdLocalBusiness = {
   url: siteUrl,
   telephone: '+55-49-3323-9050',
   priceRange: '$$',
-  // Endereço da matriz, igual ao do Perfil da Empresa no Google. Sem `geo`: as coordenadas antigas eram
-  // do centro da cidade; inclua a posição exata do pino (5 casas decimais) quando for conferida no Google Maps.
+  // Endereço da matriz, igual ao do Perfil da Empresa no Google. As coordenadas são as do pino do perfil
+  // (link informado em 02/11/2026); as antigas eram do centro da cidade.
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Rua Xanxerê, 267e - Líder',
@@ -165,6 +165,12 @@ export const jsonLdLocalBusiness = {
     postalCode: '89805-270',
     addressCountry: 'BR'
   },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -27.06831,
+    longitude: -52.62568
+  },
+  hasMap: 'https://maps.app.goo.gl/qahXxhmh5KUb2HUPA',
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',

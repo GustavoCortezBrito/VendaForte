@@ -24,8 +24,10 @@
     "address": [
       {
         "@type": "PostalAddress",
+        "streetAddress": "Rua Xanxerê, 267e - Líder",
         "addressLocality": "Chapecó",
         "addressRegion": "SC",
+        "postalCode": "89805-270",
         "addressCountry": "BR",
         "description": "Matriz"
       },
