@@ -3,64 +3,18 @@ import { SITE_URL } from '@/lib/site';
 
 const siteUrl = SITE_URL;
 const siteName = "Grupo Venda Forte";
-const siteDescription = "Empilhadeiras elétricas Íon-Lítio, diesel e paleteiras em Chapecó e Joinville. Dealer EP com venda, locação e assistência 24h no Sul e SP.";
-const siteKeywords = [
-  // Palavras-chave principais do H1
-  "soluções completas em empilhadeiras",
-  "soluções completas em equipamentos",
-  "empilhadeiras e equipamentos",
-  // Localização - Foco em Chapecó e Joinville
-  "empilhadeiras Chapecó",
-  "empilhadeiras Joinville",
-  "empilhadeiras Santa Catarina",
-  "empilhadeiras Chapecó SC",
-  "empilhadeiras Joinville SC",
-  "venda empilhadeiras Chapecó",
-  "venda empilhadeiras Joinville",
-  "locação empilhadeiras Chapecó",
-  "locação empilhadeiras Joinville",
-  "assistência técnica empilhadeiras Chapecó",
-  "assistência técnica empilhadeiras Joinville",
-  // EP Equipment - Dealer Autorizado
-  "dealer EP Equipment",
-  "EP Equipment Chapecó",
-  "EP Equipment Joinville",
-  "EP Equipment Santa Catarina",
-  "empilhadeiras EP Equipment",
-  // Tipos de equipamentos
-  "empilhadeira elétrica",
-  "empilhadeira diesel",
-  "empilhadeira íon-lítio",
-  "transpaleteira elétrica",
-  "paleteira elétrica",
-  "empilhadeira autônoma",
-  "empilhadeira retrátil",
-  "stacker elétrico",
-  // Serviços
-  "venda empilhadeiras",
-  "locação empilhadeiras",
-  "manutenção empilhadeiras",
-  "peças empilhadeiras originais",
-  "assistência técnica 24/7",
-  // Regional
-  "empilhadeiras Sul do Brasil",
-  "empilhadeiras Paraná",
-  "empilhadeiras Rio Grande do Sul",
-  "empilhadeiras São Paulo",
-  "Grupo Venda Forte",
-  "equipamentos industriais",
-  "movimentação de cargas"
-];
+const siteTitle = `Venda de empilhadeiras em Chapecó e Joinville | ${siteName}`;
+const siteDescription = "Venda e locação de empilhadeiras e paleteiras EP Equipment em Chapecó e Joinville, com assistência técnica e peças. Peça sua cotação.";
+
 
 export const metadata: Metadata = {
   // Metadados Básicos
   metadataBase: new URL(siteUrl),
   title: {
-    default: `Empilhadeiras e Equipamentos | ${siteName}`,
+    default: siteTitle,
     template: `%s | ${siteName}`
   },
   description: siteDescription,
-  keywords: siteKeywords,
   authors: [{ name: siteName }],
   creator: siteName,
   publisher: siteName,
@@ -94,7 +48,7 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
     url: siteUrl,
     siteName: siteName,
-    title: `Empilhadeiras e Equipamentos | ${siteName}`,
+    title: siteTitle,
     description: siteDescription,
     images: [
       {
@@ -117,7 +71,7 @@ export const metadata: Metadata = {
   // Twitter Card
   twitter: {
     card: 'summary_large_image',
-    title: `Empilhadeiras e Equipamentos | ${siteName}`,
+    title: siteTitle,
     description: siteDescription,
     images: [`${siteUrl}/sede.png`],
     creator: '@grupovendaforte',
@@ -138,7 +92,7 @@ export const metadata: Metadata = {
     'ai:business_type': 'Industrial Equipment Supplier',
     'ai:service_area': 'Chapecó, Joinville, Itajaí, Maringá, Seberi, Esteio - Sul do Brasil',
     'ai:main_products': 'Empilhadeira Elétrica, Empilhadeira Diesel, Empilhadeira a Gás, Transpaleteira, Paleteira, Empilhadeira Autônoma, Peças Multimarcas',
-    'ai:main_services': 'Venda, Locação, Manutenção, Assistência Técnica 24h',
+    'ai:main_services': 'Venda, Locação, Manutenção, Assistência Técnica',
     'ai:experience_years': '20+',
     'ai:contact_phone': '+55 49 3323-9050',
     'ai:contact_whatsapp': '+55 49 98839-5635',
@@ -160,8 +114,10 @@ export const jsonLdOrganization = {
   description: siteDescription,
   address: {
     '@type': 'PostalAddress',
+    streetAddress: 'Rua Xanxerê, 267e - Líder',
     addressLocality: 'Chapecó',
     addressRegion: 'SC',
+    postalCode: '89805-270',
     addressCountry: 'BR',
   },
   contactPoint: [
@@ -199,18 +155,15 @@ export const jsonLdLocalBusiness = {
   url: siteUrl,
   telephone: '+55-49-3323-9050',
   priceRange: '$$',
+  // Endereço da matriz, igual ao do Perfil da Empresa no Google. Sem `geo`: as coordenadas antigas eram
+  // do centro da cidade; inclua a posição exata do pino (5 casas decimais) quando for conferida no Google Maps.
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Chapecó',
+    streetAddress: 'Rua Xanxerê, 267e - Líder',
     addressLocality: 'Chapecó',
     addressRegion: 'SC',
-    postalCode: '89800-000',
+    postalCode: '89805-270',
     addressCountry: 'BR'
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: -27.0945,
-    longitude: -52.6166
   },
   openingHoursSpecification: [
     {
@@ -226,13 +179,8 @@ export const jsonLdLocalBusiness = {
       closes: '12:00'
     }
   ],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    reviewCount: '17',
-    bestRating: '5',
-    worstRating: '1'
-  }
+  // Sem aggregateRating: o Google ignora a nota que uma empresa dá a si mesma no próprio site (self-serving)
+  // e a marcação precisa descrever avaliações visíveis na página. A nota real (5,0, 17 avaliações) está no Perfil da Empresa.
 };
 
 export const jsonLdWebSite = {

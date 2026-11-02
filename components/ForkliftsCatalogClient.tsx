@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -31,31 +31,17 @@ import ImageLightboxModal from '@/components/ImageLightboxModal'
 import { useDragScroll } from '@/components/useDragScroll'
 import { TYPE_LABELS, formatLift } from '@/lib/product-seo'
 
-export interface ForkliftProduct {
-  id: string
-  slug: string
-  title: string
-  subtitle: string
-  category?: string
-  categorySlug?: string
-  type: string
-  capacity: string
-  liftingHeight: string
-  batteryVoltage: string
-  batteryType: string
-  turningRadius: string
-  travelSpeed: string
-  description: string
-  applications: string[]
-  url: string
-  mainImage: string
-  galleryImages: string[]
-  specs: Record<string, string | undefined>
-  highlights: { title: string; desc: string }[]
-}
+import type { CatalogItem, ForkliftProduct } from '@/lib/catalog'
+
+export type { ForkliftProduct }
 
 interface Props {
-  initialProducts: ForkliftProduct[]
+  /** Só os campos que a lista usa (cerca de 90 KB nos 222 modelos); a ficha completa fica na página do modelo. */
+  initialProducts: CatalogItem[]
+  /** Página pedida em `/produtos?pagina=N`. Vale enquanto não há filtro; com filtro, a página é do navegador. */
+  initialPage?: number
+  /** Conteúdo gerado no servidor (links dos tipos), mostrado no fim da página. */
+  children?: ReactNode
 }
 
 const ITEMS_PER_PAGE = 12
@@ -70,15 +56,16 @@ const CATEGORIES_CONFIG = [
   { id: 'Equipamentos Especiais & VNA', label: 'Outros (VNA & Especiais)', icon: Cog },
 ]
 
-export default function ForkliftsCatalogClient({ initialProducts }: Props) {
-  const [activeLightboxProduct, setActiveLightboxProduct] = useState<ForkliftProduct | null>(null)
+export default function ForkliftsCatalogClient({ initialProducts, initialPage = 1, children }: Props) {
+  const [activeLightboxProduct, setActiveLightboxProduct] = useState<CatalogItem | null>(null)
   const [search, setSearch] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [rangeFilter, setRangeFilter] = useState('all')
   const [capacityFilter, setCapacityFilter] = useState('all')
   const [liftHeightFilter, setLiftHeightFilter] = useState('all')
   const [voltageFilter, setVoltageFilter] = useState('all')
-  const [currentPage, setCurrentPage] = useState(1)
+  // Página escolhida com filtros ativos. Sem filtro, a página vem do endereço (?pagina=N) e cada número é um link.
+  const [filterPage, setFilterPage] = useState(1)
   const [showMobileFilters, setShowMobileFilters] = useState(false)
   // Fileira de categorias: também rola arrastando com o mouse
   const { ref: categoriesRef, dragging, handlers: dragHandlers } = useDragScroll<HTMLDivElement>()
@@ -115,7 +102,6 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
       const matchesSearch = !searchLower || 
         p.title.toLowerCase().includes(searchLower) ||
         p.subtitle.toLowerCase().includes(searchLower) ||
-        p.description.toLowerCase().includes(searchLower) ||
         p.slug.toLowerCase().includes(searchLower) ||
         (p.category && p.category.toLowerCase().includes(searchLower)) ||
         (p.type && p.type.toLowerCase().includes(searchLower)) ||
@@ -137,7 +123,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
 
       // Range Filter (Série)
       let matchesRange = true
-      const typeLower = (p.type + ' ' + (p.category || '') + ' ' + p.subtitle + ' ' + p.description + ' ' + p.title).toLowerCase()
+      const typeLower = (p.type + ' ' + (p.category || '') + ' ' + p.subtitle + ' ' + p.title).toLowerCase()
       if (rangeFilter === '3wheel') {
         matchesRange = typeLower.includes('3 roda') || typeLower.includes('3-roda') || typeLower.includes('3 wheel') ||
                        p.title.toLowerCase().startsWith('tvl') || p.title.toLowerCase().startsWith('tcl') || p.title.toLowerCase().startsWith('efs')
@@ -185,11 +171,13 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
     })
   }, [initialProducts, search, categoryFilter, rangeFilter, capacityFilter, liftHeightFilter, voltageFilter])
 
+  const hasActiveFilters = Boolean(search || categoryFilter !== 'all' || rangeFilter !== 'all' || capacityFilter !== 'all' || liftHeightFilter !== 'all' || voltageFilter !== 'all')
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) || 1
+  const currentPage = Math.min(hasActiveFilters ? filterPage : initialPage, totalPages)
 
   // Reset to page 1 on filter changes
   useEffect(() => {
-    setCurrentPage(1)
+    setFilterPage(1)
   }, [search, categoryFilter, rangeFilter, capacityFilter, liftHeightFilter, voltageFilter])
 
   const paginatedProducts = useMemo(() => {
@@ -197,7 +185,16 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
     return filteredProducts.slice(start, start + ITEMS_PER_PAGE)
   }, [filteredProducts, currentPage])
 
-  const hasActiveFilters = search || categoryFilter !== 'all' || rangeFilter !== 'all' || capacityFilter !== 'all' || liftHeightFilter !== 'all' || voltageFilter !== 'all'
+  // Ao trocar de página por link, leva a tela de volta ao início da lista
+  const firstRender = useRef(true)
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false
+      return
+    }
+    if (!hasActiveFilters) document.getElementById('catalog-products-top')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialPage])
 
   const handleResetFilters = () => {
     setSearch('')
@@ -206,12 +203,12 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
     setCapacityFilter('all')
     setLiftHeightFilter('all')
     setVoltageFilter('all')
-    setCurrentPage(1)
+    setFilterPage(1)
   }
 
   const goToPage = (page: number) => {
     if (page < 1 || page > totalPages) return
-    setCurrentPage(page)
+    setFilterPage(page)
     const gridEl = document.getElementById('catalog-products-top')
     if (gridEl) {
       gridEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -223,6 +220,24 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
     window.open(url, '_blank')
   }
+
+  const pageHref = (page: number) => (page > 1 ? `/produtos?pagina=${page}` : '/produtos')
+
+  const pageControl = (
+    page: number,
+    label: ReactNode,
+    classes: string,
+    options: { title?: string; current?: boolean; rel?: 'prev' | 'next' } = {}
+  ) =>
+    hasActiveFilters ? (
+      <button type="button" onClick={() => goToPage(page)} className={classes} title={options.title} aria-current={options.current ? 'page' : undefined}>
+        {label}
+      </button>
+    ) : (
+      <Link href={pageHref(page)} scroll={false} className={classes} title={options.title} rel={options.rel} aria-current={options.current ? 'page' : undefined}>
+        {label}
+      </Link>
+    )
 
   const getPageNumbers = () => {
     const pages: (number | string)[] = []
@@ -684,7 +699,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
               <>
                 {/* Product Grid (3 cols on large, 2 on medium, 1 on mobile) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-                  {paginatedProducts.map((product) => {
+                  {paginatedProducts.map((product, index) => {
                     const cleanSubtitle = product.subtitle
                       .replace(/^Empilhadeira Elétrica EP /i, '')
                       .replace(/^Paleteira Elétrica EP /i, '')
@@ -740,6 +755,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                               src={product.mainImage}
                               alt={product.title}
                               fill
+                              priority={index < 3}
                               sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 280px"
                               className="object-contain p-4 filter drop-shadow-xs group-hover:scale-110 transition-transform duration-500 ease-out"
                               style={{ mixBlendMode: 'multiply' }}
@@ -805,7 +821,7 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                   })}
                 </div>
 
-                {/* Streamlined Pagination */}
+                {/* Paginação: sem filtro, cada número é um link (/produtos?pagina=N) que o Google segue; com filtro, botões */}
                 {totalPages > 1 && (
                   <nav aria-label="Navegação de páginas" className="pt-8 pb-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200">
                     <p className="text-xs text-slate-500">
@@ -813,34 +829,30 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                     </p>
 
                     <div className="flex items-center gap-1.5">
-                      <button
-                        onClick={() => goToPage(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className={`p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all border ${
-                          currentPage === 1
-                            ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
-                            : 'bg-white text-slate-700 hover:text-red-600 border-slate-200 hover:bg-slate-50 shadow-xs'
-                        }`}
-                        title="Página anterior"
-                      >
-                        <ChevronLeft size={16} />
-                        <span className="hidden sm:inline pr-1">Anterior</span>
-                      </button>
+                      {currentPage > 1 ? (
+                        pageControl(currentPage - 1, (
+                          <>
+                            <ChevronLeft size={16} />
+                            <span className="hidden sm:inline pr-1">Anterior</span>
+                          </>
+                        ), 'p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all border bg-white text-slate-700 hover:text-red-600 border-slate-200 hover:bg-slate-50 shadow-xs', { title: 'Página anterior', rel: 'prev' })
+                      ) : (
+                        <span aria-hidden="true" className="p-2 rounded-xl text-xs font-bold flex items-center gap-1 border bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed">
+                          <ChevronLeft size={16} />
+                          <span className="hidden sm:inline pr-1">Anterior</span>
+                        </span>
+                      )}
 
                       <div className="flex items-center gap-1">
                         {getPageNumbers().map((p, idx) => (
                           typeof p === 'number' ? (
-                            <button
-                              key={idx}
-                              onClick={() => goToPage(p)}
-                              className={`w-9 h-9 rounded-xl text-xs font-bold transition-all border ${
+                            <span key={idx}>
+                              {pageControl(p, p, `w-9 h-9 rounded-xl text-xs font-bold transition-all border flex items-center justify-center ${
                                 currentPage === p
                                   ? 'bg-red-600 text-white border-red-600 shadow-xs shadow-red-600/30'
                                   : 'bg-white text-slate-700 hover:text-red-600 border-slate-200 hover:bg-slate-50'
-                              }`}
-                            >
-                              {p}
-                            </button>
+                              }`, { current: currentPage === p })}
+                            </span>
                           ) : (
                             <span key={idx} className="px-1 text-slate-400 text-xs font-bold">
                               •••
@@ -849,19 +861,19 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
                         ))}
                       </div>
 
-                      <button
-                        onClick={() => goToPage(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                        className={`p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all border ${
-                          currentPage === totalPages
-                            ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
-                            : 'bg-white text-slate-700 hover:text-red-600 border-slate-200 hover:bg-slate-50 shadow-xs'
-                        }`}
-                        title="Próxima página"
-                      >
-                        <span className="hidden sm:inline pl-1">Próxima</span>
-                        <ChevronRight size={16} />
-                      </button>
+                      {currentPage < totalPages ? (
+                        pageControl(currentPage + 1, (
+                          <>
+                            <span className="hidden sm:inline pl-1">Próxima</span>
+                            <ChevronRight size={16} />
+                          </>
+                        ), 'p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all border bg-white text-slate-700 hover:text-red-600 border-slate-200 hover:bg-slate-50 shadow-xs', { title: 'Próxima página', rel: 'next' })
+                      ) : (
+                        <span aria-hidden="true" className="p-2 rounded-xl text-xs font-bold flex items-center gap-1 border bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed">
+                          <span className="hidden sm:inline pl-1">Próxima</span>
+                          <ChevronRight size={16} />
+                        </span>
+                      )}
                     </div>
                   </nav>
                 )}
@@ -872,6 +884,8 @@ export default function ForkliftsCatalogClient({ initialProducts }: Props) {
 
         </div>
       </div>
+
+      {children}
 
       {/* Lightbox Modal */}
       {activeLightboxProduct && (

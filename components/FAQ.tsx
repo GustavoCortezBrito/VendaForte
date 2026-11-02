@@ -30,7 +30,7 @@ export default function FAQ() {
     },
     {
       question: 'Como funciona a assistência técnica?',
-      answer: 'Nossa assistência técnica é especializada e atende todas as marcas. Oferecemos manutenção preventiva e corretiva com equipe certificada. O suporte técnico está disponível 24 horas para emergências, garantindo o mínimo de tempo de parada em sua operação.'
+      answer: 'Nossa assistência técnica é especializada e atende todas as marcas. Oferecemos manutenção preventiva e corretiva com equipe certificada.'
     },
     {
       question: 'Qual o prazo para entrega de equipamentos?',

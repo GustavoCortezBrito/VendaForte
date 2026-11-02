@@ -1,16 +1,14 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import ForkliftDetailClient from '@/components/ForkliftDetailClient'
-import forkliftsData from '@/lib/data/electric-forklifts.json'
-import { ForkliftProduct } from '@/components/ForkliftsCatalogClient'
+import { allProducts, guideFor, similarProducts, toCatalogItem, typePageOf } from '@/lib/catalog'
+import type { ForkliftProduct } from '@/lib/catalog'
 import { LOCAL_PHOTOS } from '@/lib/data/local-photos'
-import { productDescription, productJsonLd, productTitle } from '@/lib/product-seo'
+import { productDescription, productIntro, productJsonLd, productTitle } from '@/lib/product-seo'
 
 interface Props {
   params: Promise<{ slug: string }>
 }
-
-const allProducts = forkliftsData as unknown as ForkliftProduct[]
 
 /** Fotos reais do modelo (quando existem) entram na galeria logo depois da imagem principal. */
 const withLocalPhotos = (product: ForkliftProduct): ForkliftProduct => {
@@ -59,19 +57,26 @@ export default async function ProductDetailPage({ params }: Props) {
     notFound()
   }
 
-  const relatedProducts = allProducts
-    .filter(p => p.slug !== slug && p.categorySlug === product.categorySlug)
-    .slice(0, 3)
-    .concat(allProducts.filter(p => p.slug !== slug && p.categorySlug !== product.categorySlug).slice(0, 3))
-    .slice(0, 3)
+  // Toda ficha liga à página do seu tipo e a 4 modelos do mesmo tipo com capacidade próxima
+  const type = typePageOf(product)
+  const typeLink = type ? { href: `/produtos/tipo/${type.slug}`, label: type.label } : undefined
+  const related = similarProducts(product, 4).map(toCatalogItem)
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(product, LOCAL_PHOTOS[product.slug])) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productJsonLd(product, type ? { name: type.label, path: `/produtos/tipo/${type.slug}` } : undefined)),
+        }}
       />
-      <ForkliftDetailClient product={withLocalPhotos(product)} relatedProducts={relatedProducts} />
+      <ForkliftDetailClient
+        product={withLocalPhotos(product)}
+        relatedProducts={related}
+        typeLink={typeLink}
+        intro={productIntro(product)}
+        guide={guideFor(product.slug)}
+      />
     </>
   )
 }

@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import { FileText, CheckCircle, XCircle, AlertTriangle, Scale, Shield, Gavel, Phone } from 'lucide-react'
 import Link from 'next/link'
 
@@ -16,21 +13,18 @@ export default function TermosClient() {
           }} />
         </div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-center">
+          <div className="text-center">
             <Scale className="w-16 h-16 text-red-500 mx-auto mb-6" />
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Termos de Uso</h1>
             <p className="text-xl text-gray-200">Última atualização: {new Date().toLocaleDateString('pt-BR')}</p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Content Section */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+          <div
             className="bg-white rounded-3xl shadow-xl p-8 md:p-12"
           >
             {/* Introdução */}
@@ -208,12 +202,9 @@ export default function TermosClient() {
                 <p>Endereço: Chapecó - SC</p>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
+          <div
             className="mt-8 text-center"
           >
             <Link
@@ -222,7 +213,7 @@ export default function TermosClient() {
             >
               ← Voltar para o site principal
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

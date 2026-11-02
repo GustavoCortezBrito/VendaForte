@@ -30,7 +30,7 @@ export default function Testimonials() {
       initials: 'GB',
       bgColor: 'bg-purple-500',
       rating: 5,
-      timeAgo: 'há 2 meses',
+      timeAgo: 'há mais de 4 anos',
       text: 'Ambiente amplo, bom atendimento dos funcionários, prestativos. Obtive resposta rápida do orçamento! Produto de qualidade, recomendo!'
     },
     {
@@ -39,7 +39,7 @@ export default function Testimonials() {
       initials: 'WA',
       bgColor: 'bg-blue-500',
       rating: 5,
-      timeAgo: 'há 3 meses',
+      timeAgo: 'há mais de 4 anos',
       text: 'Atendimento muito bom! Buscaram entender a demanda para disponibilizar o equipamento com as características ideias para nossa operação.'
     },
     {
@@ -48,7 +48,7 @@ export default function Testimonials() {
       initials: 'LC',
       bgColor: 'bg-green-500',
       rating: 5,
-      timeAgo: 'há 1 mês',
+      timeAgo: 'há mais de 4 anos',
       text: 'Vendedor Michael Felipe Vieira extremamente atencioso, atendimento 10, super recomendo.'
     },
     {
@@ -57,7 +57,7 @@ export default function Testimonials() {
       initials: 'AB',
       bgColor: 'bg-orange-500',
       rating: 5,
-      timeAgo: 'há 4 meses',
+      timeAgo: 'há mais de 4 anos',
       text: 'Empresa superou minhas expectativas. Ótimo atendimento, preços e condições. Recomendo para todos que precisam de empilhadeiras de qualidade.'
     },
     {
@@ -66,7 +66,7 @@ export default function Testimonials() {
       initials: 'CL',
       bgColor: 'bg-pink-500',
       rating: 5,
-      timeAgo: 'há 5 meses',
+      timeAgo: 'há mais de 4 anos',
       text: 'Excelente atendimento, ótimos preços e máquinas de qualidade parabéns'
     },
     {
@@ -75,7 +75,7 @@ export default function Testimonials() {
       initials: 'AM',
       bgColor: 'bg-indigo-500',
       rating: 5,
-      timeAgo: 'há 2 meses',
+      timeAgo: 'há mais de 4 anos',
       text: 'Atendimento sensacional! Prestativo e produto de qualidade.'
     },
     {
@@ -84,7 +84,7 @@ export default function Testimonials() {
       initials: 'AM',
       bgColor: 'bg-teal-500',
       rating: 5,
-      timeAgo: 'há 1 mês',
+      timeAgo: 'há mais de 4 anos',
       isLocalGuide: true,
       text: 'Excelente atendimento do Michael, empresa muito boa! Recomendo!'
     },
@@ -94,7 +94,7 @@ export default function Testimonials() {
       initials: 'AL',
       bgColor: 'bg-cyan-500',
       rating: 5,
-      timeAgo: 'há 3 meses',
+      timeAgo: 'há mais de 4 anos',
       text: 'Atendimento diferenciado e ótima qualidade dos equipamentos'
     },
     {
@@ -103,7 +103,7 @@ export default function Testimonials() {
       initials: 'MC',
       bgColor: 'bg-rose-500',
       rating: 5,
-      timeAgo: 'há 6 meses',
+      timeAgo: 'há mais de 4 anos',
       text: 'Ótimo atendimento!! Recomendo'
     },
     {
@@ -112,7 +112,7 @@ export default function Testimonials() {
       initials: 'SR',
       bgColor: 'bg-amber-500',
       rating: 5,
-      timeAgo: 'há 4 meses',
+      timeAgo: 'há mais de 4 anos',
       text: 'Agilidade no atendimento e máquinas de qualidade.'
     },
     {
@@ -121,7 +121,7 @@ export default function Testimonials() {
       initials: 'DV',
       bgColor: 'bg-lime-500',
       rating: 5,
-      timeAgo: 'há 2 meses',
+      timeAgo: 'há mais de 4 anos',
       text: 'Excelente atendimento'
     }
   ]
@@ -329,8 +329,8 @@ export default function Testimonials() {
                 <p className="text-red-100 text-lg">Clientes Satisfeitos</p>
               </div>
               <div className="transform hover:scale-105 transition-transform">
-                <p className="text-5xl font-bold mb-3">24/7</p>
-                <p className="text-red-100 text-lg">Suporte Técnico</p>
+                <p className="text-5xl font-bold mb-3">5,0</p>
+                <p className="text-red-100 text-lg">Nota no Google</p>
               </div>
             </div>
           </motion.div>

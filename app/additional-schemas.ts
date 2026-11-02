@@ -72,7 +72,7 @@ export const servicesSchema = {
         "itemOffered": {
           "@type": "Service",
           "name": "Manutenção de Empilhadeiras",
-          "description": "Manutenção preventiva e corretiva multimarcas 24h"
+          "description": "Manutenção preventiva e corretiva multimarcas"
         }
       },
       {

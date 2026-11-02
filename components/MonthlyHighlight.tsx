@@ -324,7 +324,7 @@ export default function MonthlyHighlight() {
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-2 cursor-default">
             <Percent size={16} className="text-red-600" />
-            <span>Financiamento Facilitado Direto e BNDES</span>
+            <span>Financiamento Facilitado Direto</span>
           </motion.div>
         </motion.div>
 

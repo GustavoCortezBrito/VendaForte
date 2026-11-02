@@ -68,7 +68,7 @@ export default function Services() {
       subtitle: 'Suporte Especializado Multimarca',
       description: 'Equipe de técnicos altamente qualificados e oficinas móveis preparadas para atendimentos preventivos e corretivos urgentes.',
       features: ['Técnicos certificados EP', 'Oficinas móveis para atendimento', 'Manutenção preventiva & corretiva', 'Planos de revisão periódica'],
-      badge: 'Suporte 24/7',
+      badge: 'Multimarca',
       ctaText: 'Falar com a Assistência Técnica',
       ctaHref: '/#contact',
       isHighlighted: false

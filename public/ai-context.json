@@ -85,7 +85,7 @@
       {
         "@type": "ContactPoint",
         "telephone": "+55-49-98839-5635",
-        "contactType": "Atendimento WhatsApp 24h",
+        "contactType": "Atendimento WhatsApp",
         "areaServed": "BR",
         "availableLanguage": ["Portuguese"]
       }
@@ -183,8 +183,8 @@
       },
       {
         "@type": "Service",
-        "name": "Assistência Técnica 24h",
-        "description": "Suporte técnico disponível 24 horas para emergências"
+        "name": "Assistência Técnica",
+        "description": "Manutenção preventiva e corretiva multimarcas com equipe certificada"
       }
     ],
 
@@ -239,7 +239,6 @@
       "Mais de 20 anos de experiência no mercado",
       "Importação direta com melhor custo-benefício",
       "Atendimento em 6 cidades do Sul do Brasil",
-      "Assistência técnica 24 horas",
       "Estoque completo de peças multimarcas",
       "Avaliação 5.0 estrelas no Google",
       "Clientes incluem grandes empresas (BRF, JBS, Seara, Copacol)"

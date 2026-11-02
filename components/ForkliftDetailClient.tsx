@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
 import { 
   ChevronRight, 
@@ -21,15 +21,24 @@ import {
   SlidersHorizontal
 } from 'lucide-react'
 import ImageLightboxModal from '@/components/ImageLightboxModal'
-import { ForkliftProduct } from './ForkliftsCatalogClient'
+import type { CatalogItem, ForkliftProduct } from '@/lib/catalog'
+import { energyLabel } from '@/lib/catalog'
+import { formatLift } from '@/lib/product-seo'
 import { getOrganizedSpecs, FormattedSpecGroup } from '@/lib/utils/specs-formatter'
 
 interface Props {
   product: ForkliftProduct
-  relatedProducts: ForkliftProduct[]
+  /** Modelos do mesmo tipo com capacidade próxima. */
+  relatedProducts: CatalogItem[]
+  /** Página do tipo do modelo; o único modelo "especial/VNA" não tem. */
+  typeLink?: { href: string; label: string }
+  /** Parágrafos de abertura montados com os dados do modelo. */
+  intro: string[]
+  /** Post do blog que explica a ficha deste modelo, se já estiver no ar. */
+  guide?: { href: string; label: string }
 }
 
-export default function ForkliftDetailClient({ product, relatedProducts }: Props) {
+export default function ForkliftDetailClient({ product, relatedProducts, typeLink, intro, guide }: Props) {
   const [activeImage, setActiveImage] = useState(product.mainImage)
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -92,6 +101,12 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
           <ChevronRight size={14} className="text-gray-400" />
           <Link href="/produtos" className="hover:text-red-600 transition-colors">Produtos</Link>
           <ChevronRight size={14} className="text-gray-400" />
+          {typeLink && (
+            <>
+              <Link href={typeLink.href} className="hover:text-red-600 transition-colors">{typeLink.label}</Link>
+              <ChevronRight size={14} className="text-gray-400" />
+            </>
+          )}
           <span className="text-gray-900 font-extrabold">{product.title}</span>
         </nav>
       </div>
@@ -110,7 +125,7 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
             >
               <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-10">
                 <span className="px-3.5 py-1 bg-red-600 font-bold text-white text-xs rounded-md shadow-sm">
-                  {product.batteryVoltage} Li-Ion
+                  {product.specs?.Drive === 'Diesel' ? 'Diesel' : `${product.batteryVoltage} ${/chumbo/i.test(product.batteryType) ? 'Chumbo-ácido' : 'Li-Ion'}`}
                 </span>
                 <span className="px-3.5 py-1 bg-white font-bold text-gray-700 text-xs rounded-md border border-gray-200 shadow-sm">
                   {product.type}
@@ -118,16 +133,16 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
               </div>
 
               {/* Fotos reais (arquivos locais) preenchem o quadro; os recortes do catálogo ficam inteiros sobre o fundo claro */}
-              <img
+              <Image
                 src={activeImage}
                 alt={`${product.type} EP ${product.title}`}
-                className={`transition-all duration-300 group-hover/mainimg:scale-105 ${
-                  activeImage.startsWith('/') ? 'absolute inset-0 w-full h-full object-cover' : 'w-full h-full object-contain filter drop-shadow-md'
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                className={`transition-transform duration-300 group-hover/mainimg:scale-105 ${
+                  activeImage.startsWith('/') ? 'object-cover' : 'object-contain p-4 sm:p-6 drop-shadow-md'
                 }`}
                 style={activeImage.startsWith('/') ? undefined : { mixBlendMode: 'multiply' }}
-                onError={(e) => {
-                  e.currentTarget.src = product.mainImage || 'https://cdn.ep-portal.net/products/attr_5/1758185452375-2j5v1u.webp'
-                }}
               />
 
               {/* Badge de zoom ao passar o mouse */}
@@ -150,11 +165,12 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
                         : 'border-gray-200 hover:border-gray-300 opacity-70 hover:opacity-100'
                     }`}
                   >
-                    <img
+                    <Image
                       src={img}
-                      alt="Miniatura"
-                      loading="lazy"
-                      className={`w-full h-full ${img.startsWith('/') ? 'object-cover rounded-lg' : 'object-contain'}`}
+                      alt={`Foto ${i + 1} da EP ${product.title}`}
+                      fill
+                      sizes="80px"
+                      className={img.startsWith('/') ? 'object-cover rounded-lg' : 'object-contain p-2'}
                       style={img.startsWith('/') ? undefined : { mixBlendMode: 'multiply' }}
                     />
                   </button>
@@ -208,9 +224,18 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
                 {product.subtitle.replace(/^Empilhadeira Elétrica EP /i, 'Empilhadeira Elétrica ')}
               </p>
 
-              <p className="text-gray-600 text-sm sm:text-base leading-relaxed font-normal mb-6">
-                {product.description.replace(/ EP /gi, ' ')}
-              </p>
+              <div className="text-gray-600 text-sm sm:text-base leading-relaxed font-normal mb-6 space-y-3">
+                {intro.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+                {guide && (
+                  <p>
+                    <Link href={guide.href} className="font-bold text-red-600 hover:underline">
+                      {guide.label}
+                    </Link>
+                  </p>
+                )}
+              </div>
 
               {/* Specs Cards Bar */}
               <div className="grid grid-cols-2 gap-3 mb-6">
@@ -231,9 +256,9 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
                 <div className="bg-white border border-gray-200 rounded-2xl p-3.5 shadow-sm">
                   <div className="flex items-center gap-1 text-[10px] uppercase font-bold text-gray-400">
                     <Zap size={12} className="text-red-500" />
-                    <span>Sistema de Bateria</span>
+                    <span>{product.specs?.Drive === 'Diesel' ? 'Acionamento' : 'Sistema de Bateria'}</span>
                   </div>
-                  <span className="text-lg font-extrabold text-red-600 mt-0.5 block">{product.batteryVoltage} Lítio</span>
+                  <span className="text-lg font-extrabold text-red-600 mt-0.5 block">{product.specs?.Drive === 'Diesel' ? 'Motor a diesel' : `${product.batteryVoltage} ${/chumbo/i.test(product.batteryType) ? 'Chumbo-ácido' : 'Lítio'}`}</span>
                 </div>
                 <div className="bg-white border border-gray-200 rounded-2xl p-3.5 shadow-sm">
                   <div className="flex items-center gap-1 text-[10px] uppercase font-bold text-gray-400">
@@ -386,6 +411,47 @@ export default function ForkliftDetailClient({ product, relatedProducts }: Props
             </div>
 
           </div>
+        )}
+
+        {relatedProducts.length > 0 && (
+          <section aria-labelledby="mais-da-linha" className="mt-14">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <h2 id="mais-da-linha" className="text-2xl font-extrabold tracking-tight text-slate-900">
+                Mais modelos desta linha
+              </h2>
+              {typeLink && (
+                <Link href={typeLink.href} className="text-sm font-bold text-red-600 hover:underline">
+                  Ver todas: {typeLink.label.toLowerCase()}
+                </Link>
+              )}
+            </div>
+            <ul className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-4">
+              {relatedProducts.map((item) => (
+                <li key={item.slug}>
+                  <Link
+                    href={`/produtos/${item.slug}`}
+                    className="block h-full rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-colors hover:border-red-300"
+                  >
+                    <span className="relative mb-3 block aspect-[4/3] overflow-hidden rounded-xl bg-slate-50">
+                      <Image
+                        src={item.mainImage}
+                        alt=""
+                        fill
+                        sizes="(max-width: 1024px) 45vw, 260px"
+                        loading="lazy"
+                        className="object-contain p-3"
+                        style={{ mixBlendMode: 'multiply' }}
+                      />
+                    </span>
+                    <span className="block font-extrabold text-slate-900">EP {item.title}</span>
+                    <span className="mt-1 block text-xs text-slate-500">
+                      {item.capacity} · {formatLift(item.liftingHeight)} · {energyLabel({ batteryVoltage: item.batteryVoltage, batteryType: item.batteryType, specs: { Drive: item.drive } })}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         )}
 
       </section>

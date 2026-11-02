@@ -1,110 +1,36 @@
-'use client'
-
-import { motion } from 'framer-motion'
+import Image from 'next/image'
+import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { useEffect, useState } from 'react'
+
+/** Atraso de entrada de cada bloco, em segundos (animação .rise, em CSS). */
+const delay = (seconds: number) => ({ '--delay': `${seconds}s` }) as React.CSSProperties
 
 export default function Hero() {
-  const [particles, setParticles] = useState<Array<{
-    id: number
-    x: number
-    y: number
-    delay: number
-    duration: number
-  }>>([])
-
-  // Gera partículas apenas no cliente para evitar hydration mismatch
-  useEffect(() => {
-    setParticles(
-      Array.from({ length: 50 }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        delay: Math.random() * 5,
-        duration: 20 + Math.random() * 15,
-      }))
-    )
-  }, [])
-
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
+      {/* Foto de fundo: otimizada e carregada com prioridade (é o maior elemento do primeiro quadro) */}
       <div className="absolute inset-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: 'url(/sede.png)' }}
-        />
+        <Image src="/sede.png" alt="" fill priority sizes="100vw" quality={55} className="object-cover object-center" />
         {/* Dark Overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70" />
       </div>
 
-      {/* Particles Background - Hidden on Mobile */}
-      {particles.length > 0 && (
-        <div className="hidden md:block absolute inset-0 overflow-hidden pointer-events-none">
-          {particles.map((particle) => (
-            <motion.div
-              key={particle.id}
-              className="absolute w-1 h-1 bg-white/30 rounded-full"
-              style={{
-                left: `${particle.x}%`,
-                top: `${particle.y}%`,
-              }}
-              animate={{
-                y: [0, -40, 0],
-                x: [0, Math.sin(particle.id) * 15, 0],
-                opacity: [0.1, 0.4, 0.1],
-                scale: [1, 1.3, 1],
-              }}
-              transition={{
-                duration: particle.duration,
-                delay: particle.delay,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Animated Background Elements - Simplified on Mobile */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.15, 0.1],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute top-0 left-1/4 w-64 md:w-96 h-64 md:h-96 bg-red-600 rounded-full blur-3xl"
+      {/* Brilhos de fundo estáticos: no lugar de círculos desfocados e 50 partículas animadas, que custavam JavaScript e pintura */}
+      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute top-0 left-1/4 w-64 md:w-96 h-64 md:h-96 rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(220,38,38,0.16), transparent 70%)' }}
         />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.1, 0.15, 0.1],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute bottom-0 right-1/4 w-64 md:w-96 h-64 md:h-96 bg-red-800 rounded-full blur-3xl"
+        <div
+          className="absolute bottom-0 right-1/4 w-64 md:w-96 h-64 md:h-96 rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(153,27,27,0.16), transparent 70%)' }}
         />
       </div>
 
       {/* Centered Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-32 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+        <div>
+          <h1
             className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight px-2 mt-16 sm:mt-20 md:mt-0"
           >
             <span className="block text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-red-400 mb-2">
@@ -116,24 +42,19 @@ export default function Hero() {
             <span className="block text-red-500 mt-1 sm:mt-2">
               Empilhadeiras e Equipamentos
             </span>
-          </motion.h1>
+          </h1>
           
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+          <p
             className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-100 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto px-2 font-normal"
           >
             O <strong className="text-white font-semibold">Grupo Venda Forte</strong> oferece <strong className="text-white font-semibold">soluções completas em empilhadeiras e equipamentos</strong> industriais e autônomos. Como Dealer Oficial da <strong className="text-white font-semibold">EP Equipment</strong>, fornecemos suporte especializado, peças originais e alta tecnologia para otimizar a operação logística em Santa Catarina e toda a região Sul.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center px-2"
+          <div
+            className="rise flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center px-2"
+            style={delay(0.2)}
           >
-            <a
+            <Link
               href="/#contact"
               aria-label="Peça seu orçamento personalizado de empilhadeiras"
               title="Solicitar Orçamento de Empilhadeiras"
@@ -141,44 +62,36 @@ export default function Hero() {
             >
               Peça seu Orçamento
               <ArrowRight className="ml-2" size={18} />
-            </a>
-            <a
+            </Link>
+            <Link
               href="/#services"
               aria-label="Conheça nossos produtos e soluções em empilhadeiras"
               title="Ver Soluções e Equipamentos"
               className="inline-flex items-center justify-center border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-red-600 transition-all text-sm sm:text-base lg:text-lg"
             >
               Nossos Produtos
-            </a>
-          </motion.div>
+            </Link>
+          </div>
 
           {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="grid grid-cols-3 gap-3 sm:gap-6 md:gap-12 mt-10 sm:mt-12 md:mt-16 max-w-3xl mx-auto px-2"
+          <div
+            className="rise grid grid-cols-2 gap-3 sm:gap-6 md:gap-12 mt-10 sm:mt-12 md:mt-16 max-w-xl mx-auto px-2"
+            style={delay(0.35)}
           >
             <div className="text-center">
               <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-red-500 mb-1 sm:mb-2">1000+</div>
               <div className="text-xs sm:text-sm md:text-base text-gray-200 leading-tight">Equipamentos Vendidos</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-red-500 mb-1 sm:mb-2">24h</div>
-              <div className="text-xs sm:text-sm md:text-base text-gray-200 leading-tight">Assistência Técnica</div>
-            </div>
-            <div className="text-center">
               <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-red-500 mb-1 sm:mb-2">20+</div>
               <div className="text-xs sm:text-sm md:text-base text-gray-200 leading-tight">Anos de Experiência</div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Location Badge - Redesigned */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, type: "spring" }}
-            className="mt-8 sm:mt-10 md:mt-12 px-2"
+          <div
+            className="rise mt-8 sm:mt-10 md:mt-12 px-2"
+            style={delay(0.5)}
           >
             <div className="inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-3 bg-gradient-to-r from-red-600/90 to-red-700/90 backdrop-blur-md rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3 sm:py-4 border border-red-500/30 shadow-xl max-w-full">
               <div className="flex items-center gap-2">
@@ -191,8 +104,8 @@ export default function Hero() {
               <div className="hidden sm:block w-px h-6 sm:h-8 bg-white/30" />
               <span className="text-white/90 text-xs sm:text-sm text-center sm:text-left">Atendimento em todo Sul do Brasil</span>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   )

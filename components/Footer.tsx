@@ -1,12 +1,7 @@
-'use client'
-
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
 import { Mail, Phone, MapPin } from 'lucide-react'
+import { TYPE_PAGES } from '@/lib/catalog'
 
 export default function Footer() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
@@ -73,20 +68,19 @@ export default function Footer() {
 
   const usefulLinks = [
     { label: 'Catálogo de Produtos EP', href: '/produtos', ariaLabel: 'Acessar catálogo completo de produtos EP Equipment' },
+    // Uma página para cada tipo de equipamento: links em todas as páginas do site levam o Google até elas
+    ...TYPE_PAGES.map((type) => ({ label: type.label, href: `/produtos/tipo/${type.slug}`, ariaLabel: `Ver ${type.label.toLowerCase()} EP Equipment com ficha técnica` })),
     { label: 'Blog e Notícias Industriais', href: '/blog', ariaLabel: 'Ler artigos e novidades no blog do Grupo Venda Forte' },
     { label: 'Diretrizes de Privacidade', href: '/privacidade', ariaLabel: 'Consultar política de privacidade do site' },
     { label: 'Termos e Condições', href: '/termos', ariaLabel: 'Consultar os termos de uso do site' },
   ]
 
   return (
-    <footer ref={ref} className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
+          <div
           >
             <div className="text-2xl font-bold mb-2 text-red-500">
               Venda Forte
@@ -96,39 +90,29 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social, index) => (
-                <motion.a
+                <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 0.1 * index, duration: 0.4 }}
-                  whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
-                  className={`w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center ${social.color} transition-all duration-300`}
+                  className={`w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center ${social.color} transition-all duration-300 transition-transform hover:scale-[1.2]`}
                   aria-label={`Siga-nos no ${social.label}`}
                   title={`Visite nosso perfil no ${social.label}`}
                 >
                   {social.icon}
-                </motion.a>
+                </a>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
+          <div
           >
             <div className="text-lg font-semibold mb-4">Links Rápidos</div>
             <ul className="space-y-2">
               {quickLinks.map((link, index) => (
-                <motion.li
+                <li
                   key={link.label}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.1 + 0.05 * index, duration: 0.4 }}
                 >
                   <a
                     href={link.href}
@@ -138,25 +122,19 @@ export default function Footer() {
                     <span className="w-1.5 h-1.5 bg-red-600 rounded-full mr-2" />
                     {link.label}
                   </a>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Useful Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          <div
           >
             <div className="text-lg font-semibold mb-4">Links Úteis</div>
             <ul className="space-y-2">
               {usefulLinks.map((service, index) => (
-                <motion.li
+                <li
                   key={service.label}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.2 + 0.05 * index, duration: 0.4 }}
                 >
                   <a
                     href={service.href}
@@ -166,32 +144,23 @@ export default function Footer() {
                     <span className="w-1.5 h-1.5 bg-red-600 rounded-full mr-2" />
                     {service.label}
                   </a>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
+          <div
           >
             <div className="text-lg font-semibold mb-4">Contato</div>
             <ul className="space-y-4">
-              <motion.li
-                initial={{ opacity: 0, y: 10 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.3, duration: 0.4 }}
+              <li
                 className="flex items-start text-gray-400"
               >
                 <MapPin size={20} className="mr-3 mt-1 flex-shrink-0 text-red-600" />
                 <span>Chapecó-SC (Matriz), Joinville-SC,<br />Itajaí-SC, Maringá-PR, Seberi-RS, Esteio-RS</span>
-              </motion.li>
-              <motion.li
-                initial={{ opacity: 0, y: 10 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.4, duration: 0.4 }}
+              </li>
+              <li
                 className="flex items-center text-gray-400"
               >
                 <Phone size={20} className="mr-3 flex-shrink-0 text-red-600" />
@@ -203,27 +172,21 @@ export default function Footer() {
                     47 3842-3333 (Joinville)
                   </a>
                 </div>
-              </motion.li>
-              <motion.li
-                initial={{ opacity: 0, y: 10 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.5, duration: 0.4 }}
+              </li>
+              <li
                 className="flex items-center text-gray-400"
               >
                 <Mail size={20} className="mr-3 flex-shrink-0 text-red-600" />
                 <a href="mailto:comercial@grupovendaforte.com" className="hover:text-red-500 transition-colors">
                   comercial@grupovendaforte.com
                 </a>
-              </motion.li>
+              </li>
             </ul>
-          </motion.div>
+          </div>
         </div>
 
         {/* Bottom Bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6, duration: 0.6 }}
+        <div
           className="border-t border-gray-800 pt-8 mt-8"
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
@@ -239,7 +202,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </footer>
   )

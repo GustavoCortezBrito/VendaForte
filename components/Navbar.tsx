@@ -1,8 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, useScroll, useSpring } from 'framer-motion'
-import { Menu, X, Settings } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -14,20 +13,12 @@ export default function Navbar() {
   const isHomePage = pathname === '/'
   // Header é considerado "light" (fundo branco / texto escuro) se rolou OU se está em qualquer página que não seja a home
   const isLightHeader = isScrolled || !isHomePage
-  
-  // Progress bar do scroll
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  })
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -44,16 +35,14 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Barra de Progresso de Scroll Animada */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-red-500 to-red-600 origin-left z-[60]"
-        style={{ scaleX }}
+      {/* Barra de progresso da rolagem: CSS puro (ver .scroll-progress em globals.css) */}
+      <div
+        aria-hidden="true"
+        className="scroll-progress fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-red-500 to-red-600 z-[60]"
       />
 
       {/* Main Navbar */}
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
+      <nav
         className={`fixed w-full z-50 transition-all duration-300 ${
           isLightHeader 
             ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100' 
@@ -95,12 +84,9 @@ export default function Navbar() {
             <div className="hidden md:block">
               <div className="ml-10 flex items-center space-x-8">
                 {menuItems.map((item, index) => (
-                  <motion.a
+                  <a
                     key={item.label}
                     href={item.href}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.05 * index }}
                     aria-label={`Acessar seção ${item.label}`}
                     className={`font-medium relative group transition-colors duration-300 ${
                       isLightHeader 
@@ -112,40 +98,16 @@ export default function Navbar() {
                     <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${
                       isLightHeader ? 'bg-red-600' : 'bg-white'
                     }`}></span>
-                  </motion.a>
+                  </a>
                 ))}
                 
-                {/* Ícone Admin */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  <Link
-                    href="/admin"
-                    rel="nofollow"
-                    aria-label="Acessar Painel Administrativo"
-                    className={`p-2 rounded-lg transition-all ${
-                      isLightHeader
-                        ? 'hover:bg-gray-100 text-gray-600 hover:text-red-600'
-                        : 'hover:bg-white/10 text-white'
-                    }`}
-                    title="Painel Administrativo"
-                  >
-                    <Settings size={20} />
-                  </Link>
-                </motion.div>
-                
-                <motion.a
+                <a
                   href="/#contact"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.5 }}
                   aria-label="Fale Conosco - Solicitar orçamento de empilhadeiras"
                   className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-semibold"
                 >
                   Fale Conosco
-                </motion.a>
+                </a>
               </div>
             </div>
 
@@ -167,11 +129,8 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <motion.div
+          <div
             aria-hidden="true"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
             className={`md:hidden ${
               isLightHeader ? 'bg-white' : 'bg-gray-900/95 backdrop-blur-lg'
             } shadow-lg border-t ${
@@ -204,9 +163,9 @@ export default function Navbar() {
                 Entre em Contato
               </a>
             </div>
-          </motion.div>
+          </div>
         )}
-      </motion.nav>
+      </nav>
     </>
   )
 }

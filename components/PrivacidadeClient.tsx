@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import { Shield, Lock, Eye, FileText, Users, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
 
@@ -16,17 +13,17 @@ export default function PrivacidadeClient() {
           }} />
         </div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-center">
+          <div className="text-center">
             <Shield className="w-16 h-16 text-red-500 mx-auto mb-6" />
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Política de Privacidade</h1>
             <p className="text-xl text-gray-200">Última atualização: {new Date().toLocaleDateString('pt-BR')}</p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+          <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
 
             {/* Introdução */}
             <div className="mb-12">
@@ -205,13 +202,13 @@ export default function PrivacidadeClient() {
                 <p>Endereço: Chapecó - SC</p>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="mt-8 text-center">
+          <div className="mt-8 text-center">
             <Link href="/" className="inline-flex items-center gap-2 text-red-600 hover:text-red-700 font-semibold">
               ← Voltar para o site
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

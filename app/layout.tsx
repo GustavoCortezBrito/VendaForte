@@ -1,8 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import WhatsAppButton from "@/components/WhatsAppButton";
-import LoadingScreen from "@/components/LoadingScreen";
+import AnalyticsEvents from "@/components/AnalyticsEvents";
 import { metadata as siteMetadata, jsonLdOrganization, jsonLdLocalBusiness, jsonLdWebSite } from "./metadata";
 import Script from "next/script";
 
@@ -57,7 +56,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#dc2626" />
       </head>
       <body className={inter.className}>
-        <LoadingScreen />
+        <AnalyticsEvents />
         {children}
       </body>
     </html>

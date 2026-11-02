@@ -166,6 +166,55 @@ a, button {
   margin: 1.5rem 0;
 }
 
+/* Barra de progresso da rolagem do menu: animação de CSS ligada à rolagem da página, sem JavaScript.
+   Onde o navegador não suporta, a barra fica recolhida. */
+.scroll-progress {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: scroll-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@keyframes scroll-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    animation: none;
+  }
+}
+
+/* Entrada suave dos blocos do topo da página inicial (CSS puro; o título não usa: fica visível no primeiro quadro) */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  animation: rise 0.7s ease-out both;
+  animation-delay: var(--delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+}
+
 /* Blog Page Animations */
 @keyframes fade-in {
   from {

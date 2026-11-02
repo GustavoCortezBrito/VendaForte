@@ -6,6 +6,7 @@ import { blogHref, categoryList } from '@/lib/blog-format'
 import { totalPagesFor } from '@/lib/blog-listing'
 import { SITE_URL } from '@/lib/site'
 import forkliftsData from '@/lib/data/electric-forklifts.json'
+import { TYPE_PAGES, TYPE_PAGE_SIZE, productsOfType } from '@/lib/catalog'
 
 type PostDates = { updated_at?: string; created_at?: string; date?: string }
 
@@ -36,6 +37,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }))
+
+  // Uma página para cada tipo de equipamento, mais as páginas numeradas da lista (cada uma com canônica própria)
+  const typeUrls: MetadataRoute.Sitemap = TYPE_PAGES.flatMap((type) => {
+    const pages = Math.ceil(productsOfType(type).length / TYPE_PAGE_SIZE)
+    return Array.from({ length: pages }, (_, index) => ({
+      url: `${baseUrl}/produtos/tipo/${type.slug}${index > 0 ? `?pagina=${index + 1}` : ''}`,
+      changeFrequency: 'monthly' as const,
+      priority: index === 0 ? 0.8 : 0.5,
+    }))
+  })
 
   // Buscar todos os posts do blog para inclusão dinâmica no sitemap
   let blogUrls: MetadataRoute.Sitemap = []
@@ -96,5 +107,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Erro ao listar as páginas do blog para o sitemap:', error)
   }
 
-  return [...staticUrls, ...productUrls, ...listingUrls, ...blogUrls]
+  return [...staticUrls, ...typeUrls, ...productUrls, ...listingUrls, ...blogUrls]
 }

@@ -17,6 +17,7 @@ interface ProductLike {
   turningRadius?: string
   description: string
   mainImage: string
+  specs?: Record<string, string | undefined>
 }
 
 /** Nome do tipo em português, mostrado no cartão, no título e na descrição. */
@@ -45,51 +46,106 @@ export function formatLift(value: string): string {
 const batteryKind = (batteryType: string) =>
   /li/i.test(batteryType) ? 'lítio' : /chumbo/i.test(batteryType) ? 'chumbo-ácido' : batteryType.toLowerCase()
 
+/** A ficha da EP diz como a máquina é movida: nos modelos a diesel o catálogo traz "24 V, Li-Ion" por engano. */
+export const isDiesel = (p: Pick<ProductLike, 'specs'>) => p.specs?.Drive === 'Diesel'
+
+/** "bateria 48 V (lítio)" ou "motor a diesel", conforme o modelo. */
+export const powerText = (p: ProductLike) =>
+  isDiesel(p) ? 'motor a diesel' : `bateria ${p.batteryVoltage} (${batteryKind(p.batteryType)})`
+
 /** Título único por modelo (absoluto: já leva a marca, para não repeti-la). */
 export const productTitle = (p: ProductLike) => `EP ${p.title} ${p.capacity}: ${typeLabel(p.type)} | Venda Forte`
 
 /** Descrição de até 160 caracteres, com o tipo de bateria real do modelo. */
 export function productDescription(p: ProductLike): string {
-  const base = `EP ${p.title}: ${typeLabel(p.type).toLowerCase()} de ${p.capacity}, elevação de ${formatLift(p.liftingHeight)}, bateria ${p.batteryVoltage} (${batteryKind(p.batteryType)}).`
+  const base = `EP ${p.title}: ${typeLabel(p.type).toLowerCase()} de ${p.capacity}, elevação de ${formatLift(p.liftingHeight)}, ${powerText(p)}.`
   const full = `${base} Veja a ficha técnica e peça cotação.`
   return full.length <= 160 ? full : base.slice(0, 157).trimEnd() + '...'
 }
 
-const absolute = (src: string) => (src.startsWith('http') ? src : `${SITE_URL}${src}`)
-
-/** Product e BreadcrumbList do modelo. Sem `offers`: o site não publica preço, e preço inventado viola a política do Google. */
-export function productJsonLd(p: ProductLike, photos: string[] = []) {
+/**
+ * Só a BreadcrumbList. O Product exige `offers`, `review` ou `aggregateRating`; o site não publica preço
+ * (e preço inventado viola a política do Google), então o Product só gerava erro nos dados estruturados.
+ */
+export function productJsonLd(p: ProductLike, typeCrumb?: { name: string; path: string }) {
   const url = `${SITE_URL}/produtos/${p.slug}`
-  const images = [...photos.slice(0, 4), p.mainImage].filter(Boolean).map(absolute)
-  const prop = (name: string, value: string) => ({ '@type': 'PropertyValue', name, value })
+  const trail = [
+    { name: 'Início', item: SITE_URL },
+    { name: 'Produtos', item: `${SITE_URL}/produtos` },
+    ...(typeCrumb ? [{ name: typeCrumb.name, item: `${SITE_URL}${typeCrumb.path}` }] : []),
+    { name: `EP ${p.title}`, item: url },
+  ]
   return [
     {
       '@context': 'https://schema.org',
-      '@type': 'Product',
-      name: `EP ${p.title}`,
-      // Descrição própria: o texto do catálogo diz "Íon-Lítio" também nos modelos de chumbo-ácido
-      description: productDescription(p),
-      sku: p.slug,
-      mpn: p.title,
-      url,
-      image: images,
-      category: typeLabel(p.type),
-      brand: { '@type': 'Brand', name: 'EP Equipment' },
-      additionalProperty: [
-        prop('Capacidade de carga', p.capacity),
-        prop('Elevação máxima', formatLift(p.liftingHeight)),
-        prop('Bateria', `${p.batteryVoltage}, ${batteryKind(p.batteryType)}`),
-        ...(p.turningRadius ? [prop('Raio de giro', p.turningRadius)] : []),
-      ],
-    },
-    {
-      '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Início', item: SITE_URL },
-        { '@type': 'ListItem', position: 2, name: 'Produtos', item: `${SITE_URL}/produtos` },
-        { '@type': 'ListItem', position: 3, name: `EP ${p.title}`, item: url },
-      ],
+      itemListElement: trail.map((step, index) => ({ '@type': 'ListItem', position: index + 1, ...step })),
     },
   ]
+}
+
+// ---------- texto de abertura da ficha ----------
+
+const mm = (n: number) => `${n.toLocaleString('pt-BR')} mm`
+const dec = (value: string) => value.replace('.', ',')
+
+/** Lê um campo da ficha só se ele tiver o formato esperado; valores múltiplos ("1242|1340 kg") ficam de fora. */
+const spec = (p: ProductLike, key: string, pattern: RegExp): RegExpMatchArray | null => {
+  const value = p.specs?.[key]
+  return value ? value.trim().match(pattern) : null
+}
+
+const OPERATOR: Record<string, string> = {
+  Seated: 'o operador conduz sentado',
+  Pedestrian: 'a máquina é conduzida a pé',
+  Standing: 'o operador conduz em pé',
+  'Stand-on': 'o operador conduz em pé, na plataforma',
+  'Order-picker': 'o operador sobe junto com a plataforma, para separar pedidos',
+}
+
+/** Frases de aplicação escritas para modelos que o Google já mostra nas buscas. Usam só dados da própria ficha. */
+const MODEL_NOTES: Record<string, (p: ProductLike) => string> = {
+  f4: () => 'A bateria de lítio é removível e pesa só 5 kg, e a máquina aceita uma segunda bateria para maior autonomia.',
+  esl122: (p) => `Atende a quem precisa empilhar em estantes de até cerca de ${formatLift(p.liftingHeight)} com uma máquina compacta, em piso plano.`,
+  cqd20lb: (p) => `Atende a armazéns com porta-paletes de até ${formatLift(p.liftingHeight)}, em corredor estreito e piso regular.`,
+  jx1: (p) => `Atende a quem separa pedidos item a item, com elevação de até cerca de ${formatLift(p.liftingHeight)}.`,
+  tvl151: () => 'É da mesma linha da TVL181, que levanta 1.800 kg.',
+  tvl181: () => 'É da mesma linha da TVL151, que levanta 1.500 kg.',
+}
+
+/**
+ * Parágrafos de abertura da ficha, montados com os dados reais do modelo. Substituem o texto padrão do
+ * catálogo, igual em 212 fichas e com a bateria errada nos modelos a diesel e de chumbo-ácido.
+ */
+export function productIntro(p: ProductLike): string[] {
+  const radius = p.turningRadius && /^\d+ mm$/.test(p.turningRadius.trim()) ? mm(parseInt(p.turningRadius, 10)) : ''
+  const lead = `A EP ${p.title} (${typeLabel(p.type).toLowerCase()}) tem capacidade de ${p.capacity}, elevação de ${formatLift(p.liftingHeight)}, ${powerText(p)}${radius ? ` e raio de giro de ${radius}` : ''}.`
+
+  const facts: string[] = []
+  const weight = spec(p, 'Service weight', /^(\d+) kg$/)
+  if (weight) facts.push(`pesa ${parseInt(weight[1], 10).toLocaleString('pt-BR')} kg`)
+  const speed = spec(p, 'Travel speed, laden/unladen', /^(\d+(?:\.\d)?) ?\/ ?(\d+(?:\.\d)?) km\/h$/)
+  if (speed) facts.push(`anda a ${dec(speed[1])} km/h com carga e ${dec(speed[2])} km/h sem carga`)
+  const ramp = spec(p, 'Max. gradeability, laden/unladen', /^(\d+(?:\.\d)?) ?\/ ?(\d+(?:\.\d)?) ?%$/)
+  if (ramp) facts.push(`vence rampa de ${dec(ramp[1])}% com carga e ${dec(ramp[2])}% sem carga`)
+  const aisle = spec(p, 'Aisle width for pallets 1000×1200 crossways', /^(\d+) mm$/)
+  if (aisle) facts.push(`pede corredor de ${mm(parseInt(aisle[1], 10))} para palete de 1.000 × 1.200 mm carregado de través`)
+
+  const paragraphs = [lead]
+  const operator = OPERATOR[p.specs?.['Operator type'] ?? '']
+  if (operator) paragraphs.push(`Pela ficha da EP, ${operator}.`)
+  if (facts.length) {
+    const list = facts.join(', ').replace(/, ([^,]*)$/, ' e $1')
+    paragraphs.push(`${operator ? 'A máquina' : 'Pela ficha da EP, a máquina'} ${list}.`)
+  }
+
+  const battery = spec(p, 'Battery nominal capacity K5', /^(\d+) Ah$/)
+  const batteryWeight = spec(p, 'Battery weight', /^(\d+(?:\.\d)?) kg$/)
+  if (!isDiesel(p) && battery && batteryWeight) {
+    paragraphs.push(`A bateria tem ${battery[1]} Ah e pesa ${dec(batteryWeight[1])} kg.`)
+  }
+
+  const note = MODEL_NOTES[p.slug]
+  if (note) paragraphs.push(note(p))
+  return paragraphs
 }
