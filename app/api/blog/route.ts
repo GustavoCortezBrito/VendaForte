@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { supabase, supabaseAdmin } from '@/lib/supabase'
 import { getUserFromRequest } from '@/lib/auth'
+import { canEdit, FORBIDDEN_EDIT_MESSAGE } from '@/lib/permissions'
 import { isLocalRequest, LOCAL_BLOCK_MESSAGE } from '@/lib/environment'
 
 // Fallback: buscar posts de arquivos .md se Supabase não estiver configurado
@@ -144,6 +145,9 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       )
     }
+    if (!canEdit(user)) {
+      return NextResponse.json({ error: FORBIDDEN_EDIT_MESSAGE }, { status: 403 })
+    }
 
     const body = await request.json()
     const { slug, title, description, content, image, category, tags, author, published } = body
@@ -259,6 +263,9 @@ export async function PUT(request: NextRequest) {
         { status: 401 }
       )
     }
+    if (!canEdit(user)) {
+      return NextResponse.json({ error: FORBIDDEN_EDIT_MESSAGE }, { status: 403 })
+    }
 
     const body = await request.json()
     const { slug, title, description, content, image, category, tags, author, published } = body
@@ -345,6 +352,9 @@ export async function PATCH(request: NextRequest) {
     if (!user) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 })
     }
+    if (!canEdit(user)) {
+      return NextResponse.json({ error: FORBIDDEN_EDIT_MESSAGE }, { status: 403 })
+    }
 
     if (isLocalRequest(request.headers)) return blockedLocally()
 
@@ -414,6 +424,9 @@ export async function DELETE(request: NextRequest) {
         { error: 'Não autenticado' },
         { status: 401 }
       )
+    }
+    if (!canEdit(user)) {
+      return NextResponse.json({ error: FORBIDDEN_EDIT_MESSAGE }, { status: 403 })
     }
 
     if (user.role !== 'admin') {

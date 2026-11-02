@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { getUserFromRequest } from '@/lib/auth'
+import { canEdit, FORBIDDEN_EDIT_MESSAGE } from '@/lib/permissions'
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,6 +12,9 @@ export async function POST(request: NextRequest) {
         { error: 'Não autenticado' },
         { status: 401 }
       )
+    }
+    if (!canEdit(user)) {
+      return NextResponse.json({ error: FORBIDDEN_EDIT_MESSAGE }, { status: 403 })
     }
 
     const formData = await request.formData()

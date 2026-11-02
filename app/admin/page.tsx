@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Truck, FileText, ArrowRight, LogOut, ExternalLink, Settings, ShieldCheck } from 'lucide-react'
+import { Truck, FileText, ArrowRight, LogOut, ExternalLink, PenLine, Share2, Users } from 'lucide-react'
+import { canEdit, isAdmin } from '@/lib/permissions'
 
 export default function AdminHubPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState<{ email?: string } | null>(null)
+  const [user, setUser] = useState<{ email?: string; role?: string } | null>(null)
 
   useEffect(() => {
     fetch('/api/auth/me')
@@ -47,9 +48,10 @@ export default function AdminHubPage() {
     )
   }
 
-  const SECTIONS = [
+  const ALL_SECTIONS = [
     {
       id: 'empilhadeiras',
+      show: canEdit(user),
       title: 'Catálogo de Empilhadeiras',
       subtitle: 'Gestão de Equipamentos Industriais',
       description: 'Cadastre e edite empilhadeiras elétricas, capacidades de carga, fichas técnicas completas e galeria de imagens.',
@@ -63,6 +65,7 @@ export default function AdminHubPage() {
     },
     {
       id: 'blog',
+      show: canEdit(user),
       title: 'Blog & Notícias',
       subtitle: 'Publicações e Artigos Técnicos',
       description: 'Crie e edite postagens do blog da Venda Forte, dicas de manutenção preventiva, operação e novidades da linha EP Equipment.',
@@ -74,7 +77,50 @@ export default function AdminHubPage() {
       borderColor: 'hover:border-gray-900',
       buttonText: 'Gerenciar Blog',
     },
+    {
+      id: 'rascunhos',
+      show: true,
+      title: 'Rascunhos do Blog',
+      subtitle: 'Textos antes de ir ao ar',
+      description: 'Veja como cada texto ficará no site, confira os avisos automáticos e publique quando estiver pronto.',
+      badge: 'Revisão',
+      icon: PenLine,
+      href: '/admin/rascunhos',
+      gradient: 'from-slate-700 to-slate-600',
+      lightBg: 'bg-slate-50',
+      borderColor: 'hover:border-slate-600',
+      buttonText: 'Ver Rascunhos',
+    },
+    {
+      id: 'redes',
+      show: true,
+      title: 'Redes Sociais',
+      subtitle: 'Legendas, artes e aprovação',
+      description: 'Textos de Instagram, LinkedIn, Facebook, WhatsApp e Perfil Google com data, conversa e aprovação de quem revisa.',
+      badge: 'Calendário',
+      icon: Share2,
+      href: '/admin/redes',
+      gradient: 'from-red-700 to-rose-600',
+      lightBg: 'bg-rose-50',
+      borderColor: 'hover:border-rose-500',
+      buttonText: 'Abrir Redes Sociais',
+    },
+    {
+      id: 'usuarios',
+      show: isAdmin(user),
+      title: 'Usuários',
+      subtitle: 'Quem entra no painel',
+      description: 'Crie o login de cada pessoa, defina se ela edita ou só revisa e troque senhas.',
+      badge: 'Acesso',
+      icon: Users,
+      href: '/admin/usuarios',
+      gradient: 'from-gray-800 to-gray-700',
+      lightBg: 'bg-gray-100',
+      borderColor: 'hover:border-gray-700',
+      buttonText: 'Gerenciar Usuários',
+    },
   ]
+  const SECTIONS = ALL_SECTIONS.filter((section) => section.show)
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white flex flex-col justify-between">
@@ -134,7 +180,7 @@ export default function AdminHubPage() {
             O que você deseja <span className="text-red-600">gerenciar hoje?</span>
           </h1>
           <p className="text-base text-gray-600 max-w-xl mx-auto">
-            Selecione uma das opções abaixo para administrar os produtos do catálogo ou as publicações do blog.
+            Escolha uma área para administrar o catálogo, o blog, os textos das redes sociais ou quem tem acesso.
           </p>
         </motion.div>
 

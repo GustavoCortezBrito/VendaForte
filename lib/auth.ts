@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 import { supabaseAdmin } from './supabase'
+import type { Role } from './permissions'
 
 // Em produção o segredo é obrigatório. Com um valor padrão público no código, qualquer pessoa
 // poderia assinar um token de admin; sem JWT_SECRET o login falha em vez de ficar aberto.
@@ -12,7 +13,7 @@ export interface AuthUser {
   id: string
   email: string
   name: string
-  role: 'admin' | 'editor'
+  role: Role
 }
 
 export interface TokenPayload extends AuthUser {
@@ -209,7 +210,7 @@ export async function createUser(data: {
   email: string
   password: string
   name: string
-  role: 'admin' | 'editor'
+  role: Role
 }) {
   try {
     // Hash da senha

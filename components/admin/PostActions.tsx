@@ -14,6 +14,8 @@ interface PostActionsProps {
   errors: number
   /** Quando preenchido, publicar e despublicar ficam desativados e o motivo aparece na tela (ambiente local). */
   blockedReason?: string
+  /** Perfil de revisor: pode ler o texto, mas não importar, editar nem publicar. */
+  readOnly?: boolean
 }
 
 /** O que a pessoa confirma antes de publicar. Não fica guardado: vale para este clique. */
@@ -27,7 +29,7 @@ const ACTION =
   'inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
 
 /** Botões de um post na tela de visualização: importar, editar, publicar e despublicar. */
-export default function PostActions({ slug, source, published, errors, blockedReason }: PostActionsProps) {
+export default function PostActions({ slug, source, published, errors, blockedReason, readOnly }: PostActionsProps) {
   const router = useRouter()
   const [dialog, setDialog] = useState<'publicar' | 'despublicar' | null>(null)
   const [checked, setChecked] = useState<boolean[]>(CONFIRMATIONS.map(() => false))
@@ -103,6 +105,14 @@ export default function PostActions({ slug, source, published, errors, blockedRe
           body: JSON.stringify({ slug }),
         }),
       () => setNotice('Importado para o painel como rascunho.')
+    )
+  }
+
+  if (readOnly) {
+    return (
+      <p className="max-w-xs text-sm font-semibold text-gray-500 md:text-right">
+        Você pode ler e conferir este texto. Quem edita e publica é quem escreve; para pedir mudança, fale com o Gustavo.
+      </p>
     )
   }
 

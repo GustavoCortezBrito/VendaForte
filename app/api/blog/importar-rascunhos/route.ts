@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { getUserFromRequest } from '@/lib/auth'
+import { canEdit, FORBIDDEN_EDIT_MESSAGE } from '@/lib/permissions'
 import { getFilesToImport, isDraftSlug } from '@/lib/drafts'
 import { supabaseAdmin } from '@/lib/supabase'
 
@@ -13,6 +14,9 @@ export async function POST(request: NextRequest) {
     const user = getUserFromRequest(request)
     if (!user) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 })
+    }
+    if (!canEdit(user)) {
+      return NextResponse.json({ error: FORBIDDEN_EDIT_MESSAGE }, { status: 403 })
     }
 
     // Corpo opcional: { slug } importa só esse rascunho; sem corpo, importa todos os que faltam

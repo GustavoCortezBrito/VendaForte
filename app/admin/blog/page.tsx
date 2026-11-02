@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import AdminNav from '@/components/admin/AdminNav'
 import { useRouter } from 'next/navigation'
-import { Trash2, Edit, Plus, Eye, LogOut, Search, X, SlidersHorizontal, ChevronLeft, ChevronRight, Truck, FileText, PenLine, EyeOff, Rocket } from 'lucide-react'
+import { Trash2, Edit, Plus, Eye, Search, X, SlidersHorizontal, ChevronLeft, ChevronRight, EyeOff, Rocket } from 'lucide-react'
 
 interface Post {
   slug: string
@@ -56,13 +57,6 @@ export default function AdminBlogPage() {
   useEffect(() => {
     filterAndSortPosts()
   }, [posts, selectedCategory, searchTerm, sortBy, statusFilter])
-
-  async function handleLogout() {
-    try {
-      await fetch('/api/auth/logout', { method: 'POST' })
-    } catch {}
-    router.push('/admin/login')
-  }
 
   async function fetchPosts() {
     try {
@@ -197,77 +191,15 @@ export default function AdminBlogPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
-      {/* ── Header Admin ── */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-
-            {/* Brand + Tabs */}
-            <div className="flex items-center gap-6">
-              <Link href="/admin" className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-red-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-red-600/20">
-                  VF
-                </div>
-                <div className="hidden sm:block">
-                  <span className="text-base font-bold text-gray-900 leading-none block">Venda Forte</span>
-                  <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider block">Painel Admin</span>
-                </div>
-              </Link>
-
-              <div className="flex items-center gap-2 border-l border-gray-200 pl-5">
-                <Link
-                  href="/admin/empilhadeiras"
-                  className="px-4 py-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-semibold text-xs flex items-center gap-2 transition-colors"
-                >
-                  <Truck size={14} />
-                  <span className="hidden md:inline">Empilhadeiras</span>
-                </Link>
-                <Link
-                  href="/admin/blog"
-                  className="px-4 py-2 rounded-full bg-red-600 text-white font-semibold text-xs flex items-center gap-2 shadow-md shadow-red-600/20"
-                >
-                  <FileText size={14} />
-                  <span className="hidden md:inline">Blog & Notícias</span>
-                </Link>
-                <Link
-                  href="/admin/rascunhos"
-                  className="px-4 py-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-semibold text-xs flex items-center gap-2 transition-colors"
-                >
-                  <PenLine size={14} />
-                  <span className="hidden md:inline">Rascunhos</span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Right actions */}
-            <div className="flex items-center gap-3">
-              <Link
-                href="/blog"
-                target="_blank"
-                className="text-xs font-semibold text-gray-600 hover:text-red-600 flex items-center gap-1.5 transition-colors px-3 py-1.5 rounded-full hover:bg-red-50"
-              >
-                <Eye size={14} />
-                <span className="hidden sm:inline">Ver Blog</span>
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="p-2 text-gray-400 hover:text-red-600 rounded-full hover:bg-red-50 transition-colors"
-                title="Sair do Painel"
-              >
-                <LogOut size={18} />
-              </button>
-              <Link
-                href="/admin/blog/novo"
-                className="flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 sm:px-5 py-2 rounded-full hover:shadow-lg transition-all font-semibold text-xs"
-              >
-                <Plus size={14} />
-                <span>Novo Post</span>
-              </Link>
-            </div>
-
-          </div>
-        </div>
-      </nav>
+      <AdminNav active="blog">
+        <Link
+          href="/admin/blog/novo"
+          className="flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 sm:px-5 py-2 rounded-full hover:shadow-lg transition-all font-semibold text-xs"
+        >
+          <Plus size={14} />
+          <span>Novo Post</span>
+        </Link>
+      </AdminNav>
 
       {/* Conteúdo Principal */}
       <main className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">

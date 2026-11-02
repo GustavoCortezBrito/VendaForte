@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 import { getUserFromRequest } from '@/lib/auth'
+import { canEdit, FORBIDDEN_EDIT_MESSAGE } from '@/lib/permissions'
 
 const jsonFilePath = path.join(process.cwd(), 'lib', 'data', 'electric-forklifts.json')
 
@@ -53,6 +54,9 @@ export async function POST(request: NextRequest) {
     const user = getUserFromRequest(request)
     if (!user) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 })
+    }
+    if (!canEdit(user)) {
+      return NextResponse.json({ error: FORBIDDEN_EDIT_MESSAGE }, { status: 403 })
     }
 
     const body = await request.json()
@@ -120,6 +124,9 @@ export async function PUT(request: NextRequest) {
     if (!user) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 })
     }
+    if (!canEdit(user)) {
+      return NextResponse.json({ error: FORBIDDEN_EDIT_MESSAGE }, { status: 403 })
+    }
 
     const body = await request.json()
     const { id, slug } = body
@@ -162,6 +169,9 @@ export async function DELETE(request: NextRequest) {
     const user = getUserFromRequest(request)
     if (!user) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 })
+    }
+    if (!canEdit(user)) {
+      return NextResponse.json({ error: FORBIDDEN_EDIT_MESSAGE }, { status: 403 })
     }
 
     const { searchParams } = new URL(request.url)

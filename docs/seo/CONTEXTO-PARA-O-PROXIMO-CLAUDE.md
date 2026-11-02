@@ -145,3 +145,15 @@ Posts às terças e quintas, 9h. Pausa de 24/12 a 04/01. Feriados sem publicaç�
 3. Confirmar com o usuário a retirada do post de BNDES (envolve Supabase de produção).
 4. Quando os 5 a 10 concorrentes chegarem, rodar Visão geral do domínio e Lacunas de palavras-chave no SEMrush.
 5. Em 23/11 (30 dias) e 22/01 (90 dias): revisão com os números do Search Console e do GA4.
+
+## 13. Painel centralizado: perfis, redes sociais e usuários (02/11/2026)
+
+O usuário pediu "tudo centralizado no painel". Escolheu trazer os **textos das redes sociais** e criar **logins para o Paulo e o Rodrigo** (só aprovam e comentam). Calendário, páginas do site e medição ficaram de fora por escolha dele.
+
+- **Perfis** (`lib/permissions.ts`): `admin` (tudo e usuários), `editor` (escreve e edita), `revisor` (lê, comenta e aprova). Todas as rotas de escrita (`/api/blog` POST/PUT/PATCH/DELETE, `/api/empilhadeiras` POST/PUT/DELETE, `/api/upload`, `/api/blog/importar-rascunhos`) devolvem 403 ao revisor; `proxy.ts` manda o revisor de volta para `/admin/redes` fora de `/admin`, `/admin/rascunhos` e `/admin/redes`; `/admin/usuarios` é só do admin. O perfil vai dentro do token JWT: mudar perfil ou remover alguém só vale no próximo login (o token dura 7 dias).
+- **Redes sociais** (`/admin/redes`, `/admin/redes/[id]`, `lib/social.ts`, `lib/social-agenda.ts`, `app/api/redes`): 127 peças do calendário (`docs/seo/agenda-conteudo.json`: Instagram, LinkedIn, Facebook, WhatsApp, Perfil Google) importadas como rascunho vazio pelo botão do painel (idempotente por `source_id`). Fluxo: rascunho → em aprovação → aprovado → publicado; revisor/admin aprova ou pede ajustes (exige comentário); mudar a legenda de um texto em aprovação ou aprovado o devolve a rascunho; publicado não aceita edição. Conversa por peça (`social_comments`). **As legendas ainda estão vazias**: ninguém escreveu os textos, e eles precisam de fatos reais (não inventar).
+- **Usuários** (`/admin/usuarios`, `app/api/usuarios`): admin cria, troca perfil, troca senha e remove; não rebaixa nem remove o último admin nem a si mesmo; senha mínima de 10 caracteres, só o hash bcrypt é guardado.
+- **Barra única** `components/admin/AdminNav.tsx` (abas por perfil) no lugar de quatro cópias.
+- **Passo no Supabase que só o usuário faz (SQL Editor):** `supabase/migrations/2026-11-02-redes-sociais-e-revisores.sql` (libera o perfil `revisor`, cria `social_posts` e `social_comments` com RLS ligada). Sem ele, `/admin/redes` mostra o passo a passo e criar revisor devolve um aviso.
+- A trava de ambiente local (`lib/environment.ts`) continua só para publicar o blog; redes sociais e usuários **não** passam por ela, então no `localhost` (ligado ao banco de produção) essas telas gravam em produção.
+- Testado em cópia isolada com banco falso (`mock-supabase2.cjs`): 107 verificações (perfis nas rotas, fluxo de aprovação, concorrência de duas aprovações, tabelas ausentes, usuários, acesso às telas por perfil) e capturas de tela. Depois do último ajuste (efeito de carregamento das três telas) só rodaram `tsc` e `eslint`; o build de produção não rodou porque o disco C: estava com 0 bytes livres.

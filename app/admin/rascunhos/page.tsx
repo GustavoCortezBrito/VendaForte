@@ -5,6 +5,7 @@ import { AlertTriangle, CheckCircle2, Clock, Eye, Pencil, Plus, XCircle } from '
 import DraftsHeader from '@/components/admin/DraftsHeader'
 import ImportDraftsButton from '@/components/admin/ImportDraftsButton'
 import { getCurrentUser } from '@/lib/auth'
+import { canEdit } from '@/lib/permissions'
 import { formatPostDate } from '@/lib/blog-format'
 import { getDraftOverview, type DraftSummary } from '@/lib/drafts'
 
@@ -43,7 +44,7 @@ function Status({ draft }: { draft: DraftSummary }) {
   )
 }
 
-function DraftCard({ draft }: { draft: DraftSummary }) {
+function DraftCard({ draft, mayEdit }: { draft: DraftSummary; mayEdit: boolean }) {
   const fromFile = draft.source === 'arquivo'
   return (
     <article className="flex flex-col gap-5 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center">
@@ -96,7 +97,7 @@ function DraftCard({ draft }: { draft: DraftSummary }) {
           <Eye size={16} aria-hidden="true" />
           Visualizar
         </Link>
-        {!fromFile && (
+        {!fromFile && mayEdit && (
           <Link
             href={`/admin/blog/editar/${draft.slug}`}
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-bold text-gray-800 transition-colors hover:bg-gray-50"
@@ -111,7 +112,9 @@ function DraftCard({ draft }: { draft: DraftSummary }) {
 }
 
 export default async function DraftsPage() {
-  if (!(await getCurrentUser())) redirect('/admin/login')
+  const user = await getCurrentUser()
+  if (!user) redirect('/admin/login')
+  const mayEdit = canEdit(user)
 
   const { drafts, files, databaseOk } = await getDraftOverview()
 
@@ -128,13 +131,15 @@ export default async function DraftsPage() {
               <strong>não aparece no blog, na busca nem no mapa do site</strong>.
             </p>
           </div>
-          <Link
-            href="/admin/blog/novo"
-            className="inline-flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-bold text-gray-800 transition-colors hover:bg-gray-50"
-          >
-            <Plus size={16} aria-hidden="true" />
-            Novo rascunho
-          </Link>
+          {mayEdit && (
+            <Link
+              href="/admin/blog/novo"
+              className="inline-flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-bold text-gray-800 transition-colors hover:bg-gray-50"
+            >
+              <Plus size={16} aria-hidden="true" />
+              Novo rascunho
+            </Link>
+          )}
         </header>
 
         {!databaseOk && (
@@ -156,12 +161,12 @@ export default async function DraftsPage() {
                   sobrescrito); depois você edita e publica por aqui. Dá para visualizar antes de importar.
                 </p>
               </div>
-              <ImportDraftsButton count={files.length} />
+              {mayEdit && <ImportDraftsButton count={files.length} />}
             </div>
             <ul className="mt-5 space-y-3">
               {files.map((draft) => (
                 <li key={draft.slug}>
-                  <DraftCard draft={draft} />
+                  <DraftCard draft={draft} mayEdit={mayEdit} />
                 </li>
               ))}
             </ul>
@@ -181,7 +186,7 @@ export default async function DraftsPage() {
             <ul className="space-y-4">
               {drafts.map((draft) => (
                 <li key={draft.slug}>
-                  <DraftCard draft={draft} />
+                  <DraftCard draft={draft} mayEdit={mayEdit} />
                 </li>
               ))}
             </ul>

@@ -11,6 +11,7 @@ import TableOfContents from '@/components/blog/TableOfContents'
 import { CONTAINER, PROSE } from '@/components/blog/styles'
 import { whatsappUrl } from '@/components/promo/promo.config'
 import { getCurrentUser } from '@/lib/auth'
+import { canEdit } from '@/lib/permissions'
 import { formatPostDate } from '@/lib/blog-format'
 import { isLocalRequest, LOCAL_BLOCK_MESSAGE } from '@/lib/environment'
 import { getPostPreview } from '@/lib/drafts'
@@ -29,7 +30,8 @@ const LEVEL = {
 } as const
 
 export default async function PostPreviewPage({ params }: { params: Promise<{ slug: string }> }) {
-  if (!(await getCurrentUser())) redirect('/admin/login')
+  const user = await getCurrentUser()
+  if (!user) redirect('/admin/login')
 
   const { slug } = await params
   const post = await getPostPreview(slug)
@@ -77,7 +79,7 @@ export default async function PostPreviewPage({ params }: { params: Promise<{ sl
                 {post.plannedDate && <> · previsto para {formatPostDate(post.plannedDate)}</>}
               </p>
             </div>
-            <PostActions slug={post.slug} source={post.source} published={post.published} errors={errors} blockedReason={blockedReason} />
+            <PostActions slug={post.slug} source={post.source} published={post.published} errors={errors} blockedReason={blockedReason} readOnly={!canEdit(user)} />
           </div>
 
           <div className="mt-5 grid gap-6 md:grid-cols-2">

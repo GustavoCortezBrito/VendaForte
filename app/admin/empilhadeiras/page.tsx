@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import AdminNav from '@/components/admin/AdminNav'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import {
-  Trash2, Edit, Plus, Eye, LogOut, Search,
-  ChevronLeft, ChevronRight, Truck, FileText, ExternalLink
+  Trash2, Edit, Plus, Eye, Search,
+  ChevronLeft, ChevronRight, Truck, ExternalLink
 } from 'lucide-react'
 
 interface Forklift {
@@ -98,77 +99,22 @@ export default function AdminEmpilhadeirasPage() {
     }
   }
 
-  async function handleLogout() {
-    try {
-      await fetch('/api/auth/logout', { method: 'POST' })
-    } catch {}
-    router.push('/admin/login')
-  }
-
   const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1
   const paginatedItems = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white pb-20">
 
-      {/* ── Navbar Admin (identidade visual da Homepage) ── */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-
-            {/* Brand Logo */}
-            <div className="flex items-center gap-6">
-              <Link href="/" className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-red-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-red-600/20">
-                  VF
-                </div>
-                <div>
-                  <span className="text-base font-bold text-gray-900 leading-none block">Venda Forte</span>
-                  <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider block">Painel Admin</span>
-                </div>
-              </Link>
-
-              {/* Tabs de navegação */}
-              <div className="hidden md:flex items-center gap-2">
-                <Link
-                  href="/admin/empilhadeiras"
-                  className="px-4 py-2 rounded-full bg-red-600 text-white font-semibold text-xs flex items-center gap-2 shadow-md shadow-red-600/20"
-                >
-                  <Truck size={14} />
-                  <span>Empilhadeiras</span>
-                </Link>
-                <Link
-                  href="/admin/blog"
-                  className="px-4 py-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-semibold text-xs flex items-center gap-2 transition-colors"
-                >
-                  <FileText size={14} />
-                  <span>Blog & Notícias</span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Right actions */}
-            <div className="flex items-center gap-3">
-              <Link
-                href="/empilhadeiras-eletricas"
-                target="_blank"
-                className="text-xs font-semibold text-gray-600 hover:text-red-600 flex items-center gap-1.5 transition-colors px-3 py-1.5 rounded-full hover:bg-red-50"
-              >
-                <ExternalLink size={14} />
-                <span className="hidden sm:inline">Ver no Site</span>
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="p-2 text-gray-400 hover:text-red-600 rounded-full hover:bg-red-50 transition-colors"
-                title="Sair do Painel"
-              >
-                <LogOut size={18} />
-              </button>
-            </div>
-
-          </div>
-        </div>
-      </nav>
+      <AdminNav active="empilhadeiras">
+        <Link
+          href="/empilhadeiras-eletricas"
+          target="_blank"
+          className="text-xs font-semibold text-gray-600 hover:text-red-600 hidden sm:flex items-center gap-1.5 transition-colors px-3 py-1.5 rounded-full hover:bg-red-50"
+        >
+          <ExternalLink size={14} />
+          <span>Ver no Site</span>
+        </Link>
+      </AdminNav>
 
       {/* ── Main Content ── */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
