@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Settings } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -100,7 +100,21 @@ export default function Navbar() {
                     }`}></span>
                   </a>
                 ))}
-                
+
+                <Link
+                  href="/admin"
+                  rel="nofollow"
+                  aria-label="Acessar Painel Administrativo"
+                  title="Painel Administrativo"
+                  className={`p-2 rounded-lg transition-all ${
+                    isLightHeader
+                      ? 'hover:bg-gray-100 text-gray-600 hover:text-red-600'
+                      : 'hover:bg-white/10 text-white'
+                  }`}
+                >
+                  <Settings size={20} />
+                </Link>
+
                 <a
                   href="/#contact"
                   aria-label="Fale Conosco - Solicitar orçamento de empilhadeiras"
@@ -162,6 +176,18 @@ export default function Navbar() {
               >
                 Entre em Contato
               </a>
+              <Link
+                href="/admin"
+                rel="nofollow"
+                tabIndex={-1}
+                onClick={() => setIsOpen(false)}
+                className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm transition-all ${
+                  isLightHeader ? 'text-gray-600 hover:bg-gray-100' : 'text-white/80 hover:bg-white/10'
+                }`}
+              >
+                <Settings size={16} />
+                Painel administrativo
+              </Link>
             </div>
           </div>
         )}
