@@ -9,7 +9,7 @@ import RichTextEditor from '@/components/RichTextEditor'
 // Categorias do blog: as mesmas das abas da listagem (/blog). Novas categorias criadas
 // no formulário também viram aba, ordenadas das mais cheias às mais vazias.
 const DEFAULT_CATEGORIES = [
-  'Custos e financiamento',
+  'Custos',
   'Máquinas EP',
   'Tecnologia',
   'Empresa',
@@ -42,6 +42,10 @@ export default function EditarPostPage() {
   const [authenticated, setAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  // Rascunho (false) ou no ar (true); `null` até o post carregar
+  const [published, setPublished] = useState<boolean | null>(null)
+  // Falso em ambiente local: não dá para publicar nem alterar um post que já está no ar
+  const [canPublish, setCanPublish] = useState(true)
 
   async function handleLogout() {
     try {
@@ -72,6 +76,7 @@ export default function EditarPostPage() {
         if (!res.ok) {
           router.push('/admin/login')
         } else {
+          res.json().then((data) => setCanPublish(data.canPublish !== false)).catch(() => {})
           setAuthenticated(true)
           loadExistingCategories()
           loadPost()
@@ -173,6 +178,7 @@ export default function EditarPostPage() {
 
       if (data.post) {
         const post = data.post
+        setPublished(post.published !== false)
         setFormData({
           title: post.title || '',
           description: post.description || '',
@@ -209,6 +215,10 @@ export default function EditarPostPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+
+    // "Salvar e publicar" (value="publicar") grava o texto e em seguida publica o rascunho
+    const submitter = (e.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null
+    const publishAfterSaving = submitter?.value === 'publicar'
     
     if (!formData.category) {
       alert('Por favor, selecione ou crie uma categoria')
@@ -233,9 +243,23 @@ export default function EditarPostPage() {
         })
       })
 
-      if (response.ok) {
-        alert('Post atualizado com sucesso!')
-        router.push('/admin/blog')
+      if (response.ok && publishAfterSaving) {
+        const publish = await fetch('/api/blog', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug, published: true })
+        })
+        if (publish.ok) {
+          alert('Post publicado com sucesso!')
+          router.push('/admin/blog')
+        } else {
+          const error = await publish.json().catch(() => ({}))
+          alert('O texto foi salvo, mas o post não foi publicado: ' + (error.error || 'tente de novo em instantes.'))
+          router.push('/admin/rascunhos')
+        }
+      } else if (response.ok) {
+        alert(published === false ? 'Rascunho salvo! Ele continua fora do site.' : 'Post atualizado com sucesso!')
+        router.push(published === false ? '/admin/rascunhos' : '/admin/blog')
       } else {
         const error = await response.json()
         alert(error.error || 'Erro ao atualizar post')
@@ -586,10 +610,28 @@ export default function EditarPostPage() {
           </div>
 
           {/* Botões */}
-          <div className="flex gap-4 pt-8 border-t-2 border-gray-200">
+          {!canPublish && published !== false && (
+            <p role="status" className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm font-semibold text-amber-900">
+              Ambiente local: este post está no ar e não pode ser alterado daqui. Use o painel do site publicado.
+            </p>
+          )}
+
+          {published === false && (
+            <p className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm font-semibold text-amber-900">
+              Este post é um rascunho: não aparece no blog, na busca nem no mapa do site. Veja como ficará em{' '}
+              <Link href={`/admin/rascunhos/${slug}`} className="underline">
+                Visualizar rascunho
+              </Link>
+              .
+            </p>
+          )}
+
+          <div className="flex flex-wrap gap-4 pt-8 border-t-2 border-gray-200">
             <button
               type="submit"
-              disabled={saving}
+              value="salvar"
+              disabled={saving || (!canPublish && published !== false)}
+              title={!canPublish && published !== false ? 'Indisponível no ambiente local: este post está no ar' : undefined}
               className="flex-1 inline-flex items-center justify-center gap-3 bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-5 rounded-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all font-bold text-lg transform hover:-translate-y-0.5"
             >
               {saving ? (
@@ -600,10 +642,21 @@ export default function EditarPostPage() {
               ) : (
                 <>
                   <Save size={22} />
-                  Salvar Alterações
+                  {published === false ? 'Salvar rascunho' : 'Salvar Alterações'}
                 </>
               )}
             </button>
+            {published === false && (
+              <button
+                type="submit"
+                value="publicar"
+                disabled={saving || !canPublish}
+                title={canPublish ? undefined : 'Indisponível no ambiente local'}
+                className="flex-1 inline-flex items-center justify-center gap-3 border-2 border-red-600 bg-white text-red-700 px-8 py-5 rounded-xl hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-bold text-lg"
+              >
+                Salvar e publicar
+              </button>
+            )}
             <Link
               href="/admin/blog"
               className="px-8 py-5 border-2 border-gray-300 rounded-xl hover:bg-gray-50 transition-colors font-bold text-gray-700 text-lg"

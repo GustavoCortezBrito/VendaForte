@@ -37,6 +37,13 @@ const nextConfig: NextConfig = {
       { source: "/blog/primeiro-post", destination: "/blog", permanent: true },
       { source: "/blog/manutencao-preventiva-empilhadeiras", destination: "/blog", permanent: true },
       { source: "/blog/seguranca-operacao-empilhadeiras", destination: "/blog/nr-11-empilhadeira-o-que-a-norma-exige", permanent: true },
+      // Os dois posts de lítio viraram um só
+      { source: "/blog/por-que-empilhadeiras-lithium-ion", destination: "/blog/bateria-litio-vs-chumbo-acido-empilhadeiras", permanent: true },
+      // "Custos e financiamento" virou "Custos"
+      { source: "/blog/categoria/custos-e-financiamento", destination: "/blog/categoria/custos", permanent: true },
+      { source: "/blog/categoria/custos-e-financiamento/page/:page", destination: "/blog/categoria/custos/page/:page", permanent: true },
+      // Só vendemos máquinas importadas, que não entram no BNDES Finame: o post saiu do blog
+      { source: "/blog/financiamento-empilhadeira-bndes-finame-como-funciona", destination: "/blog/locar-ou-comprar-empilhadeira-guia-decisao", permanent: true },
       // Redireciona grupovendaforte.com.br → grupovendaforte.com (301 permanente)
       {
         source: "/:path*",

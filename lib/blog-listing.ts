@@ -9,7 +9,7 @@
  */
 import type { Metadata } from 'next'
 import { listPosts } from '@/lib/blog-data'
-import { blogHref } from '@/lib/blog-format'
+import { blogHref, categoryIntro } from '@/lib/blog-format'
 import { buildListing, listingTitle, type Listing } from '@/lib/blog-list'
 import { SITE_URL } from '@/lib/site'
 
@@ -33,7 +33,7 @@ const BASE_DESCRIPTION =
 export function listingMetadata({ category, page, totalPages }: Pick<Listing, 'category' | 'page' | 'totalPages'>): Metadata {
   const title = listingTitle({ category, page })
   const description = category
-    ? `Artigos de ${category.name} no blog da Venda Forte: fichas técnicas, comparativos e guias sobre empilhadeiras elétricas.${page > 1 ? ` Página ${page}.` : ''}`
+    ? `${categoryIntro(category.name) ?? `Artigos de ${category.name} no blog da Venda Forte: fichas técnicas, comparativos e guias sobre empilhadeiras elétricas.`}${page > 1 ? ` Página ${page}.` : ''}`
     : `${BASE_DESCRIPTION}${page > 1 ? ` Página ${page}.` : ''}`
 
   const hrefFor = (target: number) => `${SITE_URL}${blogHref({ category: category?.slug, page: target })}`

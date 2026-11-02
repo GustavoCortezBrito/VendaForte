@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyToken } from '@/lib/auth'
+import { isLocalRequest } from '@/lib/environment'
 
 export async function GET(request: NextRequest) {
   try {
@@ -28,7 +29,9 @@ export async function GET(request: NextRequest) {
         email: payload.email,
         name: payload.name,
         role: payload.role,
-      }
+      },
+      // Falso em ambiente local: o painel desativa os botões que mudam o que está no ar
+      canPublish: !isLocalRequest(request.headers),
     })
   } catch (error) {
     console.error('Erro ao obter usuário:', error)

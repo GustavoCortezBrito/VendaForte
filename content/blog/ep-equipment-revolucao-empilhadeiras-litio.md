@@ -68,4 +68,3 @@ Descubra como os modelos da EP Equipment podem transformar a rotina do seu armaz
 
 - [Tipos de empilhadeira: qual usar em cada operação](/blog/tipos-de-empilhadeira)
 - [Bateria de lítio vs. chumbo-ácido em empilhadeiras](/blog/bateria-litio-vs-chumbo-acido-empilhadeiras)
-- [Por que migrar para empilhadeiras de lítio](/blog/por-que-empilhadeiras-lithium-ion)

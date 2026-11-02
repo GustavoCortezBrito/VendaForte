@@ -59,11 +59,11 @@ Para ver os custos de energia e manutenção lado a lado, com a bateria de líti
 - **Usar a média da tarifa.** Se a sua conta de energia tem horário de ponta, calcule com a tarifa real do período de carga.
 - **Misturar prazos.** Compare compra, financiamento e locação sempre no mesmo período.
 
-Se a dúvida é entre comprar e alugar, veja também [locar ou comprar empilhadeira](/blog/locar-ou-comprar-empilhadeira-guia-decisao) e [financiamento pelo BNDES Finame](/blog/financiamento-empilhadeira-bndes-finame-como-funciona).
+Se a dúvida é entre comprar e alugar, veja também [locar ou comprar empilhadeira](/blog/locar-ou-comprar-empilhadeira-guia-decisao).
 
 ## Leia também
 
-- [Por que migrar para empilhadeiras de lítio](/blog/por-que-empilhadeiras-lithium-ion)
+- [Bateria de lítio vs. chumbo-ácido em empilhadeiras](/blog/bateria-litio-vs-chumbo-acido-empilhadeiras)
 - [Tipos de empilhadeira: qual usar em cada operação](/blog/tipos-de-empilhadeira)
 - [5 erros ao escolher uma empilhadeira](/blog/5-erros-comuns-ao-escolher-empilhadeira)
 

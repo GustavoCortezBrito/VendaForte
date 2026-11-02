@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useSyncExternalStore } from 'r
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { X } from 'lucide-react'
-import { blogHref, categoryOf, type BlogPostSummary } from '@/lib/blog-format'
+import { blogHref, categoryIntro, categoryOf, type BlogPostSummary } from '@/lib/blog-format'
 import { buildListing, listingTitle, parseBlogPath, sortSuffix, type SortOrder } from '@/lib/blog-list'
 import CategoryTiles from './CategoryTiles'
 import FeaturedPost from './FeaturedPost'
@@ -105,6 +105,9 @@ export default function BlogExplorer({ posts, guides }: BlogExplorerProps) {
                   {countText}
                   {totalPages > 1 && ` · página ${page} de ${totalPages}`}
                 </p>
+                {category && categoryIntro(category.name) && (
+                  <p className="mt-3 max-w-2xl text-base leading-relaxed text-gray-600">{categoryIntro(category.name)}</p>
+                )}
               </div>
 
               <div className="flex flex-wrap items-center gap-3">

@@ -29,7 +29,7 @@ Meça o corredor entre as faces das cargas estocadas, e não entre as estantes. 
 
 ## Bateria e recarga
 
-A DS3 trabalha com **24 V**. A ficha lista duas versões de bateria: chumbo-ácido AGM de 80 Ah, ou **íon-lítio de 40 Ah**. O carregador de 10 A é o padrão, e há um de 15 A para a bateria de lítio. O carregador é interno, então basta ligar a máquina na tomada, sem sala de baterias. Na versão de lítio, a recarga também pode acontecer em qualquer intervalo do turno; veja mais em [Por que migrar para empilhadeiras de lítio](/blog/por-que-empilhadeiras-lithium-ion).
+A DS3 trabalha com **24 V**. A ficha lista duas versões de bateria: chumbo-ácido AGM de 80 Ah, ou **íon-lítio de 40 Ah**. O carregador de 10 A é o padrão, e há um de 15 A para a bateria de lítio. O carregador é interno, então basta ligar a máquina na tomada, sem sala de baterias. Na versão de lítio, a recarga também pode acontecer em qualquer intervalo do turno; veja mais em [Bateria de lítio vs. chumbo-ácido em empilhadeiras](/blog/bateria-litio-vs-chumbo-acido-empilhadeiras).
 
 ## Velocidade, rampa e segurança
 

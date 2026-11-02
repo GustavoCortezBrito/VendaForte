@@ -42,6 +42,7 @@ interface PostRow {
   author?: string | null
   reading_time?: string | null
   created_at: string
+  published_at?: string | null
 }
 
 /** Roda uma consulta ao Supabase e devolve `null` se falhar, demorar ou não houver o que ler. */
@@ -62,7 +63,8 @@ function summaryFromRow(row: PostRow): BlogPostSummary {
     slug: row.slug,
     title: row.title,
     description: row.description ?? '',
-    date: row.created_at,
+    // Um rascunho publicado tarde mostra o dia em que foi ao ar, não o dia em que foi criado
+    date: row.published_at || row.created_at,
     author: row.author || 'Equipe Venda Forte',
     image: row.image || '/sede.png',
     category: row.category || 'Geral',
@@ -82,7 +84,7 @@ export const listPosts = cache(async function listPosts(): Promise<BlogPostSumma
   const rows = await fromSupabase<PostRow[]>((signal) =>
     supabaseAdmin
       .from('posts')
-      .select('slug,title,description,image,category,tags,author,reading_time,created_at')
+      .select('slug,title,description,image,category,tags,author,reading_time,created_at,published_at')
       .eq('published', true)
       .order('created_at', { ascending: false })
       .abortSignal(signal)
@@ -96,7 +98,7 @@ export const listPosts = cache(async function listPosts(): Promise<BlogPostSumma
  * Converte o corpo em HTML. Conteúdo que já começa com `<` veio do editor
  * (TipTap) e é usado como está; o resto é Markdown.
  */
-async function renderBody(content: string): Promise<string> {
+export async function renderBody(content: string): Promise<string> {
   if (content.trim().startsWith('<')) return content
   const file = await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(content)
   return file.toString()
@@ -155,6 +157,11 @@ export const getPost = cache(async function getPost(slug: string): Promise<BlogP
     const { html, headings } = enhanceHtml(await renderBody(row.content ?? ''))
     return { ...summaryFromRow(row), html, headings }
   }
+
+  // O arquivo só vale como reserva quando o banco não respondeu. Se o banco respondeu e o post não
+  // está publicado (rascunho ou despublicado), a cópia em content/blog não pode trazê-lo de volta.
+  const published = await listPosts()
+  if (!published.some((item) => item.slug === slug)) return null
 
   const file = await getFilePost(slug)
   if (!file) return null

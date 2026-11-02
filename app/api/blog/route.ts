@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { supabase, supabaseAdmin } from '@/lib/supabase'
 import { getUserFromRequest } from '@/lib/auth'
+import { isLocalRequest, LOCAL_BLOCK_MESSAGE } from '@/lib/environment'
 
 // Fallback: buscar posts de arquivos .md se Supabase não estiver configurado
 import { getAllPosts as getAllPostsFromFiles, getPostBySlug as getPostBySlugFromFiles, createPost, updatePost, deletePost } from '@/lib/blog'
@@ -22,12 +23,33 @@ function refreshPublicBlog() {
   revalidatePath('/sitemap.xml')
 }
 
+// No ambiente local o painel só mexe em rascunhos (o .env.local aponta para o banco de produção)
+const blockedLocally = () => NextResponse.json({ error: LOCAL_BLOCK_MESSAGE, local: true }, { status: 403 })
+
+// O post está no ar agora? Se o banco não responder, não há como afirmar: segue o fluxo normal
+async function isLive(slug: string): Promise<boolean> {
+  if (!isSupabaseConfigured) return false
+  try {
+    const { data } = await supabaseAdmin
+      .from('posts')
+      .select('published')
+      .eq('slug', slug)
+      .abortSignal(AbortSignal.timeout(SUPABASE_READ_TIMEOUT_MS))
+      .maybeSingle()
+    return data?.published === true
+  } catch {
+    return false
+  }
+}
+
 // GET - Listar todos os posts OU buscar um post específico por slug
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const slug = searchParams.get('slug')
     const published = searchParams.get('published')
+    // Rascunhos (published = false) só saem para quem está logado no painel
+    const onlyPublished = !getUserFromRequest(request)
 
     // Helper para formatar posts de arquivos .md locais
     const getLocalPosts = () => {
@@ -44,10 +66,9 @@ export async function GET(request: NextRequest) {
     if (slug) {
       if (isSupabaseConfigured) {
         try {
-          const { data: post, error } = await supabaseAdmin
-            .from('posts')
-            .select('*')
-            .eq('slug', slug)
+          let postQuery = supabaseAdmin.from('posts').select('*').eq('slug', slug)
+          if (onlyPublished) postQuery = postQuery.eq('published', true)
+          const { data: post, error } = await postQuery
             .abortSignal(AbortSignal.timeout(SUPABASE_READ_TIMEOUT_MS))
             .single()
 
@@ -84,7 +105,7 @@ export async function GET(request: NextRequest) {
           .select('*')
           .order('created_at', { ascending: false })
 
-        if (published === 'true') {
+        if (published === 'true' || onlyPublished) {
           query = query.eq('published', true)
         }
 
@@ -134,6 +155,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Criar um post já no ar é publicar
+    if (published !== false && isLocalRequest(request.headers)) return blockedLocally()
+
     // Calcular tempo de leitura
     const wordCount = content ? content.trim().split(/\s+/).length : 0
     const readingTime = `${Math.ceil(wordCount / 200)} min de leitura`
@@ -152,6 +176,7 @@ export async function POST(request: NextRequest) {
             tags: tags || [],
             author: author || user.name,
             published: published ?? true,
+            published_at: published === false ? null : new Date().toISOString(),
             reading_time: readingTime,
             author_id: user.id
           })
@@ -159,14 +184,24 @@ export async function POST(request: NextRequest) {
           .single()
 
         if (!error && post) {
-          // Criar também cópia local de segurança
-          createPost(slug, { title, description, content, image, category, tags, author, date: new Date().toISOString() })
+          // Cópia local de segurança, só de post publicado: um rascunho em content/blog apareceria no site
+          if (published !== false) {
+            createPost(slug, { title, description, content, image, category, tags, author, date: new Date().toISOString() })
+          }
           refreshPublicBlog()
           return NextResponse.json({ success: true, post })
         }
       } catch (err) {
         console.warn('⚠️ Supabase indisponível, salvando post localmente (.md)')
       }
+    }
+
+    // Rascunho não tem reserva em arquivo: sem o banco, o melhor é avisar e não salvar
+    if (published === false) {
+      return NextResponse.json(
+        { error: 'O banco de dados está indisponível e o rascunho não foi salvo. Tente de novo em instantes.' },
+        { status: 503 }
+      )
     }
 
     // Fallback: criar arquivo .md local
@@ -235,6 +270,9 @@ export async function PUT(request: NextRequest) {
       )
     }
 
+    // Localmente: nem publicar um rascunho, nem alterar o texto de um post que já está no ar
+    if (isLocalRequest(request.headers) && (published === true || (await isLive(slug)))) return blockedLocally()
+
     // Calcular tempo de leitura
     const wordCount = content ? content.trim().split(/\s+/).length : 0
     const readingTime = `${Math.ceil(wordCount / 200)} min de leitura`
@@ -259,13 +297,22 @@ export async function PUT(request: NextRequest) {
           .single()
 
         if (!error && post) {
-          updatePost(slug, { title, description, content, image, category, tags, author, date: new Date().toISOString() })
+          if (published !== false && post.published !== false) {
+            updatePost(slug, { title, description, content, image, category, tags, author, date: new Date().toISOString() })
+          }
           refreshPublicBlog()
           return NextResponse.json({ success: true, post })
         }
       } catch (err) {
         console.warn('⚠️ Supabase indisponível, atualizando post localmente (.md)')
       }
+    }
+
+    if (published === false) {
+      return NextResponse.json(
+        { error: 'O banco de dados está indisponível e as alterações do rascunho não foram salvas.' },
+        { status: 503 }
+      )
     }
 
     // Fallback: atualizar arquivo .md local
@@ -288,6 +335,73 @@ export async function PUT(request: NextRequest) {
       { error: error.message || 'Erro interno ao atualizar post' },
       { status: 500 }
     )
+  }
+}
+
+// PATCH - Publicar ou despublicar um post (requer autenticação)
+export async function PATCH(request: NextRequest) {
+  try {
+    const user = getUserFromRequest(request)
+    if (!user) {
+      return NextResponse.json({ error: 'Não autenticado' }, { status: 401 })
+    }
+
+    if (isLocalRequest(request.headers)) return blockedLocally()
+
+    const { slug, published } = await request.json()
+    if (!slug || typeof slug !== 'string' || typeof published !== 'boolean') {
+      return NextResponse.json({ error: 'Informe o slug e se o post deve ficar publicado' }, { status: 400 })
+    }
+    if (!isSupabaseConfigured) {
+      return NextResponse.json({ error: 'O banco de dados não está configurado' }, { status: 503 })
+    }
+
+    const { data: current, error: readError } = await supabaseAdmin
+      .from('posts')
+      .select('slug,title,description,content,image,category,published')
+      .eq('slug', slug)
+      .abortSignal(AbortSignal.timeout(SUPABASE_READ_TIMEOUT_MS))
+      .maybeSingle()
+
+    if (readError) {
+      return NextResponse.json({ error: 'Não foi possível ler o post. Tente de novo em instantes.' }, { status: 503 })
+    }
+    if (!current) {
+      return NextResponse.json({ error: 'Post não encontrado' }, { status: 404 })
+    }
+
+    if (published) {
+      // Não publica um post incompleto
+      const missing = [
+        !current.title?.trim() && 'título',
+        !current.description?.trim() && 'descrição',
+        !current.content?.trim() && 'texto',
+        !current.category?.trim() && 'categoria',
+        !current.image?.trim() && 'capa',
+      ].filter(Boolean)
+      if (missing.length) {
+        return NextResponse.json({ error: `Antes de publicar, preencha: ${missing.join(', ')}.` }, { status: 400 })
+      }
+    }
+
+    // Ao publicar, a data do post passa a ser a de hoje; ao despublicar, a data anterior fica guardada
+    const update = published ? { published: true, published_at: new Date().toISOString() } : { published: false }
+    const { data: post, error } = await supabaseAdmin
+      .from('posts')
+      .update(update)
+      .eq('slug', slug)
+      .select('slug,title,published,published_at')
+      .single()
+
+    if (error || !post) {
+      return NextResponse.json({ error: 'Não foi possível atualizar o post. Tente de novo em instantes.' }, { status: 500 })
+    }
+
+    refreshPublicBlog()
+    return NextResponse.json({ success: true, post })
+  } catch (error: any) {
+    console.error('Erro ao publicar post:', error)
+    return NextResponse.json({ error: error.message || 'Erro interno ao publicar post' }, { status: 500 })
   }
 }
 
@@ -318,6 +432,8 @@ export async function DELETE(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    if (isLocalRequest(request.headers) && (await isLive(slug))) return blockedLocally()
 
     if (isSupabaseConfigured) {
       try {

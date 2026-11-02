@@ -56,7 +56,32 @@ Isso significa que, para entregar a mesma quantidade de energia aos motores da e
 
 ---
 
-## 5. Resumo Comparativo: O Impacto no TCO
+## 5. O que a Linha EP Traz
+
+Estas são as baterias de lítio de três máquinas EP, segundo as fichas oficiais:
+
+| Máquina | Bateria de lítio |
+| :--- | :--- |
+| [EP F4](/blog/ep-f4-ficha-tecnica-explicada) (paleteira) | 24 V, 20 Ah, removível, 5 kg (aceita até duas) |
+| [EP DS3](/blog/ep-ds3-ficha-tecnica-explicada) (patolada) | 24 V, 40 Ah, carregador de 15 A, interno à máquina: basta ligar na tomada |
+| [EP EFL302 B3](/blog/ep-efl302-b3-ficha-tecnica-explicada) (contrabalançada) | 80 V, 205 Ah, carregadores de 35 A ou 60 A |
+
+---
+
+## 6. Quando a Troca Compensa
+
+O lítio faz mais diferença quando:
+
+- a operação tem **mais de um turno**, e a troca de bateria seria uma parada;
+- a máquina **para e anda o dia inteiro**, com muitas pausas curtas que podem virar recarga;
+- o **espaço é limitado** e a sala de baterias custa metros quadrados;
+- o ambiente é **fechado, refrigerado ou de alimentos**, onde não há vapores de ácido nem gases de recarga.
+
+Para uma operação de um turno, com pouco uso e uma bateria de chumbo-ácido que já funciona bem, a diferença pode ser menor. A conta depende do seu volume, do seu tempo de parada e do seu custo de energia. Por isso vale simular antes: veja o [comparativo de custos com GLP](/blog/comparativo-custos-empilhadeira-eletrica-vs-glp).
+
+---
+
+## 7. Resumo Comparativo: O Impacto no TCO
 
 ```
 Custo Total em 5 Anos:
@@ -76,6 +101,6 @@ O **Grupo Venda Forte** é especialista na transição de frotas convencionais p
 
 ## Leia também
 
-- [Por que migrar para empilhadeiras de lítio](/blog/por-que-empilhadeiras-lithium-ion)
+- [EP Equipment: fabricante de empilhadeiras de lítio](/blog/ep-equipment-revolucao-empilhadeiras-litio)
 - [Empilhadeiras em câmaras frias e frigoríficos](/blog/empilhadeiras-para-frigorificos-camaras-frias-guia-tecnico)
 - [TCO de empilhadeira: como calcular o custo total](/blog/tco-empilhadeira-eletrica-como-calcular)

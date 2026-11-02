@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Trash2, Edit, Plus, Eye, LogOut, Search, X, SlidersHorizontal, ChevronLeft, ChevronRight, Truck, FileText } from 'lucide-react'
+import { Trash2, Edit, Plus, Eye, LogOut, Search, X, SlidersHorizontal, ChevronLeft, ChevronRight, Truck, FileText, PenLine, EyeOff, Rocket } from 'lucide-react'
 
 interface Post {
   slug: string
@@ -19,6 +19,7 @@ interface Post {
 }
 
 type SortOption = 'newest' | 'oldest' | 'title-asc' | 'title-desc'
+type StatusFilter = 'all' | 'published' | 'draft'
 
 export default function AdminBlogPage() {
   const router = useRouter()
@@ -30,6 +31,9 @@ export default function AdminBlogPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [sortBy, setSortBy] = useState<SortOption>('newest')
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  // Falso em ambiente local: não dá para despublicar nem mexer no que está no ar
+  const [canPublish, setCanPublish] = useState(true)
   const [showFilters, setShowFilters] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const postsPerPage = 10
@@ -43,6 +47,7 @@ export default function AdminBlogPage() {
         } else {
           setAuthenticated(true)
           fetchPosts()
+          return res.json().then((data) => setCanPublish(data.canPublish !== false)).catch(() => {})
         }
       })
       .catch(() => router.push('/admin/login'))
@@ -50,7 +55,7 @@ export default function AdminBlogPage() {
 
   useEffect(() => {
     filterAndSortPosts()
-  }, [posts, selectedCategory, searchTerm, sortBy])
+  }, [posts, selectedCategory, searchTerm, sortBy, statusFilter])
 
   async function handleLogout() {
     try {
@@ -84,6 +89,11 @@ export default function AdminBlogPage() {
       filtered = filtered.filter(post => post.category === selectedCategory)
     }
 
+    // Filtrar por status (no ar ou rascunho)
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(post => (post.published !== false) === (statusFilter === 'published'))
+    }
+
     // Filtrar por busca
     if (searchTerm) {
       filtered = filtered.filter(post =>
@@ -115,6 +125,7 @@ export default function AdminBlogPage() {
 
   function clearFilters() {
     setSelectedCategory('all')
+    setStatusFilter('all')
     setSearchTerm('')
     setSortBy('newest')
     setCurrentPage(1)
@@ -142,7 +153,33 @@ export default function AdminBlogPage() {
     }
   }
 
-  const hasActiveFilters = selectedCategory !== 'all' || searchTerm !== ''
+  async function handleUnpublish(slug: string) {
+    if (!confirm('Tirar este post do blog? Ele volta a ser rascunho: sai da lista, da busca e do mapa do site, e o endereço deixa de abrir. O texto fica guardado.')) {
+      return
+    }
+
+    try {
+      const response = await fetch('/api/blog', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug, published: false }),
+      })
+
+      if (response.ok) {
+        fetchPosts()
+      } else {
+        const error = await response.json().catch(() => ({}))
+        alert(error.error || 'Erro ao despublicar post')
+      }
+    } catch (error) {
+      console.error('Erro ao despublicar post:', error)
+      alert('Erro ao despublicar post')
+    }
+  }
+
+  const hasActiveFilters = selectedCategory !== 'all' || searchTerm !== '' || statusFilter !== 'all'
+  const publishedCount = posts.filter(post => post.published !== false).length
+  const draftCount = posts.length - publishedCount
   
   // Paginação
   const indexOfLastPost = currentPage * postsPerPage
@@ -191,6 +228,13 @@ export default function AdminBlogPage() {
                 >
                   <FileText size={14} />
                   <span className="hidden md:inline">Blog & Notícias</span>
+                </Link>
+                <Link
+                  href="/admin/rascunhos"
+                  className="px-4 py-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-semibold text-xs flex items-center gap-2 transition-colors"
+                >
+                  <PenLine size={14} />
+                  <span className="hidden md:inline">Rascunhos</span>
                 </Link>
               </div>
             </div>
@@ -251,6 +295,13 @@ export default function AdminBlogPage() {
           </div>
         ) : (
           <div className="space-y-8">
+            {!canPublish && (
+              <div role="status" className="rounded-2xl border-2 border-amber-300 bg-amber-50 px-6 py-4 text-sm font-semibold text-amber-900">
+                Ambiente local: dá para criar e editar rascunhos, mas não para publicar, despublicar nem alterar o que já está no ar.
+                Para isso, use o painel do site publicado.
+              </div>
+            )}
+
             {/* Estatísticas no Topo */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Total de Posts */}
@@ -265,7 +316,7 @@ export default function AdminBlogPage() {
                 </div>
                 <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">Total de Posts</h3>
                 <p className="text-gray-600 text-sm">
-                  {posts.length === 1 ? 'post publicado' : 'posts publicados'}
+                  {publishedCount} {publishedCount === 1 ? 'publicado' : 'publicados'} · {draftCount} {draftCount === 1 ? 'rascunho' : 'rascunhos'}
                 </p>
               </div>
 
@@ -312,6 +363,28 @@ export default function AdminBlogPage() {
 
             {/* Barra de Busca e Filtros */}
             <div className="space-y-6">
+              <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrar por status">
+                {([
+                  ['all', 'Todos', posts.length],
+                  ['published', 'No ar', publishedCount],
+                  ['draft', 'Rascunhos', draftCount],
+                ] as const).map(([value, label, count]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => { setStatusFilter(value); setCurrentPage(1); }}
+                    aria-pressed={statusFilter === value}
+                    className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all ${
+                      statusFilter === value
+                        ? 'bg-gray-900 text-white shadow-md'
+                        : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-gray-900'
+                    }`}
+                  >
+                    {label} <span className="opacity-70">({count})</span>
+                  </button>
+                ))}
+              </div>
+
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="relative flex-1 group">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-red-600 transition-colors" size={22} />
@@ -460,6 +533,11 @@ export default function AdminBlogPage() {
                           <span className="px-4 py-1.5 text-sm font-bold rounded-full bg-gradient-to-r from-red-100 to-red-50 text-red-700 border border-red-200">
                             {post.category}
                           </span>
+                          {post.published === false && (
+                            <span className="px-3 py-1.5 text-xs font-bold uppercase tracking-wide rounded-full bg-amber-100 text-amber-800 border border-amber-200">
+                              Rascunho
+                            </span>
+                          )}
                           <span className="text-sm text-gray-500 font-medium">
                             {new Date(post.created_at).toLocaleDateString('pt-BR', {
                               day: '2-digit',
@@ -496,14 +574,43 @@ export default function AdminBlogPage() {
 
                       {/* Ações */}
                       <div className="flex flex-col gap-3">
-                        <Link
-                          href={`/blog/${post.slug}`}
-                          target="_blank"
-                          className="p-3.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-blue-100"
-                          title="Visualizar post"
-                        >
-                          <Eye size={22} />
-                        </Link>
+                        {post.published === false ? (
+                          <>
+                            <Link
+                              href={`/admin/rascunhos/${post.slug}`}
+                              className="p-3.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-blue-100"
+                              title="Visualizar rascunho e publicar"
+                            >
+                              <Eye size={22} />
+                            </Link>
+                            <Link
+                              href={`/admin/rascunhos/${post.slug}`}
+                              className="p-3.5 text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-amber-100"
+                              title="Conferir e publicar"
+                            >
+                              <Rocket size={22} />
+                            </Link>
+                          </>
+                        ) : (
+                          <>
+                            <Link
+                              href={`/blog/${post.slug}`}
+                              target="_blank"
+                              className="p-3.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-blue-100"
+                              title="Ver no site"
+                            >
+                              <Eye size={22} />
+                            </Link>
+                            <button
+                              onClick={() => handleUnpublish(post.slug)}
+                              disabled={!canPublish}
+                              className="p-3.5 text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-amber-100 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:shadow-sm"
+                              title={canPublish ? 'Despublicar (volta a ser rascunho)' : 'Indisponível no ambiente local'}
+                            >
+                              <EyeOff size={22} />
+                            </button>
+                          </>
+                        )}
                         <Link
                           href={`/admin/blog/editar/${post.slug}`}
                           className="p-3.5 text-green-600 hover:text-green-700 hover:bg-green-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-green-100"

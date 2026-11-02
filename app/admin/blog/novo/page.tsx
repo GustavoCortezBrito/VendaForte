@@ -9,7 +9,7 @@ import RichTextEditor from '@/components/RichTextEditor'
 // Categorias do blog: as mesmas das abas da listagem (/blog). Novas categorias criadas
 // no formulário também viram aba, ordenadas das mais cheias às mais vazias.
 const DEFAULT_CATEGORIES = [
-  'Custos e financiamento',
+  'Custos',
   'Máquinas EP',
   'Tecnologia',
   'Empresa',
@@ -38,6 +38,8 @@ export default function NovoPostPage() {
   const router = useRouter()
   const [authenticated, setAuthenticated] = useState(false)
   const [saving, setSaving] = useState(false)
+  // Falso em ambiente local: só dá para salvar rascunho
+  const [canPublish, setCanPublish] = useState(true)
 
   async function handleLogout() {
     try {
@@ -71,6 +73,7 @@ export default function NovoPostPage() {
         } else {
           setAuthenticated(true)
           loadExistingCategories()
+          return res.json().then((data) => setCanPublish(data.canPublish !== false)).catch(() => {})
         }
       })
       .catch(() => router.push('/admin/login'))
@@ -180,6 +183,10 @@ export default function NovoPostPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+
+    // Dois botões enviam o formulário: "Salvar rascunho" (value="rascunho") e "Publicar" (value="publicar")
+    const submitter = (e.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null
+    const publish = submitter?.value !== 'rascunho'
     
     if (!formData.category) {
       alert('Por favor, selecione ou crie uma categoria')
@@ -201,13 +208,14 @@ export default function NovoPostPage() {
           tags: selectedTags,
           image: formData.image,
           content: formData.content,
+          published: publish,
           date: new Date().toISOString()
         })
       })
 
       if (response.ok) {
-        alert('Post criado com sucesso!')
-        router.push('/admin/blog')
+        alert(publish ? 'Post publicado com sucesso!' : 'Rascunho salvo! Ele não aparece no site até você publicar.')
+        router.push(publish ? '/admin/blog' : '/admin/rascunhos')
       } else {
         const error = await response.json()
         alert(error.error || 'Erro ao criar post')
@@ -288,8 +296,10 @@ export default function NovoPostPage() {
               </button>
               <button
                 type="submit"
+                value="publicar"
                 form="blog-form"
-                disabled={saving}
+                disabled={saving || !canPublish}
+                title={canPublish ? undefined : 'Indisponível no ambiente local'}
                 className="flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 sm:px-5 py-2 rounded-full hover:shadow-lg transition-all font-semibold text-xs disabled:opacity-50"
               >
                 <Save size={14} />
@@ -571,15 +581,32 @@ export default function NovoPostPage() {
             />
           </div>
 
+          {!canPublish && (
+            <p role="status" className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm font-semibold text-amber-900">
+              Ambiente local: só dá para salvar como rascunho. Para publicar, use o painel do site publicado.
+            </p>
+          )}
+
           {/* Botões */}
-          <div className="flex gap-4 pt-8 border-t-2 border-gray-200">
+          <div className="flex flex-wrap gap-4 pt-8 border-t-2 border-gray-200">
             <button
               type="submit"
+              value="rascunho"
               disabled={saving}
+              className="flex-1 inline-flex items-center justify-center gap-3 border-2 border-gray-900 bg-white text-gray-900 px-8 py-5 rounded-xl hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-bold text-lg"
+            >
+              <Save size={22} />
+              {saving ? 'Salvando...' : 'Salvar rascunho'}
+            </button>
+            <button
+              type="submit"
+              value="publicar"
+              disabled={saving || !canPublish}
+              title={canPublish ? undefined : 'Indisponível no ambiente local'}
               className="flex-1 inline-flex items-center justify-center gap-3 bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-5 rounded-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all font-bold text-lg transform hover:-translate-y-0.5"
             >
               <Save size={22} />
-              {saving ? 'Salvando...' : 'Criar Post'}
+              {saving ? 'Salvando...' : 'Publicar agora'}
             </button>
             <Link
               href="/admin/blog"

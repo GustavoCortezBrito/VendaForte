@@ -5,12 +5,12 @@ date: '2026-09-04'
 author: 'Engenharia de Aplicação Grupo Venda Forte'
 image: '/blog/covers/f4-locar.webp'
 category: 'Custos e financiamento'
-tags: ['Locação vs Compra', 'Aluguel de empilhadeira', 'Financiamento', 'BNDES', 'Gestão de Frotas', 'Custos Operacionais']
+tags: ['Locação vs Compra', 'Aluguel de empilhadeira', 'Gestão de Frotas', 'Custos Operacionais']
 ---
 
 Para diretores financeiros (CFOs) e gestores de suprimentos, uma das decisões mais críticas no planejamento de intralogística é: **devemos comprar ou locar as empilhadeiras da operação?**
 
-Com o avanço da tecnologia de **Baterias de Íon-Lítio**, taxas de juros variáveis e novas linhas de crédito como o **BNDES Finame**, o cálculo tradicional de *Capex vs. Opex* mudou consideravelmente nos últimos anos. Neste guia técnico, analisamos os prós, contras e a matemática exata por trás de cada modalidade.
+Com o avanço da tecnologia de **Baterias de Íon-Lítio**, taxas de juros variáveis e novas formas de contratação, o cálculo tradicional de *Capex vs. Opex* mudou consideravelmente nos últimos anos. Neste guia técnico, analisamos os prós, contras e a matemática exata por trás de cada modalidade.
 
 ---
 
@@ -20,7 +20,6 @@ A aquisição do ativo (compra direta ou financiada) confere controle patrimonia
 
 ### Vantagens da Compra:
 * **Formação de Patrimônio:** O equipamento entra no balanço patrimonial da empresa como ativo imobilizado.
-* **Financiamento com Juros Subsidiados (BNDES Finame):** Empresas com faturamento ativo no Brasil podem financiar equipamentos elétricos com carência e prazos de até 60 meses, resultando em parcelas muitas vezes inferiores ao valor mensal de uma locação.
 * **Depreciação Acelerada:** Benefícios contábeis para empresas enquadradas no regime de Lucro Real.
 * **Disponibilidade Total:** Sem limites contratuais de horímetro ou multas por horas excedentes de trabalho.
 
@@ -50,9 +49,9 @@ O modelo de locação (Rental) transforma o investimento em despesa operacional 
 
 Abaixo, veja uma simulação realista considerando uma **Empilhadeira Elétrica Patolada de 1.500 kg**:
 
-| Critério de Análise | Compra Direta / BNDES (Ativo Próprio) | Locação Mensal (Contrato Típico) |
+| Critério de Análise | Compra (Ativo Próprio) | Locação Mensal (Contrato Típico) |
 | :--- | :--- | :--- |
-| **Custo Médio Mensal** | Parcela BNDES ~ R$ 1.200 a R$ 1.800 | Mensalidade ~ R$ 2.800 a R$ 4.200 |
+| **Custo Mensal** | Compra à vista, sem mensalidade | Mensalidade, conforme prazo, modelo e serviços incluídos |
 | **Patrimônio Residual (Mês 36)** | A empresa possui o ativo (valor de revenda ~ 60%) | Nenhum patrimônio residual |
 | **Garantia da Bateria** | Até 5 anos de fábrica (Li-Ion EP) | Depende do SLA do locador |
 | **Impacto no Fluxo de Caixa** | Moderado no início, nulo após quitação | Custo perpétuo enquanto durar o contrato |
@@ -75,7 +74,7 @@ Com a consolidação da tecnologia **Li-Ion (Fosfato de Ferro-Lítio - LiFePO4)*
 
 ## Qual a Melhor Escolha para a sua Empresa?
 
-* Se sua operação opera em **regime contínuo** (galpão fixo, planejamento acima de 2 anos): **Comprar via BNDES Finame ou faturamento direto é financeiramente muito mais vantajoso**.
+* Se sua operação opera em **regime contínuo** (galpão fixo, planejamento acima de 2 anos): **Comprar é financeiramente muito mais vantajoso**.
 * Se sua demanda é **indefinida ou sazonal** (projetos de 3 a 9 meses): **A locação de curto prazo é a alternativa mais segura**.
 
 ---
@@ -89,5 +88,4 @@ Deseja saber exatamente o ponto de equilíbrio entre comprar ou alugar para o vo
 ## Leia também
 
 - [TCO de empilhadeira: como calcular o custo total](/blog/tco-empilhadeira-eletrica-como-calcular)
-- [Financiamento de empilhadeiras pelo BNDES Finame](/blog/financiamento-empilhadeira-bndes-finame-como-funciona)
 - [Empilhadeira elétrica de lítio vs. GLP: custos em 5 anos](/blog/comparativo-custos-empilhadeira-eletrica-vs-glp)

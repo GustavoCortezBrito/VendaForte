@@ -51,10 +51,39 @@ export function slugifyText(text: string): string {
     .replace(/^-+|-+$/g, '')
 }
 
+/**
+ * Categorias renomeadas. O nome antigo ainda pode estar gravado nos posts do banco; a leitura troca pelo
+ * novo, e o endereço antigo da categoria redireciona (ver next.config.ts).
+ */
+const CATEGORY_RENAMES: Record<string, string> = {
+  'Custos e financiamento': 'Custos',
+}
+
 /** Categoria vazia vira "Geral", como já acontecia no cadastro. */
 export function categoryOf(post: Pick<BlogPostSummary, 'category'>): string {
-  return post.category?.trim() || 'Geral'
+  const name = post.category?.trim() || 'Geral'
+  return CATEGORY_RENAMES[name] ?? name
 }
+
+/** Texto de abertura de cada categoria: dá à página o que dizer antes da lista e à busca o que mostrar. */
+const CATEGORY_INTROS: Record<string, string> = {
+  Custos:
+    'Guias para entender o custo de ter e operar uma empilhadeira: locar ou comprar, custo total de propriedade e custo de energia, com as contas explicadas passo a passo.',
+  'Máquinas EP':
+    'Fichas técnicas explicadas dos modelos EP Equipment: capacidade, bateria, dimensões, corredor e opcionais, lidos direto da ficha do fabricante.',
+  Tecnologia:
+    'Bateria de lítio, chumbo-ácido e outras tecnologias das empilhadeiras elétricas: como funcionam e o que muda na operação e na manutenção.',
+  Empresa:
+    'Notícias e apresentações da Venda Forte e da EP Equipment: eventos, parcerias e como trabalhamos com a linha EP.',
+  'Guia de compra':
+    'Como escolher a empilhadeira certa para a sua operação: tipos de máquina, corredor, altura, capacidade e os erros mais comuns na hora de comprar.',
+  'Aplicações':
+    'Como cada operação usa empilhadeiras: câmaras frias, frigoríficos e armazéns, e o que muda na escolha da máquina em cada aplicação.',
+  'Segurança e normas':
+    'O que a norma exige de quem opera empilhadeira e como manter a operação segura: NR-11, treinamento e responsabilidades.',
+}
+
+export const categoryIntro = (name: string): string | undefined => CATEGORY_INTROS[name]
 
 /** Artigos por página, fora o destaque da primeira. */
 export const POSTS_PER_PAGE = 9
