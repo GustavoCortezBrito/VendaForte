@@ -1,0 +1,2608 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Venda Forte//Agenda de conteudo//PT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Conteúdo Venda Forte
+X-WR-TIMEZONE:America/Sao_Paulo
+BEGIN:VTIMEZONE
+TZID:America/Sao_Paulo
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:-0300
+TZOFFSETTO:-0300
+TZNAME:-03
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:prazo-conversa@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261023
+DTEND;VALUE=DATE:20261024
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Paulo e Rodrigo: conversa sobre as datas especiais
+DESCRIPTION:Responsável: Paulo e Rodrigo\nCalendário completo: https://c
+ laude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p01-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261026
+DTEND;VALUE=DATE:20261027
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 1: Paleteira elétrica: 1.500 ou 2.000 kg?
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p02-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261026
+DTEND;VALUE=DATE:20261027
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 2: Empilhadeira retrátil: o que é\, como 
+ funciona e quando usar
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p01-linkedin-pergunta@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261026
+DTEND;VALUE=DATE:20261027
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Pergunta: "Na sua operação\, a paleteira é de 1.500
+  ou de 2.000 kg?"
+DESCRIPTION:Post 1: Paleteira elétrica: 1.500 ou 2.000 kg?\nResponsável:
+  Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9
+ YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p01-instagram-stories@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261026
+DTEND;VALUE=DATE:20261027
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Stories com enquete\, com a mesma pergunta
+DESCRIPTION:Post 1: Paleteira elétrica: 1.500 ou 2.000 kg?\nResponsável:
+  Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9
+ YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p01-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261027T090000
+DTEND;TZID=America/Sao_Paulo:20261027T093000
+SUMMARY:Blog · Post 1 no ar às 9h: Paleteira elétrica: 1.500 ou 2.000 k
+ g?
+DESCRIPTION:Pedir indexação no Search Console\nLink: https://www.grupove
+ ndaforte.com/blog/paleteira-eletrica-1500-ou-2000-kg\nResponsável: Gusta
+ vo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ2
+ 7T
+URL:https://www.grupovendaforte.com/blog/paleteira-eletrica-1500-ou-2000-k
+ g
+END:VEVENT
+BEGIN:VEVENT
+UID:p01-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261027
+DTEND;VALUE=DATE:20261028
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 1
+DESCRIPTION:Post 1: Paleteira elétrica: 1.500 ou 2.000 kg?\nLink: https:/
+ /www.grupovendaforte.com/blog/paleteira-eletrica-1500-ou-2000-kg?utm_sour
+ ce=linkedin&utm_medium=social&utm_campaign=conteudo-nov26&utm_content=pal
+ eteira-eletrica-1500-ou-2000-kg\nResponsável: Gustavo\nCalendário compl
+ eto: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/paleteira-eletrica-1500-ou-2000-k
+ g?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-nov26&utm_c
+ ontent=paleteira-eletrica-1500-ou-2000-kg
+END:VEVENT
+BEGIN:VEVENT
+UID:p01-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261027
+DTEND;VALUE=DATE:20261028
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 1
+DESCRIPTION:Post 1: Paleteira elétrica: 1.500 ou 2.000 kg?\nLink: https:/
+ /www.grupovendaforte.com/blog/paleteira-eletrica-1500-ou-2000-kg?utm_sour
+ ce=facebook&utm_medium=social&utm_campaign=conteudo-nov26&utm_content=pal
+ eteira-eletrica-1500-ou-2000-kg\nResponsável: Gustavo\nCalendário compl
+ eto: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/paleteira-eletrica-1500-ou-2000-k
+ g?utm_source=facebook&utm_medium=social&utm_campaign=conteudo-nov26&utm_c
+ ontent=paleteira-eletrica-1500-ou-2000-kg
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-locacao-antecipada@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261028
+DTEND;VALUE=DATE:20261029
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) Prazo · Rodrigo: dados da locação\, para antecipa
+ r o post de aluguel para 03/11
+DESCRIPTION:Responsável: Rodrigo\nA confirmar com Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p03-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261028
+DTEND;VALUE=DATE:20261029
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 3: Empilhadeira patolada: o que é e a dife
+ rença para a semi-elétrica
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p01-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261028
+DTEND;VALUE=DATE:20261029
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel "1.500 ou 2.000 kg? 5 perguntas antes de es
+ colher"
+DESCRIPTION:Post 1: Paleteira elétrica: 1.500 ou 2.000 kg?\nResponsável:
+  Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9
+ YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p01-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261028
+DTEND;VALUE=DATE:20261029
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 1: Paleteira elétrica: 1.500 ou 2.000 kg?\nResponsável:
+  Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9
+ YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p02-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261029T090000
+DTEND;TZID=America/Sao_Paulo:20261029T093000
+SUMMARY:Blog · Post 2 no ar às 9h: Empilhadeira retrátil: o que é\, co
+ mo funciona e quando usar
+DESCRIPTION:Pedir indexação no Search Console. Conferir os números da C
+ QD20LB na ficha oficial\nLink: https://www.grupovendaforte.com/blog/empil
+ hadeira-retratil-o-que-e\nResponsável: Gustavo\nCalendário completo: ht
+ tps://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-retratil-o-que-e
+END:VEVENT
+BEGIN:VEVENT
+UID:p02-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261029
+DTEND;VALUE=DATE:20261030
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 2 com o dado do corredor
+DESCRIPTION:Post 2: Empilhadeira retrátil: o que é\, como funciona e qua
+ ndo usar\nLink: https://www.grupovendaforte.com/blog/empilhadeira-retrati
+ l-o-que-e?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-nov
+ 26&utm_content=empilhadeira-retratil-o-que-e\nResponsável: Gustavo\nCale
+ ndário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-retratil-o-que-e?utm
+ _source=linkedin&utm_medium=social&utm_campaign=conteudo-nov26&utm_conten
+ t=empilhadeira-retratil-o-que-e
+END:VEVENT
+BEGIN:VEVENT
+UID:p02-perfil-google@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261029
+DTEND;VALUE=DATE:20261030
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Atualização com o link do post 2
+DESCRIPTION:Post 2: Empilhadeira retrátil: o que é\, como funciona e qua
+ ndo usar\nFoto real\, duas frases e o botão "Saiba mais"\nLink: https://
+ www.grupovendaforte.com/blog/empilhadeira-retratil-o-que-e?utm_source=per
+ fil-google&utm_medium=organic&utm_campaign=conteudo-nov26&utm_content=emp
+ ilhadeira-retratil-o-que-e\nResponsável: Gustavo\nCalendário completo: 
+ https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-retratil-o-que-e?utm
+ _source=perfil-google&utm_medium=organic&utm_campaign=conteudo-nov26&utm_
+ content=empilhadeira-retratil-o-que-e
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-revisor@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261030
+DTEND;VALUE=DATE:20261031
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Paulo: indicar quem faz a revisão técnica dos posts
+DESCRIPTION:Responsável: Paulo\nCalendário completo: https://claude.ai/a
+ rtifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-acessos@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261030
+DTEND;VALUE=DATE:20261031
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Paulo e Rodrigo: acesso de administrador ao Instagram\, F
+ acebook\, LinkedIn e Perfil da Empresa no Google
+DESCRIPTION:Responsável: Paulo e Rodrigo\nCalendário completo: https://c
+ laude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p04-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261030
+DTEND;VALUE=DATE:20261031
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 4: Paleteira elétrica ou manual: quando a 
+ troca compensa
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p02-instagram-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261030
+DTEND;VALUE=DATE:20261031
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Reel "Quanto corredor a retrátil economiza"
+DESCRIPTION:Post 2: Empilhadeira retrátil: o que é\, como funciona e qua
+ ndo usar\nResponsável: Gustavo\nCalendário completo: https://claude.ai/
+ artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p02-facebook-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261030
+DTEND;VALUE=DATE:20261031
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo Reel do Instagram
+DESCRIPTION:Post 2: Empilhadeira retrátil: o que é\, como funciona e qua
+ ndo usar\nResponsável: Gustavo\nCalendário completo: https://claude.ai/
+ artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:horario-finados@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261030
+DTEND;VALUE=DATE:20261031
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Horário especial de 02/11 (Finados)
+DESCRIPTION:Responsável: Gustavo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:feriado-2026-11-02@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261102
+DTEND;VALUE=DATE:20261103
+TRANSP:TRANSPARENT
+SUMMARY:Feriado · Finados
+DESCRIPTION:Nada sai no blog nem nas redes\nCalendário completo: https://
+ claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p03-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261103T090000
+DTEND;TZID=America/Sao_Paulo:20261103T093000
+SUMMARY:Blog · Post 3 no ar às 9h: Empilhadeira patolada: o que é e a d
+ iferença para a semi-elétrica
+DESCRIPTION:Pedir indexação no Search Console. Confirmar se o catálogo 
+ tem modelo semi-elétrico\nLink: https://www.grupovendaforte.com/blog/emp
+ ilhadeira-patolada-o-que-e\nResponsável: Gustavo\nCalendário completo: 
+ https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-patolada-o-que-e
+END:VEVENT
+BEGIN:VEVENT
+UID:p03-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261103
+DTEND;VALUE=DATE:20261104
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 3
+DESCRIPTION:Post 3: Empilhadeira patolada: o que é e a diferença para a 
+ semi-elétrica\nLink: https://www.grupovendaforte.com/blog/empilhadeira-p
+ atolada-o-que-e?utm_source=linkedin&utm_medium=social&utm_campaign=conteu
+ do-nov26&utm_content=empilhadeira-patolada-o-que-e\nResponsável: Gustavo
+ \nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-patolada-o-que-e?utm
+ _source=linkedin&utm_medium=social&utm_campaign=conteudo-nov26&utm_conten
+ t=empilhadeira-patolada-o-que-e
+END:VEVENT
+BEGIN:VEVENT
+UID:p03-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261103
+DTEND;VALUE=DATE:20261104
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 3
+DESCRIPTION:Post 3: Empilhadeira patolada: o que é e a diferença para a 
+ semi-elétrica\nLink: https://www.grupovendaforte.com/blog/empilhadeira-p
+ atolada-o-que-e?utm_source=facebook&utm_medium=social&utm_campaign=conteu
+ do-nov26&utm_content=empilhadeira-patolada-o-que-e\nResponsável: Gustavo
+ \nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-patolada-o-que-e?utm
+ _source=facebook&utm_medium=social&utm_campaign=conteudo-nov26&utm_conten
+ t=empilhadeira-patolada-o-que-e
+END:VEVENT
+BEGIN:VEVENT
+UID:p03-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261104
+DTEND;VALUE=DATE:20261105
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel "Patolada\, paleteira ou retrátil: quando 
+ usar cada uma"
+DESCRIPTION:Post 3: Empilhadeira patolada: o que é e a diferença para a 
+ semi-elétrica\nResponsável: Gustavo\nCalendário completo: https://clau
+ de.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p03-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261104
+DTEND;VALUE=DATE:20261105
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 3: Empilhadeira patolada: o que é e a diferença para a 
+ semi-elétrica\nResponsável: Gustavo\nCalendário completo: https://clau
+ de.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-locacao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261105
+DTEND;VALUE=DATE:20261106
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Rodrigo: dados da locação (frota\, prazo mínimo\, cida
+ des\, o que está incluso e operador)
+DESCRIPTION:Responsável: Rodrigo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p05-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261105
+DTEND;VALUE=DATE:20261106
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 5: Aluguel de empilhadeira: o que entra no 
+ valor e como pedir proposta
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p04-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261105T090000
+DTEND;TZID=America/Sao_Paulo:20261105T093000
+SUMMARY:Blog · Post 4 no ar às 9h: Paleteira elétrica ou manual: quando
+  a troca compensa
+DESCRIPTION:Pedir indexação no Search Console\nLink: https://www.grupove
+ ndaforte.com/blog/paleteira-eletrica-ou-manual\nResponsável: Gustavo\nCa
+ lendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/paleteira-eletrica-ou-manual
+END:VEVENT
+BEGIN:VEVENT
+UID:p04-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261105
+DTEND;VALUE=DATE:20261106
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 4
+DESCRIPTION:Post 4: Paleteira elétrica ou manual: quando a troca compensa
+ \nLink: https://www.grupovendaforte.com/blog/paleteira-eletrica-ou-manual
+ ?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-nov26&utm_co
+ ntent=paleteira-eletrica-ou-manual\nResponsável: Gustavo\nCalendário co
+ mpleto: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/paleteira-eletrica-ou-manual?utm_
+ source=linkedin&utm_medium=social&utm_campaign=conteudo-nov26&utm_content
+ =paleteira-eletrica-ou-manual
+END:VEVENT
+BEGIN:VEVENT
+UID:p04-perfil-google@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261105
+DTEND;VALUE=DATE:20261106
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Atualização com o link do post 4
+DESCRIPTION:Post 4: Paleteira elétrica ou manual: quando a troca compensa
+ \nFoto real\, duas frases e o botão "Saiba mais"\nLink: https://www.grup
+ ovendaforte.com/blog/paleteira-eletrica-ou-manual?utm_source=perfil-googl
+ e&utm_medium=organic&utm_campaign=conteudo-nov26&utm_content=paleteira-el
+ etrica-ou-manual\nResponsável: Gustavo\nCalendário completo: https://cl
+ aude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/paleteira-eletrica-ou-manual?utm_
+ source=perfil-google&utm_medium=organic&utm_campaign=conteudo-nov26&utm_c
+ ontent=paleteira-eletrica-ou-manual
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-assistencia@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261106
+DTEND;VALUE=DATE:20261107
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Paulo: dados da assistência técnica EP (região\, prazo
+ \, marcas\, frase de dealer oficial e se o "24h" do site é real)
+DESCRIPTION:Responsável: Paulo\nCalendário completo: https://claude.ai/a
+ rtifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p04-instagram-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261106
+DTEND;VALUE=DATE:20261107
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Reel "Manual contra elétrica\, com a F4"
+DESCRIPTION:Post 4: Paleteira elétrica ou manual: quando a troca compensa
+ \nResponsável: Gustavo\nCalendário completo: https://claude.ai/artifact
+ /K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p04-facebook-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261106
+DTEND;VALUE=DATE:20261107
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo Reel do Instagram
+DESCRIPTION:Post 4: Paleteira elétrica ou manual: quando a troca compensa
+ \nResponsável: Gustavo\nCalendário completo: https://claude.ai/artifact
+ /K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p06-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261109
+DTEND;VALUE=DATE:20261110
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 6: Manutenção de empilhadeira elétrica: 
+ o que revisar e quando
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:pagina-locacao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261109
+DTEND;VALUE=DATE:20261110
+TRANSP:TRANSPARENT
+SUMMARY:Site · Prazo da página: Locação de empilhadeiras
+DESCRIPTION:No ar até 09/11. Depende dos dados do Rodrigo\nLink: https://
+ www.grupovendaforte.com/locacao-de-empilhadeiras\nResponsável: Gustavo\n
+ Calendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/locacao-de-empilhadeiras
+END:VEVENT
+BEGIN:VEVENT
+UID:p05-linkedin-pergunta@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261109
+DTEND;VALUE=DATE:20261110
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Pergunta: "Comprar ou alugar: o que pesa mais na sua d
+ ecisão?"
+DESCRIPTION:Post 5: Aluguel de empilhadeira: o que entra no valor e como p
+ edir proposta\nResponsável: Gustavo\nCalendário completo: https://claud
+ e.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p05-instagram-stories@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261109
+DTEND;VALUE=DATE:20261110
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Stories com enquete\, com a mesma pergunta
+DESCRIPTION:Post 5: Aluguel de empilhadeira: o que entra no valor e como p
+ edir proposta\nResponsável: Gustavo\nCalendário completo: https://claud
+ e.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p05-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261110T090000
+DTEND;TZID=America/Sao_Paulo:20261110T093000
+SUMMARY:Blog · Post 5 no ar às 9h: Aluguel de empilhadeira: o que entra 
+ no valor e como pedir proposta
+DESCRIPTION:Pedir indexação no Search Console. Rodrigo: frota\, prazo m
+ ínimo\, cidades\, o que está incluso e operador (até 05/11)\nLink: htt
+ ps://www.grupovendaforte.com/blog/aluguel-de-empilhadeira-o-que-entra-no-
+ valor\nResponsável: Gustavo\nCalendário completo: https://claude.ai/art
+ ifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/aluguel-de-empilhadeira-o-que-ent
+ ra-no-valor
+END:VEVENT
+BEGIN:VEVENT
+UID:p05-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261110
+DTEND;VALUE=DATE:20261111
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 5
+DESCRIPTION:Post 5: Aluguel de empilhadeira: o que entra no valor e como p
+ edir proposta\nLink: https://www.grupovendaforte.com/blog/aluguel-de-empi
+ lhadeira-o-que-entra-no-valor?utm_source=linkedin&utm_medium=social&utm_c
+ ampaign=conteudo-nov26&utm_content=aluguel-de-empilhadeira-o-que-entra-no
+ -valor\nResponsável: Gustavo\nCalendário completo: https://claude.ai/ar
+ tifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/aluguel-de-empilhadeira-o-que-ent
+ ra-no-valor?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-n
+ ov26&utm_content=aluguel-de-empilhadeira-o-que-entra-no-valor
+END:VEVENT
+BEGIN:VEVENT
+UID:p05-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261110
+DTEND;VALUE=DATE:20261111
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 5
+DESCRIPTION:Post 5: Aluguel de empilhadeira: o que entra no valor e como p
+ edir proposta\nLink: https://www.grupovendaforte.com/blog/aluguel-de-empi
+ lhadeira-o-que-entra-no-valor?utm_source=facebook&utm_medium=social&utm_c
+ ampaign=conteudo-nov26&utm_content=aluguel-de-empilhadeira-o-que-entra-no
+ -valor\nResponsável: Gustavo\nCalendário completo: https://claude.ai/ar
+ tifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/aluguel-de-empilhadeira-o-que-ent
+ ra-no-valor?utm_source=facebook&utm_medium=social&utm_campaign=conteudo-n
+ ov26&utm_content=aluguel-de-empilhadeira-o-que-entra-no-valor
+END:VEVENT
+BEGIN:VEVENT
+UID:pagina-assistencia@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261112
+TRANSP:TRANSPARENT
+SUMMARY:Site · Prazo da página: Assistência técnica EP
+DESCRIPTION:No ar até 11/11. Depende dos dados do Paulo\nLink: https://ww
+ w.grupovendaforte.com/assistencia-tecnica-ep\nResponsável: Gustavo\nCale
+ ndário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/assistencia-tecnica-ep
+END:VEVENT
+BEGIN:VEVENT
+UID:p05-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261112
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel "O que entra no valor do aluguel"
+DESCRIPTION:Post 5: Aluguel de empilhadeira: o que entra no valor e como p
+ edir proposta\nResponsável: Gustavo\nCalendário completo: https://claud
+ e.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p05-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261112
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 5: Aluguel de empilhadeira: o que entra no valor e como p
+ edir proposta\nResponsável: Gustavo\nCalendário completo: https://claud
+ e.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-pecas@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261112
+DTEND;VALUE=DATE:20261113
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Rodrigo: dados de peças e baterias (estoque\, marcas e o
+  que o cliente informa para cotar)
+DESCRIPTION:Responsável: Rodrigo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p07-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261112
+DTEND;VALUE=DATE:20261113
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 7: Empilhadeira elétrica de 2 a 3 tonelada
+ s: o que pesa no preço
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p06-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261112T090000
+DTEND;TZID=America/Sao_Paulo:20261112T093000
+SUMMARY:Blog · Post 6 no ar às 9h: Manutenção de empilhadeira elétric
+ a: o que revisar e quando
+DESCRIPTION:Pedir indexação no Search Console. Paulo: intervalos de revi
+ são da EP\, região e prazo de atendimento (até 06/11)\nLink: https://w
+ ww.grupovendaforte.com/blog/manutencao-de-empilhadeira-eletrica\nRespons
+ ável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUW
+ LwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/manutencao-de-empilhadeira-eletri
+ ca
+END:VEVENT
+BEGIN:VEVENT
+UID:p06-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261112
+DTEND;VALUE=DATE:20261113
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 6
+DESCRIPTION:Post 6: Manutenção de empilhadeira elétrica: o que revisar 
+ e quando\nLink: https://www.grupovendaforte.com/blog/manutencao-de-empilh
+ adeira-eletrica?utm_source=linkedin&utm_medium=social&utm_campaign=conteu
+ do-nov26&utm_content=manutencao-de-empilhadeira-eletrica\nResponsável: G
+ ustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ
+ 3yQ27T
+URL:https://www.grupovendaforte.com/blog/manutencao-de-empilhadeira-eletri
+ ca?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-nov26&utm_
+ content=manutencao-de-empilhadeira-eletrica
+END:VEVENT
+BEGIN:VEVENT
+UID:p06-perfil-google@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261112
+DTEND;VALUE=DATE:20261113
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Atualização com o link do post 6
+DESCRIPTION:Post 6: Manutenção de empilhadeira elétrica: o que revisar 
+ e quando\nFoto real\, duas frases e o botão "Saiba mais"\nLink: https://
+ www.grupovendaforte.com/blog/manutencao-de-empilhadeira-eletrica?utm_sour
+ ce=perfil-google&utm_medium=organic&utm_campaign=conteudo-nov26&utm_conte
+ nt=manutencao-de-empilhadeira-eletrica\nResponsável: Gustavo\nCalendári
+ o completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/manutencao-de-empilhadeira-eletri
+ ca?utm_source=perfil-google&utm_medium=organic&utm_campaign=conteudo-nov2
+ 6&utm_content=manutencao-de-empilhadeira-eletrica
+END:VEVENT
+BEGIN:VEVENT
+UID:pagina-paleteiras@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261113
+DTEND;VALUE=DATE:20261114
+TRANSP:TRANSPARENT
+SUMMARY:Site · Prazo da página: Paleteiras elétricas
+DESCRIPTION:No ar até 13/11\nResponsável: Gustavo\nCalendário completo:
+  https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:pagina-patoladas@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261113
+DTEND;VALUE=DATE:20261114
+TRANSP:TRANSPARENT
+SUMMARY:Site · Prazo da página: Empilhadeiras patoladas
+DESCRIPTION:No ar até 13/11\nResponsável: Gustavo\nCalendário completo:
+  https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:pagina-retrateis@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261113
+DTEND;VALUE=DATE:20261114
+TRANSP:TRANSPARENT
+SUMMARY:Site · Prazo da página: Empilhadeiras retráteis
+DESCRIPTION:No ar até 13/11\nResponsável: Gustavo\nCalendário completo:
+  https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:bf-pagina@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261113
+DTEND;VALUE=DATE:20261114
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) Site · Prazo da página /black-friday\, com link na
+  home
+DESCRIPTION:Endereço fixo\, sem o ano\, reaproveitado todo ano\nLink: htt
+ ps://www.grupovendaforte.com/black-friday\nResponsável: Gustavo\nA confi
+ rmar com Paulo e Rodrigo\nCalendário completo: https://claude.ai/artifac
+ t/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/black-friday
+END:VEVENT
+BEGIN:VEVENT
+UID:p06-instagram-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261113
+DTEND;VALUE=DATE:20261114
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Reel "3 verificações do operador antes de ligar"
+DESCRIPTION:Post 6: Manutenção de empilhadeira elétrica: o que revisar 
+ e quando\nResponsável: Gustavo\nCalendário completo: https://claude.ai/
+ artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p06-facebook-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261113
+DTEND;VALUE=DATE:20261114
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo Reel do Instagram
+DESCRIPTION:Post 6: Manutenção de empilhadeira elétrica: o que revisar 
+ e quando\nResponsável: Gustavo\nCalendário completo: https://claude.ai/
+ artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p08-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261116
+DTEND;VALUE=DATE:20261117
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 8: Bateria da empilhadeira elétrica: carga
+ \, vida útil e troca
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:pagina-pecas@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261116
+DTEND;VALUE=DATE:20261117
+TRANSP:TRANSPARENT
+SUMMARY:Site · Prazo da página: Peças e baterias
+DESCRIPTION:No ar até 16/11. Depende dos dados do Rodrigo\nLink: https://
+ www.grupovendaforte.com/pecas-e-baterias\nResponsável: Gustavo\nCalendá
+ rio completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/pecas-e-baterias
+END:VEVENT
+BEGIN:VEVENT
+UID:p07-linkedin-pergunta@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261116
+DTEND;VALUE=DATE:20261117
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Pergunta: "Na hora de comprar\, o que pesa mais: capac
+ idade\, altura ou bateria?"
+DESCRIPTION:Post 7: Empilhadeira elétrica de 2 a 3 toneladas: o que pesa 
+ no preço\nResponsável: Gustavo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p07-instagram-stories@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261116
+DTEND;VALUE=DATE:20261117
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Stories com enquete\, com a mesma pergunta
+DESCRIPTION:Post 7: Empilhadeira elétrica de 2 a 3 toneladas: o que pesa 
+ no preço\nResponsável: Gustavo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p07-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261117T090000
+DTEND;TZID=America/Sao_Paulo:20261117T093000
+SUMMARY:Blog · Post 7 no ar às 9h: Empilhadeira elétrica de 2 a 3 tonel
+ adas: o que pesa no preço
+DESCRIPTION:Pedir indexação no Search Console\nLink: https://www.grupove
+ ndaforte.com/blog/preco-empilhadeira-eletrica-2-a-3-toneladas\nResponsáv
+ el: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwL
+ zU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/preco-empilhadeira-eletrica-2-a-3
+ -toneladas
+END:VEVENT
+BEGIN:VEVENT
+UID:p07-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261117
+DTEND;VALUE=DATE:20261118
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 7
+DESCRIPTION:Post 7: Empilhadeira elétrica de 2 a 3 toneladas: o que pesa 
+ no preço\nLink: https://www.grupovendaforte.com/blog/preco-empilhadeira-
+ eletrica-2-a-3-toneladas?utm_source=linkedin&utm_medium=social&utm_campai
+ gn=conteudo-nov26&utm_content=preco-empilhadeira-eletrica-2-a-3-toneladas
+ \nResponsável: Gustavo\nCalendário completo: https://claude.ai/artifact
+ /K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/preco-empilhadeira-eletrica-2-a-3
+ -toneladas?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-no
+ v26&utm_content=preco-empilhadeira-eletrica-2-a-3-toneladas
+END:VEVENT
+BEGIN:VEVENT
+UID:p07-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261117
+DTEND;VALUE=DATE:20261118
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 7
+DESCRIPTION:Post 7: Empilhadeira elétrica de 2 a 3 toneladas: o que pesa 
+ no preço\nLink: https://www.grupovendaforte.com/blog/preco-empilhadeira-
+ eletrica-2-a-3-toneladas?utm_source=facebook&utm_medium=social&utm_campai
+ gn=conteudo-nov26&utm_content=preco-empilhadeira-eletrica-2-a-3-toneladas
+ \nResponsável: Gustavo\nCalendário completo: https://claude.ai/artifact
+ /K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/preco-empilhadeira-eletrica-2-a-3
+ -toneladas?utm_source=facebook&utm_medium=social&utm_campaign=conteudo-no
+ v26&utm_content=preco-empilhadeira-eletrica-2-a-3-toneladas
+END:VEVENT
+BEGIN:VEVENT
+UID:p09-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261118
+DTEND;VALUE=DATE:20261119
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 9: Selecionadora de pedidos: o que é e qua
+ ndo compensa
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p07-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261118
+DTEND;VALUE=DATE:20261119
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel "O que pesa no preço de uma empilhadeira"
+DESCRIPTION:Post 7: Empilhadeira elétrica de 2 a 3 toneladas: o que pesa 
+ no preço\nResponsável: Gustavo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p07-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261118
+DTEND;VALUE=DATE:20261119
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 7: Empilhadeira elétrica de 2 a 3 toneladas: o que pesa 
+ no preço\nResponsável: Gustavo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:horario-consciencia-negra@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261118
+DTEND;VALUE=DATE:20261119
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Horário especial de 20/11 (Consciência Negra)
+DESCRIPTION:Responsável: Gustavo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p08-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261119T090000
+DTEND;TZID=America/Sao_Paulo:20261119T093000
+SUMMARY:Blog · Post 8 no ar às 9h: Bateria da empilhadeira elétrica: ca
+ rga\, vida útil e troca
+DESCRIPTION:Pedir indexação no Search Console. Rodrigo: baterias em esto
+ que (até 12/11)\nLink: https://www.grupovendaforte.com/blog/bateria-empi
+ lhadeira-eletrica\nResponsável: Gustavo\nCalendário completo: https://c
+ laude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/bateria-empilhadeira-eletrica
+END:VEVENT
+BEGIN:VEVENT
+UID:p08-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261119
+DTEND;VALUE=DATE:20261120
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 8 com a pergunta "Lítio ou chumbo-ácido
+ : o que sua frota usa hoje?"
+DESCRIPTION:Post 8: Bateria da empilhadeira elétrica: carga\, vida útil 
+ e troca\nLink: https://www.grupovendaforte.com/blog/bateria-empilhadeira-
+ eletrica?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-nov2
+ 6&utm_content=bateria-empilhadeira-eletrica\nResponsável: Gustavo\nCalen
+ dário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/bateria-empilhadeira-eletrica?utm
+ _source=linkedin&utm_medium=social&utm_campaign=conteudo-nov26&utm_conten
+ t=bateria-empilhadeira-eletrica
+END:VEVENT
+BEGIN:VEVENT
+UID:p08-perfil-google@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261119
+DTEND;VALUE=DATE:20261120
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Atualização com o link do post 8
+DESCRIPTION:Post 8: Bateria da empilhadeira elétrica: carga\, vida útil 
+ e troca\nFoto real\, duas frases e o botão "Saiba mais"\nLink: https://w
+ ww.grupovendaforte.com/blog/bateria-empilhadeira-eletrica?utm_source=perf
+ il-google&utm_medium=organic&utm_campaign=conteudo-nov26&utm_content=bate
+ ria-empilhadeira-eletrica\nResponsável: Gustavo\nCalendário completo: h
+ ttps://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/bateria-empilhadeira-eletrica?utm
+ _source=perfil-google&utm_medium=organic&utm_campaign=conteudo-nov26&utm_
+ content=bateria-empilhadeira-eletrica
+END:VEVENT
+BEGIN:VEVENT
+UID:feriado-2026-11-20@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261120
+DTEND;VALUE=DATE:20261121
+TRANSP:TRANSPARENT
+SUMMARY:Feriado · Consciência Negra
+DESCRIPTION:Nada sai no blog nem nas redes\nCalendário completo: https://
+ claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:pagina-contrabalancadas@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261120
+DTEND;VALUE=DATE:20261121
+TRANSP:TRANSPARENT
+SUMMARY:Site · Prazo da página: Empilhadeiras contrabalançadas
+DESCRIPTION:No ar até 20/11\nResponsável: Gustavo\nCalendário completo:
+  https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:pagina-selecionadoras@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261120
+DTEND;VALUE=DATE:20261121
+TRANSP:TRANSPARENT
+SUMMARY:Site · Prazo da página: Selecionadoras e rebocadores
+DESCRIPTION:No ar até 20/11\nResponsável: Gustavo\nCalendário completo:
+  https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:marco-30-dias@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261123
+DTEND;VALUE=DATE:20261124
+TRANSP:TRANSPARENT
+SUMMARY:Revisão de 30 dias: números do Search Console e do Analytics
+DESCRIPTION:Responsável: Gustavo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p10-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261123
+DTEND;VALUE=DATE:20261124
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 10: EP JX1: a ficha técnica explicada
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p09-linkedin-pergunta@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261123
+DTEND;VALUE=DATE:20261124
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Pergunta: "Quantos pedidos sua equipe separa por dia?"
+DESCRIPTION:Post 9: Selecionadora de pedidos: o que é e quando compensa\n
+ Responsável: Gustavo\nCalendário completo: https://claude.ai/artifact/K
+ 9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:bf-instagram-aviso@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261123
+DTEND;VALUE=DATE:20261124
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) Instagram · Stories com o aviso da oferta
+DESCRIPTION:Responsável: Gustavo\nA confirmar com Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p08-instagram-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261123
+DTEND;VALUE=DATE:20261124
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Reel "Como carregar a bateria com segurança"
+DESCRIPTION:Post 8: Bateria da empilhadeira elétrica: carga\, vida útil 
+ e troca\nResponsável: Gustavo\nCalendário completo: https://claude.ai/a
+ rtifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p09-instagram-stories@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261123
+DTEND;VALUE=DATE:20261124
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Stories com enquete\, com a mesma pergunta
+DESCRIPTION:Post 9: Selecionadora de pedidos: o que é e quando compensa\n
+ Responsável: Gustavo\nCalendário completo: https://claude.ai/artifact/K
+ 9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p08-facebook-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261123
+DTEND;VALUE=DATE:20261124
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo Reel do Instagram
+DESCRIPTION:Post 8: Bateria da empilhadeira elétrica: carga\, vida útil 
+ e troca\nResponsável: Gustavo\nCalendário completo: https://claude.ai/a
+ rtifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p09-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261124T090000
+DTEND;TZID=America/Sao_Paulo:20261124T093000
+SUMMARY:Blog · Post 9 no ar às 9h: Selecionadora de pedidos: o que é e 
+ quando compensa
+DESCRIPTION:Pedir indexação no Search Console\nLink: https://www.grupove
+ ndaforte.com/blog/selecionadora-de-pedidos\nResponsável: Gustavo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/selecionadora-de-pedidos
+END:VEVENT
+BEGIN:VEVENT
+UID:p09-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261124
+DTEND;VALUE=DATE:20261125
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 9
+DESCRIPTION:Post 9: Selecionadora de pedidos: o que é e quando compensa\n
+ Link: https://www.grupovendaforte.com/blog/selecionadora-de-pedidos?utm_s
+ ource=linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_content=
+ selecionadora-de-pedidos\nResponsável: Gustavo\nCalendário completo: ht
+ tps://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/selecionadora-de-pedidos?utm_sour
+ ce=linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_content=sel
+ ecionadora-de-pedidos
+END:VEVENT
+BEGIN:VEVENT
+UID:p09-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261124
+DTEND;VALUE=DATE:20261125
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 9
+DESCRIPTION:Post 9: Selecionadora de pedidos: o que é e quando compensa\n
+ Link: https://www.grupovendaforte.com/blog/selecionadora-de-pedidos?utm_s
+ ource=facebook&utm_medium=social&utm_campaign=conteudo-dez26&utm_content=
+ selecionadora-de-pedidos\nResponsável: Gustavo\nCalendário completo: ht
+ tps://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/selecionadora-de-pedidos?utm_sour
+ ce=facebook&utm_medium=social&utm_campaign=conteudo-dez26&utm_content=sel
+ ecionadora-de-pedidos
+END:VEVENT
+BEGIN:VEVENT
+UID:feriado-sc@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261125
+DTEND;VALUE=DATE:20261126
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) Possível feriado estadual de Santa Catarina
+DESCRIPTION:Se virar feriado\, o carrossel do post 9 vai para 26/11\nA con
+ firmar com Paulo e Rodrigo\nCalendário completo: https://claude.ai/artif
+ act/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p09-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261125
+DTEND;VALUE=DATE:20261126
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel "Selecionadora: 4 sinais de que compensa"
+DESCRIPTION:Post 9: Selecionadora de pedidos: o que é e quando compensa\n
+ Responsável: Gustavo\nCalendário completo: https://claude.ai/artifact/K
+ 9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p09-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261125
+DTEND;VALUE=DATE:20261126
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 9: Selecionadora de pedidos: o que é e quando compensa\n
+ Responsável: Gustavo\nCalendário completo: https://claude.ai/artifact/K
+ 9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p11-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261126
+DTEND;VALUE=DATE:20261127
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 11: Rebocador elétrico: o que é e quando 
+ usar
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p10-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261126T090000
+DTEND;TZID=America/Sao_Paulo:20261126T093000
+SUMMARY:Blog · Post 10 no ar às 9h: EP JX1: a ficha técnica explicada
+DESCRIPTION:Pedir indexação no Search Console. Conferir a ficha oficial 
+ do JX1 (bateria e peso)\nLink: https://www.grupovendaforte.com/blog/ep-jx
+ 1-ficha-tecnica-explicada\nResponsável: Gustavo\nCalendário completo: h
+ ttps://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-jx1-ficha-tecnica-explicada
+END:VEVENT
+BEGIN:VEVENT
+UID:p10-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261126
+DTEND;VALUE=DATE:20261127
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 10
+DESCRIPTION:Post 10: EP JX1: a ficha técnica explicada\nLink: https://www
+ .grupovendaforte.com/blog/ep-jx1-ficha-tecnica-explicada?utm_source=linke
+ din&utm_medium=social&utm_campaign=conteudo-dez26&utm_content=ep-jx1-fich
+ a-tecnica-explicada\nResponsável: Gustavo\nCalendário completo: https:/
+ /claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-jx1-ficha-tecnica-explicada?ut
+ m_source=linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_conte
+ nt=ep-jx1-ficha-tecnica-explicada
+END:VEVENT
+BEGIN:VEVENT
+UID:p10-perfil-google@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261126
+DTEND;VALUE=DATE:20261127
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Atualização com o link do post 10
+DESCRIPTION:Post 10: EP JX1: a ficha técnica explicada\nFoto real\, duas 
+ frases e o botão "Saiba mais"\nLink: https://www.grupovendaforte.com/blo
+ g/ep-jx1-ficha-tecnica-explicada?utm_source=perfil-google&utm_medium=orga
+ nic&utm_campaign=conteudo-dez26&utm_content=ep-jx1-ficha-tecnica-explicad
+ a\nResponsável: Gustavo\nCalendário completo: https://claude.ai/artifac
+ t/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-jx1-ficha-tecnica-explicada?ut
+ m_source=perfil-google&utm_medium=organic&utm_campaign=conteudo-dez26&utm
+ _content=ep-jx1-ficha-tecnica-explicada
+END:VEVENT
+BEGIN:VEVENT
+UID:bf-data@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) Black Friday
+DESCRIPTION:A confirmar com Paulo e Rodrigo\nCalendário completo: https:/
+ /claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-dealer@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Paulo: texto de dealer oficial e endereço completo de ca
+ da unidade
+DESCRIPTION:Responsável: Paulo\nCalendário completo: https://claude.ai/a
+ rtifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:bf-linkedin@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) LinkedIn · Post da oferta com o link da página
+DESCRIPTION:Link: https://www.grupovendaforte.com/black-friday?utm_source=
+ linkedin&utm_medium=social&utm_campaign=black-friday\nResponsável: Gusta
+ vo\nA confirmar com Paulo e Rodrigo\nCalendário completo: https://claude
+ .ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/black-friday?utm_source=linkedin&utm_m
+ edium=social&utm_campaign=black-friday
+END:VEVENT
+BEGIN:VEVENT
+UID:bf-instagram@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) Instagram · Post e Stories da oferta
+DESCRIPTION:Responsável: Gustavo\nA confirmar com Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p10-instagram-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Reel "O JX1 em 30 segundos"
+DESCRIPTION:Post 10: EP JX1: a ficha técnica explicada\nResponsável: Gus
+ tavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3y
+ Q27T
+END:VEVENT
+BEGIN:VEVENT
+UID:bf-facebook@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) Facebook · Post da oferta com o link da página
+DESCRIPTION:Link: https://www.grupovendaforte.com/black-friday?utm_source=
+ facebook&utm_medium=social&utm_campaign=black-friday\nResponsável: Gusta
+ vo\nA confirmar com Paulo e Rodrigo\nCalendário completo: https://claude
+ .ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/black-friday?utm_source=facebook&utm_m
+ edium=social&utm_campaign=black-friday
+END:VEVENT
+BEGIN:VEVENT
+UID:p10-facebook-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo Reel do Instagram
+DESCRIPTION:Post 10: EP JX1: a ficha técnica explicada\nResponsável: Gus
+ tavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3y
+ Q27T
+END:VEVENT
+BEGIN:VEVENT
+UID:bf-whatsapp@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) WhatsApp · Oferta para a base de clientes
+DESCRIPTION:Link: https://www.grupovendaforte.com/black-friday?utm_source=
+ whatsapp&utm_medium=referral&utm_campaign=black-friday\nResponsável: Rod
+ rigo\nA confirmar com Paulo e Rodrigo\nCalendário completo: https://clau
+ de.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/black-friday?utm_source=whatsapp&utm_m
+ edium=referral&utm_campaign=black-friday
+END:VEVENT
+BEGIN:VEVENT
+UID:cm-data@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) Cyber Monday
+DESCRIPTION:A confirmar com Paulo e Rodrigo\nCalendário completo: https:/
+ /claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p12-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 12: EP ESL122: a ficha técnica explicada
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p11-linkedin-pergunta@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Pergunta: "Quantas viagens por turno levam carga do re
+ cebimento à linha?"
+DESCRIPTION:Post 11: Rebocador elétrico: o que é e quando usar\nRespons
+ ável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUW
+ LwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:bf-instagram-ultimo-dia@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) Instagram · Stories com o último dia da oferta
+DESCRIPTION:Responsável: Gustavo\nA confirmar com Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p11-instagram-stories@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261130
+DTEND;VALUE=DATE:20261201
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Stories com enquete\, com a mesma pergunta
+DESCRIPTION:Post 11: Rebocador elétrico: o que é e quando usar\nRespons
+ ável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUW
+ LwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-diesel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261201
+DTEND;VALUE=DATE:20261202
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Rodrigo: a empresa vende os 14 modelos a diesel do catál
+ ogo?
+DESCRIPTION:Responsável: Rodrigo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p11-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261201T090000
+DTEND;TZID=America/Sao_Paulo:20261201T093000
+SUMMARY:Blog · Post 11 no ar às 9h: Rebocador elétrico: o que é e quan
+ do usar
+DESCRIPTION:Pedir indexação no Search Console\nLink: https://www.grupove
+ ndaforte.com/blog/rebocador-eletrico\nResponsável: Gustavo\nCalendário 
+ completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/rebocador-eletrico
+END:VEVENT
+BEGIN:VEVENT
+UID:p11-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261201
+DTEND;VALUE=DATE:20261202
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 11
+DESCRIPTION:Post 11: Rebocador elétrico: o que é e quando usar\nLink: ht
+ tps://www.grupovendaforte.com/blog/rebocador-eletrico?utm_source=linkedin
+ &utm_medium=social&utm_campaign=conteudo-dez26&utm_content=rebocador-elet
+ rico\nResponsável: Gustavo\nCalendário completo: https://claude.ai/arti
+ fact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/rebocador-eletrico?utm_source=lin
+ kedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_content=rebocador
+ -eletrico
+END:VEVENT
+BEGIN:VEVENT
+UID:p11-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261201
+DTEND;VALUE=DATE:20261202
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 11
+DESCRIPTION:Post 11: Rebocador elétrico: o que é e quando usar\nLink: ht
+ tps://www.grupovendaforte.com/blog/rebocador-eletrico?utm_source=facebook
+ &utm_medium=social&utm_campaign=conteudo-dez26&utm_content=rebocador-elet
+ rico\nResponsável: Gustavo\nCalendário completo: https://claude.ai/arti
+ fact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/rebocador-eletrico?utm_source=fac
+ ebook&utm_medium=social&utm_campaign=conteudo-dez26&utm_content=rebocador
+ -eletrico
+END:VEVENT
+BEGIN:VEVENT
+UID:p11-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261202
+DTEND;VALUE=DATE:20261203
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel "Quando o rebocador compensa"
+DESCRIPTION:Post 11: Rebocador elétrico: o que é e quando usar\nRespons
+ ável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUW
+ LwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p11-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261202
+DTEND;VALUE=DATE:20261203
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 11: Rebocador elétrico: o que é e quando usar\nRespons
+ ável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUW
+ LwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p13-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261203
+DTEND;VALUE=DATE:20261204
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 13: Empilhadeira a diesel: quando escolher 
+ e quais capacidades
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p12-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261203T090000
+DTEND;TZID=America/Sao_Paulo:20261203T093000
+SUMMARY:Blog · Post 12 no ar às 9h: EP ESL122: a ficha técnica explicad
+ a
+DESCRIPTION:Pedir indexação no Search Console. Conferir a ficha oficial 
+ da ESL122\nLink: https://www.grupovendaforte.com/blog/ep-esl122-ficha-tec
+ nica-explicada\nResponsável: Gustavo\nCalendário completo: https://clau
+ de.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-esl122-ficha-tecnica-explicada
+END:VEVENT
+BEGIN:VEVENT
+UID:p12-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261203
+DTEND;VALUE=DATE:20261204
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 12
+DESCRIPTION:Post 12: EP ESL122: a ficha técnica explicada\nLink: https://
+ www.grupovendaforte.com/blog/ep-esl122-ficha-tecnica-explicada?utm_source
+ =linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_content=ep-es
+ l122-ficha-tecnica-explicada\nResponsável: Gustavo\nCalendário completo
+ : https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-esl122-ficha-tecnica-explicada
+ ?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_co
+ ntent=ep-esl122-ficha-tecnica-explicada
+END:VEVENT
+BEGIN:VEVENT
+UID:p12-perfil-google@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261203
+DTEND;VALUE=DATE:20261204
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Atualização com o link do post 12
+DESCRIPTION:Post 12: EP ESL122: a ficha técnica explicada\nFoto real\, du
+ as frases e o botão "Saiba mais"\nLink: https://www.grupovendaforte.com/
+ blog/ep-esl122-ficha-tecnica-explicada?utm_source=perfil-google&utm_mediu
+ m=organic&utm_campaign=conteudo-dez26&utm_content=ep-esl122-ficha-tecnica
+ -explicada\nResponsável: Gustavo\nCalendário completo: https://claude.a
+ i/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-esl122-ficha-tecnica-explicada
+ ?utm_source=perfil-google&utm_medium=organic&utm_campaign=conteudo-dez26&
+ utm_content=ep-esl122-ficha-tecnica-explicada
+END:VEVENT
+BEGIN:VEVENT
+UID:pagina-ep-equipment@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261205
+TRANSP:TRANSPARENT
+SUMMARY:Site · Prazo da página: EP Equipment\, dealer oficial
+DESCRIPTION:No ar até 04/12. Depende do texto do Paulo\nLink: https://www
+ .grupovendaforte.com/ep-equipment\nResponsável: Gustavo\nCalendário com
+ pleto: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/ep-equipment
+END:VEVENT
+BEGIN:VEVENT
+UID:p12-instagram-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261205
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Reel "A ESL122 em operação"
+DESCRIPTION:Post 12: EP ESL122: a ficha técnica explicada\nResponsável: 
+ Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9Y
+ Z3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p12-facebook-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261205
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo Reel do Instagram
+DESCRIPTION:Post 12: EP ESL122: a ficha técnica explicada\nResponsável: 
+ Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9Y
+ Z3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p14-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261207
+DTEND;VALUE=DATE:20261208
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 14: Guia do operador: como ligar\, operar e
+  carregar
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p13-linkedin-pergunta@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261207
+DTEND;VALUE=DATE:20261208
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Pergunta: "Sua operação é interna\, externa ou as d
+ uas?"
+DESCRIPTION:Post 13: Empilhadeira a diesel: quando escolher e quais capaci
+ dades\nResponsável: Gustavo\nCalendário completo: https://claude.ai/art
+ ifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p13-instagram-stories@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261207
+DTEND;VALUE=DATE:20261208
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Stories com enquete\, com a mesma pergunta
+DESCRIPTION:Post 13: Empilhadeira a diesel: quando escolher e quais capaci
+ dades\nResponsável: Gustavo\nCalendário completo: https://claude.ai/art
+ ifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p13-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261208T090000
+DTEND;TZID=America/Sao_Paulo:20261208T093000
+SUMMARY:Blog · Post 13 no ar às 9h: Empilhadeira a diesel: quando escolh
+ er e quais capacidades
+DESCRIPTION:Pedir indexação no Search Console. Rodrigo (até 01/12): a e
+ mpresa vende diesel? Se não\, a data recebe outro tema\nLink: https://ww
+ w.grupovendaforte.com/blog/empilhadeira-a-diesel\nResponsável: Gustavo\n
+ Calendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-a-diesel
+END:VEVENT
+BEGIN:VEVENT
+UID:p13-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261208
+DTEND;VALUE=DATE:20261209
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 13
+DESCRIPTION:Post 13: Empilhadeira a diesel: quando escolher e quais capaci
+ dades\nLink: https://www.grupovendaforte.com/blog/empilhadeira-a-diesel?u
+ tm_source=linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_cont
+ ent=empilhadeira-a-diesel\nResponsável: Gustavo\nCalendário completo: h
+ ttps://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-a-diesel?utm_source=
+ linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_content=empilh
+ adeira-a-diesel
+END:VEVENT
+BEGIN:VEVENT
+UID:p13-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261208
+DTEND;VALUE=DATE:20261209
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 13
+DESCRIPTION:Post 13: Empilhadeira a diesel: quando escolher e quais capaci
+ dades\nLink: https://www.grupovendaforte.com/blog/empilhadeira-a-diesel?u
+ tm_source=facebook&utm_medium=social&utm_campaign=conteudo-dez26&utm_cont
+ ent=empilhadeira-a-diesel\nResponsável: Gustavo\nCalendário completo: h
+ ttps://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-a-diesel?utm_source=
+ facebook&utm_medium=social&utm_campaign=conteudo-dez26&utm_content=empilh
+ adeira-a-diesel
+END:VEVENT
+BEGIN:VEVENT
+UID:p13-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261209
+DTEND;VALUE=DATE:20261210
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel "Diesel ou elétrica: 4 critérios"
+DESCRIPTION:Post 13: Empilhadeira a diesel: quando escolher e quais capaci
+ dades\nResponsável: Gustavo\nCalendário completo: https://claude.ai/art
+ ifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p13-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261209
+DTEND;VALUE=DATE:20261210
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 13: Empilhadeira a diesel: quando escolher e quais capaci
+ dades\nResponsável: Gustavo\nCalendário completo: https://claude.ai/art
+ ifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-cotacao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261210
+DTEND;VALUE=DATE:20261211
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Rodrigo: conferir o checklist de cotação do post 15
+DESCRIPTION:Responsável: Rodrigo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261210
+DTEND;VALUE=DATE:20261211
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 15: Checklist para pedir cotação de empil
+ hadeira ou paleteira
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p14-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261210T090000
+DTEND;TZID=America/Sao_Paulo:20261210T093000
+SUMMARY:Blog · Post 14 no ar às 9h: Guia do operador: como ligar\, opera
+ r e carregar
+DESCRIPTION:Pedir indexação no Search Console\nLink: https://www.grupove
+ ndaforte.com/blog/como-operar-empilhadeira-eletrica\nResponsável: Gustav
+ o\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27
+ T
+URL:https://www.grupovendaforte.com/blog/como-operar-empilhadeira-eletrica
+END:VEVENT
+BEGIN:VEVENT
+UID:p14-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261210
+DTEND;VALUE=DATE:20261211
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 14
+DESCRIPTION:Post 14: Guia do operador: como ligar\, operar e carregar\nLin
+ k: https://www.grupovendaforte.com/blog/como-operar-empilhadeira-eletrica
+ ?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_co
+ ntent=como-operar-empilhadeira-eletrica\nResponsável: Gustavo\nCalendár
+ io completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/como-operar-empilhadeira-eletrica
+ ?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_co
+ ntent=como-operar-empilhadeira-eletrica
+END:VEVENT
+BEGIN:VEVENT
+UID:p14-perfil-google@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261210
+DTEND;VALUE=DATE:20261211
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Atualização com o link do post 14
+DESCRIPTION:Post 14: Guia do operador: como ligar\, operar e carregar\nFot
+ o real\, duas frases e o botão "Saiba mais"\nLink: https://www.grupovend
+ aforte.com/blog/como-operar-empilhadeira-eletrica?utm_source=perfil-googl
+ e&utm_medium=organic&utm_campaign=conteudo-dez26&utm_content=como-operar-
+ empilhadeira-eletrica\nResponsável: Gustavo\nCalendário completo: https
+ ://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/como-operar-empilhadeira-eletrica
+ ?utm_source=perfil-google&utm_medium=organic&utm_campaign=conteudo-dez26&
+ utm_content=como-operar-empilhadeira-eletrica
+END:VEVENT
+BEGIN:VEVENT
+UID:pagina-diesel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261211
+DTEND;VALUE=DATE:20261212
+TRANSP:TRANSPARENT
+SUMMARY:Site · Prazo da página: Empilhadeiras a diesel
+DESCRIPTION:No ar até 11/12. Só se o Rodrigo confirmar que a empresa ven
+ de diesel (até 01/12)\nResponsável: Gustavo\nCalendário completo: http
+ s://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p14-instagram-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261211
+DTEND;VALUE=DATE:20261212
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Reel "Checklist do operador em 30 segundos"
+DESCRIPTION:Post 14: Guia do operador: como ligar\, operar e carregar\nRes
+ ponsável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fL
+ HGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p14-facebook-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261211
+DTEND;VALUE=DATE:20261212
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo Reel do Instagram
+DESCRIPTION:Post 14: Guia do operador: como ligar\, operar e carregar\nRes
+ ponsável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fL
+ HGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p16-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261214
+DTEND;VALUE=DATE:20261215
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 16: EP CQD20LB: a retrátil de 12 metros ex
+ plicada
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-linkedin-pergunta@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261214
+DTEND;VALUE=DATE:20261215
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Pergunta: "Qual informação sempre falta quando você
+  pede cotação?"
+DESCRIPTION:Post 15: Checklist para pedir cotação de empilhadeira ou pal
+ eteira\nResponsável: Gustavo\nCalendário completo: https://claude.ai/ar
+ tifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-instagram-stories@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261214
+DTEND;VALUE=DATE:20261215
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Stories com enquete\, com a mesma pergunta
+DESCRIPTION:Post 15: Checklist para pedir cotação de empilhadeira ou pal
+ eteira\nResponsável: Gustavo\nCalendário completo: https://claude.ai/ar
+ tifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-seminovas@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261215
+DTEND;VALUE=DATE:20261216
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Rodrigo: a empresa vende seminovas? (post 17)
+DESCRIPTION:Responsável: Rodrigo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261215T090000
+DTEND;TZID=America/Sao_Paulo:20261215T093000
+SUMMARY:Blog · Post 15 no ar às 9h: Checklist para pedir cotação de em
+ pilhadeira ou paleteira
+DESCRIPTION:Pedir indexação no Search Console. Rodrigo confere a lista (
+ até 10/12)\nLink: https://www.grupovendaforte.com/blog/checklist-cotacao
+ -empilhadeira\nResponsável: Gustavo\nCalendário completo: https://claud
+ e.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/checklist-cotacao-empilhadeira
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261215
+DTEND;VALUE=DATE:20261216
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 15
+DESCRIPTION:Post 15: Checklist para pedir cotação de empilhadeira ou pal
+ eteira\nLink: https://www.grupovendaforte.com/blog/checklist-cotacao-empi
+ lhadeira?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-dez2
+ 6&utm_content=checklist-cotacao-empilhadeira\nResponsável: Gustavo\nCale
+ ndário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/checklist-cotacao-empilhadeira?ut
+ m_source=linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_conte
+ nt=checklist-cotacao-empilhadeira
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261215
+DTEND;VALUE=DATE:20261216
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 15
+DESCRIPTION:Post 15: Checklist para pedir cotação de empilhadeira ou pal
+ eteira\nLink: https://www.grupovendaforte.com/blog/checklist-cotacao-empi
+ lhadeira?utm_source=facebook&utm_medium=social&utm_campaign=conteudo-dez2
+ 6&utm_content=checklist-cotacao-empilhadeira\nResponsável: Gustavo\nCale
+ ndário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/checklist-cotacao-empilhadeira?ut
+ m_source=facebook&utm_medium=social&utm_campaign=conteudo-dez26&utm_conte
+ nt=checklist-cotacao-empilhadeira
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261216
+DTEND;VALUE=DATE:20261217
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel "O que informar para pedir cotação"
+DESCRIPTION:Post 15: Checklist para pedir cotação de empilhadeira ou pal
+ eteira\nResponsável: Gustavo\nCalendário completo: https://claude.ai/ar
+ tifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261216
+DTEND;VALUE=DATE:20261217
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 15: Checklist para pedir cotação de empilhadeira ou pal
+ eteira\nResponsável: Gustavo\nCalendário completo: https://claude.ai/ar
+ tifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p17-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261217
+DTEND;VALUE=DATE:20261218
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 17: Empilhadeira usada ou nova: o que avali
+ ar
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p16-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261217T090000
+DTEND;TZID=America/Sao_Paulo:20261217T093000
+SUMMARY:Blog · Post 16 no ar às 9h: EP CQD20LB: a retrátil de 12 metros
+  explicada
+DESCRIPTION:Pedir indexação no Search Console. Conferir a ficha oficial 
+ da CQD20LB\nLink: https://www.grupovendaforte.com/blog/ep-cqd20lb-ficha-t
+ ecnica-explicada\nResponsável: Gustavo\nCalendário completo: https://cl
+ aude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-cqd20lb-ficha-tecnica-explicad
+ a
+END:VEVENT
+BEGIN:VEVENT
+UID:p16-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261217
+DTEND;VALUE=DATE:20261218
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 16 com a pergunta "Qual a altura do seu p
+ orta-paletes?"
+DESCRIPTION:Post 16: EP CQD20LB: a retrátil de 12 metros explicada\nLink:
+  https://www.grupovendaforte.com/blog/ep-cqd20lb-ficha-tecnica-explicada?
+ utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_con
+ tent=ep-cqd20lb-ficha-tecnica-explicada\nResponsável: Gustavo\nCalendár
+ io completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-cqd20lb-ficha-tecnica-explicad
+ a?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-dez26&utm_c
+ ontent=ep-cqd20lb-ficha-tecnica-explicada
+END:VEVENT
+BEGIN:VEVENT
+UID:p16-perfil-google@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261217
+DTEND;VALUE=DATE:20261218
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Atualização com o link do post 16
+DESCRIPTION:Post 16: EP CQD20LB: a retrátil de 12 metros explicada\nFoto 
+ real\, duas frases e o botão "Saiba mais"\nLink: https://www.grupovendaf
+ orte.com/blog/ep-cqd20lb-ficha-tecnica-explicada?utm_source=perfil-google
+ &utm_medium=organic&utm_campaign=conteudo-dez26&utm_content=ep-cqd20lb-fi
+ cha-tecnica-explicada\nResponsável: Gustavo\nCalendário completo: https
+ ://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-cqd20lb-ficha-tecnica-explicad
+ a?utm_source=perfil-google&utm_medium=organic&utm_campaign=conteudo-dez26
+ &utm_content=ep-cqd20lb-ficha-tecnica-explicada
+END:VEVENT
+BEGIN:VEVENT
+UID:p16-instagram-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261218
+DTEND;VALUE=DATE:20261219
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Reel "12 metros de elevação"
+DESCRIPTION:Post 16: EP CQD20LB: a retrátil de 12 metros explicada\nRespo
+ nsável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHG
+ UWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p16-facebook-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261218
+DTEND;VALUE=DATE:20261219
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo Reel do Instagram
+DESCRIPTION:Post 16: EP CQD20LB: a retrátil de 12 metros explicada\nRespo
+ nsável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHG
+ UWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:horario-fim-de-ano@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261218
+DTEND;VALUE=DATE:20261219
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Horário especial de 24/12 a 01/01
+DESCRIPTION:Responsável: Gustavo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p17-linkedin-pergunta@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261221
+DTEND;VALUE=DATE:20261222
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Pergunta: "Usada ou nova: o que pesa mais para você?"
+DESCRIPTION:Post 17: Empilhadeira usada ou nova: o que avaliar\nResponsáv
+ el: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwL
+ zU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p17-instagram-stories@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261221
+DTEND;VALUE=DATE:20261222
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Stories com enquete\, com a mesma pergunta
+DESCRIPTION:Post 17: Empilhadeira usada ou nova: o que avaliar\nResponsáv
+ el: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwL
+ zU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p17-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20261222T090000
+DTEND;TZID=America/Sao_Paulo:20261222T093000
+SUMMARY:Blog · Post 17 no ar às 9h: Empilhadeira usada ou nova: o que av
+ aliar
+DESCRIPTION:Pedir indexação no Search Console. Rodrigo (até 15/12): a e
+ mpresa vende seminovas? Se não\, o post vira "Quando trocar de empilhade
+ ira: 5 sinais"\nLink: https://www.grupovendaforte.com/blog/empilhadeira-u
+ sada-ou-nova\nResponsável: Gustavo\nCalendário completo: https://claude
+ .ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-usada-ou-nova
+END:VEVENT
+BEGIN:VEVENT
+UID:p17-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261222
+DTEND;VALUE=DATE:20261223
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 17
+DESCRIPTION:Post 17: Empilhadeira usada ou nova: o que avaliar\nLink: http
+ s://www.grupovendaforte.com/blog/empilhadeira-usada-ou-nova?utm_source=li
+ nkedin&utm_medium=social&utm_campaign=conteudo-jan27&utm_content=empilhad
+ eira-usada-ou-nova\nResponsável: Gustavo\nCalendário completo: https://
+ claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-usada-ou-nova?utm_so
+ urce=linkedin&utm_medium=social&utm_campaign=conteudo-jan27&utm_content=e
+ mpilhadeira-usada-ou-nova
+END:VEVENT
+BEGIN:VEVENT
+UID:p17-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261222
+DTEND;VALUE=DATE:20261223
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 17
+DESCRIPTION:Post 17: Empilhadeira usada ou nova: o que avaliar\nLink: http
+ s://www.grupovendaforte.com/blog/empilhadeira-usada-ou-nova?utm_source=fa
+ cebook&utm_medium=social&utm_campaign=conteudo-jan27&utm_content=empilhad
+ eira-usada-ou-nova\nResponsável: Gustavo\nCalendário completo: https://
+ claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/empilhadeira-usada-ou-nova?utm_so
+ urce=facebook&utm_medium=social&utm_campaign=conteudo-jan27&utm_content=e
+ mpilhadeira-usada-ou-nova
+END:VEVENT
+BEGIN:VEVENT
+UID:p18-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261223
+DTEND;VALUE=DATE:20261224
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 18: Como comparar duas empilhadeiras pela f
+ icha técnica
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p17-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261223
+DTEND;VALUE=DATE:20261224
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel "Usada ou nova: 5 pontos para avaliar"
+DESCRIPTION:Post 17: Empilhadeira usada ou nova: o que avaliar\nResponsáv
+ el: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwL
+ zU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p17-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261223
+DTEND;VALUE=DATE:20261224
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 17: Empilhadeira usada ou nova: o que avaliar\nResponsáv
+ el: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwL
+ zU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:pausa@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261224
+DTEND;VALUE=DATE:20261225
+TRANSP:TRANSPARENT
+SUMMARY:Começa a pausa do blog\, que volta em 05/01
+DESCRIPTION:Até 04/01 só sai o balanço do ano no LinkedIn\, em 28/12\nC
+ alendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:natal-linkedin@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261224
+DTEND;VALUE=DATE:20261225
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) LinkedIn · Mensagem de Natal com o horário de fim 
+ de ano
+DESCRIPTION:Com o plantão da assistência técnica\, se houver\nResponsá
+ vel: Gustavo\nA confirmar com Paulo e Rodrigo\nCalendário completo: http
+ s://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:natal-instagram@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261224
+DTEND;VALUE=DATE:20261225
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) Instagram · Mensagem de Natal com o horário de fim
+  de ano
+DESCRIPTION:Com o plantão da assistência técnica\, se houver\nResponsá
+ vel: Gustavo\nA confirmar com Paulo e Rodrigo\nCalendário completo: http
+ s://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:natal-facebook@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261224
+DTEND;VALUE=DATE:20261225
+TRANSP:TRANSPARENT
+SUMMARY:(a confirmar) Facebook · Mensagem de Natal com o horário de fim 
+ de ano
+DESCRIPTION:Com o plantão da assistência técnica\, se houver\nResponsá
+ vel: Gustavo\nA confirmar com Paulo e Rodrigo\nCalendário completo: http
+ s://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:feriado-2026-12-25@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261225
+DTEND;VALUE=DATE:20261226
+TRANSP:TRANSPARENT
+SUMMARY:Feriado · Natal
+DESCRIPTION:Nada sai no blog nem nas redes\nCalendário completo: https://
+ claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:balanco-linkedin@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261228
+DTEND;VALUE=DATE:20261229
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Balanço do ano e os guias mais lidos
+DESCRIPTION:Responsável: Gustavo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-operador@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20261230
+DTEND;VALUE=DATE:20261231
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Rodrigo: a empresa aluga com operador? (post 19)
+DESCRIPTION:Responsável: Rodrigo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:feriado-2027-01-01@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270101
+DTEND;VALUE=DATE:20270102
+TRANSP:TRANSPARENT
+SUMMARY:Feriado · Ano Novo
+DESCRIPTION:Nada sai no blog nem nas redes\nCalendário completo: https://
+ claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p19-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270104
+DTEND;VALUE=DATE:20270105
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 19: Locação com ou sem operador: como fun
+ ciona
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p18-linkedin-pergunta@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270104
+DTEND;VALUE=DATE:20270105
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Pergunta: "Na hora de escolher\, o que pesa mais: pre
+ ço\, prazo ou assistência?"
+DESCRIPTION:Post 18: Como comparar duas empilhadeiras pela ficha técnica\
+ nResponsável: Gustavo\nCalendário completo: https://claude.ai/artifact/
+ K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p18-instagram-stories@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270104
+DTEND;VALUE=DATE:20270105
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Stories com enquete\, com a mesma pergunta
+DESCRIPTION:Post 18: Como comparar duas empilhadeiras pela ficha técnica\
+ nResponsável: Gustavo\nCalendário completo: https://claude.ai/artifact/
+ K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:prazo-caso@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270105
+DTEND;VALUE=DATE:20270106
+TRANSP:TRANSPARENT
+SUMMARY:Prazo · Paulo e Rodrigo: um cliente que autorize\, por escrito\, 
+ o caso do post 20
+DESCRIPTION:Responsável: Paulo e Rodrigo\nCalendário completo: https://c
+ laude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p18-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20270105T090000
+DTEND;TZID=America/Sao_Paulo:20270105T093000
+SUMMARY:Blog · Post 18 no ar às 9h: Como comparar duas empilhadeiras pel
+ a ficha técnica
+DESCRIPTION:Pedir indexação no Search Console\nLink: https://www.grupove
+ ndaforte.com/blog/como-comparar-empilhadeiras-ficha-tecnica\nResponsável
+ : Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU
+ 9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/como-comparar-empilhadeiras-ficha
+ -tecnica
+END:VEVENT
+BEGIN:VEVENT
+UID:p18-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270105
+DTEND;VALUE=DATE:20270106
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 18
+DESCRIPTION:Post 18: Como comparar duas empilhadeiras pela ficha técnica\
+ nLink: https://www.grupovendaforte.com/blog/como-comparar-empilhadeiras-f
+ icha-tecnica?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-
+ jan27&utm_content=como-comparar-empilhadeiras-ficha-tecnica\nResponsável
+ : Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU
+ 9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/como-comparar-empilhadeiras-ficha
+ -tecnica?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-jan2
+ 7&utm_content=como-comparar-empilhadeiras-ficha-tecnica
+END:VEVENT
+BEGIN:VEVENT
+UID:p18-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270105
+DTEND;VALUE=DATE:20270106
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 18
+DESCRIPTION:Post 18: Como comparar duas empilhadeiras pela ficha técnica\
+ nLink: https://www.grupovendaforte.com/blog/como-comparar-empilhadeiras-f
+ icha-tecnica?utm_source=facebook&utm_medium=social&utm_campaign=conteudo-
+ jan27&utm_content=como-comparar-empilhadeiras-ficha-tecnica\nResponsável
+ : Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU
+ 9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/como-comparar-empilhadeiras-ficha
+ -tecnica?utm_source=facebook&utm_medium=social&utm_campaign=conteudo-jan2
+ 7&utm_content=como-comparar-empilhadeiras-ficha-tecnica
+END:VEVENT
+BEGIN:VEVENT
+UID:p18-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270106
+DTEND;VALUE=DATE:20270107
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel "4 números da ficha técnica"
+DESCRIPTION:Post 18: Como comparar duas empilhadeiras pela ficha técnica\
+ nResponsável: Gustavo\nCalendário completo: https://claude.ai/artifact/
+ K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p18-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270106
+DTEND;VALUE=DATE:20270107
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 18: Como comparar duas empilhadeiras pela ficha técnica\
+ nResponsável: Gustavo\nCalendário completo: https://claude.ai/artifact/
+ K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p20-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270107
+DTEND;VALUE=DATE:20270108
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 20: Caso de cliente: a operação antes e d
+ epois
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p19-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20270107T090000
+DTEND;TZID=America/Sao_Paulo:20270107T093000
+SUMMARY:Blog · Post 19 no ar às 9h: Locação com ou sem operador: como 
+ funciona
+DESCRIPTION:Pedir indexação no Search Console. Rodrigo (até 30/12): a e
+ mpresa aluga com operador? Se não\, o post vira "Empilhadeira com plataf
+ orma: quando usar"\nLink: https://www.grupovendaforte.com/blog/locacao-co
+ m-ou-sem-operador\nResponsável: Gustavo\nCalendário completo: https://c
+ laude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/locacao-com-ou-sem-operador
+END:VEVENT
+BEGIN:VEVENT
+UID:p19-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270107
+DTEND;VALUE=DATE:20270108
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 19
+DESCRIPTION:Post 19: Locação com ou sem operador: como funciona\nLink: h
+ ttps://www.grupovendaforte.com/blog/locacao-com-ou-sem-operador?utm_sourc
+ e=linkedin&utm_medium=social&utm_campaign=conteudo-jan27&utm_content=loca
+ cao-com-ou-sem-operador\nResponsável: Gustavo\nCalendário completo: htt
+ ps://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/locacao-com-ou-sem-operador?utm_s
+ ource=linkedin&utm_medium=social&utm_campaign=conteudo-jan27&utm_content=
+ locacao-com-ou-sem-operador
+END:VEVENT
+BEGIN:VEVENT
+UID:p19-perfil-google@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270107
+DTEND;VALUE=DATE:20270108
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Atualização com o link do post 19
+DESCRIPTION:Post 19: Locação com ou sem operador: como funciona\nFoto re
+ al\, duas frases e o botão "Saiba mais"\nLink: https://www.grupovendafor
+ te.com/blog/locacao-com-ou-sem-operador?utm_source=perfil-google&utm_medi
+ um=organic&utm_campaign=conteudo-jan27&utm_content=locacao-com-ou-sem-ope
+ rador\nResponsável: Gustavo\nCalendário completo: https://claude.ai/art
+ ifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/locacao-com-ou-sem-operador?utm_s
+ ource=perfil-google&utm_medium=organic&utm_campaign=conteudo-jan27&utm_co
+ ntent=locacao-com-ou-sem-operador
+END:VEVENT
+BEGIN:VEVENT
+UID:p19-instagram-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270108
+DTEND;VALUE=DATE:20270109
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Reel "Com ou sem operador: o que muda"
+DESCRIPTION:Post 19: Locação com ou sem operador: como funciona\nRespons
+ ável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUW
+ LwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p19-facebook-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270108
+DTEND;VALUE=DATE:20270109
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo Reel do Instagram
+DESCRIPTION:Post 19: Locação com ou sem operador: como funciona\nRespons
+ ável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUW
+ LwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p21-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270111
+DTEND;VALUE=DATE:20270112
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 21: EP TVL151 e TVL181: as fichas explicada
+ s
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p20-linkedin-pergunta@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270111
+DTEND;VALUE=DATE:20270112
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Pergunta ligada ao caso do cliente
+DESCRIPTION:Post 20: Caso de cliente: a operação antes e depois\nRespons
+ ável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUW
+ LwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p20-instagram-stories@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270111
+DTEND;VALUE=DATE:20270112
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Stories com enquete\, com a mesma pergunta
+DESCRIPTION:Post 20: Caso de cliente: a operação antes e depois\nRespons
+ ável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUW
+ LwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p20-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20270112T090000
+DTEND;TZID=America/Sao_Paulo:20270112T093000
+SUMMARY:Blog · Post 20 no ar às 9h: Caso de cliente: a operação antes 
+ e depois
+DESCRIPTION:Pedir indexação no Search Console. Os dois (até 05/01): cli
+ ente que autorize o caso por escrito. Sem caso\, a data recebe a revisão
+  do guia de frigoríficos e câmaras frias\nLink: https://www.grupovendaf
+ orte.com/blog/caso-nome-do-cliente\nResponsável: Gustavo\nCalendário co
+ mpleto: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/caso-nome-do-cliente
+END:VEVENT
+BEGIN:VEVENT
+UID:p20-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270112
+DTEND;VALUE=DATE:20270113
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 20
+DESCRIPTION:Post 20: Caso de cliente: a operação antes e depois\nLink: h
+ ttps://www.grupovendaforte.com/blog/caso-nome-do-cliente?utm_source=linke
+ din&utm_medium=social&utm_campaign=conteudo-jan27&utm_content=caso-nome-d
+ o-cliente\nResponsável: Gustavo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/caso-nome-do-cliente?utm_source=l
+ inkedin&utm_medium=social&utm_campaign=conteudo-jan27&utm_content=caso-no
+ me-do-cliente
+END:VEVENT
+BEGIN:VEVENT
+UID:p20-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270112
+DTEND;VALUE=DATE:20270113
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 20
+DESCRIPTION:Post 20: Caso de cliente: a operação antes e depois\nMarcar 
+ o cliente se ele autorizar\nLink: https://www.grupovendaforte.com/blog/ca
+ so-nome-do-cliente?utm_source=facebook&utm_medium=social&utm_campaign=con
+ teudo-jan27&utm_content=caso-nome-do-cliente\nResponsável: Gustavo\nCale
+ ndário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/caso-nome-do-cliente?utm_source=f
+ acebook&utm_medium=social&utm_campaign=conteudo-jan27&utm_content=caso-no
+ me-do-cliente
+END:VEVENT
+BEGIN:VEVENT
+UID:p20-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270113
+DTEND;VALUE=DATE:20270114
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel "Antes e depois na operação do cliente"
+DESCRIPTION:Post 20: Caso de cliente: a operação antes e depois\nRespons
+ ável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUW
+ LwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p20-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270113
+DTEND;VALUE=DATE:20270114
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 20: Caso de cliente: a operação antes e depois\nRespons
+ ável: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUW
+ LwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p22-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270114
+DTEND;VALUE=DATE:20270115
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 22: Tema escolhido pelos dados do Google
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p21-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20270114T090000
+DTEND;TZID=America/Sao_Paulo:20270114T093000
+SUMMARY:Blog · Post 21 no ar às 9h: EP TVL151 e TVL181: as fichas explic
+ adas
+DESCRIPTION:Pedir indexação no Search Console. Conferir as fichas oficia
+ is da TVL151 e da TVL181\nLink: https://www.grupovendaforte.com/blog/ep-t
+ vl151-tvl181-fichas-explicadas\nResponsável: Gustavo\nCalendário comple
+ to: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-tvl151-tvl181-fichas-explicada
+ s
+END:VEVENT
+BEGIN:VEVENT
+UID:p21-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270114
+DTEND;VALUE=DATE:20270115
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 21
+DESCRIPTION:Post 21: EP TVL151 e TVL181: as fichas explicadas\nLink: https
+ ://www.grupovendaforte.com/blog/ep-tvl151-tvl181-fichas-explicadas?utm_so
+ urce=linkedin&utm_medium=social&utm_campaign=conteudo-jan27&utm_content=e
+ p-tvl151-tvl181-fichas-explicadas\nResponsável: Gustavo\nCalendário com
+ pleto: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-tvl151-tvl181-fichas-explicada
+ s?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-jan27&utm_c
+ ontent=ep-tvl151-tvl181-fichas-explicadas
+END:VEVENT
+BEGIN:VEVENT
+UID:p21-perfil-google@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270114
+DTEND;VALUE=DATE:20270115
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Atualização com o link do post 21
+DESCRIPTION:Post 21: EP TVL151 e TVL181: as fichas explicadas\nFoto real\,
+  duas frases e o botão "Saiba mais"\nLink: https://www.grupovendaforte.c
+ om/blog/ep-tvl151-tvl181-fichas-explicadas?utm_source=perfil-google&utm_m
+ edium=organic&utm_campaign=conteudo-jan27&utm_content=ep-tvl151-tvl181-fi
+ chas-explicadas\nResponsável: Gustavo\nCalendário completo: https://cla
+ ude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/ep-tvl151-tvl181-fichas-explicada
+ s?utm_source=perfil-google&utm_medium=organic&utm_campaign=conteudo-jan27
+ &utm_content=ep-tvl151-tvl181-fichas-explicadas
+END:VEVENT
+BEGIN:VEVENT
+UID:p21-instagram-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Reel "TVL151 e TVL181 lado a lado"
+DESCRIPTION:Post 21: EP TVL151 e TVL181: as fichas explicadas\nResponsáve
+ l: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLz
+ U9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p21-facebook-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo Reel do Instagram
+DESCRIPTION:Post 21: EP TVL151 e TVL181: as fichas explicadas\nResponsáve
+ l: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLz
+ U9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p23-revisao@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270118
+DTEND;VALUE=DATE:20270119
+TRANSP:TRANSPARENT
+SUMMARY:Cliente: revisa o post 23: Locação de empilhadeira ou compra (po
+ st ampliado)
+DESCRIPTION:Texto técnico com o Paulo\, prazos e serviços com o Rodrigo\
+ , pelo WhatsApp e em até 24 horas\nResponsável: Paulo e Rodrigo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p22-linkedin-pergunta@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270118
+DTEND;VALUE=DATE:20270119
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Pergunta sobre o tema escolhido
+DESCRIPTION:Post 22: Tema escolhido pelos dados do Google\nResponsável: G
+ ustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ
+ 3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p22-instagram-stories@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270118
+DTEND;VALUE=DATE:20270119
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Stories com enquete\, com a mesma pergunta
+DESCRIPTION:Post 22: Tema escolhido pelos dados do Google\nResponsável: G
+ ustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ
+ 3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p22-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20270119T090000
+DTEND;TZID=America/Sao_Paulo:20270119T093000
+SUMMARY:Blog · Post 22 no ar às 9h: Tema escolhido pelos dados do Google
+DESCRIPTION:Pedir indexação no Search Console. Tema definido em 05/01 pe
+ los dados do Search Console\nResponsável: Gustavo\nCalendário completo:
+  https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p22-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270119
+DTEND;VALUE=DATE:20270120
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 22
+DESCRIPTION:Post 22: Tema escolhido pelos dados do Google\nResponsável: G
+ ustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ
+ 3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p22-facebook-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270119
+DTEND;VALUE=DATE:20270120
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · Link do post 22
+DESCRIPTION:Post 22: Tema escolhido pelos dados do Google\nResponsável: G
+ ustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ
+ 3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p22-instagram-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270121
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Carrossel sobre o tema escolhido
+DESCRIPTION:Post 22: Tema escolhido pelos dados do Google\nResponsável: G
+ ustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ
+ 3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p22-facebook-carrossel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270121
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo carrossel do Instagram
+DESCRIPTION:Post 22: Tema escolhido pelos dados do Google\nResponsável: G
+ ustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ
+ 3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p23-blog@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;TZID=America/Sao_Paulo:20270121T090000
+DTEND;TZID=America/Sao_Paulo:20270121T093000
+SUMMARY:Blog · Post 23 no ar às 9h: Locação de empilhadeira ou compra 
+ (post ampliado)
+DESCRIPTION:Pedir indexação no Search Console. Post que já existe\, amp
+ liado com os dados da locação\nLink: https://www.grupovendaforte.com/bl
+ og/locar-ou-comprar-empilhadeira-guia-decisao\nResponsável: Gustavo\nCal
+ endário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/locar-ou-comprar-empilhadeira-gui
+ a-decisao
+END:VEVENT
+BEGIN:VEVENT
+UID:p23-linkedin-link@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270121
+DTEND;VALUE=DATE:20270122
+TRANSP:TRANSPARENT
+SUMMARY:LinkedIn · Link do post 23
+DESCRIPTION:Post 23: Locação de empilhadeira ou compra (post ampliado)\n
+ Link: https://www.grupovendaforte.com/blog/locar-ou-comprar-empilhadeira-
+ guia-decisao?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-
+ jan27&utm_content=locar-ou-comprar-empilhadeira-guia-decisao\nResponsáve
+ l: Gustavo\nCalendário completo: https://claude.ai/artifact/K9fLHGUWLwLz
+ U9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/locar-ou-comprar-empilhadeira-gui
+ a-decisao?utm_source=linkedin&utm_medium=social&utm_campaign=conteudo-jan
+ 27&utm_content=locar-ou-comprar-empilhadeira-guia-decisao
+END:VEVENT
+BEGIN:VEVENT
+UID:p23-perfil-google@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270121
+DTEND;VALUE=DATE:20270122
+TRANSP:TRANSPARENT
+SUMMARY:Perfil Google · Atualização com o link do post 23
+DESCRIPTION:Post 23: Locação de empilhadeira ou compra (post ampliado)\n
+ Foto real\, duas frases e o botão "Saiba mais"\nLink: https://www.grupov
+ endaforte.com/blog/locar-ou-comprar-empilhadeira-guia-decisao?utm_source=
+ perfil-google&utm_medium=organic&utm_campaign=conteudo-jan27&utm_content=
+ locar-ou-comprar-empilhadeira-guia-decisao\nResponsável: Gustavo\nCalend
+ ário completo: https://claude.ai/artifact/K9fLHGUWLwLzU9YZ3yQ27T
+URL:https://www.grupovendaforte.com/blog/locar-ou-comprar-empilhadeira-gui
+ a-decisao?utm_source=perfil-google&utm_medium=organic&utm_campaign=conteu
+ do-jan27&utm_content=locar-ou-comprar-empilhadeira-guia-decisao
+END:VEVENT
+BEGIN:VEVENT
+UID:marco-90-dias@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270122
+DTEND;VALUE=DATE:20270123
+TRANSP:TRANSPARENT
+SUMMARY:Revisão de 90 dias e plano do próximo trimestre
+DESCRIPTION:Responsável: Gustavo\nCalendário completo: https://claude.ai
+ /artifact/K9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p23-instagram-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270122
+DTEND;VALUE=DATE:20270123
+TRANSP:TRANSPARENT
+SUMMARY:Instagram · Reel "Alugar ou comprar em 30 segundos"
+DESCRIPTION:Post 23: Locação de empilhadeira ou compra (post ampliado)\n
+ Responsável: Gustavo\nCalendário completo: https://claude.ai/artifact/K
+ 9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+BEGIN:VEVENT
+UID:p23-facebook-reel@agenda-conteudo.grupovendaforte.com
+DTSTAMP:20261023T071241Z
+DTSTART;VALUE=DATE:20270122
+DTEND;VALUE=DATE:20270123
+TRANSP:TRANSPARENT
+SUMMARY:Facebook · O mesmo Reel do Instagram
+DESCRIPTION:Post 23: Locação de empilhadeira ou compra (post ampliado)\n
+ Responsável: Gustavo\nCalendário completo: https://claude.ai/artifact/K
+ 9fLHGUWLwLzU9YZ3yQ27T
+END:VEVENT
+END:VCALENDAR
