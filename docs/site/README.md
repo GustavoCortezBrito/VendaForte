@@ -247,3 +247,26 @@ skill-creator: resume este guia em uma página para as próximas sessões.
   `venda-forte-visual`; nenhum dos 10 temas prontos serve, porque a referência é a `/promo`.
 - Véu da abertura clareado (esquerda `ink/95` a transparente, base `ink/45` no computador) para a fachada
   aparecer mais; o título continua legível.
+
+### Segunda rodada (10/11/2026): as skills rodadas de verdade
+
+Diretrizes da Vercel buscadas na hora (`command.md`) e aplicadas a Hero, Navbar, Footer, Services, Contact,
+FAQ, Testimonials, EPForkliftsSection e WhatsAppFab, mais as buscas da ui-ux-pro-max (`ux`: foco coberto por
+cabeçalho fixo, botão só de ícone, vídeo que toca sozinho, carrossel) e a crítica da frontend-design.
+
+- Botão flutuante de WhatsApp cobria "Privacidade / Termos / Voltar ao topo" no fim da página: o rodapé ganhou
+  `md:pb-24`.
+- Foco coberto pelo cabeçalho fixo: `scroll-padding-top: 6rem` no `html`.
+- Foco visível padrão em todo o site escuro (`:where(.theme-ink) :focus-visible`, peso baixo, não briga com as
+  classes do Tailwind). Rolagem suave desligada com movimento reduzido (CSS e setas dos depoimentos).
+- Janela do YouTube (Services): o foco entra nela, Tab não escapa, Esc fecha, o foco volta ao cartão,
+  `overscroll-contain`.
+- Fileira de depoimentos focável pelo teclado (`tabIndex`); cartões de tipo no catálogo com nome acessível
+  ("Empilhadeiras elétricas: 12 modelos"); cidades do rodapé como itens de lista; `<select>` do contato com
+  fundo escuro nas opções; campo do WhatsApp com `name`; botões do cabeçalho com 44 px; textos a 40% e 50% de
+  branco subiram para 60% e 70%.
+- Não mexido de propósito: títulos e botões em sentença (o guia da Vercel pede Title Case, regra do inglês);
+  animação de altura do acordeão do FAQ (conteúdo curto, e a /promo faz igual); rótulo com ponto no meio e
+  entrada com subida em toda seção, que a frontend-design chama de padrão genérico mas são da /promo, e a
+  /promo manda. Pendente com o Paulo: o FAQ declara 10 perguntas no JSON-LD e mostra 5 até clicar em "Ver todas".
+- `components/promo/` (a campanha) e o `/admin` não foram tocados.

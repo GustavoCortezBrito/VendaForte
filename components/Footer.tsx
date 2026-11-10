@@ -63,7 +63,7 @@ function Column({ title, children, className = '' }: { title: string; children: 
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] bg-ink pb-28 md:pb-0">
+    <footer className="border-t border-white/[0.06] bg-ink pb-28 md:pb-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Colunas */}
         <div className="grid gap-12 py-14 sm:grid-cols-2 lg:grid-cols-12 lg:py-16">
@@ -154,14 +154,12 @@ export default function Footer() {
           </Column>
 
           <Column title="Pontos de atendimento" className="lg:col-span-2">
-            <li className="grid gap-3">
-              {PONTOS.map((cidade) => (
-                <span key={cidade} className="flex items-center gap-2">
-                  <MapPin className="h-3.5 w-3.5 text-red-500" aria-hidden="true" />
-                  {cidade}
-                </span>
-              ))}
-            </li>
+            {PONTOS.map((cidade) => (
+              <li key={cidade} className="flex items-center gap-2">
+                <MapPin className="h-3.5 w-3.5 text-red-500" aria-hidden="true" />
+                {cidade}
+              </li>
+            ))}
           </Column>
         </div>
 

@@ -133,6 +133,7 @@ export default function WhatsAppFab() {
                       </label>
                       <input
                         id="whatsapp-mensagem"
+                        name="mensagem"
                         value={text}
                         onChange={(event) => setText(event.target.value)}
                         autoComplete="off"

@@ -105,7 +105,7 @@ export default function Navbar() {
               </span>
               <span className="leading-none">
                 <span className="block text-[15px] font-semibold tracking-tight text-white">Venda Forte</span>
-                <span className="mt-1 block text-[11px] font-medium text-white/50">Dealer EP Equipment</span>
+                <span className="mt-1 block text-[11px] font-medium text-white/70">Dealer EP Equipment</span>
               </span>
             </Link>
 
@@ -146,7 +146,7 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/#contact"
-                className="hidden h-10 items-center rounded-full border border-white/15 px-4 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 xl:inline-flex"
+                className="hidden h-11 items-center rounded-full border border-white/15 px-4 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 xl:inline-flex"
               >
                 Pedir cotação
               </Link>
@@ -155,7 +155,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Falar com um consultor no WhatsApp"
-                className="inline-flex h-10 items-center gap-2 rounded-full bg-green-600 px-3.5 text-sm font-semibold text-white transition-colors hover:bg-green-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400/60 sm:px-4"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-green-600 px-3.5 text-sm font-semibold text-white transition-colors hover:bg-green-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400/60 sm:px-4"
               >
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 <span className="hidden sm:inline">WhatsApp</span>
@@ -212,7 +212,7 @@ export default function Navbar() {
                     href="/admin"
                     rel="nofollow"
                     onClick={() => setMenuOpen(false)}
-                    className="flex h-11 items-center justify-center gap-2 rounded-full text-sm text-white/40 transition-colors hover:bg-white/[0.06] hover:text-white"
+                    className="flex h-11 items-center justify-center gap-2 rounded-full text-sm text-white/60 transition-colors hover:bg-white/[0.06] hover:text-white"
                   >
                     <Settings className="h-4 w-4" aria-hidden="true" />
                     Painel administrativo

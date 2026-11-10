@@ -154,9 +154,9 @@ export default function Contact() {
                 </Field>
                 <Field id="contato-equipamento" label="Tipo de equipamento" className="sm:col-span-2">
                   <select id="contato-equipamento" name="equipamento" value={formData.equipamento} onChange={handleChange} className={INPUT}>
-                    <option value="">Selecione uma opção</option>
+                    <option value="" className="bg-ink-raised text-white">Selecione uma opção</option>
                     {EQUIPAMENTOS.map((option) => (
-                      <option key={option.value} value={option.value}>
+                      <option key={option.value} value={option.value} className="bg-ink-raised text-white">
                         {option.label}
                       </option>
                     ))}

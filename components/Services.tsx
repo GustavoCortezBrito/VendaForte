@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, Play, X } from 'lucide-react'
 import { EASE_OUT, Reveal } from '@/components/promo/ui'
@@ -121,12 +121,35 @@ function CardBody({ service, icon }: { service: Service; icon: ReactNode }) {
 
 export default function Services() {
   const [showVideoModal, setShowVideoModal] = useState(false)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const openerRef = useRef<HTMLElement | null>(null)
 
+  // Janela de vídeo: o foco entra nela, Tab não escapa para a página e, ao fechar, volta para o cartão
   useEffect(() => {
     if (!showVideoModal) return
-    const close = (event: KeyboardEvent) => event.key === 'Escape' && setShowVideoModal(false)
-    window.addEventListener('keydown', close)
-    return () => window.removeEventListener('keydown', close)
+    const opener = openerRef.current
+    closeRef.current?.focus()
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') return setShowVideoModal(false)
+      if (event.key !== 'Tab') return
+      const items = dialogRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')
+      if (!items?.length) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      opener?.focus()
+    }
   }, [showVideoModal])
 
   return (
@@ -143,7 +166,14 @@ export default function Services() {
             <li key={service.title}>
               <Reveal delay={(index % 3) * 0.06} className="h-full">
                 {service.hasVideoModal ? (
-                  <button type="button" onClick={() => setShowVideoModal(true)} className={CARD_CLASS}>
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      openerRef.current = event.currentTarget
+                      setShowVideoModal(true)
+                    }}
+                    className={CARD_CLASS}
+                  >
                     <CardBody service={service} icon={<Play className="h-4 w-4 fill-current" aria-hidden="true" />} />
                   </button>
                 ) : (
@@ -164,9 +194,10 @@ export default function Services() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowVideoModal(false)}
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm sm:p-6"
+            className="fixed inset-0 z-[60] flex items-center justify-center overscroll-contain bg-black/80 p-4 backdrop-blur-sm sm:p-6"
           >
             <motion.div
+              ref={dialogRef}
               role="dialog"
               aria-modal="true"
               aria-labelledby="youtube-titulo"
@@ -178,6 +209,7 @@ export default function Services() {
               className="relative w-full max-w-lg rounded-[28px] border border-white/10 bg-ink-raised p-8"
             >
               <button
+                ref={closeRef}
                 type="button"
                 onClick={() => setShowVideoModal(false)}
                 aria-label="Fechar"

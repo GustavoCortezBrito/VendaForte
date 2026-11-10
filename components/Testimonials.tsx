@@ -79,7 +79,8 @@ export default function Testimonials() {
 
   const scrollBy = (direction: 1 | -1) => {
     const el = ref.current
-    if (el) el.scrollBy({ left: direction * el.clientWidth * 0.9, behavior: 'smooth' })
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (el) el.scrollBy({ left: direction * el.clientWidth * 0.9, behavior: reduce ? 'auto' : 'smooth' })
   }
 
   const arrow =
@@ -121,6 +122,7 @@ export default function Testimonials() {
           ref={ref}
           {...handlers}
           aria-label="Avaliações de clientes"
+          tabIndex={0}
           className={`-mx-6 mt-10 flex gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden ${
             dragging ? 'cursor-grabbing select-none snap-none' : 'snap-x snap-mandatory scroll-px-6 sm:cursor-grab lg:scroll-px-0'
           }`}

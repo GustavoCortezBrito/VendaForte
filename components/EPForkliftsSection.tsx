@@ -31,7 +31,7 @@ export default function EPForkliftsSection({ total, categories }: { total: numbe
           {categories.map((category, index) => (
             <li key={category.href}>
               <Reveal delay={(index % 5) * 0.05} className="h-full">
-                <Link href={category.href} className={`${CARD_LINK} p-6`}>
+                <Link href={category.href} aria-label={`${category.label}: ${category.count} modelos`} className={`${CARD_LINK} p-6`}>
                   <p className="text-5xl font-bold tracking-[-0.045em] text-white">{category.count}</p>
                   <p className="mt-3 text-sm font-semibold text-white">{category.label}</p>
                   <p className="mt-0.5 text-xs text-ink-muted">modelos</p>
