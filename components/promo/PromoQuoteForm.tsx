@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import {
   CircleAlert,
@@ -81,6 +81,21 @@ export default function PromoQuoteForm() {
   const [notes, setNotes] = useState("");
   const [sentUrl, setSentUrl] = useState<string | null>(null);
   const [emailStatus, setEmailStatus] = useState<SendStatus>("sending");
+
+  // Quando o visitante clica em "Proposta formal da EFL302 B3 / F4 / DS3", já
+  // seleciona o modelo correspondente ao chegar no formulário.
+  useEffect(() => {
+    const onModelClick = (event: MouseEvent) => {
+      const trigger = (event.target as Element | null)?.closest?.("[data-promo-model]");
+      const selected = trigger?.getAttribute("data-promo-model") as PromoProductId | null;
+      if (selected && MODEL_OPTIONS.some((option) => option.id === selected)) {
+        setModel(selected);
+        setSentUrl(null);
+      }
+    };
+    document.addEventListener("click", onModelClick, true);
+    return () => document.removeEventListener("click", onModelClick, true);
+  }, []);
 
   const modelLabel =
     MODEL_OPTIONS.find((option) => option.id === model)?.label ?? "Consultoria de frota";
