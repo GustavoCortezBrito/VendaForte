@@ -134,7 +134,7 @@ export default function CTA() {
                   onChange={handleChange}
                   placeholder="Seu nome"
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition"
                 />
               </div>
               <div>
@@ -145,7 +145,7 @@ export default function CTA() {
                   onChange={handleChange}
                   placeholder="Seu e-mail"
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition"
                 />
               </div>
               <div>
@@ -156,7 +156,7 @@ export default function CTA() {
                   onChange={handleChange}
                   placeholder="Seu telefone"
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition"
                 />
               </div>
               <div>
@@ -166,7 +166,7 @@ export default function CTA() {
                   value={formData.empresa}
                   onChange={handleChange}
                   placeholder="Nome da sua empresa"
-                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition"
                 />
               </div>
               <div>
@@ -177,7 +177,7 @@ export default function CTA() {
                   placeholder="Que tipo de equipamento você precisa?"
                   rows={4}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition resize-none"
                 />
               </div>
               <motion.button

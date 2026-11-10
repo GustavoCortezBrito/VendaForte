@@ -12,7 +12,7 @@ interface PostCardProps {
 /** Cartão de um post na listagem, nos resultados da busca e nos "relacionados". */
 export default function PostCard({ post, priority = false }: PostCardProps) {
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-raised transition-all duration-300 hover:border-white/15 focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-raised transition duration-300 hover:border-white/15 focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2">
       <div className="relative aspect-[16/9] overflow-hidden bg-ink-raised">
         <PostImage
           src={post.image}
@@ -47,7 +47,7 @@ export default function PostCard({ post, priority = false }: PostCardProps) {
             </p>
             <ArrowUpRight
               aria-hidden="true"
-              className="h-4 w-4 shrink-0 text-neutral-500 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-red-400"
+              className="h-4 w-4 shrink-0 text-ink-muted transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-red-400"
             />
           </div>
         </div>

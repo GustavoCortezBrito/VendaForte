@@ -131,7 +131,7 @@ export default function BlogSearch({ index, initialQuery = '' }: BlogSearchProps
       </label>
       <Search
         aria-hidden="true"
-        className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-500"
+        className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-muted"
       />
       <input
         ref={inputRef}
@@ -154,7 +154,7 @@ export default function BlogSearch({ index, initialQuery = '' }: BlogSearchProps
         onFocus={() => setOpen(true)}
         onKeyDown={onKeyDown}
         placeholder="Buscar artigos, máquinas…"
-        className="h-14 w-full rounded-2xl border border-white/10 bg-ink-raised pl-12 pr-14 text-base text-white transition-all placeholder:text-neutral-500 hover:border-white/15 focus:border-red-500 focus:outline-none focus:ring-4 focus:ring-red-500/20 [&::-webkit-search-cancel-button]:hidden"
+        className="h-14 w-full rounded-2xl border border-white/10 bg-ink-raised pl-12 pr-14 text-base text-white transition placeholder:text-ink-muted hover:border-white/15 focus:border-red-500 focus:outline-none focus:ring-4 focus:ring-red-500/20 [&::-webkit-search-cancel-button]:hidden"
       />
 
       {value ? (
@@ -166,7 +166,7 @@ export default function BlogSearch({ index, initialQuery = '' }: BlogSearchProps
             inputRef.current?.focus()
           }}
           aria-label="Limpar busca"
-          className="absolute right-3 top-1/2 grid h-9 w-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full text-neutral-500 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+          className="absolute right-2 top-1/2 grid h-11 w-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full text-ink-muted transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>

@@ -57,7 +57,7 @@ export default function TableOfContents({ headings }: { headings: Heading[] }) {
         <p className="flex items-center gap-2 text-xs font-bold text-red-500">
           <List className="h-4 w-4" aria-hidden="true" />
           Neste artigo
-          <span className="ml-auto font-semibold tabular-nums text-neutral-500">
+          <span className="ml-auto font-semibold tabular-nums text-ink-muted">
             {activeIndex + 1}/{headings.length}
           </span>
         </p>
@@ -77,7 +77,7 @@ export default function TableOfContents({ headings }: { headings: Heading[] }) {
                 )}
                 <span
                   aria-hidden="true"
-                  className={`absolute left-0 top-[9px] h-4 w-4 rounded-full border-2 transition-all ${
+                  className={`absolute left-0 top-[9px] h-4 w-4 rounded-full border-2 transition ${
                     isActive
                       ? 'border-red-600 bg-ink-raised ring-4 ring-red-500/20'
                       : isDone

@@ -95,7 +95,7 @@ export default function ImageLightboxModal({
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={onClose}
-                className="w-10 h-10 rounded-full bg-ink-raised border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10 transition-colors flex-shrink-0"
+                className="w-11 h-11 rounded-full bg-ink-raised border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10 transition-colors flex-shrink-0"
                 aria-label="Fechar visualização"
               >
                 <X size={20} />
@@ -122,13 +122,13 @@ export default function ImageLightboxModal({
               <div className="flex items-center gap-3 sm:gap-4 text-xs font-semibold text-neutral-300 flex-wrap justify-center sm:justify-start">
                 {capacity && (
                   <div className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/10">
-                    <span className="text-neutral-500 block text-[9px] font-bold">Capacidade</span>
+                    <span className="text-ink-muted block text-[9px] font-bold">Capacidade</span>
                     <span className="font-bold text-white text-xs">{capacity}</span>
                   </div>
                 )}
                 {liftingHeight && (
                   <div className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/10">
-                    <span className="text-neutral-500 block text-[9px] font-bold">Elevação</span>
+                    <span className="text-ink-muted block text-[9px] font-bold">Elevação</span>
                     <span className="font-bold text-white text-xs">{liftingHeight}</span>
                   </div>
                 )}
@@ -157,7 +157,7 @@ export default function ImageLightboxModal({
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={handleWhatsApp}
-                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-500 text-white font-bold text-xs transition-all"
+                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-500 text-white font-bold text-xs transition"
                 >
                   <MessageCircle size={15} />
                   <span>Pedir Cotação</span>

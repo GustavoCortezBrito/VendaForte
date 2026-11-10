@@ -33,7 +33,7 @@ export const PROSE = [
   'prose-p:leading-relaxed prose-p:text-neutral-300',
   'prose-a:font-semibold prose-a:text-red-500 prose-a:no-underline hover:prose-a:underline',
   'prose-strong:font-semibold prose-strong:text-white',
-  'prose-li:text-neutral-300 prose-li:marker:text-neutral-500',
+  'prose-li:text-neutral-300 prose-li:marker:text-ink-muted',
   'prose-hr:my-12 prose-hr:border-white/10',
   'prose-blockquote:rounded-r-2xl prose-blockquote:border-l-4 prose-blockquote:border-red-600 prose-blockquote:bg-red-50/60 prose-blockquote:px-6 prose-blockquote:py-1 prose-blockquote:font-normal prose-blockquote:not-italic prose-blockquote:text-white',
   // Sem as aspas decorativas que o plugin acrescenta antes e depois do parágrafo

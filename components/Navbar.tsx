@@ -140,7 +140,7 @@ export default function Navbar() {
                 rel="nofollow"
                 aria-label="Acessar Painel Administrativo"
                 title="Painel Administrativo"
-                className="hidden h-10 w-10 place-items-center rounded-full text-white/40 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:grid"
+                className="hidden h-11 w-11 place-items-center rounded-full text-white/60 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:grid"
               >
                 <Settings className="h-4 w-4" aria-hidden="true" />
               </Link>
@@ -166,7 +166,7 @@ export default function Navbar() {
                 aria-expanded={menuOpen}
                 aria-controls="site-menu"
                 aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
-                className="grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-white/[0.08] text-white transition-colors hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:hidden"
+                className="grid h-11 w-11 cursor-pointer place-items-center rounded-full bg-white/[0.08] text-white transition-colors hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:hidden"
               >
                 {menuOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
               </button>

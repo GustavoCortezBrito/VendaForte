@@ -64,7 +64,7 @@ export default function TileScroller({ label, ariaLabel, activeKey, children }: 
   }
 
   const arrow =
-    'hidden h-9 w-9 cursor-pointer place-items-center rounded-full border border-white/10 bg-ink-raised text-white/80 shadow-sm transition-all hover:border-white/15 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-white/10 sm:grid'
+    'hidden h-11 w-11 cursor-pointer place-items-center rounded-full border border-white/10 bg-ink-raised text-white/80 shadow-sm transition hover:border-white/15 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-white/10 sm:grid'
 
   return (
     <nav aria-label={ariaLabel}>

@@ -141,10 +141,10 @@ export default function Contact() {
                   <input id="contato-nome" name="nome" value={formData.nome} onChange={handleChange} required autoComplete="name" placeholder="Digite seu nome completo" className={INPUT} />
                 </Field>
                 <Field id="contato-email" label="E-mail" required>
-                  <input id="contato-email" type="email" name="email" value={formData.email} onChange={handleChange} required autoComplete="email" placeholder="seu@email.com" className={INPUT} />
+                  <input id="contato-email" type="email" name="email" spellCheck={false} value={formData.email} onChange={handleChange} required autoComplete="email" placeholder="nome@empresa.com.br" className={INPUT} />
                 </Field>
                 <Field id="contato-telefone" label="Telefone" required>
-                  <input id="contato-telefone" type="tel" name="telefone" value={formData.telefone} onChange={handleChange} required autoComplete="tel" placeholder="(00) 00000-0000" className={INPUT} />
+                  <input id="contato-telefone" type="tel" inputMode="tel" name="telefone" value={formData.telefone} onChange={handleChange} required autoComplete="tel" placeholder="(49) 99999-9999" className={INPUT} />
                 </Field>
                 <Field id="contato-empresa" label="Empresa">
                   <input id="contato-empresa" name="empresa" value={formData.empresa} onChange={handleChange} autoComplete="organization" placeholder="Nome da empresa" className={INPUT} />
@@ -170,14 +170,14 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     rows={4}
-                    placeholder="Descreva suas necessidades e como podemos ajudar..."
+                    placeholder="Descreva o que você precisa e como podemos ajudar…"
                     className={`${INPUT} resize-none`}
                   />
                 </Field>
               </div>
 
               <div className="flex flex-col gap-5 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm leading-relaxed text-neutral-500 sm:max-w-sm" role="status" aria-live="polite">
+                <p className="text-sm leading-relaxed text-ink-muted sm:max-w-sm" role="status" aria-live="polite">
                   {status.kind === 'sent' && <span className="font-medium text-green-500">Mensagem enviada. Entraremos em contato em breve.</span>}
                   {status.kind === 'error' && (
                     <span className="font-medium text-red-400">
@@ -192,7 +192,7 @@ export default function Contact() {
                   className={`${BTN_PRIMARY} shrink-0 cursor-pointer px-8 py-4 text-base disabled:cursor-wait disabled:opacity-70`}
                 >
                   {status.kind === 'sending' ? <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" /> : <Send className="h-5 w-5" aria-hidden="true" />}
-                  {status.kind === 'sending' ? 'Enviando...' : 'Enviar solicitação'}
+                  {status.kind === 'sending' ? 'Enviando…' : 'Enviar solicitação'}
                 </button>
               </div>
             </form>

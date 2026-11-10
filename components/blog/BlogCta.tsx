@@ -49,7 +49,7 @@ export default function BlogCta({
         <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-red-600/25 blur-3xl" />
         <div className="relative">
           <h2 className="max-w-xl text-balance text-2xl font-bold leading-tight tracking-tight sm:text-3xl">{title}</h2>
-          <p className="mt-3 max-w-xl leading-relaxed text-neutral-500">{text}</p>
+          <p className="mt-3 max-w-xl leading-relaxed text-ink-muted">{text}</p>
           {buttons}
         </div>
       </aside>
@@ -70,7 +70,7 @@ export default function BlogCta({
             >
               Quer ver <span className="text-red-500">preço e prazo</span> da sua operação?
             </h2>
-            <p className="mt-4 max-w-md text-lg leading-relaxed text-neutral-500">{text}</p>
+            <p className="mt-4 max-w-md text-lg leading-relaxed text-ink-muted">{text}</p>
             {buttons}
             <p className="mt-6 flex items-center gap-2 text-sm text-neutral-400">
               <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />

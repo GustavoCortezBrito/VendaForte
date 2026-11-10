@@ -21,7 +21,7 @@ interface CategoryTilesProps {
 }
 
 const TILE =
-  'group relative block h-32 w-44 shrink-0 snap-start overflow-hidden rounded-2xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 sm:h-40 sm:w-64'
+  'group relative block h-32 w-44 shrink-0 snap-start overflow-hidden rounded-2xl transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 sm:h-40 sm:w-64'
 
 /**
  * "Explore por tema": uma fileira de cartões com a capa de cada categoria, no

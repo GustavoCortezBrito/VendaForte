@@ -75,7 +75,7 @@ Tudo em `components/site/styles.ts` (classes, valem em servidor e cliente) e
 
 Cabeçalho (`components/Navbar.tsx`) e rodapé (`components/Footer.tsx`) são versões do site do
 `PromoHeader` e do `PromoFooter`: cápsula de vidro, aba ativa animada, linha de progresso e, no
-celular, a barra fixa de WhatsApp. Não existe botão flutuante de WhatsApp.
+celular, a barra fixa de WhatsApp. No computador há o botão flutuante da seção 12.
 
 ### Modelo de seção
 
@@ -183,3 +183,67 @@ avaliações, perguntas frequentes, contato.
 - **Pontos de atendimento:** o site lista 6 cidades; a `/promo` lista 3.
 - **Foto nova da fachada:** a atual é uma foto de 680 px ampliada. Uma foto de celular atual, na
   horizontal, daria ainda mais nitidez e serviria de base para um vídeo melhor.
+
+## 11. Princípios de design adaptados (skill frontend-design, da Anthropic)
+
+Lida em 10/11/2026 (repositório público `anthropics/skills`) e instalada em `.claude/skills/` com a
+autorização do usuário. O que serve ao nosso visual foi adaptado, e a `/promo` continua mandando quando
+há conflito.
+
+| Princípio da skill | Como ficou aqui |
+|---|---|
+| Não destacar só uma palavra do título em cor | Títulos da abertura e da página Sobre agora são todos brancos. O vermelho fica nos rótulos, ícones e botões |
+| Movimento só onde chama atenção | Uma animação de abertura (o vídeo da fachada) e respostas a ações (menu, painel do WhatsApp, abas). Sem animação contínua nova |
+| Estrutura que informa | Linhas, bordas e números só quando carregam informação; cartões idênticos só para itens equivalentes |
+| Um ponto de ousadia | A fachada animada da matriz na abertura; o resto é calmo |
+| Qualidade mínima | Teste a 390 e 1440 px, foco visível, movimento reduzido respeitado |
+| Rótulo em caixa alta, setinha `→` em todo botão, pontos entre metadados | Evitados |
+
+Não adotados, por contrariarem a `/promo`: trocar a tipografia por uma combinação de serifa e sans, e
+um fundo diferente do `#0D0D0D`.
+
+## 12. Botão de WhatsApp
+
+`components/site/WhatsAppFab.tsx`: botão redondo de 64 px nas cores oficiais do WhatsApp (verde `#25D366`,
+ícone branco) no canto inferior direito. Ao clicar abre uma janela com animação (Radix Popover, que cuida de
+foco, Esc, clique fora e leitor de tela, mais framer-motion) com quatro assuntos prontos (cotar, locação,
+peças, assistência) e um campo para escrever a mensagem. Tudo abre o WhatsApp por link direto `wa.me` com o
+texto pronto, então o `AnalyticsEvents` conta o `click_whatsapp` no GA4. O cabeçalho da janela usa o verde
+escuro padrão do WhatsApp (`#075E54`) para o texto branco ter contraste. Some no celular, onde a barra fixa
+do cabeçalho faz esse papel.
+
+Histórico: a versão anterior do botão (verde apagado, 48 px) foi trocada por duas bibliotecas de terceiros
+(`react-floating-whatsapp` e `@carlos8a/react-whatsapp-floating-button`) que o usuário não aprovou; voltou-se
+à versão própria com Radix, maior e com as cores padrão.
+
+## 13. Auditoria Vercel Web Interface Guidelines (10/11/2026)
+
+Aplicada nos arquivos públicos. Corrigido: `transition: all` global e `transition-all` em 14
+componentes (agora com propriedades listadas), `touch-action: manipulation`, link "Pular para o
+conteúdo", `theme-color`, reticências `…` nos textos, `spellCheck` e `inputMode` nos campos e
+dimensões nas logos de clientes. Já estava certo: vídeo mudo em loop que para com movimento
+reduzido, foto como alternativa, rótulos e `autocomplete` nos campos, foco visível e
+`color-scheme: dark`.
+
+## 14. Skills usadas e o que mudou por causa delas (10/11/2026)
+
+Instaladas em `.claude/skills/` com a autorização do usuário: `frontend-design`, `theme-factory`,
+`ui-ux-pro-max` e `web-design-guidelines` (Vercel). A `venda-forte-visual` é nossa, no formato do
+skill-creator: resume este guia em uma página para as próximas sessões.
+
+- **ui-ux-pro-max** (`search.py --design-system`, domínio `ux`): sugeriu o padrão "Trust & Authority +
+  Conversion" (abertura, provas, soluções, caminho claro até o contato), que a home já segue. A paleta
+  azul-marinho clara e a Plus Jakarta Sans que ele sugere **não** foram adotadas: contrariam a `/promo`.
+  Adotada a lista de conferência:
+  - texto pequeno cinza passou de `neutral-500` (4,1:1) para `ink-muted` `#8C8C8C` (5,4:1), em todo o site
+    público e nos campos (`placeholder`); o ícone de engrenagem do cabeçalho subiu de 40% para 60% de branco;
+  - alvos de toque de 44 px (antes 36 a 40 px): menu do celular, engrenagem, redes do rodapé, setas dos
+    depoimentos e dos carrosséis, fechar da janela de vídeo, do zoom e da busca do blog;
+  - vídeo da abertura: botão de pausar/reproduzir (44 px, no canto inferior esquerdo) e o vídeo só roda
+    com a abertura na tela; some com movimento reduzido.
+- **frontend-design**: ver seção 11.
+- **web-design-guidelines**: ver seção 13.
+- **theme-factory**: o tema do site foi descrito no formato dele (cores, tipografia, uso) na skill
+  `venda-forte-visual`; nenhum dos 10 temas prontos serve, porque a referência é a `/promo`.
+- Véu da abertura clareado (esquerda `ink/95` a transparente, base `ink/45` no computador) para a fachada
+  aparecer mais; o título continua legível.

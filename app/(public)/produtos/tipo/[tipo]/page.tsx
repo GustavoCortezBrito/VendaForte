@@ -93,7 +93,7 @@ export default async function TypePage({ params, searchParams }: Props) {
 
       <PageHeader
         before={
-          <nav aria-label="Você está em" className="mb-8 flex flex-wrap items-center gap-2 text-sm text-neutral-500">
+          <nav aria-label="Você está em" className="mb-8 flex flex-wrap items-center gap-2 text-sm text-ink-muted">
             <Link href="/" className="transition-colors hover:text-white">
               Início
             </Link>
@@ -214,7 +214,7 @@ export default async function TypePage({ params, searchParams }: Props) {
               ) : null}
               {pageWindow(current, totalPages).map((item, index) =>
                 item === 'gap' ? (
-                  <span key={`gap-${index}`} aria-hidden="true" className="px-1 text-neutral-500">
+                  <span key={`gap-${index}`} aria-hidden="true" className="px-1 text-ink-muted">
                     …
                   </span>
                 ) : (

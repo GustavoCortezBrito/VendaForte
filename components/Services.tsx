@@ -113,7 +113,7 @@ function CardBody({ service, icon }: { service: Service; icon: ReactNode }) {
       </div>
       <ArrowUpRight
         aria-hidden="true"
-        className="absolute right-6 top-6 h-5 w-5 text-white/70 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
+        className="absolute right-6 top-6 h-5 w-5 text-white/70 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
       />
     </>
   )
@@ -181,7 +181,7 @@ export default function Services() {
                 type="button"
                 onClick={() => setShowVideoModal(false)}
                 aria-label="Fechar"
-                className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full bg-white/[0.06] text-neutral-300 transition-colors hover:bg-white/15 hover:text-white"
+                className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/[0.06] text-neutral-300 transition-colors hover:bg-white/15 hover:text-white"
               >
                 <X className="h-4 w-4" aria-hidden="true" />
               </button>

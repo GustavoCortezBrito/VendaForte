@@ -6,6 +6,9 @@ import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// Cor da barra do navegador no celular: a mesma do fundo do site
+export const viewport = { themeColor: "#0d0d0d" };
+
 export const metadata = siteMetadata;
 
 export default function RootLayout({

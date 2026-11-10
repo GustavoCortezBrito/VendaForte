@@ -61,7 +61,7 @@ export default function AboutPageClient() {
           <Reveal className="lg:col-span-6">
             <p className={EYEBROW}>Grupo Venda Forte</p>
             <h1 className="mt-4 text-balance text-5xl font-bold leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
-              Sobre nossa história e <span className="text-red-500">missão</span>
+              Nossa história e a nossa missão
             </h1>
             <p className={`mt-6 max-w-xl ${LEAD}`}>
               Desde 2014 no mercado de equipamentos para movimentação de cargas. Em 2021, tornamo-nos{' '}
@@ -80,7 +80,7 @@ export default function AboutPageClient() {
             <dl className="mt-12 flex gap-10 border-t border-white/10 pt-8">
               {STATS.map((stat) => (
                 <div key={stat.label} className="flex flex-col">
-                  <dt className="order-2 mt-1 text-sm text-neutral-500">{stat.label}</dt>
+                  <dt className="order-2 mt-1 text-sm text-ink-muted">{stat.label}</dt>
                   <dd className="text-4xl font-bold tracking-[-0.045em] text-white">{stat.value}</dd>
                 </div>
               ))}
@@ -131,7 +131,7 @@ export default function AboutPageClient() {
                   “Possuímos uma metodologia de vendas inteligente, com foco na estratégia, qualidade no atendimento e na
                   capacitação da equipe. O resultado disso é uma parceria sólida e duradoura com nossos clientes.”
                 </blockquote>
-                <figcaption className="mt-4 text-sm text-neutral-500">Rodrigo Schilke, CEO</figcaption>
+                <figcaption className="mt-4 text-sm text-ink-muted">Rodrigo Schilke, CEO</figcaption>
               </figure>
             </Reveal>
 
@@ -172,7 +172,7 @@ export default function AboutPageClient() {
                     <span className={TAG}>{unit.kind}</span>
                   </div>
                   <h3 className="mt-8 text-4xl font-bold tracking-[-0.035em] text-white">{unit.name}</h3>
-                  <p className="mt-1 text-sm text-neutral-500">Santa Catarina</p>
+                  <p className="mt-1 text-sm text-ink-muted">Santa Catarina</p>
                   <p className="mt-5 text-[15px] leading-relaxed text-neutral-400">{unit.text}</p>
                   <ul className="mt-6 flex flex-wrap gap-2">
                     {unit.services.map((service) => (
@@ -210,11 +210,11 @@ export default function AboutPageClient() {
             </div>
             <dl className="grid grid-cols-2 border-y border-white/10 lg:border-y-0 lg:border-l lg:pl-10">
               <div className="flex flex-col py-6">
-                <dt className="order-2 mt-1 text-sm text-neutral-500">Anos de experiência</dt>
+                <dt className="order-2 mt-1 text-sm text-ink-muted">Anos de experiência</dt>
                 <dd className="text-5xl font-bold tracking-[-0.045em] text-white">10+</dd>
               </div>
               <div className="flex flex-col border-l border-white/10 py-6 pl-6">
-                <dt className="order-2 mt-1 text-sm text-neutral-500">Dealer EP Equipment</dt>
+                <dt className="order-2 mt-1 text-sm text-ink-muted">Dealer EP Equipment</dt>
                 <dd className="text-5xl font-bold tracking-[-0.045em] text-white">Oficial</dd>
               </div>
             </dl>

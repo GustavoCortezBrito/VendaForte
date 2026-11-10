@@ -46,6 +46,6 @@ export const CHIP_OFF = `${CHIP} border-white/10 text-neutral-400 hover:border-w
 export const TAG = 'rounded-full border border-white/10 px-4 py-1.5 text-sm font-medium text-neutral-300'
 
 export const INPUT =
-  'w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-[15px] text-white placeholder:text-neutral-600 transition-colors focus:border-red-500/70 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-red-500/15'
+  'w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-[15px] text-white placeholder:text-ink-muted transition-colors focus:border-red-500/70 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-red-500/15'
 
 export const LABEL = 'mb-2 block text-sm font-medium text-neutral-300'

@@ -265,7 +265,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
       
       <PageHeader
         before={
-          <nav aria-label="Você está em" className="mb-8 flex items-center gap-2 text-sm text-neutral-500">
+          <nav aria-label="Você está em" className="mb-8 flex items-center gap-2 text-sm text-ink-muted">
             <Link href="/" className="transition-colors hover:text-white">Início</Link>
             <ChevronRight size={14} aria-hidden="true" />
             <span className="text-neutral-300">Produtos</span>
@@ -277,7 +277,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
       />
 
       {/* STICKY TOOLBAR (Categories & Search Bar that follow on scroll) */}
-      <div className="sticky top-20 z-30 bg-ink/95 backdrop-blur-md border-b border-white/10 transition-all">
+      <div className="sticky top-20 z-30 bg-ink/95 backdrop-blur-md border-b border-white/10 transition">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
           
           {/* Barra de categorias: rola arrastando, pela roda ou pela barra fina embaixo */}
@@ -310,7 +310,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                     <Icon size={14} className={isSelected ? 'text-ink' : 'text-red-500'} />
                     <span>{cat.label}</span>
                     <span className={`text-[10px] px-1.5 py-0.2 rounded-md font-medium ${
-                      isSelected ? 'bg-ink/10 text-ink' : 'bg-white/[0.06] text-neutral-500'
+                      isSelected ? 'bg-ink/10 text-ink' : 'bg-white/[0.06] text-ink-muted'
                     }`}>
                       {count}
                     </span>
@@ -324,18 +324,18 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
           {/* Quick Search Box inside Sticky Bar */}
           <div className="w-full md:w-72 lg:w-80 shrink-0 relative">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" size={15} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted" size={15} />
               <input
                 type="text"
                 placeholder="Buscar modelo (ex: F4, DS3, EFL302B3)..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full rounded-full border border-white/10 bg-white/[0.03] py-2.5 pl-10 pr-9 text-sm text-white placeholder:text-neutral-600 transition-colors focus:border-red-500/70 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-red-500/15"
+                className="w-full rounded-full border border-white/10 bg-white/[0.03] py-2.5 pl-10 pr-9 text-sm text-white placeholder:text-ink-muted transition-colors focus:border-red-500/70 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-red-500/15"
               />
               {search && (
                 <button 
                   onClick={() => setSearch('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white p-0.5 rounded-full"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-ink-muted hover:text-white p-0.5 rounded-full"
                   title="Limpar busca"
                 >
                   <X size={14} />
@@ -378,7 +378,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
               <select
                 value={categoryFilter}
                 onChange={e => setCategoryFilter(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition"
               >
                 <option value="all">Todas as Categorias</option>
                 <option value="Paleteiras Elétricas">Paleteiras Elétricas</option>
@@ -398,7 +398,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
               <select
                 value={rangeFilter}
                 onChange={e => setRangeFilter(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition"
               >
                 <option value="all">Todas as Séries</option>
                 <option value="3wheel">3 rodas</option>
@@ -417,7 +417,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
               <select
                 value={capacityFilter}
                 onChange={e => setCapacityFilter(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition"
               >
                 <option value="all">Todas as Capacidades</option>
                 <option value="under_1500">Até 1.500 kg (1.5t)</option>
@@ -436,7 +436,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
               <select
                 value={liftHeightFilter}
                 onChange={e => setLiftHeightFilter(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition"
               >
                 <option value="all">Todas as Alturas</option>
                 <option value="under_2000">Até 2.000 mm (2,0m)</option>
@@ -454,7 +454,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
               <select
                 value={voltageFilter}
                 onChange={e => setVoltageFilter(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition"
               >
                 <option value="all">Todas as Voltagens</option>
                 <option value="24V">24V Li-Ion</option>
@@ -469,7 +469,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
               <button
                 onClick={handleResetFilters}
                 disabled={!hasActiveFilters}
-                className="w-full py-2.5 rounded-full border border-white/15 hover:bg-white/10 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:bg-white/10 disabled:text-neutral-500 disabled:cursor-not-allowed"
+                className="w-full py-2.5 rounded-full border border-white/15 hover:bg-white/10 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:bg-white/10 disabled:text-ink-muted disabled:cursor-not-allowed"
               >
                 <RotateCcw size={12} />
                 <span>Limpar filtros</span>
@@ -559,7 +559,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                       )}
                       <button 
                         onClick={() => setShowMobileFilters(false)}
-                        className="text-neutral-500 hover:text-white p-1"
+                        className="text-ink-muted hover:text-white p-1"
                       >
                         <X size={16} />
                       </button>
@@ -722,7 +722,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                             </div>
 
                             {/* Hover Zoom Pill */}
-                            <div className="absolute top-2.5 right-2.5 z-10 opacity-0 group-hover/frame:opacity-100 transition-all duration-200 transform translate-y-1 group-hover/frame:translate-y-0">
+                            <div className="absolute top-2.5 right-2.5 z-10 opacity-0 group-hover/frame:opacity-100 transition duration-200 transform translate-y-1 group-hover/frame:translate-y-0">
                               <div className="bg-ink/95 hover:bg-white/10 text-white text-[11px] font-bold px-2.5 py-1 rounded-lg border border-white/10 backdrop-blur-md flex items-center gap-1">
                                 <ZoomIn size={12} className="text-red-500" />
                                 <span>Ampliar</span>
@@ -761,7 +761,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                           {/* Spec Metric Cards */}
                           <div className="grid grid-cols-2 gap-2.5 my-3.5">
                             <div className="rounded-xl border border-white/10 bg-white/[0.03] p-2.5 transition-colors group-hover:border-white/15">
-                              <div className="flex items-center gap-1 text-[9px] font-bold text-neutral-500">
+                              <div className="flex items-center gap-1 text-[9px] font-bold text-ink-muted">
                                 <Scale size={11} className="text-red-500" />
                                 <span>Capacidade</span>
                               </div>
@@ -771,7 +771,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                             </div>
 
                             <div className="rounded-xl border border-white/10 bg-white/[0.03] p-2.5 transition-colors group-hover:border-white/15">
-                              <div className="flex items-center gap-1 text-[9px] font-bold text-neutral-500">
+                              <div className="flex items-center gap-1 text-[9px] font-bold text-ink-muted">
                                 <ArrowUpFromLine size={11} className="text-red-500" />
                                 <span>Elevação</span>
                               </div>
@@ -821,9 +821,9 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                             <ChevronLeft size={16} />
                             <span className="hidden sm:inline pr-1">Anterior</span>
                           </>
-                        ), 'p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all border bg-ink-raised text-neutral-300 hover:text-red-400 border-white/10 hover:bg-white/5', { title: 'Página anterior', rel: 'prev' })
+                        ), 'p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition border bg-ink-raised text-neutral-300 hover:text-red-400 border-white/10 hover:bg-white/5', { title: 'Página anterior', rel: 'prev' })
                       ) : (
-                        <span aria-hidden="true" className="p-2 rounded-xl text-xs font-bold flex items-center gap-1 border bg-white/10 text-neutral-500 border-white/10 cursor-not-allowed">
+                        <span aria-hidden="true" className="p-2 rounded-xl text-xs font-bold flex items-center gap-1 border bg-white/10 text-ink-muted border-white/10 cursor-not-allowed">
                           <ChevronLeft size={16} />
                           <span className="hidden sm:inline pr-1">Anterior</span>
                         </span>
@@ -833,14 +833,14 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                         {getPageNumbers().map((p, idx) => (
                           typeof p === 'number' ? (
                             <span key={idx}>
-                              {pageControl(p, p, `w-9 h-9 rounded-xl text-xs font-bold transition-all border flex items-center justify-center ${
+                              {pageControl(p, p, `w-9 h-9 rounded-xl text-xs font-bold transition border flex items-center justify-center ${
                                 currentPage === p
                                   ? 'bg-red-600 text-white border-red-600'
                                   : 'bg-ink-raised text-neutral-300 hover:text-red-400 border-white/10 hover:bg-white/5'
                               }`, { current: currentPage === p })}
                             </span>
                           ) : (
-                            <span key={idx} className="px-1 text-neutral-500 text-xs font-bold">
+                            <span key={idx} className="px-1 text-ink-muted text-xs font-bold">
                               •••
                             </span>
                           )
@@ -853,9 +853,9 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                             <span className="hidden sm:inline pl-1">Próxima</span>
                             <ChevronRight size={16} />
                           </>
-                        ), 'p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all border bg-ink-raised text-neutral-300 hover:text-red-400 border-white/10 hover:bg-white/5', { title: 'Próxima página', rel: 'next' })
+                        ), 'p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition border bg-ink-raised text-neutral-300 hover:text-red-400 border-white/10 hover:bg-white/5', { title: 'Próxima página', rel: 'next' })
                       ) : (
-                        <span aria-hidden="true" className="p-2 rounded-xl text-xs font-bold flex items-center gap-1 border bg-white/10 text-neutral-500 border-white/10 cursor-not-allowed">
+                        <span aria-hidden="true" className="p-2 rounded-xl text-xs font-bold flex items-center gap-1 border bg-white/10 text-ink-muted border-white/10 cursor-not-allowed">
                           <span className="hidden sm:inline pl-1">Próxima</span>
                           <ChevronRight size={16} />
                         </span>

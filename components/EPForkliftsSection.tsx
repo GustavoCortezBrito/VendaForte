@@ -34,10 +34,10 @@ export default function EPForkliftsSection({ total, categories }: { total: numbe
                 <Link href={category.href} className={`${CARD_LINK} p-6`}>
                   <p className="text-5xl font-bold tracking-[-0.045em] text-white">{category.count}</p>
                   <p className="mt-3 text-sm font-semibold text-white">{category.label}</p>
-                  <p className="mt-0.5 text-xs text-neutral-500">modelos</p>
+                  <p className="mt-0.5 text-xs text-ink-muted">modelos</p>
                   <ArrowUpRight
                     aria-hidden="true"
-                    className="absolute right-5 top-5 h-5 w-5 text-neutral-600 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
+                    className="absolute right-5 top-5 h-5 w-5 text-neutral-600 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
                   />
                 </Link>
               </Reveal>

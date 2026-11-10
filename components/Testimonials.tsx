@@ -83,7 +83,7 @@ export default function Testimonials() {
   }
 
   const arrow =
-    'grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-white/10 text-white transition-colors hover:border-white/25 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/60 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent'
+    'grid h-11 w-11 cursor-pointer place-items-center rounded-full border border-white/10 text-white transition-colors hover:border-white/25 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/60 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent'
 
   return (
     <section id="testimonials" className={SECTION}>
@@ -136,7 +136,7 @@ export default function Testimonials() {
                   </span>
                   <span className="min-w-0">
                     <span className="block truncate text-sm font-semibold text-white">{review.name}</span>
-                    <span className="block text-xs text-neutral-500">{review.reviews}</span>
+                    <span className="block text-xs text-ink-muted">{review.reviews}</span>
                   </span>
                 </figcaption>
               </figure>
@@ -151,7 +151,7 @@ export default function Testimonials() {
             {CLIENTS.map((client) => (
               <li key={client.name} className="flex h-20 items-center justify-center rounded-2xl bg-white p-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={client.url} alt={`Logo ${client.name}`} loading="lazy" className="max-h-full w-auto object-contain" />
+                <img src={client.url} alt={`Logo ${client.name}`} width={160} height={80} loading="lazy" className="max-h-full w-auto object-contain" />
               </li>
             ))}
           </ul>

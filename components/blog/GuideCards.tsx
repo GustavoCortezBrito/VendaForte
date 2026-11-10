@@ -26,7 +26,7 @@ export default function GuideCards({ guides }: { guides: Guide[] }) {
           {guides.map(({ product, post }) => (
             <li
               key={product.id}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-raised transition-all duration-300 focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2"
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-raised transition duration-300 focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2"
             >
               <div className="relative aspect-[16/9] overflow-hidden bg-ink-raised">
                 <Image

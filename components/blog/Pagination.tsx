@@ -18,7 +18,7 @@ interface PaginationProps {
 }
 
 const BOX =
-  'inline-flex h-11 min-w-11 items-center justify-center rounded-xl border px-3 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
+  'inline-flex h-11 min-w-11 items-center justify-center rounded-xl border px-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
 const IDLE = 'border-white/10 bg-ink-raised text-neutral-300 hover:border-white/15 hover:bg-white/5'
 const CURRENT = 'border-red-600 bg-red-600 text-white'
 const OFF = 'cursor-not-allowed border-white/10 bg-white/5 text-neutral-400'
@@ -65,7 +65,7 @@ export default function Pagination({ page, totalPages, category, range, onNaviga
 
         {pageWindow(page, totalPages).map((item, position) =>
           item === 'gap' ? (
-            <li key={`gap-${position}`} aria-hidden="true" className="px-1 text-neutral-500">
+            <li key={`gap-${position}`} aria-hidden="true" className="px-1 text-ink-muted">
               …
             </li>
           ) : (

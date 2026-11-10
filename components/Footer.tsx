@@ -74,7 +74,7 @@ export default function Footer() {
               </span>
               <span className="leading-none">
                 <span className="block text-lg font-semibold tracking-tight text-white">Venda Forte</span>
-                <span className="mt-1 block text-xs font-medium text-neutral-500">Grupo · Dealer EP Equipment</span>
+                <span className="mt-1 block text-xs font-medium text-ink-muted">Grupo · Dealer EP Equipment</span>
               </span>
             </Link>
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-neutral-400">
@@ -90,7 +90,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Grupo Venda Forte no ${social.label}`}
-                    className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-neutral-400 transition-colors hover:border-white/25 hover:bg-white/[0.06] hover:text-white"
+                    className="grid h-11 w-11 place-items-center rounded-full border border-white/10 text-neutral-400 transition-colors hover:border-white/25 hover:bg-white/[0.06] hover:text-white"
                   >
                     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
                       <path d={social.path} />
@@ -135,19 +135,19 @@ export default function Footer() {
             </li>
             <li>
               <a href="tel:+554933239050" className={`flex items-center gap-2.5 whitespace-nowrap ${LINK_CLASS}`}>
-                <Phone className="h-4 w-4 text-neutral-500" aria-hidden="true" />
+                <Phone className="h-4 w-4 text-ink-muted" aria-hidden="true" />
                 Chapecó {CONTATO.chapeco}
               </a>
             </li>
             <li>
               <a href="tel:+554738423333" className={`flex items-center gap-2.5 whitespace-nowrap ${LINK_CLASS}`}>
-                <Phone className="h-4 w-4 text-neutral-500" aria-hidden="true" />
+                <Phone className="h-4 w-4 text-ink-muted" aria-hidden="true" />
                 Joinville {CONTATO.joinville}
               </a>
             </li>
             <li>
               <a href={`mailto:${CONTATO.email}`} className={`flex items-center gap-2.5 break-all ${LINK_CLASS}`}>
-                <Mail className="h-4 w-4 shrink-0 text-neutral-500" aria-hidden="true" />
+                <Mail className="h-4 w-4 shrink-0 text-ink-muted" aria-hidden="true" />
                 {CONTATO.email}
               </a>
             </li>
@@ -166,7 +166,7 @@ export default function Footer() {
         </div>
 
         {/* Linha final */}
-        <div className="flex flex-col gap-3 border-t border-white/10 py-6 text-xs text-neutral-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-white/10 py-6 text-xs text-ink-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} Grupo Venda Forte · Dealer oficial EP Equipment no Sul do Brasil
           </p>

@@ -118,7 +118,7 @@ export default function FAQ() {
                       <span className="min-w-0 flex-1 text-[17px] font-semibold leading-snug tracking-tight text-white">{faq.question}</span>
                       <span
                         aria-hidden="true"
-                        className={`grid h-9 w-9 shrink-0 place-items-center rounded-full transition-all duration-300 ${
+                        className={`grid h-9 w-9 shrink-0 place-items-center rounded-full transition duration-300 ${
                           isOpen ? 'rotate-180 bg-white text-ink' : 'bg-white/[0.06] text-neutral-300'
                         }`}
                       >
