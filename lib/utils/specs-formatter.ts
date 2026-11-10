@@ -170,27 +170,30 @@ export function cleanSpecValue(rawVal: string | undefined): string {
   val = val.replace(/\[\s*"([^"]+)"\s*\]/g, '$1')
   val = val.replace(/\[\s*(\d+)\s*\]/g, '$1')
   val = val.replace(/\\"/g, '')
-  val = val.replace(/|，/g, ' ')
+  // Vírgulas chinesas da ficha de origem. A expressão antiga tinha uma alternativa vazia (/|，/) que
+  // casava em toda posição e punha um espaço entre cada letra ("1 2 0 0 k g").
+  val = val.replace(/[、，]/g, ', ')
 
-  // Dicionário de traduções de valores comuns
+  // Traduções literais dos valores da ficha. Sem acréscimos: "Electric" vale também para chumbo-ácido,
+  // então não pode virar "bateria Li-Ion".
   const valueTranslations: [RegExp, string][] = [
-    [/^Electric$/i, 'Elétrico (Bateria Li-Ion)'],
-    [/^Pedestrian$/i, 'Operador a Pé (Pedestre / Walkie)'],
-    [/^Rider seated$/i, 'Operador Sentado'],
-    [/^Rider stand-on$/i, 'Operador Embarcado (Plataforma)'],
-    [/^Stand-on$/i, 'Operador em Pé / Embarcado'],
-    [/^Polyurethane$/i, 'Poliuretano (PU de Alta Resistência)'],
-    [/^Solid rubber$/i, 'Superelástico / Borracha Maciça'],
+    [/^Electric$/i, 'Elétrico'],
+    [/^Pedestrian$/i, 'Operador a pé'],
+    [/^Rider seated$/i, 'Operador sentado'],
+    [/^Rider stand-on$/i, 'Operador em pé (plataforma)'],
+    [/^Stand-on$/i, 'Operador em pé'],
+    [/^Polyurethane$/i, 'Poliuretano'],
+    [/^Solid rubber$/i, 'Borracha maciça'],
     [/^Pneumatic$/i, 'Pneumático'],
-    [/^Electromagnetic$/i, 'Eletromagnético Regenerativo'],
+    [/^Electromagnetic$/i, 'Eletromagnético'],
     [/^Hydraulic$/i, 'Hidráulico'],
     [/^Mechanical$/i, 'Mecânico'],
-    [/^Li-Ion$/i, 'Íon-Lítio (Li-Ion EP)'],
-    [/^Lead-acid$/i, 'Chumbo-Ácido'],
-    [/^AC$/i, 'Corrente Alternada (AC Brushless)'],
-    [/^DC$/i, 'Corrente Contínua (DC)'],
-    [/^Mechanical steering$/i, 'Direção Mecânica com Timão Ergonômico'],
-    [/^Electric power steering$/i, 'Direção Elétrica Assistida (EPS)'],
+    [/^Li-Ion$/i, 'Íon-lítio'],
+    [/^Lead-acid$/i, 'Chumbo-ácido'],
+    [/^AC$/i, 'Corrente alternada (AC)'],
+    [/^DC$/i, 'Corrente contínua (DC)'],
+    [/^Mechanical steering$/i, 'Direção mecânica'],
+    [/^Electric power steering$/i, 'Direção elétrica (EPS)'],
     [/^Automatic$/i, 'Automático']
   ]
 
@@ -208,7 +211,7 @@ export function cleanSpecValue(rawVal: string | undefined): string {
  */
 export function getSpecLabel(key: string): string {
   // Tratamento para variações com caracteres especiais
-  const cleanKey = key.replace(/|，/g, ', ').trim()
+  const cleanKey = key.replace(/[、，]/g, ', ').trim()
   return SPEC_LABELS_PT[cleanKey] || SPEC_LABELS_PT[key] || key
 }
 

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import PageHeader from '@/components/site/PageHeader'
+import { BTN_GHOST, BTN_WHATSAPP } from '@/components/site/styles'
 import { notFound } from 'next/navigation'
 import { ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react'
 import { whatsappUrl } from '@/components/promo/promo.config'
@@ -86,69 +88,61 @@ export default async function TypePage({ params, searchParams }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-20 pt-24 text-slate-900">
+    <div className="min-h-screen bg-ink pb-24 text-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
 
-      <header className="border-b border-slate-200/80 bg-white">
-        <div className="mx-auto max-w-7xl px-4 pb-8 pt-4 sm:px-6 lg:px-8">
-          <nav aria-label="Você está em" className="mb-4 flex flex-wrap items-center gap-2 text-xs font-medium text-slate-500">
-            <Link href="/" className="hover:text-red-600">
+      <PageHeader
+        before={
+          <nav aria-label="Você está em" className="mb-8 flex flex-wrap items-center gap-2 text-sm text-neutral-500">
+            <Link href="/" className="transition-colors hover:text-white">
               Início
             </Link>
-            <ChevronRight size={13} aria-hidden="true" className="text-slate-400" />
-            <Link href="/produtos" className="hover:text-red-600">
+            <ChevronRight size={14} aria-hidden="true" />
+            <Link href="/produtos" className="transition-colors hover:text-white">
               Produtos
             </Link>
-            <ChevronRight size={13} aria-hidden="true" className="text-slate-400" />
-            <span className="font-bold text-slate-900">{page.label}</span>
+            <ChevronRight size={14} aria-hidden="true" />
+            <span className="text-neutral-300">{page.label}</span>
           </nav>
-
-          <h1 className="text-balance text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            {page.label} EP Equipment
-          </h1>
-          <div className="mt-4 max-w-3xl space-y-3 text-base leading-relaxed text-slate-700">
+        }
+        eyebrow={`${stats.count} modelos no catálogo`}
+        title={<>{page.label} EP Equipment</>}
+        lead={
+          <div className="space-y-3">
             {page.intro(stats).map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href={quoteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-green-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-green-600/20 transition-colors hover:bg-green-700"
-            >
-              <MessageCircle size={16} aria-hidden="true" />
-              Pedir cotação no WhatsApp
-            </a>
-            <Link
-              href="/produtos"
-              className="inline-flex items-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 transition-colors hover:bg-slate-50"
-            >
-              Filtrar o catálogo completo
-            </Link>
-          </div>
+        }
+      >
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <a href={quoteUrl} target="_blank" rel="noopener noreferrer" className={BTN_WHATSAPP}>
+            <MessageCircle size={16} aria-hidden="true" />
+            Pedir cotação no WhatsApp
+          </a>
+          <Link href="/produtos" className={BTN_GHOST}>
+            Filtrar o catálogo completo
+          </Link>
         </div>
-      </header>
+      </PageHeader>
 
-      <main className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl px-6 pt-16 lg:px-8">
         <section aria-labelledby="modelos">
           <div className="flex flex-wrap items-end justify-between gap-2">
-            <h2 id="modelos" className="text-2xl font-extrabold tracking-tight text-slate-900">
+            <h2 id="modelos" className="text-3xl font-bold tracking-[-0.035em] text-white sm:text-4xl">
               {stats.count} modelos
             </h2>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-neutral-400">
               Mostrando {(current - 1) * TYPE_PAGE_SIZE + 1} a {Math.min(current * TYPE_PAGE_SIZE, products.length)} de {products.length}
             </p>
           </div>
 
-          <div className="mt-4 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="mt-6 overflow-x-auto rounded-[28px] border border-white/10 bg-ink-raised">
             <table className="w-full min-w-[40rem] text-left text-sm">
               <caption className="sr-only">
                 {page.label} EP: capacidade, elevação, energia e raio de giro de cada modelo
               </caption>
-              <thead className="bg-slate-900 text-xs uppercase tracking-wider text-white">
+              <thead className="bg-ink-raised text-xs text-white">
                 <tr>
                   <th scope="col" className="px-4 py-3 font-bold">
                     Modelo
@@ -172,12 +166,12 @@ export default async function TypePage({ params, searchParams }: Props) {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-white/10">
                 {visible.map((product) => (
-                  <tr key={product.slug} className="hover:bg-slate-50">
-                    <th scope="row" className="px-4 py-2.5 font-semibold text-slate-900">
-                      <Link href={`/produtos/${product.slug}`} className="flex items-center gap-3 hover:text-red-600">
-                        <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-slate-100 bg-slate-50">
+                  <tr key={product.slug} className="hover:bg-white/5">
+                    <th scope="row" className="px-4 py-2.5 font-semibold text-white">
+                      <Link href={`/produtos/${product.slug}`} className="flex items-center gap-3 hover:text-red-400">
+                        <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-white">
                           <Image
                             src={product.mainImage}
                             alt=""
@@ -192,14 +186,14 @@ export default async function TypePage({ params, searchParams }: Props) {
                       </Link>
                     </th>
                     {showKind && (
-                      <td className="px-4 py-2.5 text-slate-600">
+                      <td className="px-4 py-2.5 text-neutral-400">
                         {product.type === 'Rebocador Elétrico' ? 'Rebocador' : 'Selecionadora'}
                       </td>
                     )}
-                    <td className="px-4 py-2.5 tabular-nums text-slate-700">{product.capacity}</td>
-                    <td className="px-4 py-2.5 tabular-nums text-slate-700">{formatLift(product.liftingHeight)}</td>
-                    <td className="px-4 py-2.5 text-slate-700">{energyLabel(product)}</td>
-                    <td className="px-4 py-2.5 tabular-nums text-slate-700">{turningLabel(product.turningRadius)}</td>
+                    <td className="px-4 py-2.5 tabular-nums text-neutral-300">{product.capacity}</td>
+                    <td className="px-4 py-2.5 tabular-nums text-neutral-300">{formatLift(product.liftingHeight)}</td>
+                    <td className="px-4 py-2.5 text-neutral-300">{energyLabel(product)}</td>
+                    <td className="px-4 py-2.5 tabular-nums text-neutral-300">{turningLabel(product.turningRadius)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -212,7 +206,7 @@ export default async function TypePage({ params, searchParams }: Props) {
                 <Link
                   href={hrefOf(page.slug, current - 1)}
                   rel="prev"
-                  className="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 hover:text-red-600"
+                  className="inline-flex items-center gap-1 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10"
                 >
                   <ChevronLeft size={15} aria-hidden="true" />
                   Anterior
@@ -220,7 +214,7 @@ export default async function TypePage({ params, searchParams }: Props) {
               ) : null}
               {pageWindow(current, totalPages).map((item, index) =>
                 item === 'gap' ? (
-                  <span key={`gap-${index}`} aria-hidden="true" className="px-1 text-slate-400">
+                  <span key={`gap-${index}`} aria-hidden="true" className="px-1 text-neutral-500">
                     …
                   </span>
                 ) : (
@@ -228,10 +222,10 @@ export default async function TypePage({ params, searchParams }: Props) {
                     key={item}
                     href={hrefOf(page.slug, item)}
                     aria-current={item === current ? 'page' : undefined}
-                    className={`grid h-9 w-9 place-items-center rounded-xl border text-xs font-bold ${
+                    className={`grid h-10 w-10 place-items-center rounded-full border text-sm font-semibold ${
                       item === current
-                        ? 'border-red-600 bg-red-600 text-white'
-                        : 'border-slate-200 bg-white text-slate-700 hover:text-red-600'
+                        ? 'border-white bg-white text-ink'
+                        : 'border-white/10 text-neutral-400 hover:border-white/25 hover:text-white'
                     }`}
                   >
                     {item}
@@ -242,7 +236,7 @@ export default async function TypePage({ params, searchParams }: Props) {
                 <Link
                   href={hrefOf(page.slug, current + 1)}
                   rel="next"
-                  className="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 hover:text-red-600"
+                  className="inline-flex items-center gap-1 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10"
                 >
                   Próxima
                   <ChevronRight size={15} aria-hidden="true" />
@@ -253,19 +247,19 @@ export default async function TypePage({ params, searchParams }: Props) {
         </section>
 
         <section aria-labelledby="perguntas" className="mt-14">
-          <h2 id="perguntas" className="text-2xl font-extrabold tracking-tight text-slate-900">
+          <h2 id="perguntas" className="text-3xl font-bold tracking-[-0.035em] text-white sm:text-4xl">
             Perguntas frequentes
           </h2>
           <dl className="mt-5 grid gap-4 md:grid-cols-2">
             {page.faq(stats).map((item) => (
-              <div key={item.q} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                <dt className="font-bold text-slate-900">{item.q}</dt>
-                <dd className="mt-2 text-sm leading-relaxed text-slate-700">
+              <div key={item.q} className="rounded-3xl border border-white/10 bg-ink-raised p-6 sm:p-7">
+                <dt className="font-bold text-white">{item.q}</dt>
+                <dd className="mt-2 text-sm leading-relaxed text-neutral-300">
                   {item.a}
                   {item.link && (
                     <>
                       {' '}
-                      <Link href={item.link.href} className="font-semibold text-red-600 hover:underline">
+                      <Link href={item.link.href} className="font-semibold text-red-500 hover:underline">
                         {item.link.label}
                       </Link>
                       .
@@ -279,7 +273,7 @@ export default async function TypePage({ params, searchParams }: Props) {
 
         <section aria-labelledby="outros" className="mt-14 grid gap-8 md:grid-cols-2">
           <div>
-            <h2 id="outros" className="text-xl font-extrabold tracking-tight text-slate-900">
+            <h2 id="outros" className="text-2xl font-bold tracking-[-0.03em] text-white">
               Outros tipos de equipamento
             </h2>
             <ul className="mt-4 flex flex-wrap gap-2">
@@ -287,7 +281,7 @@ export default async function TypePage({ params, searchParams }: Props) {
                 <li key={item.slug}>
                   <Link
                     href={hrefOf(item.slug, 1)}
-                    className="inline-flex rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:border-red-300 hover:text-red-600"
+                    className="inline-flex rounded-full border border-white/10 bg-ink-raised px-4 py-2 text-sm font-semibold text-neutral-300 hover:border-red-500/30 hover:text-red-400"
                   >
                     {item.label}
                   </Link>
@@ -296,11 +290,11 @@ export default async function TypePage({ params, searchParams }: Props) {
             </ul>
           </div>
           <div>
-            <h2 className="text-xl font-extrabold tracking-tight text-slate-900">Leia também</h2>
+            <h2 className="text-2xl font-bold tracking-[-0.03em] text-white">Leia também</h2>
             <ul className="mt-4 space-y-2 text-sm">
               {page.reading.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="font-semibold text-red-600 hover:underline">
+                  <Link href={item.href} className="font-semibold text-red-500 hover:underline">
                     {item.label}
                   </Link>
                 </li>

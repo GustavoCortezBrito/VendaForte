@@ -45,11 +45,11 @@ export default function BlogCta({
 
   if (!full) {
     return (
-      <aside className="not-prose relative overflow-hidden rounded-3xl bg-ink p-8 text-white shadow-xl sm:p-10">
+      <aside className="not-prose relative overflow-hidden rounded-[28px] bg-ink p-8 text-white sm:p-10">
         <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-red-600/25 blur-3xl" />
         <div className="relative">
-          <h2 className="max-w-xl text-balance text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">{title}</h2>
-          <p className="mt-3 max-w-xl leading-relaxed text-gray-400">{text}</p>
+          <h2 className="max-w-xl text-balance text-2xl font-bold leading-tight tracking-tight sm:text-3xl">{title}</h2>
+          <p className="mt-3 max-w-xl leading-relaxed text-neutral-500">{text}</p>
           {buttons}
         </div>
       </aside>
@@ -57,22 +57,22 @@ export default function BlogCta({
   }
 
   return (
-    <section className="bg-white pb-16 pt-14 lg:pb-24 lg:pt-20" aria-labelledby="blog-cta">
+    <section className="bg-ink pb-16 pt-14 lg:pb-24 lg:pt-20" aria-labelledby="blog-cta">
       <div className={CONTAINER}>
-        <div className="relative isolate grid overflow-hidden rounded-3xl bg-ink text-white shadow-2xl lg:grid-cols-2">
+        <div className="relative isolate grid overflow-hidden rounded-[28px] bg-ink text-white lg:grid-cols-2">
           <div className="relative z-10 flex flex-col justify-center p-8 sm:p-12 lg:py-16 lg:pl-14 lg:pr-4">
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-red-400">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold text-red-400">
               Campanha EP Equipment
             </span>
             <h2
               id="blog-cta"
-              className="mt-5 max-w-lg text-balance text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl"
+              className="mt-5 max-w-lg text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl"
             >
               Quer ver <span className="text-red-500">preço e prazo</span> da sua operação?
             </h2>
-            <p className="mt-4 max-w-md text-lg leading-relaxed text-gray-400">{text}</p>
+            <p className="mt-4 max-w-md text-lg leading-relaxed text-neutral-500">{text}</p>
             {buttons}
-            <p className="mt-6 flex items-center gap-2 text-sm text-gray-500">
+            <p className="mt-6 flex items-center gap-2 text-sm text-neutral-400">
               <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
               Atendimento em Chapecó, Joinville e Itajaí
             </p>

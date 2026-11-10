@@ -341,3 +341,81 @@ a, button {
   background: rgba(220, 38, 38, 0.12);
   pointer-events: none;
 }
+
+/* Tema escuro do site público: o mesmo da campanha /promo (fundo ink, títulos apertados, vidro e linhas finas) */
+.theme-ink {
+  color-scheme: dark;
+}
+
+/* Peso zero (:where): as classes de cada título (tracking da campanha) sempre vencem */
+:where(.theme-ink) h1,
+:where(.theme-ink) h2 {
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+:where(.theme-ink) h3 {
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* Fundo e barra de rolagem escuros também fora do conteúdo (rolagem elástica, rolagem lateral) */
+html:has(.theme-ink) {
+  background: #0d0d0d;
+}
+
+html:has(.theme-ink)::-webkit-scrollbar-track {
+  background: #0d0d0d;
+}
+
+/* Preenchimento automático do navegador sem o fundo amarelo/azul claro */
+.theme-ink input:-webkit-autofill,
+.theme-ink textarea:-webkit-autofill,
+.theme-ink select:-webkit-autofill {
+  -webkit-text-fill-color: #fff;
+  box-shadow: 0 0 0 1000px #1a1a1a inset;
+  caret-color: #fff;
+}
+
+/* Abertura da home: a fachada se aproxima devagar e um feixe de luz cruza a cada ciclo */
+@keyframes hero-kenburns {
+  from {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(-1%, -0.6%, 0);
+  }
+}
+
+.hero-kenburns {
+  transform-origin: 62% 50%;
+  animation: hero-kenburns 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes hero-sweep {
+  0%,
+  55% {
+    transform: translateX(0) skewX(-18deg);
+    opacity: 0;
+  }
+  62% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(320%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+.hero-sweep {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07), rgba(248, 113, 113, 0.08), transparent);
+  animation: hero-sweep 11s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-kenburns,
+  .hero-sweep {
+    animation: none;
+  }
+}

@@ -19,9 +19,9 @@ interface PaginationProps {
 
 const BOX =
   'inline-flex h-11 min-w-11 items-center justify-center rounded-xl border px-3 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
-const IDLE = 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50 hover:shadow-sm'
-const CURRENT = 'border-red-600 bg-red-600 text-white shadow-lg shadow-red-600/25'
-const OFF = 'cursor-not-allowed border-gray-100 bg-gray-50 text-gray-300'
+const IDLE = 'border-white/10 bg-ink-raised text-neutral-300 hover:border-white/15 hover:bg-white/5'
+const CURRENT = 'border-red-600 bg-red-600 text-white'
+const OFF = 'cursor-not-allowed border-white/10 bg-white/5 text-neutral-400'
 
 /**
  * Paginação numerada. Cada número é um link para uma página estática própria
@@ -65,7 +65,7 @@ export default function Pagination({ page, totalPages, category, range, onNaviga
 
         {pageWindow(page, totalPages).map((item, position) =>
           item === 'gap' ? (
-            <li key={`gap-${position}`} aria-hidden="true" className="px-1 text-gray-400">
+            <li key={`gap-${position}`} aria-hidden="true" className="px-1 text-neutral-500">
               …
             </li>
           ) : (
@@ -104,9 +104,9 @@ export default function Pagination({ page, totalPages, category, range, onNaviga
         </li>
       </ul>
 
-      <p className="text-sm text-gray-500">
-        Mostrando <span className="font-semibold text-gray-700">{range.from}–{range.to}</span> de{' '}
-        <span className="font-semibold text-gray-700">{range.total}</span> artigos
+      <p className="text-sm text-neutral-400">
+        Mostrando <span className="font-semibold text-neutral-300">{range.from}–{range.to}</span> de{' '}
+        <span className="font-semibold text-neutral-300">{range.total}</span> artigos
       </p>
     </nav>
   )

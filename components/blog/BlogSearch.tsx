@@ -22,7 +22,7 @@ function Highlighted({ text, terms }: { text: string; terms: string[] }) {
   ranges.forEach(([start, end], index) => {
     if (start > cursor) parts.push(text.slice(cursor, start))
     parts.push(
-      <mark key={index} className="rounded-sm bg-red-100 px-0.5 text-red-900">
+      <mark key={index} className="rounded-sm bg-red-500/15 px-0.5 text-red-900">
         {text.slice(start, end)}
       </mark>
     )
@@ -131,7 +131,7 @@ export default function BlogSearch({ index, initialQuery = '' }: BlogSearchProps
       </label>
       <Search
         aria-hidden="true"
-        className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+        className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-500"
       />
       <input
         ref={inputRef}
@@ -154,7 +154,7 @@ export default function BlogSearch({ index, initialQuery = '' }: BlogSearchProps
         onFocus={() => setOpen(true)}
         onKeyDown={onKeyDown}
         placeholder="Buscar artigos, máquinas…"
-        className="h-14 w-full rounded-2xl border border-gray-200 bg-white pl-12 pr-14 text-base text-gray-900 shadow-sm transition-all placeholder:text-gray-400 hover:border-gray-300 focus:border-red-500 focus:outline-none focus:ring-4 focus:ring-red-100 [&::-webkit-search-cancel-button]:hidden"
+        className="h-14 w-full rounded-2xl border border-white/10 bg-ink-raised pl-12 pr-14 text-base text-white transition-all placeholder:text-neutral-500 hover:border-white/15 focus:border-red-500 focus:outline-none focus:ring-4 focus:ring-red-500/20 [&::-webkit-search-cancel-button]:hidden"
       />
 
       {value ? (
@@ -166,14 +166,14 @@ export default function BlogSearch({ index, initialQuery = '' }: BlogSearchProps
             inputRef.current?.focus()
           }}
           aria-label="Limpar busca"
-          className="absolute right-3 top-1/2 grid h-9 w-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+          className="absolute right-3 top-1/2 grid h-9 w-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full text-neutral-500 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
       ) : (
         <kbd
           aria-hidden="true"
-          className="pointer-events-none absolute right-4 top-1/2 hidden h-7 min-w-7 -translate-y-1/2 place-items-center rounded-lg border border-gray-200 bg-gray-50 px-2 font-sans text-xs font-semibold text-gray-500 shadow-[0_1px_0_rgba(0,0,0,0.04)] sm:grid"
+          className="pointer-events-none absolute right-4 top-1/2 hidden h-7 min-w-7 -translate-y-1/2 place-items-center rounded-lg border border-white/10 bg-white/5 px-2 font-sans text-xs font-semibold text-neutral-400 shadow-[0_1px_0_rgba(0,0,0,0.04)] sm:grid"
         >
           /
         </kbd>
@@ -187,11 +187,11 @@ export default function BlogSearch({ index, initialQuery = '' }: BlogSearchProps
         <div
           // Mantém o foco no campo ao clicar no painel
           onMouseDown={(event) => event.preventDefault()}
-          className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-gray-900/10"
+          className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-2xl border border-white/10 bg-ink-raised"
         >
           {!hasQuery && (
             <div className="p-5">
-              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-500">
+              <p className="flex items-center gap-2 text-xs font-bold text-neutral-400">
                 <TrendingUp className="h-3.5 w-3.5" aria-hidden="true" />
                 Buscas populares
               </p>
@@ -205,7 +205,7 @@ export default function BlogSearch({ index, initialQuery = '' }: BlogSearchProps
                       setActive(-1)
                       inputRef.current?.focus()
                     }}
-                    className="cursor-pointer rounded-full border border-gray-200 bg-white px-3.5 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+                    className="cursor-pointer rounded-full border border-white/10 bg-ink-raised px-3.5 py-1.5 text-sm font-medium text-neutral-300 transition-colors hover:border-red-500/25 hover:bg-red-500/10 hover:text-red-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
                   >
                     {term}
                   </button>
@@ -216,9 +216,9 @@ export default function BlogSearch({ index, initialQuery = '' }: BlogSearchProps
 
           {hasQuery && results.length === 0 && (
             <div className="px-6 py-9 text-center">
-              <SearchX className="mx-auto h-8 w-8 text-gray-300" aria-hidden="true" />
-              <p className="mt-3 font-semibold text-gray-900">Nenhum artigo encontrado para “{value.trim()}”</p>
-              <p className="mt-1 text-sm text-gray-500">Confira a grafia ou tente um termo mais geral, como “bateria”.</p>
+              <SearchX className="mx-auto h-8 w-8 text-neutral-400" aria-hidden="true" />
+              <p className="mt-3 font-semibold text-white">Nenhum artigo encontrado para “{value.trim()}”</p>
+              <p className="mt-1 text-sm text-neutral-400">Confira a grafia ou tente um termo mais geral, como “bateria”.</p>
             </div>
           )}
 
@@ -233,16 +233,16 @@ export default function BlogSearch({ index, initialQuery = '' }: BlogSearchProps
                     aria-selected={active === position}
                     onMouseEnter={() => setActive(position)}
                     onClick={() => choose(position)}
-                    className={`cursor-pointer rounded-xl px-4 py-3 transition-colors ${active === position ? 'bg-gray-100' : ''}`}
+                    className={`cursor-pointer rounded-xl px-4 py-3 transition-colors ${active === position ? 'bg-white/10' : ''}`}
                   >
-                    <span className="block text-[11px] font-bold uppercase tracking-wider text-red-600">
+                    <span className="block text-[11px] font-bold text-red-500">
                       {categoryOf(post)}
                     </span>
-                    <span className="mt-0.5 block text-[15px] font-semibold leading-snug text-gray-900">
+                    <span className="mt-0.5 block text-[15px] font-semibold leading-snug text-white">
                       <Highlighted text={post.title} terms={terms} />
                     </span>
                     {post.description && (
-                      <span className="mt-0.5 line-clamp-1 block text-sm text-gray-500">
+                      <span className="mt-0.5 line-clamp-1 block text-sm text-neutral-400">
                         <Highlighted text={post.description} terms={terms} />
                       </span>
                     )}
@@ -254,34 +254,34 @@ export default function BlogSearch({ index, initialQuery = '' }: BlogSearchProps
                   aria-selected={active === suggestions.length}
                   onMouseEnter={() => setActive(suggestions.length)}
                   onClick={() => choose(suggestions.length)}
-                  className={`mt-1 flex cursor-pointer items-center justify-between gap-3 rounded-xl border-t border-gray-100 px-4 py-3 text-sm font-semibold text-gray-900 transition-colors ${
-                    active === suggestions.length ? 'bg-gray-100' : ''
+                  className={`mt-1 flex cursor-pointer items-center justify-between gap-3 rounded-xl border-t border-white/10 px-4 py-3 text-sm font-semibold text-white transition-colors ${
+                    active === suggestions.length ? 'bg-white/10' : ''
                   }`}
                 >
                   <span>
                     Ver {results.length > 1 ? `todos os ${results.length} resultados` : 'o resultado'} para “{value.trim()}”
                   </span>
-                  <ArrowRight className="h-4 w-4 shrink-0 text-red-600" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4 shrink-0 text-red-500" aria-hidden="true" />
                 </li>
               </ul>
 
               <div
                 aria-hidden="true"
-                className="hidden items-center gap-4 border-t border-gray-100 bg-gray-50 px-5 py-2.5 text-xs text-gray-500 sm:flex"
+                className="hidden items-center gap-4 border-t border-white/10 bg-white/5 px-5 py-2.5 text-xs text-neutral-400 sm:flex"
               >
                 <span className="flex items-center gap-1.5">
-                  <kbd className="rounded border border-gray-200 bg-white px-1.5 font-sans">↑</kbd>
-                  <kbd className="rounded border border-gray-200 bg-white px-1.5 font-sans">↓</kbd>
+                  <kbd className="rounded border border-white/10 bg-ink-raised px-1.5 font-sans">↑</kbd>
+                  <kbd className="rounded border border-white/10 bg-ink-raised px-1.5 font-sans">↓</kbd>
                   navegar
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <kbd className="grid h-5 place-items-center rounded border border-gray-200 bg-white px-1.5">
+                  <kbd className="grid h-5 place-items-center rounded border border-white/10 bg-ink-raised px-1.5">
                     <CornerDownLeft className="h-3 w-3" />
                   </kbd>
                   abrir
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <kbd className="rounded border border-gray-200 bg-white px-1.5 font-sans">esc</kbd>
+                  <kbd className="rounded border border-white/10 bg-ink-raised px-1.5 font-sans">esc</kbd>
                   fechar
                 </span>
               </div>

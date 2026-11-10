@@ -10,7 +10,7 @@ export default function NotFound() {
             alignItems: 'center',
             justifyContent: 'center',
             fontFamily: 'Inter, system-ui, sans-serif',
-            background: 'linear-gradient(135deg, #fff 0%, #fef2f2 50%, #fff 100%)',
+            background: '#0d0d0d',
             position: 'relative',
             overflow: 'hidden',
             padding: '2rem',
@@ -25,7 +25,7 @@ export default function NotFound() {
               transform: 'translate(-50%, -50%)',
               width: '600px',
               height: '600px',
-              background: 'radial-gradient(circle, rgba(220,38,38,0.08) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(220,38,38,0.18) 0%, transparent 70%)',
               borderRadius: '50%',
               pointerEvents: 'none',
             }}
@@ -59,10 +59,10 @@ export default function NotFound() {
               </svg>
             </div>
             <div>
-              <div style={{ fontSize: '16px', fontWeight: 800, color: '#111827', lineHeight: 1 }}>
+              <div style={{ fontSize: '16px', fontWeight: 800, color: '#fff', lineHeight: 1 }}>
                 Venda Forte
               </div>
-              <div style={{ fontSize: '10px', fontWeight: 500, color: '#6b7280', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '10px', fontWeight: 500, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                 Grupo
               </div>
             </div>
@@ -105,8 +105,8 @@ export default function NotFound() {
           <h1
             style={{
               fontSize: 'clamp(20px, 4vw, 28px)',
-              fontWeight: 800,
-              color: '#111827',
+              fontWeight: 700,
+              color: '#fff',
               textAlign: 'center',
               marginBottom: '0.75rem',
               position: 'relative',
@@ -121,7 +121,7 @@ export default function NotFound() {
           <p
             style={{
               fontSize: '15px',
-              color: '#6b7280',
+              color: 'rgba(255,255,255,0.65)',
               textAlign: 'center',
               maxWidth: '400px',
               lineHeight: 1.6,
@@ -176,14 +176,13 @@ export default function NotFound() {
                 alignItems: 'center',
                 gap: '8px',
                 padding: '13px 28px',
-                background: '#fff',
-                color: '#374151',
+                background: 'rgba(255,255,255,0.06)',
+                color: '#fff',
                 borderRadius: '14px',
                 fontWeight: 700,
                 fontSize: '14px',
                 textDecoration: 'none',
-                border: '1.5px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                border: '1px solid rgba(255,255,255,0.15)',
               }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -210,14 +209,14 @@ export default function NotFound() {
             {[
               { href: '/sobre', label: 'Sobre nós' },
               { href: '/blog', label: 'Blog' },
-              { href: '/contato', label: 'Contato' },
+              { href: '/#contact', label: 'Contato' },
             ].map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 style={{
                   fontSize: '13px',
-                  color: '#dc2626',
+                  color: '#ef4444',
                   fontWeight: 600,
                   textDecoration: 'none',
                   borderBottom: '1px solid transparent',
@@ -233,12 +232,12 @@ export default function NotFound() {
             style={{
               marginTop: '3rem',
               fontSize: '12px',
-              color: '#9ca3af',
+              color: 'rgba(255,255,255,0.4)',
               position: 'relative',
               zIndex: 1,
             }}
           >
-            © 2025 Venda Forte · Grupo Forte
+            © {new Date().getFullYear()} Venda Forte · Grupo Forte
           </p>
         </main>
   )

@@ -24,7 +24,7 @@ export default function SortToggle({ value, onChange }: SortToggleProps) {
 
   return (
     <LayoutGroup id="blog-sort">
-      <div role="radiogroup" aria-label="Ordenar artigos" className="inline-flex rounded-xl bg-gray-200/70 p-1">
+      <div role="radiogroup" aria-label="Ordenar artigos" className="inline-flex rounded-full border border-white/10 bg-white/[0.03] p-1">
         {OPTIONS.map(({ value: option, label, Icon }) => {
           const active = option === value
           return (
@@ -41,20 +41,20 @@ export default function SortToggle({ value, onChange }: SortToggleProps) {
                 <motion.span
                   layoutId="blog-sort-thumb"
                   aria-hidden="true"
-                  className="absolute inset-0 rounded-lg bg-white shadow-sm ring-1 ring-black/5"
+                  className="absolute inset-0 rounded-full bg-white"
                   transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 520, damping: 42 }}
                 />
               )}
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-lg peer-focus-visible:ring-2 peer-focus-visible:ring-red-500 peer-focus-visible:ring-offset-1"
+                className="pointer-events-none absolute inset-0 rounded-full peer-focus-visible:ring-2 peer-focus-visible:ring-red-500 peer-focus-visible:ring-offset-1"
               />
               <span
-                className={`relative flex items-center gap-1.5 whitespace-nowrap px-3.5 py-2 text-sm font-semibold transition-colors ${
-                  active ? 'text-gray-900' : 'text-gray-500 hover:text-gray-800'
+                className={`relative flex items-center gap-1.5 whitespace-nowrap px-4 py-2 text-sm font-medium transition-colors ${
+                  active ? 'text-ink' : 'text-neutral-400 hover:text-white'
                 }`}
               >
-                <Icon className={`h-4 w-4 ${active ? 'text-red-600' : ''}`} aria-hidden="true" />
+                <Icon className={`h-4 w-4 ${active ? 'text-red-500' : ''}`} aria-hidden="true" />
                 {label}
               </span>
             </label>

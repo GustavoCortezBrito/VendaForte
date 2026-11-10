@@ -62,7 +62,7 @@ export default function CTA() {
   ]
 
   return (
-    <section ref={ref} className="py-24 bg-gradient-to-br from-gray-900 via-red-900 to-gray-800 relative overflow-hidden">
+    <section ref={ref} className="py-24 bg-gradient-to-br from-ink-raised via-red-950/70 to-ink border-b border-white/10 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -90,7 +90,7 @@ export default function CTA() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.3 }}
-              className="text-xl text-gray-100 mb-8"
+              className="text-xl text-white/90 mb-8"
             >
               Solicite um orçamento sem compromisso. O Venda Forte oferece soluções completas em empilhadeiras e equipamentos para movimentação de cargas com o melhor custo-benefício do mercado.
             </motion.p>
@@ -120,9 +120,9 @@ export default function CTA() {
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="bg-white p-8 md:p-12 rounded-3xl shadow-2xl"
+            className="bg-ink-raised p-8 md:p-12 rounded-3xl shadow-2xl"
           >
-            <div className="text-2xl font-bold text-gray-900 mb-6">
+            <div className="text-2xl font-bold text-white mb-6">
               Receba uma Proposta
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -134,7 +134,7 @@ export default function CTA() {
                   onChange={handleChange}
                   placeholder="Seu nome"
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
                 />
               </div>
               <div>
@@ -145,7 +145,7 @@ export default function CTA() {
                   onChange={handleChange}
                   placeholder="Seu e-mail"
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
                 />
               </div>
               <div>
@@ -156,7 +156,7 @@ export default function CTA() {
                   onChange={handleChange}
                   placeholder="Seu telefone"
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
                 />
               </div>
               <div>
@@ -166,7 +166,7 @@ export default function CTA() {
                   value={formData.empresa}
                   onChange={handleChange}
                   placeholder="Nome da sua empresa"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all"
                 />
               </div>
               <div>
@@ -177,7 +177,7 @@ export default function CTA() {
                   placeholder="Que tipo de equipamento você precisa?"
                   rows={4}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-lg border border-white/15 focus:border-red-600 focus:ring-2 focus:ring-red-600 focus:outline-none transition-all resize-none"
                 />
               </div>
               <motion.button
@@ -190,7 +190,7 @@ export default function CTA() {
                 <ArrowRight className="ml-2" size={20} />
               </motion.button>
             </form>
-            <p className="text-sm text-gray-500 text-center mt-4">
+            <p className="text-sm text-white/60 text-center mt-4">
               Resposta em até 24 horas • Orçamento sem compromisso
             </p>
           </motion.div>

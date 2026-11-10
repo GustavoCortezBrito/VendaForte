@@ -112,29 +112,29 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   ]
 
   return (
-    <div className="bg-white">
+    <div className="bg-ink-raised">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* ---------------- Cabeçalho do artigo ---------------- */}
       <header className={`${CONTAINER} pt-32 lg:pt-36`}>
-        <nav aria-label="Você está em" className="flex flex-wrap items-center gap-1.5 text-sm text-gray-500">
-          <Link href="/blog" className="transition-colors hover:text-red-600">
+        <nav aria-label="Você está em" className="flex flex-wrap items-center gap-1.5 text-sm text-neutral-400">
+          <Link href="/blog" className="transition-colors hover:text-red-400">
             Blog Venda Forte
           </Link>
           <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
-          <Link href={categoryHref} className="transition-colors hover:text-red-600">
+          <Link href={categoryHref} className="transition-colors hover:text-red-400">
             {category}
           </Link>
         </nav>
 
         <div className="mt-8 max-w-4xl">
-          <h1 className="text-balance text-4xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+          <h1 className="text-balance text-5xl font-bold leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
             {post.title}
           </h1>
           {post.description && (
-            <p className="mt-6 max-w-3xl text-pretty text-xl leading-relaxed text-gray-600">{post.description}</p>
+            <p className="mt-6 max-w-3xl text-pretty text-xl leading-relaxed text-neutral-400">{post.description}</p>
           )}
-          <div className="mt-8 flex items-center gap-3 text-sm text-gray-500">
+          <div className="mt-8 flex items-center gap-3 text-sm text-neutral-400">
             <span
               aria-hidden="true"
               className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-red-600 font-bold text-white"
@@ -142,7 +142,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               {post.author.charAt(0).toUpperCase()}
             </span>
             <p>
-              <span className="block font-semibold text-gray-900">{post.author}</span>
+              <span className="block font-semibold text-white">{post.author}</span>
               <time dateTime={postDateTime(post.date)}>{formatPostDate(post.date)}</time>
               <span aria-hidden="true"> · </span>
               {post.readingTime}
@@ -150,7 +150,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </div>
         </div>
 
-        <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-3xl border border-gray-200 bg-gray-900 shadow-xl">
+        <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised">
           <PostImage src={post.image || '/sede.png'} alt={post.title} sizes="(max-width: 1280px) 100vw, 1216px" priority />
         </div>
       </header>
@@ -171,9 +171,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             <div className={PROSE} dangerouslySetInnerHTML={{ __html: post.html }} />
 
             {post.tags.length > 0 && (
-              <ul className="mt-12 flex flex-wrap gap-2 border-t border-gray-200 pt-8" aria-label="Assuntos">
+              <ul className="mt-12 flex flex-wrap gap-2 border-t border-white/10 pt-8" aria-label="Assuntos">
                 {post.tags.map((tag) => (
-                  <li key={tag} className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
+                  <li key={tag} className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-neutral-300">
                     {tag}
                   </li>
                 ))}
@@ -182,8 +182,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
             {/* Máquina de que o artigo trata */}
             {product && (
-              <aside className="mt-12 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm sm:flex">
-                <div className="relative aspect-[16/9] bg-gray-900 sm:aspect-auto sm:w-2/5">
+              <aside className="mt-12 overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised sm:flex">
+                <div className="relative aspect-[16/9] bg-ink-raised sm:aspect-auto sm:w-2/5">
                   <Image
                     src={product.image}
                     alt={product.imageAlt}
@@ -193,14 +193,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                   />
                 </div>
                 <div className="flex flex-1 flex-col justify-center p-7">
-                  <p className="text-xs font-bold uppercase tracking-wider text-red-600">Na campanha</p>
-                  <p className="mt-2 text-2xl font-extrabold tracking-tight text-gray-900">EP {product.shortName}</p>
-                  <p className="mt-1 text-sm text-gray-600">
+                  <p className="text-xs font-bold text-red-500">Na campanha</p>
+                  <p className="mt-2 text-2xl font-bold tracking-tight text-white">EP {product.shortName}</p>
+                  <p className="mt-1 text-sm text-neutral-400">
                     {product.category} · {product.capacity}
                   </p>
                   <Link
                     href={product.href}
-                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-red-600 transition-colors hover:text-red-700"
+                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-red-500 transition-colors hover:text-red-300"
                   >
                     Ver preço e ficha na campanha
                     <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -225,11 +225,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
       {/* ---------------- Continue lendo ---------------- */}
       {related.length > 0 && (
-        <section className="bg-gray-50 py-16 lg:py-24" aria-labelledby="continue-lendo">
+        <section className="bg-ink py-16 lg:py-24" aria-labelledby="continue-lendo">
           <div className={CONTAINER}>
             <div className="flex flex-wrap items-end justify-between gap-4">
-              <h2 id="continue-lendo" className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                Continue <span className="text-red-600">lendo</span>
+              <h2 id="continue-lendo" className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Continue <span className="text-red-500">lendo</span>
               </h2>
               <Link href="/blog" className={BTN_LINE}>
                 Ver todos os artigos

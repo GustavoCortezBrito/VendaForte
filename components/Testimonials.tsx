@@ -1,340 +1,161 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef, useState, useEffect } from 'react'
-import { Star, MoreVertical, ChevronDown } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
+import { ArrowLeft, ArrowRight, ArrowUpRight, Star } from 'lucide-react'
+import { useDragScroll } from '@/components/useDragScroll'
+import { Reveal } from '@/components/promo/ui'
+import { CARD, CONTAINER, EYEBROW, SECTION, TITLE } from '@/components/site/styles'
 
+const TESTIMONIALS = [
+  { name: 'Gabriela Berger', reviews: '5 avaliações', text: 'Ambiente amplo, bom atendimento dos funcionários, prestativos. Obtive resposta rápida do orçamento! Produto de qualidade, recomendo!' },
+  { name: 'Willian APEX', reviews: '4 avaliações', text: 'Atendimento muito bom! Buscaram entender a demanda para disponibilizar o equipamento com as características ideias para nossa operação.' },
+  { name: 'Luan Casarotto', reviews: '7 avaliações', text: 'Vendedor Michael Felipe Vieira extremamente atencioso, atendimento 10, super recomendo.' },
+  { name: 'Alex Barcarol', reviews: '2 avaliações', text: 'Empresa superou minhas expectativas. Ótimo atendimento, preços e condições. Recomendo para todos que precisam de empilhadeiras de qualidade.' },
+  { name: 'Caetano Lamp', reviews: '1 avaliação', text: 'Excelente atendimento, ótimos preços e máquinas de qualidade parabéns' },
+  { name: 'Alexandre Cesar Machado', reviews: '5 avaliações', text: 'Atendimento sensacional! Prestativo e produto de qualidade.' },
+  { name: 'Anderson Marques', reviews: 'Local Guide · 6 avaliações', text: 'Excelente atendimento do Michael, empresa muito boa! Recomendo!' },
+  { name: 'Adriano Ludwig', reviews: '2 avaliações', text: 'Atendimento diferenciado e ótima qualidade dos equipamentos' },
+  { name: 'Maria Caneppele', reviews: '1 avaliação', text: 'Ótimo atendimento!! Recomendo' },
+  { name: 'Sara Rohde', reviews: '2 avaliações', text: 'Agilidade no atendimento e máquinas de qualidade.' },
+  { name: 'Derlei Vieira', reviews: '4 avaliações', text: 'Excelente atendimento' },
+]
+
+const CLIENTS = [
+  { name: 'Adami', url: '/images/clients/adami-new.svg' },
+  { name: 'BRF', url: '/images/clients/brf.png' },
+  { name: 'Copacol', url: '/images/clients/copacol.png' },
+  { name: 'GT Foods', url: '/images/clients/gtfoods.png' },
+  { name: 'JBS', url: '/images/clients/jbs.png' },
+  { name: 'Muffato', url: '/images/clients/muffato.png' },
+  { name: 'Randon', url: '/images/clients/randon.png' },
+  { name: 'Seara', url: '/images/clients/seara.png' },
+]
+
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join('')
+    .toUpperCase()
+
+function Stars({ size = 'h-4 w-4' }: { size?: string }) {
+  return (
+    <span className="flex gap-0.5" aria-label="5 de 5 estrelas" role="img">
+      {Array.from({ length: 5 }, (_, i) => (
+        <Star key={i} className={`${size} fill-amber-400 text-amber-400`} aria-hidden="true" />
+      ))}
+    </span>
+  )
+}
+
+/**
+ * Avaliações numa fileira que rola na horizontal: três à vista, as outras com as setas ou o dedo.
+ * Assim a seção não cresce para baixo a cada avaliação nova.
+ */
 export default function Testimonials() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [showAll, setShowAll] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const { ref, dragging, handlers } = useDragScroll<HTMLUListElement>()
+  const [edge, setEdge] = useState({ start: true, end: false })
 
-  // Detecta se é mobile
+  const updateEdges = useCallback(() => {
+    const el = ref.current
+    if (!el) return
+    setEdge({ start: el.scrollLeft <= 4, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 4 })
+  }, [ref])
+
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+    const el = ref.current
+    if (!el) return
+    updateEdges()
+    el.addEventListener('scroll', updateEdges, { passive: true })
+    const observer = new ResizeObserver(updateEdges)
+    observer.observe(el)
+    return () => {
+      el.removeEventListener('scroll', updateEdges)
+      observer.disconnect()
     }
-    
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  }, [ref, updateEdges])
 
-  const testimonials = [
-    {
-      name: 'Gabriela Berger',
-      position: '5 avaliações',
-      initials: 'GB',
-      bgColor: 'bg-purple-500',
-      rating: 5,
-      timeAgo: 'há mais de 4 anos',
-      text: 'Ambiente amplo, bom atendimento dos funcionários, prestativos. Obtive resposta rápida do orçamento! Produto de qualidade, recomendo!'
-    },
-    {
-      name: 'Willian APEX',
-      position: '4 avaliações',
-      initials: 'WA',
-      bgColor: 'bg-blue-500',
-      rating: 5,
-      timeAgo: 'há mais de 4 anos',
-      text: 'Atendimento muito bom! Buscaram entender a demanda para disponibilizar o equipamento com as características ideias para nossa operação.'
-    },
-    {
-      name: 'Luan Casarotto',
-      position: '7 avaliações',
-      initials: 'LC',
-      bgColor: 'bg-green-500',
-      rating: 5,
-      timeAgo: 'há mais de 4 anos',
-      text: 'Vendedor Michael Felipe Vieira extremamente atencioso, atendimento 10, super recomendo.'
-    },
-    {
-      name: 'Alex Barcarol',
-      position: '2 avaliações',
-      initials: 'AB',
-      bgColor: 'bg-orange-500',
-      rating: 5,
-      timeAgo: 'há mais de 4 anos',
-      text: 'Empresa superou minhas expectativas. Ótimo atendimento, preços e condições. Recomendo para todos que precisam de empilhadeiras de qualidade.'
-    },
-    {
-      name: 'Caetano Lamp',
-      position: '1 avaliação',
-      initials: 'CL',
-      bgColor: 'bg-pink-500',
-      rating: 5,
-      timeAgo: 'há mais de 4 anos',
-      text: 'Excelente atendimento, ótimos preços e máquinas de qualidade parabéns'
-    },
-    {
-      name: 'Alexandre Cesar Machado',
-      position: '5 avaliações',
-      initials: 'AM',
-      bgColor: 'bg-indigo-500',
-      rating: 5,
-      timeAgo: 'há mais de 4 anos',
-      text: 'Atendimento sensacional! Prestativo e produto de qualidade.'
-    },
-    {
-      name: 'Anderson Marques',
-      position: 'Local Guide · 6 avaliações',
-      initials: 'AM',
-      bgColor: 'bg-teal-500',
-      rating: 5,
-      timeAgo: 'há mais de 4 anos',
-      isLocalGuide: true,
-      text: 'Excelente atendimento do Michael, empresa muito boa! Recomendo!'
-    },
-    {
-      name: 'Adriano Ludwig',
-      position: '2 avaliações',
-      initials: 'AL',
-      bgColor: 'bg-cyan-500',
-      rating: 5,
-      timeAgo: 'há mais de 4 anos',
-      text: 'Atendimento diferenciado e ótima qualidade dos equipamentos'
-    },
-    {
-      name: 'Maria Caneppele',
-      position: '1 avaliação',
-      initials: 'MC',
-      bgColor: 'bg-rose-500',
-      rating: 5,
-      timeAgo: 'há mais de 4 anos',
-      text: 'Ótimo atendimento!! Recomendo'
-    },
-    {
-      name: 'Sara Rohde',
-      position: '2 avaliações',
-      initials: 'SR',
-      bgColor: 'bg-amber-500',
-      rating: 5,
-      timeAgo: 'há mais de 4 anos',
-      text: 'Agilidade no atendimento e máquinas de qualidade.'
-    },
-    {
-      name: 'Derlei Vieira',
-      position: '4 avaliações',
-      initials: 'DV',
-      bgColor: 'bg-lime-500',
-      rating: 5,
-      timeAgo: 'há mais de 4 anos',
-      text: 'Excelente atendimento'
-    }
-  ]
+  const scrollBy = (direction: 1 | -1) => {
+    const el = ref.current
+    if (el) el.scrollBy({ left: direction * el.clientWidth * 0.9, behavior: 'smooth' })
+  }
+
+  const arrow =
+    'grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-white/10 text-white transition-colors hover:border-white/25 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/60 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent'
 
   return (
-    <section id="testimonials" ref={ref} className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section - Google Style */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10 sm:mb-12 md:mb-16"
-        >
-          <span className="inline-block text-red-600 font-bold text-xs sm:text-sm uppercase tracking-wider mb-3 sm:mb-4 px-3 sm:px-4 py-2 bg-red-50 rounded-full">
-            Avaliações
-          </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6 sm:mb-8 px-4 leading-tight">
-            O que dizem sobre o <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Venda Forte</span>
-          </h2>
-          
-          {/* Google Rating Card */}
-          <div className="inline-block bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 mb-8 sm:mb-10 md:mb-12 border border-gray-100 mx-4">
-            <div className="flex flex-col items-center">
-              <div className="text-5xl sm:text-6xl md:text-7xl font-bold text-gray-900 mb-2 sm:mb-3">5.0</div>
-              <div className="flex mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={20} className="sm:w-6 sm:h-6 text-yellow-400 fill-yellow-400 mx-0.5" />
-                ))}
-              </div>
-              <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">Baseado em 17 avaliações</p>
-              <a 
-                href="https://maps.app.goo.gl/JU9AaTSb7JFw1qJ68" 
+    <section id="testimonials" className={SECTION}>
+      <div className={CONTAINER}>
+        <Reveal className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className={EYEBROW}>Avaliações</p>
+            <h2 className={`mt-4 ${TITLE} text-white`}>O que dizem sobre a Venda Forte</h2>
+            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+              <span className="text-3xl font-bold tracking-[-0.045em] text-white">5,0</span>
+              <Stars />
+              <span className="text-sm text-neutral-400">17 avaliações no Google</span>
+              <a
+                href="https://maps.app.goo.gl/JU9AaTSb7JFw1qJ68"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base"
+                className="inline-flex items-center gap-1 text-sm font-medium text-white transition-colors hover:text-red-400"
               >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
-                </svg>
-                Ver perfil no Google
+                Ver no Google
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
           </div>
-        </motion.div>
+          <div className="flex gap-2">
+            <button type="button" aria-label="Avaliações anteriores" disabled={edge.start} onClick={() => scrollBy(-1)} className={arrow}>
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            </button>
+            <button type="button" aria-label="Próximas avaliações" disabled={edge.end} onClick={() => scrollBy(1)} className={arrow}>
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </div>
+        </Reveal>
 
-        {/* Reviews Grid - Google Maps Style */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {testimonials.slice(0, showAll ? testimonials.length : (isMobile ? 3 : 6)).map((testimonial, index) => (
-            <motion.div
-              key={`${testimonial.name}-${index}`}
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{ 
-                delay: 0.05 * index, 
-                duration: 0.5,
-                type: "spring",
-                stiffness: 100
-              }}
-              whileHover={{
-                y: -5,
-                boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
-                transition: { duration: 0.2 }
-              }}
-              className="bg-white rounded-lg p-4 sm:p-5 shadow hover:shadow-md transition-shadow border border-gray-200 relative overflow-hidden group"
-            >
-              {/* Animated Border Glow - Hidden on Mobile */}
-              <div className="hidden md:block absolute inset-0 bg-gradient-to-br from-red-100 to-transparent opacity-0 group-hover:opacity-100 pointer-events-none" />
-
-              <div className="relative z-10">
-                {/* Header with Avatar and Name */}
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    {/* Google-style circular avatar with initials */}
-                    <div className={`${testimonial.bgColor} w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0 text-sm sm:text-base`}>
-                      {testimonial.initials}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="font-medium text-gray-900 text-xs sm:text-sm truncate">
-                        {testimonial.name}
-                      </p>
-                      <p className="text-xs text-gray-500 flex items-center gap-1">
-                        {testimonial.isLocalGuide && (
-                          <span className="inline-flex items-center">
-                            <svg className="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="#34a853">
-                              <path d="M12,2L8,8.5L2,10l5.5,5L6,21l6-3.5L18,21l-1.5-6L22,10l-6-1.5L12,2z"/>
-                            </svg>
-                          </span>
-                        )}
-                        {testimonial.position}
-                      </p>
-                    </div>
-                  </div>
-                  <button className="text-gray-400 hover:text-gray-600 p-1">
-                    <MoreVertical size={16} className="sm:w-[18px] sm:h-[18px]" />
-                  </button>
-                </div>
-
-                {/* Star Rating */}
-                <div className="flex mb-2">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} size={12} className="sm:w-[14px] sm:h-[14px] text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-
-                {/* Time */}
-                <p className="text-xs text-gray-500 mb-2 sm:mb-3">{testimonial.timeAgo}</p>
-
-                {/* Review Text */}
-                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
-                  {testimonial.text}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Botão Carregar Mais */}
-        {!showAll && testimonials.length > (isMobile ? 3 : 6) && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.6 }}
-            className="mt-8 text-center"
-          >
-            <motion.button
-              onClick={() => setShowAll(true)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 bg-white text-red-600 border-2 border-red-600 px-8 py-3 rounded-full font-semibold hover:bg-red-50 transition-all shadow-md"
-            >
-              Carregar Mais Avaliações
-              <ChevronDown size={20} />
-            </motion.button>
-          </motion.div>
-        )}
-
-        {/* Trust Badges - Clientes */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.8 }}
-          className="mt-20"
+        <ul
+          ref={ref}
+          {...handlers}
+          aria-label="Avaliações de clientes"
+          className={`-mx-6 mt-10 flex gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden ${
+            dragging ? 'cursor-grabbing select-none snap-none' : 'snap-x snap-mandatory scroll-px-6 sm:cursor-grab lg:scroll-px-0'
+          }`}
         >
-          <div className="text-center mb-16">
-            <div className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
-              Empresas que <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">Confiam</span> em Nós
-            </div>
-            <p className="text-gray-600 text-lg">Parceiros de sucesso em todo o Sul do Brasil</p>
-          </div>
+          {TESTIMONIALS.map((review) => (
+            <li key={review.name} className="w-[85%] shrink-0 snap-start sm:w-[calc(50%-0.5rem)] lg:w-[calc((100%-2rem)/3)]">
+              <figure className={`flex h-full flex-col ${CARD} p-7`}>
+                <Stars />
+                <blockquote className="mt-5 flex-1 text-[15px] leading-relaxed text-neutral-300">“{review.text}”</blockquote>
+                <figcaption className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white/[0.06] text-sm font-semibold text-white">
+                    {initials(review.name)}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-semibold text-white">{review.name}</span>
+                    <span className="block text-xs text-neutral-500">{review.reviews}</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16 items-center justify-items-center">
-            {[
-              { name: 'Adami', url: '/images/clients/adami-new.svg' },
-              { name: 'BRF', url: '/images/clients/brf.png' },
-              { name: 'Copacol', url: '/images/clients/copacol.png' },
-              { name: 'GT Foods', url: '/images/clients/gtfoods.png' },
-              { name: 'JBS', url: '/images/clients/jbs.png' },
-              { name: 'Muffato', url: '/images/clients/muffato.png' },
-              { name: 'Randon', url: '/images/clients/randon.png' },
-              { name: 'Seara', url: '/images/clients/seara.png' },
-            ].map((client, index) => (
-              <motion.div
-                key={client.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.1 * index, duration: 0.5 }}
-                className="flex items-center justify-center w-full"
-              >
-                <img 
-                  src={client.url} 
-                  alt={`Logo ${client.name}`}
-                  className="max-h-20 md:max-h-24 w-auto object-contain opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 filter contrast-125"
-                  loading="lazy"
-                  onError={(e) => {
-                    const target = e.currentTarget as HTMLImageElement
-                    const parent = target.parentElement
-                    if (parent) {
-                      parent.innerHTML = `<div class="text-gray-400 font-bold text-xl">${client.name}</div>`
-                    }
-                  }}
-                />
-              </motion.div>
+        {/* Logos em cartões brancos: a maioria é colorida em fundo branco, e a da Adami é preta */}
+        <Reveal className="mt-16 border-t border-white/10 pt-12">
+          <p className="text-sm font-semibold text-neutral-400">Empresas que confiam em nós</p>
+          <ul className="mt-6 grid grid-cols-4 gap-3 lg:grid-cols-8">
+            {CLIENTS.map((client) => (
+              <li key={client.name} className="flex h-20 items-center justify-center rounded-2xl bg-white p-4">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={client.url} alt={`Logo ${client.name}`} loading="lazy" className="max-h-full w-auto object-contain" />
+              </li>
             ))}
-          </div>
-
-          {/* Estatísticas */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 1 }}
-            className="mt-16 bg-gradient-to-r from-red-600 via-red-700 to-red-600 rounded-3xl p-12 shadow-2xl"
-          >
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
-              <div className="transform hover:scale-105 transition-transform">
-                <p className="text-5xl font-bold mb-3">500+</p>
-                <p className="text-red-100 text-lg">Equipamentos Entregues</p>
-              </div>
-              <div className="transform hover:scale-105 transition-transform">
-                <p className="text-5xl font-bold mb-3">10+</p>
-                <p className="text-red-100 text-lg">Anos de Experiência</p>
-              </div>
-              <div className="transform hover:scale-105 transition-transform">
-                <p className="text-5xl font-bold mb-3">98%</p>
-                <p className="text-red-100 text-lg">Clientes Satisfeitos</p>
-              </div>
-              <div className="transform hover:scale-105 transition-transform">
-                <p className="text-5xl font-bold mb-3">5,0</p>
-                <p className="text-red-100 text-lg">Nota no Google</p>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
+          </ul>
+        </Reveal>
       </div>
     </section>
   )

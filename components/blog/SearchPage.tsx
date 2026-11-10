@@ -26,10 +26,10 @@ export default function SearchPage({ posts, categories }: SearchPageProps) {
   const results = useMemo(() => searchPosts(posts, query), [posts, query])
 
   return (
-    <div className="bg-white">
+    <div className="bg-ink-raised">
       <BlogHeader
         eyebrow="Busca"
-        title={query ? <>Resultados para <span className="text-red-600">“{query}”</span></> : 'Buscar no blog'}
+        title={query ? <>Resultados para <span className="text-red-500">“{query}”</span></> : 'Buscar no blog'}
         intro={
           query
             ? results.length === 0
@@ -44,7 +44,7 @@ export default function SearchPage({ posts, categories }: SearchPageProps) {
         </div>
       </BlogHeader>
 
-      <section className="min-h-[40vh] bg-gray-50 py-12 lg:py-16" aria-label="Resultados da busca">
+      <section className="min-h-[40vh] bg-ink py-12 lg:py-16" aria-label="Resultados da busca">
         <div className={CONTAINER}>
           {results.length > 0 ? (
             <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -55,12 +55,12 @@ export default function SearchPage({ posts, categories }: SearchPageProps) {
               ))}
             </ul>
           ) : (
-            <div className="mx-auto max-w-xl rounded-3xl border border-gray-200 bg-white p-10 text-center shadow-sm">
-              <SearchX className="mx-auto h-10 w-10 text-gray-300" aria-hidden="true" />
-              <p className="mt-4 text-xl font-bold text-gray-900">
+            <div className="mx-auto max-w-xl rounded-[28px] border border-white/10 bg-ink-raised p-10 text-center">
+              <SearchX className="mx-auto h-10 w-10 text-neutral-400" aria-hidden="true" />
+              <p className="mt-4 text-xl font-bold text-white">
                 {query ? 'Nada por aqui' : 'Comece pela busca acima'}
               </p>
-              <p className="mt-2 text-gray-600">
+              <p className="mt-2 text-neutral-400">
                 {query ? 'Tente outro termo ou navegue pelas categorias:' : 'Ou navegue pelas categorias:'}
               </p>
               <ul className="mt-5 flex flex-wrap justify-center gap-2">
@@ -68,7 +68,7 @@ export default function SearchPage({ posts, categories }: SearchPageProps) {
                   <li key={category.slug}>
                     <Link
                       href={`/blog/categoria/${category.slug}`}
-                      className="inline-flex rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-700"
+                      className="inline-flex rounded-full border border-white/10 bg-ink-raised px-4 py-2 text-sm font-semibold text-neutral-300 transition-colors hover:border-red-500/25 hover:bg-red-500/10 hover:text-red-300"
                     >
                       {category.name}
                     </Link>

@@ -43,7 +43,7 @@ export default async function ProdutosPage({ searchParams }: Props) {
     <ForkliftsCatalogClient initialProducts={allProducts.map(toCatalogItem)} initialPage={requested}>
       {/* Links por tipo, no HTML do servidor: levam a todas as fichas, com ou sem JavaScript */}
       <section aria-labelledby="por-tipo" className="mx-auto mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 id="por-tipo" className="text-xl font-extrabold tracking-tight text-slate-900">
+        <h2 id="por-tipo" className="text-xl font-bold tracking-tight text-white">
           Veja por tipo de equipamento
         </h2>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -51,10 +51,10 @@ export default async function ProdutosPage({ searchParams }: Props) {
             <li key={type.slug}>
               <Link
                 href={`/produtos/tipo/${type.slug}`}
-                className="block rounded-2xl border border-slate-200 bg-white p-4 shadow-xs transition-colors hover:border-red-300"
+                className="block rounded-2xl border border-white/10 bg-ink-raised p-4 transition-colors hover:border-red-500/30"
               >
-                <span className="block font-bold text-slate-900">{type.label}</span>
-                <span className="mt-1 block text-xs text-slate-500">{productsOfType(type).length} modelos com ficha técnica</span>
+                <span className="block font-bold text-white">{type.label}</span>
+                <span className="mt-1 block text-xs text-neutral-400">{productsOfType(type).length} modelos com ficha técnica</span>
               </Link>
             </li>
           ))}

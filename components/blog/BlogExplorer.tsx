@@ -88,25 +88,25 @@ export default function BlogExplorer({ posts, guides }: BlogExplorerProps) {
   return (
     <>
       <div>
-        <section aria-label="Temas do blog" className="border-b border-gray-100 bg-white pb-8 pt-4 lg:pb-10">
+        <section aria-label="Temas do blog" className="border-b border-white/10 bg-ink pb-8 pt-4 lg:pb-10">
           <div className={CONTAINER}>
             <CategoryTiles categories={categories} total={posts.length} covers={covers} activeSlug={category?.slug} onNavigate={navigate} hrefSuffix={suffix} />
           </div>
         </section>
 
-        <section className="bg-gray-50 py-12 lg:py-16" aria-labelledby="artigos">
+        <section className="bg-ink py-12 lg:py-16" aria-labelledby="artigos">
           <div className={CONTAINER}>
             <div ref={resultsRef} className="mb-8 flex scroll-mt-28 flex-wrap items-end justify-between gap-x-6 gap-y-4">
               <div>
-                <h2 id="artigos" className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+                <h2 id="artigos" className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
                   {heading}
                 </h2>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-neutral-400">
                   {countText}
                   {totalPages > 1 && ` · página ${page} de ${totalPages}`}
                 </p>
                 {category && categoryIntro(category.name) && (
-                  <p className="mt-3 max-w-2xl text-base leading-relaxed text-gray-600">{categoryIntro(category.name)}</p>
+                  <p className="mt-3 max-w-2xl text-base leading-relaxed text-neutral-400">{categoryIntro(category.name)}</p>
                 )}
               </div>
 
@@ -119,7 +119,7 @@ export default function BlogExplorer({ posts, guides }: BlogExplorerProps) {
                       event.preventDefault()
                       navigate(blogHref() + suffix)
                     }}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3.5 py-2 text-sm font-semibold text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-ink-raised px-3.5 py-2 text-sm font-semibold text-neutral-300 transition-colors hover:border-white/15 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
                   >
                     Limpar filtro
                     <X className="h-3.5 w-3.5" aria-hidden="true" />
@@ -135,7 +135,7 @@ export default function BlogExplorer({ posts, guides }: BlogExplorerProps) {
             </p>
 
             {posts.length === 0 && (
-              <p className="rounded-2xl border border-gray-200 bg-white p-10 text-center text-gray-600">
+              <p className="rounded-2xl border border-white/10 bg-ink-raised p-10 text-center text-neutral-400">
                 Os primeiros artigos estão a caminho.
               </p>
             )}

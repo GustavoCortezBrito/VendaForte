@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
 import { metadata as siteMetadata, jsonLdOrganization, jsonLdLocalBusiness, jsonLdWebSite } from "./metadata";
 import Script from "next/script";

@@ -13,12 +13,12 @@ export interface Guide {
 /** "Guias por máquina": o post mais recente de cada máquina da campanha, com a capa em 16:9 sem molduras. */
 export default function GuideCards({ guides }: { guides: Guide[] }) {
   return (
-    <section className="bg-white pt-16 lg:pt-24" aria-labelledby="guias-maquina">
+    <section className="bg-ink pt-16 lg:pt-24" aria-labelledby="guias-maquina">
       <div className={CONTAINER}>
         <div className="mx-auto max-w-3xl text-center">
           <span className={EYEBROW}>Guias por máquina</span>
           <h2 id="guias-maquina" className={`${H2} mt-5 text-balance`}>
-            As três máquinas da campanha, <span className="text-red-600">explicadas</span>
+            As três máquinas da campanha, <span className="text-red-500">explicadas</span>
           </h2>
         </div>
 
@@ -26,9 +26,9 @@ export default function GuideCards({ guides }: { guides: Guide[] }) {
           {guides.map(({ product, post }) => (
             <li
               key={product.id}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2"
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-raised transition-all duration-300 focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2"
             >
-              <div className="relative aspect-[16/9] overflow-hidden bg-gray-900">
+              <div className="relative aspect-[16/9] overflow-hidden bg-ink-raised">
                 <Image
                   src={product.image}
                   alt={product.imageAlt}
@@ -38,15 +38,15 @@ export default function GuideCards({ guides }: { guides: Guide[] }) {
                 />
               </div>
               <div className="flex flex-1 flex-col p-7">
-                <p className="text-xs font-bold uppercase tracking-wider text-red-600">{product.category}</p>
-                <h3 className="mt-2 text-2xl font-extrabold tracking-tight text-gray-900">EP {product.shortName}</h3>
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="text-xs font-bold text-red-500">{product.category}</p>
+                <h3 className="mt-2 text-2xl font-bold tracking-tight text-white">EP {product.shortName}</h3>
+                <p className="mt-1 text-sm text-neutral-400">
                   {product.capacity} · {product.tagline}
                 </p>
                 <div className="mt-auto flex flex-col items-start gap-3 pt-7 text-sm font-bold">
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="inline-flex items-center gap-1.5 text-red-600 transition-colors after:absolute after:inset-0 after:content-[''] hover:text-red-700 focus-visible:outline-none"
+                    className="inline-flex items-center gap-1.5 text-red-500 transition-colors after:absolute after:inset-0 after:content-[''] hover:text-red-300 focus-visible:outline-none"
                   >
                     Ler o guia da {product.shortName}
                     <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -54,7 +54,7 @@ export default function GuideCards({ guides }: { guides: Guide[] }) {
                   {/* Acima da área clicável do cartão, para continuar sendo um link à parte */}
                   <Link
                     href={product.href}
-                    className="relative z-10 font-semibold text-gray-600 transition-colors hover:text-gray-900"
+                    className="relative z-10 font-semibold text-neutral-400 transition-colors hover:text-white"
                   >
                     Ver a {product.shortName} na campanha
                   </Link>

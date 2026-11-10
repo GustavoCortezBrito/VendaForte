@@ -1,340 +1,216 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
 import Image from 'next/image'
-import { Truck, Wrench, Package, Zap, Fuel, Play, Sparkles, ExternalLink, X, Bot, ShieldCheck, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
+import { useEffect, useState, type ReactNode } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowUpRight, Play, X } from 'lucide-react'
+import { EASE_OUT, Reveal } from '@/components/promo/ui'
+import { BTN_GHOST, BTN_PRIMARY, CONTAINER, EYEBROW, LEAD, SECTION, TITLE } from '@/components/site/styles'
 
-// Componente SVG para o ícone do YouTube
-function YoutubeIcon({ size = 18, className = "" }: { size?: number; className?: string }) {
+function YoutubeIcon({ className = '' }: { className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
     </svg>
   )
 }
 
+interface Service {
+  title: string
+  image: string
+  imageAlt: string
+  description: string
+  badge: string
+  ctaText: string
+  ctaHref?: string
+  hasVideoModal?: boolean
+}
+
+const SERVICES: Service[] = [
+  {
+    title: 'Empilhadeiras Elétricas Íon-Lítio',
+    image: '/fotos/home/servico-eletrica.webp',
+    imageAlt: 'Empilhadeira elétrica EP de lítio em um armazém, com luz de segurança vermelha no chão',
+    description: 'Linha completa de empilhadeiras elétricas com baterias Íon-Lítio 80V/48V.',
+    badge: 'Mais vendido EP',
+    ctaText: 'Ver linha elétrica',
+    ctaHref: '/produtos',
+  },
+  {
+    title: 'Equipamentos Autônomos (AGVs/AMRs)',
+    image: '/fotos/home/servico-autonomos.webp',
+    imageAlt: 'Robô móvel autônomo EP transportando caixas dentro de uma fábrica',
+    description: 'Robôs e empilhadeiras autônomas para movimentação industrial 24/7.',
+    badge: 'Automação EP',
+    ctaText: 'Ver canal EP no YouTube',
+    hasVideoModal: true,
+  },
+  {
+    title: 'Locação de Empilhadeiras & Frotas',
+    image: '/fotos/home/servico-locacao.webp',
+    imageAlt: 'Paleteira elétrica EP com operador movimentando pallets no armazém',
+    description: 'Locação por dia, mês ou contratos de longo prazo com frota nova e renovada.',
+    badge: 'Frota própria',
+    ctaText: 'Solicitar orçamento de locação',
+    ctaHref: '/#contact',
+  },
+  {
+    title: 'Assistência Técnica & Manutenção',
+    image: '/fotos/home/servico-assistencia.webp',
+    imageAlt: 'Manutenção no compartimento de uma empilhadeira retrátil EP',
+    description: 'Equipe de técnicos altamente qualificados e oficinas móveis preparadas para atendimentos preventivos e corretivos urgentes.',
+    badge: 'Multimarca',
+    ctaText: 'Falar com a assistência técnica',
+    ctaHref: '/#contact',
+  },
+  {
+    title: 'Peças Originais EP Equipment',
+    image: '/fotos/home/servico-pecas.webp',
+    imageAlt: 'Módulo de bateria de lítio EP no compartimento de uma paleteira',
+    description: 'Garantia de operação contínua com estoque completo de peças originais, carregadores, baterias de lítio e componentes de reposição.',
+    badge: 'Peças de fábrica',
+    ctaText: 'Cotar peças originais',
+    ctaHref: '/#contact',
+  },
+  {
+    title: 'Empilhadeiras a Diesel & GLP',
+    image: '/fotos/home/servico-diesel.webp',
+    imageAlt: 'Empilhadeira EP a combustão, para diesel e GLP',
+    description: 'Empilhadeiras à combustão preparadas para trabalhos pesados em ambientes externos, terrenos irregulares e operações contínuas.',
+    badge: 'Uso intensivo',
+    ctaText: 'Solicitar cotação diesel e GLP',
+    ctaHref: '/#contact',
+  },
+]
+
+const CARD_CLASS =
+  'group relative flex h-full w-full flex-col overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised text-left transition-colors duration-500 hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/60'
+
+function CardBody({ service, icon }: { service: Service; icon: ReactNode }) {
+  return (
+    <>
+      <div className="relative m-2 aspect-[16/10] overflow-hidden rounded-[22px]">
+        <Image
+          src={service.image}
+          alt={service.imageAlt}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <span className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-white/15 bg-ink/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md">
+          <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+          {service.badge}
+        </span>
+      </div>
+      <div className="flex flex-1 flex-col p-6 pt-4">
+        <h3 className="text-xl font-semibold tracking-tight text-white">{service.title}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-neutral-400">{service.description}</p>
+        <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-semibold text-white">
+          {icon}
+          {service.ctaText}
+        </span>
+      </div>
+      <ArrowUpRight
+        aria-hidden="true"
+        className="absolute right-6 top-6 h-5 w-5 text-white/70 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
+      />
+    </>
+  )
+}
+
 export default function Services() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
   const [showVideoModal, setShowVideoModal] = useState(false)
 
-  const products = [
-    {
-      icon: <Zap size={32} />,
-      title: 'Empilhadeiras Elétricas Íon-Lítio',
-      image: '/fotos/home/servico-eletrica.webp',
-      imageAlt: 'Empilhadeira elétrica EP de lítio em um armazém, com luz de segurança vermelha no chão',
-      subtitle: 'Tecnologia Li-Ion EP Equipment',
-      description: 'Linha completa de empilhadeiras elétricas com baterias Íon-Lítio 80V/48V. Recarga em 1 hora, zero emissões e baixíssimo custo operacional.',
-      features: ['Baterias Lítio EP 80V/48V', 'Capacidade de 1.5t a 3.5t', 'Recarga rápida de oportunidade', 'Alta durabilidade & 5 anos de garantia'],
-      badge: 'Mais Vendido EP',
-      ctaText: 'Ver Linha Elétrica',
-      ctaHref: '/produtos',
-      isHighlighted: true
-    },
-    {
-      icon: <Bot size={32} />,
-      title: 'Equipamentos Autônomos (AGVs/AMRs)',
-      image: '/fotos/home/servico-autonomos.webp',
-      imageAlt: 'Robô móvel autônomo EP transportando caixas dentro de uma fábrica',
-      subtitle: 'Robótica Logística Inteligente',
-      description: 'Robôs e empilhadeiras autônomas para movimentação industrial 24/7. Automação com navegação laser/SLAM sem necessidade de operador.',
-      features: ['Navegação Laser & SLAM', 'Operação Ininterrupta 24/7', 'Integração WMS/ERP de fábrica', 'Retorno de Investimento (ROI) rápido'],
-      badge: 'Automação EP',
-      ctaText: 'Ver Canal EP no YouTube',
-      hasVideoModal: true,
-      isHighlighted: false
-    },
-    {
-      icon: <Truck size={32} />,
-      title: 'Locação de Empilhadeiras & Frotas',
-      image: '/fotos/home/servico-locacao.webp',
-      imageAlt: 'Paleteira elétrica EP com operador movimentando pallets no armazém',
-      subtitle: 'Contratos Flexíveis para a Região Sul',
-      description: 'Locação por dia, mês ou contratos de longo prazo com frota nova e renovada. Manutenção e assistência técnica inclusas para zero parada.',
-      features: ['Frotas novas EP Equipment', 'Manutenção inclusa no contrato', 'Atendimento rápido em SC/RS/PR', 'Sem imobilização de capital'],
-      badge: 'Frota Própria',
-      ctaText: 'Solicitar Orçamento de Locação',
-      ctaHref: '/#contact',
-      isHighlighted: false
-    },
-    {
-      icon: <Wrench size={32} />,
-      title: 'Assistência Técnica & Manutenção',
-      image: '/fotos/home/servico-assistencia.webp',
-      imageAlt: 'Manutenção no compartimento de uma empilhadeira retrátil EP',
-      subtitle: 'Suporte Especializado Multimarca',
-      description: 'Equipe de técnicos altamente qualificados e oficinas móveis preparadas para atendimentos preventivos e corretivos urgentes.',
-      features: ['Técnicos certificados EP', 'Oficinas móveis para atendimento', 'Manutenção preventiva & corretiva', 'Planos de revisão periódica'],
-      badge: 'Multimarca',
-      ctaText: 'Falar com a Assistência Técnica',
-      ctaHref: '/#contact',
-      isHighlighted: false
-    },
-    {
-      icon: <Package size={32} />,
-      title: 'Peças Originais EP Equipment',
-      image: '/fotos/home/servico-pecas.webp',
-      imageAlt: 'Módulo de bateria de lítio EP no compartimento de uma paleteira',
-      subtitle: 'Estoque de Reposição Imediata',
-      description: 'Garantia de operação contínua com estoque completo de peças originais, carregadores, baterias de lítio e componentes de reposição.',
-      features: ['Peças originais de fábrica', 'Envio rápido para todo o Brasil', 'Baterias e módulos de recarga', 'Componentes com garantia'],
-      badge: 'Peças de Fábrica',
-      ctaText: 'Cotar Peças Originais',
-      ctaHref: '/#contact',
-      isHighlighted: false
-    },
-    {
-      icon: <Fuel size={32} />,
-      title: 'Empilhadeiras a Diesel & GLP',
-      image: '/fotos/home/servico-diesel.webp',
-      imageAlt: 'Empilhadeira EP a combustão, para diesel e GLP',
-      subtitle: 'Robustez para Pátios e Uso Intensivo',
-      description: 'Empilhadeiras à combustão preparadas para trabalhos pesados em ambientes externos, terrenos irregulares e operações contínuas.',
-      features: ['Capacidades de 2.5t a 10t', 'Excelente estabilidade e tração', 'Motores de alta eficiência', 'Estrutura reforçada'],
-      badge: 'Uso Intensivo',
-      ctaText: 'Solicitar Cotação Diesel e GLP',
-      ctaHref: '/#contact',
-      isHighlighted: false
-    }
-  ]
+  useEffect(() => {
+    if (!showVideoModal) return
+    const close = (event: KeyboardEvent) => event.key === 'Escape' && setShowVideoModal(false)
+    window.addEventListener('keydown', close)
+    return () => window.removeEventListener('keydown', close)
+  }, [showVideoModal])
 
   return (
-    <section id="services" ref={ref} className="py-20 md:py-28 bg-gradient-to-b from-white via-slate-50/60 to-white relative overflow-hidden font-sans">
-      
-      {/* Elementos Decorativos Suaves de Fundo Animados */}
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.05, 0.1, 0.05] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="hidden md:block absolute top-10 right-0 w-96 h-96 bg-red-500/10 rounded-full blur-3xl pointer-events-none"
-      />
-      <motion.div
-        animate={{ scale: [1.2, 1, 1.2], opacity: [0.05, 0.1, 0.05] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 5 }}
-        className="hidden md:block absolute bottom-10 left-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none"
-      />
+    <section id="services" className={SECTION}>
+      <div className={CONTAINER}>
+        <Reveal className="max-w-3xl">
+          <p className={EYEBROW}>Soluções</p>
+          <h2 className={`mt-4 ${TITLE} text-white`}>Nossas soluções em empilhadeiras</h2>
+          <p className={`mt-5 max-w-2xl ${LEAD}`}>Venda, locação, assistência técnica, peças originais e automação, num só fornecedor.</p>
+        </Reveal>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Header da Seção */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16 max-w-3xl mx-auto"
-        >
-          <span className="inline-flex items-center gap-2 text-red-600 font-bold text-xs sm:text-sm uppercase tracking-wider mb-3 px-4 py-1.5 bg-red-50 rounded-full border border-red-100 shadow-sm">
-            <Sparkles size={16} className="animate-spin text-red-500" style={{ animationDuration: '6s' }} />
-            Produtos, Serviços & Automação EP Equipment
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mt-2 mb-4 leading-tight tracking-tight">
-            Nossas Soluções em <span className="text-red-600">Empilhadeiras</span>
-          </h2>
-          <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-normal">
-            Como Dealer Autorizado <strong className="text-gray-900 font-semibold">EP Equipment no Sul do Brasil</strong>, oferecemos venda, locação, assistência técnica, peças originais e tecnologias autônomas para acelerar a logística do seu negócio.
-          </p>
-        </motion.div>
-
-        {/* GRID DE CARDS COM ANIMAÇÃO FLUIDA */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {products.map((product, index) => (
-            <motion.div
-              key={product.title}
-              initial={{ opacity: 0, y: 35 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ 
-                delay: 0.08 * index, 
-                duration: 0.5,
-                type: "spring",
-                stiffness: 90
-              }}
-              whileHover={{ 
-                y: -10,
-                scale: 1.02,
-                transition: { duration: 0.25 }
-              }}
-              className={`p-6 sm:p-8 rounded-3xl transition-all duration-300 border relative flex flex-col justify-between h-full bg-white group ${
-                product.isHighlighted
-                  ? 'border-red-500/40 shadow-xl ring-2 ring-red-500/10 hover:shadow-2xl hover:shadow-red-500/15'
-                  : 'border-gray-200/90 shadow-md hover:shadow-xl hover:border-red-400'
-              }`}
-            >
-              <div>
-                {/* Foto do serviço, de ponta a ponta no topo do cartão */}
-                <div className="relative -mx-6 -mt-6 sm:-mx-8 sm:-mt-8 mb-6 aspect-[16/10] overflow-hidden rounded-t-3xl bg-gray-100">
-                  <Image
-                    src={product.image}
-                    alt={product.imageAlt}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-
-                {/* Badge Topo */}
-                <div className="flex items-center justify-between mb-5">
-                  <motion.div
-                    whileHover={{ rotate: [0, -10, 10, 0] }}
-                    transition={{ duration: 0.4 }}
-                    className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm ${
-                      product.isHighlighted 
-                        ? 'bg-red-600 text-white shadow-red-600/30 group-hover:scale-110 transition-transform' 
-                        : 'bg-red-50 text-red-600 border border-red-100 group-hover:bg-red-600 group-hover:text-white transition-all'
-                    }`}
-                  >
-                    {product.icon}
-                  </motion.div>
-
-                  {product.badge && (
-                    <span className={`px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider ${
-                      product.isHighlighted 
-                        ? 'bg-red-600 text-white shadow-sm' 
-                        : 'bg-gray-100 text-gray-800 border border-gray-200'
-                    }`}>
-                      {product.badge}
-                    </span>
-                  )}
-                </div>
-
-                {/* Título & Subtítulo */}
-                <p className="text-xl sm:text-2xl font-extrabold text-gray-900 mb-1 leading-snug">
-                  {product.title}
-                </p>
-                <p className="text-xs font-bold text-red-600 mb-4 uppercase tracking-wider">
-                  {product.subtitle}
-                </p>
-
-                {/* Descrição */}
-                <p className="text-xs sm:text-sm text-gray-600 mb-6 leading-relaxed">
-                  {product.description}
-                </p>
-
-                {/* Lista de Diferenciais */}
-                <ul className="space-y-2 mb-8 pt-4 border-t border-gray-100">
-                  {product.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center text-xs sm:text-sm text-gray-700 font-medium">
-                      <span className="w-1.5 h-1.5 bg-red-600 rounded-full mr-2.5 flex-shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Botão de Ação CTA */}
-              <div>
-                {product.hasVideoModal ? (
-                  <button
-                    onClick={() => setShowVideoModal(true)}
-                    className="w-full py-3.5 px-4 rounded-2xl bg-gray-900 hover:bg-red-600 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-md group"
-                  >
-                    <Play size={16} className="fill-white" />
-                    <span>{product.ctaText}</span>
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {SERVICES.map((service, index) => (
+            <li key={service.title}>
+              <Reveal delay={(index % 3) * 0.06} className="h-full">
+                {service.hasVideoModal ? (
+                  <button type="button" onClick={() => setShowVideoModal(true)} className={CARD_CLASS}>
+                    <CardBody service={service} icon={<Play className="h-4 w-4 fill-current" aria-hidden="true" />} />
                   </button>
                 ) : (
-                  <a
-                    href={product.ctaHref}
-                    aria-label={`${product.ctaText} - ${product.title}`}
-                    title={`${product.ctaText} - ${product.title}`}
-                    className={`w-full py-3.5 px-4 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-md ${
-                      product.isHighlighted
-                        ? 'bg-red-600 hover:bg-red-700 text-white shadow-red-600/25'
-                        : 'bg-gray-900 hover:bg-red-600 text-white'
-                    }`}
-                  >
-                    <span>{product.ctaText}</span>
-                    <ArrowRight size={16} />
-                  </a>
+                  <Link href={service.ctaHref ?? '/'} aria-label={`${service.ctaText} - ${service.title}`} className={CARD_CLASS}>
+                    <CardBody service={service} icon={null} />
+                  </Link>
                 )}
-              </div>
-
-            </motion.div>
+              </Reveal>
+            </li>
           ))}
-        </div>
-
-        {/* MODAL CANAL EP EQUIPMENT NO YOUTUBE */}
-        <AnimatePresence>
-          {showVideoModal && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowVideoModal(false)}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 sm:p-6"
-            >
-              <motion.div
-                initial={{ scale: 0.95, opacity: 0, y: 20 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                onClick={(e) => e.stopPropagation()}
-                className="bg-gray-950 rounded-3xl overflow-hidden max-w-lg w-full border border-gray-800 shadow-2xl relative"
-              >
-                {/* Botão Fechar */}
-                <button
-                  onClick={() => setShowVideoModal(false)}
-                  className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white/10 hover:bg-red-600 text-white flex items-center justify-center transition-colors"
-                >
-                  <X size={18} />
-                </button>
-
-                {/* Visual Hero */}
-                <div className="relative h-48 bg-gradient-to-br from-gray-900 via-red-950 to-gray-900 flex flex-col items-center justify-center p-6 gap-3 overflow-hidden">
-                  <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=60&w=600)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
-                  <div className="relative z-10 flex flex-col items-center gap-3 text-center">
-                    <div className="w-16 h-16 rounded-2xl bg-red-600/90 flex items-center justify-center shadow-xl">
-                      <YoutubeIcon size={32} className="text-white" />
-                    </div>
-                    <p className="text-white font-extrabold text-xl leading-tight">Canais no YouTube</p>
-                    <p className="text-gray-300 text-xs max-w-xs leading-relaxed">Conheça o canal da Venda Forte e veja demonstrações da linha completa EP Equipment</p>
-                  </div>
-                </div>
-
-                {/* Botões de Ação */}
-                <div className="p-6 flex flex-col gap-3">
-                  <a
-                    href="https://www.youtube.com/@grupovendaforte7665"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Acessar Canal Oficial da EP Equipment no YouTube"
-                    title="Canal EP Equipment no YouTube"
-                    className="w-full py-4 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-lg shadow-red-600/20 group"
-                  >
-                    <YoutubeIcon size={20} className="text-white" />
-                    <span>Canal Grupo Venda Forte</span>
-                    <ExternalLink size={14} className="opacity-70 group-hover:opacity-100" />
-                  </a>
-
-                  <a
-                    href="https://www.youtube.com/@EPEquipment"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-4 rounded-2xl bg-gray-800 hover:bg-gray-900 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-lg group"
-                  >
-                    <YoutubeIcon size={20} className="text-white" />
-                    <span>Canal EP Equipment (Fabricante)</span>
-                    <ExternalLink size={14} className="opacity-70 group-hover:opacity-100" />
-                  </a>
-
-                  <a
-                    href="/#contact"
-                    onClick={() => setShowVideoModal(false)}
-                    aria-label="Solicitar Cotação de Robôs Autônomos"
-                    title="Solicitar Cotação de Equipamentos Autônomos"
-                    className="w-full py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors border border-white/10"
-                  >
-                    <span>Solicitar Cotação</span>
-                    <ArrowRight size={14} />
-                  </a>
-                </div>
-
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
+        </ul>
       </div>
+
+      <AnimatePresence>
+        {showVideoModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowVideoModal(false)}
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm sm:p-6"
+          >
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="youtube-titulo"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 24 }}
+              transition={{ duration: 0.5, ease: EASE_OUT }}
+              onClick={(event) => event.stopPropagation()}
+              className="relative w-full max-w-lg rounded-[28px] border border-white/10 bg-ink-raised p-8"
+            >
+              <button
+                type="button"
+                onClick={() => setShowVideoModal(false)}
+                aria-label="Fechar"
+                className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full bg-white/[0.06] text-neutral-300 transition-colors hover:bg-white/15 hover:text-white"
+              >
+                <X className="h-4 w-4" aria-hidden="true" />
+              </button>
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-red-500/10 text-red-500">
+                <YoutubeIcon className="h-5 w-5" />
+              </span>
+              <p id="youtube-titulo" className="mt-6 text-2xl font-semibold tracking-tight text-white">
+                Canais no YouTube
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+                Conheça o canal da Venda Forte e veja demonstrações da linha completa EP Equipment.
+              </p>
+              <div className="mt-8 flex flex-col gap-3">
+                <a href="https://www.youtube.com/@grupovendaforte7665" target="_blank" rel="noopener noreferrer" className={BTN_PRIMARY}>
+                  <YoutubeIcon className="h-4 w-4" />
+                  Canal Grupo Venda Forte
+                </a>
+                <a href="https://www.youtube.com/@EPEquipment" target="_blank" rel="noopener noreferrer" className={BTN_GHOST}>
+                  <YoutubeIcon className="h-4 w-4" />
+                  Canal EP Equipment (fabricante)
+                </a>
+                <Link href="/#contact" onClick={() => setShowVideoModal(false)} className={BTN_GHOST}>
+                  Solicitar cotação
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

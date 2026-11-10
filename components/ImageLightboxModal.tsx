@@ -66,7 +66,7 @@ export default function ImageLightboxModal({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             onClick={onClose}
-            className="absolute inset-0 bg-gray-950/85 backdrop-blur-md cursor-pointer"
+            className="absolute inset-0 bg-ink/90 backdrop-blur-md cursor-pointer"
           />
 
           {/* Modal Container */}
@@ -75,19 +75,19 @@ export default function ImageLightboxModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 15 }}
             transition={{ type: 'spring', damping: 28, stiffness: 350 }}
-            className="relative z-10 w-full max-w-4xl bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-100 flex flex-col max-h-[90vh]"
+            className="relative z-10 w-full max-w-4xl bg-ink-raised rounded-[28px] overflow-hidden border border-white/10 flex flex-col max-h-[90vh]"
           >
             {/* Header do Modal */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-slate-50/80">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-white/5">
               <div className="pr-4">
                 <div className="flex items-center gap-2">
                   <span className="inline-block w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-                  <h3 className="text-lg sm:text-xl font-extrabold text-gray-900 leading-tight">
+                  <h3 className="text-lg sm:text-xl font-bold text-white leading-tight">
                     {title}
                   </h3>
                 </div>
                 {subtitle && (
-                  <p className="text-xs text-gray-500 font-medium mt-0.5">{subtitle}</p>
+                  <p className="text-xs text-neutral-400 font-medium mt-0.5">{subtitle}</p>
                 )}
               </div>
 
@@ -95,7 +95,7 @@ export default function ImageLightboxModal({
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={onClose}
-                className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-100 shadow-sm transition-colors flex-shrink-0"
+                className="w-10 h-10 rounded-full bg-ink-raised border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10 transition-colors flex-shrink-0"
                 aria-label="Fechar visualização"
               >
                 <X size={20} />
@@ -103,7 +103,7 @@ export default function ImageLightboxModal({
             </div>
 
             {/* Imagem Ampliada */}
-            <div className="relative flex-1 min-h-[280px] sm:min-h-[420px] bg-gradient-to-b from-slate-50 to-white flex items-center justify-center p-6 sm:p-10 overflow-hidden">
+            <div className="relative flex-1 min-h-[280px] sm:min-h-[420px] bg-white flex items-center justify-center p-6 sm:p-10 overflow-hidden">
               <motion.img
                 initial={{ scale: 0.96 }}
                 animate={{ scale: 1 }}
@@ -116,26 +116,26 @@ export default function ImageLightboxModal({
             </div>
 
             {/* Footer com Especificações & Ações */}
-            <div className="p-4 sm:p-6 bg-white border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="p-4 sm:p-6 bg-ink-raised border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
               
               {/* Pills de especificações */}
-              <div className="flex items-center gap-3 sm:gap-4 text-xs font-semibold text-gray-700 flex-wrap justify-center sm:justify-start">
+              <div className="flex items-center gap-3 sm:gap-4 text-xs font-semibold text-neutral-300 flex-wrap justify-center sm:justify-start">
                 {capacity && (
-                  <div className="bg-slate-100 px-3 py-1.5 rounded-xl border border-gray-200/60">
-                    <span className="text-gray-400 block text-[9px] uppercase font-bold">Capacidade</span>
-                    <span className="font-extrabold text-gray-900 text-xs">{capacity}</span>
+                  <div className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/10">
+                    <span className="text-neutral-500 block text-[9px] font-bold">Capacidade</span>
+                    <span className="font-bold text-white text-xs">{capacity}</span>
                   </div>
                 )}
                 {liftingHeight && (
-                  <div className="bg-slate-100 px-3 py-1.5 rounded-xl border border-gray-200/60">
-                    <span className="text-gray-400 block text-[9px] uppercase font-bold">Elevação</span>
-                    <span className="font-extrabold text-gray-900 text-xs">{liftingHeight}</span>
+                  <div className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/10">
+                    <span className="text-neutral-500 block text-[9px] font-bold">Elevação</span>
+                    <span className="font-bold text-white text-xs">{liftingHeight}</span>
                   </div>
                 )}
                 {batteryVoltage && (
-                  <div className="bg-red-50 text-red-600 px-3 py-1.5 rounded-xl border border-red-100">
-                    <span className="text-red-400 block text-[9px] uppercase font-bold">Bateria</span>
-                    <span className="font-extrabold text-red-700 text-xs">{batteryVoltage}</span>
+                  <div className="bg-red-500/10 text-red-500 px-3 py-1.5 rounded-xl border border-red-500/20">
+                    <span className="text-red-400 block text-[9px] font-bold">Bateria</span>
+                    <span className="font-bold text-red-400 text-xs">{batteryVoltage}</span>
                   </div>
                 )}
               </div>
@@ -146,7 +146,7 @@ export default function ImageLightboxModal({
                   <Link
                     href={`/produtos/${slug}`}
                     onClick={onClose}
-                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-gray-800 font-bold text-xs transition-colors"
+                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/10 text-white font-bold text-xs transition-colors"
                   >
                     <span>Ficha Técnica</span>
                     <ExternalLink size={13} />
@@ -157,7 +157,7 @@ export default function ImageLightboxModal({
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={handleWhatsApp}
-                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all"
+                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-500 text-white font-bold text-xs transition-all"
                 >
                   <MessageCircle size={15} />
                   <span>Pedir Cotação</span>

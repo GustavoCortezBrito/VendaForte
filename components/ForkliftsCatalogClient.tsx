@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect, useRef, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import PageHeader from '@/components/site/PageHeader'
 import Image from 'next/image'
 import { 
   Zap, 
@@ -260,38 +261,23 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/50 text-slate-900 pt-20 pb-20 font-sans">
+    <div className="min-h-screen bg-ink pb-24 font-sans text-white">
       
-      {/* Top Breadcrumbs & Page Header */}
-      <div className="border-b border-slate-200/80 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-6">
-          
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-xs text-slate-500 font-medium mb-3">
-            <Link href="/" className="hover:text-red-600 transition-colors">Início</Link>
-            <ChevronRight size={13} className="text-slate-400" />
-            <span className="text-slate-900 font-bold">Produtos</span>
+      <PageHeader
+        before={
+          <nav aria-label="Você está em" className="mb-8 flex items-center gap-2 text-sm text-neutral-500">
+            <Link href="/" className="transition-colors hover:text-white">Início</Link>
+            <ChevronRight size={14} aria-hidden="true" />
+            <span className="text-neutral-300">Produtos</span>
           </nav>
-
-          {/* Title row */}
-          <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-red-700 text-xs font-bold mb-2 border border-red-100">
-              <Zap size={13} className="text-red-600" />
-              <span>Dealer Oficial EP Equipment • Tecnologia Íon-Lítio</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Produtos & Equipamentos
-            </h1>
-            <p className="text-sm text-slate-600 mt-1 max-w-2xl">
-              Explore {initialProducts.length} modelos de empilhadeiras elétricas, paleteiras, stackers, retráteis e equipamentos para intralogística.
-            </p>
-          </div>
-
-        </div>
-      </div>
+        }
+        eyebrow="Dealer oficial EP Equipment · Tecnologia íon-lítio"
+        title="Produtos e equipamentos"
+        lead={<p>Explore {initialProducts.length} modelos de empilhadeiras elétricas, paleteiras, stackers, retráteis e equipamentos para intralogística.</p>}
+      />
 
       {/* STICKY TOOLBAR (Categories & Search Bar that follow on scroll) */}
-      <div className="sticky top-20 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs transition-all">
+      <div className="sticky top-20 z-30 bg-ink/95 backdrop-blur-md border-b border-white/10 transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
           
           {/* Barra de categorias: rola arrastando, pela roda ou pela barra fina embaixo */}
@@ -315,16 +301,16 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                   <button
                     key={cat.id}
                     onClick={() => setCategoryFilter(cat.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 border ${
+                    className={`flex shrink-0 cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                       isSelected
-                        ? 'bg-red-600 text-white border-red-600 shadow-xs'
-                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 hover:text-slate-900'
+                        ? 'border-white bg-white text-ink'
+                        : 'border-white/10 text-neutral-400 hover:border-white/25 hover:text-white'
                     }`}
                   >
-                    <Icon size={13} className={isSelected ? 'text-white' : 'text-red-600'} />
+                    <Icon size={14} className={isSelected ? 'text-ink' : 'text-red-500'} />
                     <span>{cat.label}</span>
                     <span className={`text-[10px] px-1.5 py-0.2 rounded-md font-medium ${
-                      isSelected ? 'bg-white/25 text-white' : 'bg-slate-200 text-slate-600'
+                      isSelected ? 'bg-ink/10 text-ink' : 'bg-white/[0.06] text-neutral-500'
                     }`}>
                       {count}
                     </span>
@@ -338,18 +324,18 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
           {/* Quick Search Box inside Sticky Bar */}
           <div className="w-full md:w-72 lg:w-80 shrink-0 relative">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={15} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500" size={15} />
               <input
                 type="text"
                 placeholder="Buscar modelo (ex: F4, DS3, EFL302B3)..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 rounded-xl pl-9 pr-8 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600/20 transition-all shadow-xs font-medium"
+                className="w-full rounded-full border border-white/10 bg-white/[0.03] py-2.5 pl-10 pr-9 text-sm text-white placeholder:text-neutral-600 transition-colors focus:border-red-500/70 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-red-500/15"
               />
               {search && (
                 <button 
                   onClick={() => setSearch('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5 rounded-full"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white p-0.5 rounded-full"
                   title="Limpar busca"
                 >
                   <X size={14} />
@@ -366,17 +352,17 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Filters Sidebar (Desktop) matching EP Equipment filters */}
-          <aside className="hidden lg:block lg:col-span-3 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-5 sticky top-36">
+          <aside className="sticky top-40 hidden space-y-5 rounded-[28px] border border-white/10 bg-ink-raised p-6 lg:col-span-3 lg:block">
             
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h2 className="font-bold text-slate-900 text-sm flex items-center gap-2">
-                <SlidersHorizontal size={15} className="text-red-600" />
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <h2 className="font-bold text-white text-sm flex items-center gap-2">
+                <SlidersHorizontal size={15} className="text-red-500" />
                 Filtros do Catálogo
               </h2>
               {hasActiveFilters && (
                 <button
                   onClick={handleResetFilters}
-                  className="text-xs font-bold text-red-600 hover:text-red-700 flex items-center gap-1 transition-colors"
+                  className="text-xs font-bold text-red-500 hover:text-red-300 flex items-center gap-1 transition-colors"
                 >
                   <RotateCcw size={11} />
                   Limpar
@@ -386,13 +372,13 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
             {/* Categories Selection */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <label className="block text-xs font-bold text-neutral-300">
                 Categoria
               </label>
               <select
                 value={categoryFilter}
                 onChange={e => setCategoryFilter(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-medium focus:outline-none focus:border-red-600 focus:bg-white transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all"
               >
                 <option value="all">Todas as Categorias</option>
                 <option value="Paleteiras Elétricas">Paleteiras Elétricas</option>
@@ -406,13 +392,13 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
             {/* Range / Série (EP Filter) */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <label className="block text-xs font-bold text-neutral-300">
                 Linha / série
               </label>
               <select
                 value={rangeFilter}
                 onChange={e => setRangeFilter(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-medium focus:outline-none focus:border-red-600 focus:bg-white transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all"
               >
                 <option value="all">Todas as Séries</option>
                 <option value="3wheel">3 rodas</option>
@@ -425,13 +411,13 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
             {/* Capacity Filter (Load Capacity) */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <label className="block text-xs font-bold text-neutral-300">
                 Capacidade de carga
               </label>
               <select
                 value={capacityFilter}
                 onChange={e => setCapacityFilter(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-medium focus:outline-none focus:border-red-600 focus:bg-white transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all"
               >
                 <option value="all">Todas as Capacidades</option>
                 <option value="under_1500">Até 1.500 kg (1.5t)</option>
@@ -444,13 +430,13 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
             {/* Max Lift Height Filter */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <label className="block text-xs font-bold text-neutral-300">
                 Elevação máxima
               </label>
               <select
                 value={liftHeightFilter}
                 onChange={e => setLiftHeightFilter(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-medium focus:outline-none focus:border-red-600 focus:bg-white transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all"
               >
                 <option value="all">Todas as Alturas</option>
                 <option value="under_2000">Até 2.000 mm (2,0m)</option>
@@ -462,13 +448,13 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
             {/* Battery Voltage Filter (Battery Capacity) */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <label className="block text-xs font-bold text-neutral-300">
                 Bateria e voltagem
               </label>
               <select
                 value={voltageFilter}
                 onChange={e => setVoltageFilter(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-medium focus:outline-none focus:border-red-600 focus:bg-white transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all"
               >
                 <option value="all">Todas as Voltagens</option>
                 <option value="24V">24V Li-Ion</option>
@@ -483,7 +469,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
               <button
                 onClick={handleResetFilters}
                 disabled={!hasActiveFilters}
-                className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-red-600 text-white font-extrabold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed"
+                className="w-full py-2.5 rounded-full border border-white/15 hover:bg-white/10 text-white font-bold text-xs transition-colors flex items-center justify-center gap-1.5 disabled:bg-white/10 disabled:text-neutral-500 disabled:cursor-not-allowed"
               >
                 <RotateCcw size={12} />
                 <span>Limpar filtros</span>
@@ -491,15 +477,15 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
             </div>
 
             {/* Support Callout */}
-            <div className="pt-2 border-t border-slate-100">
-              <div className="bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1.5">
-                <p className="font-bold text-slate-900">Dúvida no dimensionamento?</p>
+            <div className="pt-2 border-t border-white/10">
+              <div className="bg-white/5 rounded-xl p-3 text-xs text-neutral-400 space-y-1.5">
+                <p className="font-bold text-white">Dúvida no dimensionamento?</p>
                 <p className="text-[11px] leading-relaxed">Nossos especialistas ajudam você a escolher o modelo ideal.</p>
                 <a
                   href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent('Olá! Gostaria de uma consultoria para escolher o equipamento EP ideal.')}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 text-red-600 hover:text-red-700 font-bold text-[11px] pt-0.5"
+                  className="inline-flex items-center gap-1 text-red-500 hover:text-red-300 font-bold text-[11px] pt-0.5"
                 >
                   <span>Falar no WhatsApp</span>
                   <ChevronRight size={12} />
@@ -513,14 +499,14 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
           <main className="lg:col-span-9 space-y-6">
             
             {/* Results Header Bar */}
-            <div className="bg-white border border-slate-200 rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 shadow-xs">
-              <div className="flex items-center gap-2 text-xs text-slate-600">
-                <span className="font-extrabold text-slate-900 text-sm">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-full border border-white/10 bg-ink-raised py-2.5 pl-5 pr-2.5">
+              <div className="flex items-center gap-2 text-xs text-neutral-400">
+                <span className="font-bold text-white text-sm">
                   {filteredProducts.length}
                 </span>
                 <span>{filteredProducts.length === 1 ? 'modelo encontrado' : 'modelos encontrados'}</span>
                 {hasActiveFilters && (
-                  <span className="hidden sm:inline text-red-600 font-semibold">• filtros aplicados</span>
+                  <span className="hidden sm:inline text-red-500 font-semibold">• filtros aplicados</span>
                 )}
               </div>
 
@@ -528,23 +514,23 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                 {/* Mobile Filter Toggle */}
                 <button
                   onClick={() => setShowMobileFilters(!showMobileFilters)}
-                  className="lg:hidden px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 bg-slate-50 hover:bg-slate-100 flex items-center gap-1.5"
+                  className="lg:hidden px-4 py-2 rounded-full border border-white/10 text-xs font-bold text-neutral-300 bg-white/5 hover:bg-white/10 flex items-center gap-1.5"
                 >
-                  <Filter size={13} className="text-red-600" />
+                  <Filter size={13} className="text-red-500" />
                   <span>Filtros {hasActiveFilters && '•'}</span>
                 </button>
 
                 {hasActiveFilters && (
                   <button
                     onClick={handleResetFilters}
-                    className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-red-600 px-2 py-1 rounded-lg hover:bg-slate-50 transition-colors"
+                    className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-neutral-400 hover:text-red-400 px-2 py-1 rounded-lg hover:bg-white/5 transition-colors"
                   >
                     <RotateCcw size={12} />
                     <span>Resetar</span>
                   </button>
                 )}
 
-                <span className="text-xs text-slate-500 font-medium bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg">
+                <span className="text-xs text-neutral-400 font-medium bg-white/5 border border-white/10 px-3 py-1 rounded-full">
                   Página {currentPage} de {totalPages}
                 </span>
               </div>
@@ -557,15 +543,15 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="lg:hidden bg-white border border-slate-200 rounded-2xl p-4 shadow-md space-y-4 overflow-hidden"
+                  className="lg:hidden space-y-4 overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised p-5"
                 >
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                    <h3 className="font-bold text-xs text-slate-900 uppercase">Filtros de Busca</h3>
+                  <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                    <h3 className="font-bold text-xs text-white">Filtros de Busca</h3>
                     <div className="flex items-center gap-2">
                       {hasActiveFilters && (
                         <button
                           onClick={handleResetFilters}
-                          className="text-xs font-bold text-red-600 flex items-center gap-1"
+                          className="text-xs font-bold text-red-500 flex items-center gap-1"
                         >
                           <RotateCcw size={11} />
                           Reset
@@ -573,7 +559,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                       )}
                       <button 
                         onClick={() => setShowMobileFilters(false)}
-                        className="text-slate-400 hover:text-slate-600 p-1"
+                        className="text-neutral-500 hover:text-white p-1"
                       >
                         <X size={16} />
                       </button>
@@ -582,11 +568,11 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
                   <div className="grid sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Categoria</label>
+                      <label className="block text-[11px] font-bold text-neutral-300 mb-1">Categoria</label>
                       <select
                         value={categoryFilter}
                         onChange={e => setCategoryFilter(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs text-slate-900"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white"
                       >
                         <option value="all">Todas as Categorias</option>
                         <option value="Paleteiras Elétricas">Paleteiras Elétricas</option>
@@ -599,11 +585,11 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Linha / Série</label>
+                      <label className="block text-[11px] font-bold text-neutral-300 mb-1">Linha / Série</label>
                       <select
                         value={rangeFilter}
                         onChange={e => setRangeFilter(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs text-slate-900"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white"
                       >
                         <option value="all">Todas as Séries</option>
                         <option value="3wheel">3 Rodas</option>
@@ -615,11 +601,11 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Capacidade</label>
+                      <label className="block text-[11px] font-bold text-neutral-300 mb-1">Capacidade</label>
                       <select
                         value={capacityFilter}
                         onChange={e => setCapacityFilter(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs text-slate-900"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white"
                       >
                         <option value="all">Todas as Capacidades</option>
                         <option value="under_1500">Até 1.500 kg</option>
@@ -631,11 +617,11 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Elevação</label>
+                      <label className="block text-[11px] font-bold text-neutral-300 mb-1">Elevação</label>
                       <select
                         value={liftHeightFilter}
                         onChange={e => setLiftHeightFilter(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs text-slate-900"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white"
                       >
                         <option value="all">Todas as Alturas</option>
                         <option value="under_2000">Até 2.000 mm</option>
@@ -646,11 +632,11 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Voltagem</label>
+                      <label className="block text-[11px] font-bold text-neutral-300 mb-1">Voltagem</label>
                       <select
                         value={voltageFilter}
                         onChange={e => setVoltageFilter(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs text-slate-900"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white"
                       >
                         <option value="all">Todas as Voltagens</option>
                         <option value="24V">24V Li-Ion</option>
@@ -664,13 +650,13 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                   <div className="pt-2 flex gap-2">
                     <button
                       onClick={() => setShowMobileFilters(false)}
-                      className="flex-1 py-2 rounded-xl bg-red-600 text-white font-bold text-xs uppercase"
+                      className="flex-1 py-2.5 rounded-full bg-red-600 text-white font-semibold text-xs"
                     >
                       Ver Resultados ({filteredProducts.length})
                     </button>
                     <button
                       onClick={handleResetFilters}
-                      className="px-4 py-2 rounded-xl bg-slate-900 text-white font-bold text-xs uppercase"
+                      className="px-4 py-2.5 rounded-full border border-white/15 text-white font-semibold text-xs"
                     >
                       Reset
                     </button>
@@ -681,15 +667,15 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
             {/* Empty State */}
             {filteredProducts.length === 0 ? (
-              <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center shadow-xs">
-                <Search className="mx-auto text-slate-300 mb-3" size={38} />
-                <h3 className="text-base font-bold text-slate-900 mb-1">Nenhum equipamento encontrado</h3>
-                <p className="text-xs text-slate-500 max-w-sm mx-auto mb-4">
+              <div className="rounded-[28px] border border-white/10 bg-ink-raised p-12 text-center">
+                <Search className="mx-auto text-neutral-400 mb-3" size={38} />
+                <h3 className="text-base font-bold text-white mb-1">Nenhum equipamento encontrado</h3>
+                <p className="text-xs text-neutral-400 max-w-sm mx-auto mb-4">
                   Tente alterar os termos de busca ou redefinir os filtros selecionados.
                 </p>
                 <button
                   onClick={handleResetFilters}
-                  className="px-5 py-2.5 bg-red-600 text-white font-bold rounded-xl text-xs shadow-xs hover:bg-red-700 transition-colors inline-flex items-center gap-1.5"
+                  className="px-6 py-3 bg-red-600 text-white font-semibold rounded-full text-sm hover:bg-red-700 transition-colors inline-flex items-center gap-1.5"
                 >
                   <RotateCcw size={13} />
                   <span>Resetar Todos os Filtros</span>
@@ -715,21 +701,21 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                     return (
                       <div
                         key={product.id}
-                        className="group relative bg-white border border-slate-200/90 hover:border-red-500/40 rounded-2xl p-4 sm:p-5 flex flex-col justify-between shadow-xs hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300"
+                        className="group relative flex flex-col justify-between rounded-[28px] border border-white/10 bg-ink-raised p-3 transition-colors duration-500 hover:border-white/25 sm:p-4"
                       >
                         {/* Ambient Background Glow on Hover */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-red-500/0 via-transparent to-red-500/5 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-tr from-red-500/0 via-transparent to-red-500/5 opacity-0 group-hover:opacity-100 rounded-[28px] transition-opacity duration-300 pointer-events-none" />
 
                         <div className="relative z-10">
                           {/* Image Showcase Frame */}
                           <div
                             onClick={() => setActiveLightboxProduct(product)}
-                            className="relative aspect-[4/3] bg-gradient-to-b from-slate-100/80 via-slate-50/50 to-white rounded-xl p-4 mb-3.5 overflow-hidden cursor-zoom-in border border-slate-100 group/frame"
+                            className="relative aspect-[4/3] bg-white rounded-[20px] p-4 mb-3.5 overflow-hidden cursor-zoom-in group/frame"
                             title={`Clique para ampliar imagem da ${product.title}`}
                           >
                             {/* Battery Badge */}
                             <div className="absolute top-2.5 left-2.5 z-10">
-                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900/90 text-white text-[10px] font-black uppercase tracking-wider backdrop-blur-md shadow-xs border border-white/10">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-ink/90 text-white text-[10px] font-bold backdrop-blur-md border border-white/10">
                                 <Zap size={10} className="text-amber-400 fill-amber-400" />
                                 <span>{product.batteryVoltage}</span>
                               </span>
@@ -737,15 +723,15 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
                             {/* Hover Zoom Pill */}
                             <div className="absolute top-2.5 right-2.5 z-10 opacity-0 group-hover/frame:opacity-100 transition-all duration-200 transform translate-y-1 group-hover/frame:translate-y-0">
-                              <div className="bg-white/95 hover:bg-white text-slate-800 text-[11px] font-bold px-2.5 py-1 rounded-lg shadow-md border border-slate-200/60 backdrop-blur-md flex items-center gap-1">
-                                <ZoomIn size={12} className="text-red-600" />
+                              <div className="bg-ink/95 hover:bg-white/10 text-white text-[11px] font-bold px-2.5 py-1 rounded-lg border border-white/10 backdrop-blur-md flex items-center gap-1">
+                                <ZoomIn size={12} className="text-red-500" />
                                 <span>Ampliar</span>
                               </div>
                             </div>
 
                             {/* Category Tag */}
                             <div className="absolute bottom-2.5 left-2.5 z-10">
-                              <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-white/90 text-slate-700 text-[9px] font-bold uppercase tracking-wider backdrop-blur-md shadow-xs border border-slate-200/60">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-ink/90 text-neutral-300 text-[9px] font-bold backdrop-blur-md border border-white/10">
                                 {categoryClean}
                               </span>
                             </div>
@@ -764,32 +750,32 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
                           {/* Product Info */}
                           <div className="mb-3">
-                            <h3 className="font-black text-slate-900 text-xl group-hover:text-red-600 transition-colors tracking-tight leading-tight">
+                            <h3 className="font-bold text-white text-xl group-hover:text-red-400 transition-colors tracking-tight leading-tight">
                               {product.title}
                             </h3>
-                            <p className="text-xs text-slate-500 font-medium line-clamp-1 mt-1" title={cleanSubtitle}>
+                            <p className="text-xs text-neutral-400 font-medium line-clamp-1 mt-1" title={cleanSubtitle}>
                               {typeLabel}
                             </p>
                           </div>
 
                           {/* Spec Metric Cards */}
                           <div className="grid grid-cols-2 gap-2.5 my-3.5">
-                            <div className="bg-slate-50 group-hover:bg-red-50/30 rounded-xl p-2.5 border border-slate-100 group-hover:border-red-100/60 transition-colors">
-                              <div className="flex items-center gap-1 text-[9px] uppercase font-bold text-slate-400 tracking-wider">
+                            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-2.5 transition-colors group-hover:border-white/15">
+                              <div className="flex items-center gap-1 text-[9px] font-bold text-neutral-500">
                                 <Scale size={11} className="text-red-500" />
                                 <span>Capacidade</span>
                               </div>
-                              <span className="block font-black text-slate-900 text-sm mt-0.5 truncate">
+                              <span className="block font-bold text-white text-sm mt-0.5 truncate">
                                 {product.capacity}
                               </span>
                             </div>
 
-                            <div className="bg-slate-50 group-hover:bg-red-50/30 rounded-xl p-2.5 border border-slate-100 group-hover:border-red-100/60 transition-colors">
-                              <div className="flex items-center gap-1 text-[9px] uppercase font-bold text-slate-400 tracking-wider">
+                            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-2.5 transition-colors group-hover:border-white/15">
+                              <div className="flex items-center gap-1 text-[9px] font-bold text-neutral-500">
                                 <ArrowUpFromLine size={11} className="text-red-500" />
                                 <span>Elevação</span>
                               </div>
-                              <span className="block font-black text-slate-900 text-sm mt-0.5 truncate">
+                              <span className="block font-bold text-white text-sm mt-0.5 truncate">
                                 {formatLift(product.liftingHeight)}
                               </span>
                             </div>
@@ -797,10 +783,10 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100 relative z-10">
+                        <div className="grid grid-cols-2 gap-2 pt-3 border-t border-white/10 relative z-10">
                           <Link
                             href={`/produtos/${product.slug}`}
-                            className="py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-red-600 text-white font-bold text-xs flex items-center justify-center gap-1 transition-all duration-200 text-center shadow-xs hover:shadow-md hover:shadow-red-600/20 group/btn"
+                            className="py-2.5 px-3 rounded-full border border-white/15 hover:bg-white/10 text-white font-semibold text-xs flex items-center justify-center gap-1 transition-colors text-center group/btn"
                           >
                             <span>Ficha Técnica</span>
                             <ChevronRight size={13} className="group-hover/btn:translate-x-0.5 transition-transform" />
@@ -808,7 +794,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
                           <button
                             onClick={() => handleWhatsAppQuote(product.title)}
-                            className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all duration-200 text-center shadow-xs hover:shadow-md hover:shadow-emerald-600/20"
+                            className="py-2.5 px-3 rounded-full bg-green-600 hover:bg-green-500 text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors text-center"
                           >
                             <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current" fill="currentColor">
                               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
@@ -823,8 +809,8 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
                 {/* Paginação: sem filtro, cada número é um link (/produtos?pagina=N) que o Google segue; com filtro, botões */}
                 {totalPages > 1 && (
-                  <nav aria-label="Navegação de páginas" className="pt-8 pb-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-200">
-                    <p className="text-xs text-slate-500">
+                  <nav aria-label="Navegação de páginas" className="pt-8 pb-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10">
+                    <p className="text-xs text-neutral-400">
                       Mostrando {(currentPage - 1) * ITEMS_PER_PAGE + 1} a {Math.min(currentPage * ITEMS_PER_PAGE, filteredProducts.length)} de {filteredProducts.length} modelos
                     </p>
 
@@ -835,9 +821,9 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                             <ChevronLeft size={16} />
                             <span className="hidden sm:inline pr-1">Anterior</span>
                           </>
-                        ), 'p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all border bg-white text-slate-700 hover:text-red-600 border-slate-200 hover:bg-slate-50 shadow-xs', { title: 'Página anterior', rel: 'prev' })
+                        ), 'p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all border bg-ink-raised text-neutral-300 hover:text-red-400 border-white/10 hover:bg-white/5', { title: 'Página anterior', rel: 'prev' })
                       ) : (
-                        <span aria-hidden="true" className="p-2 rounded-xl text-xs font-bold flex items-center gap-1 border bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed">
+                        <span aria-hidden="true" className="p-2 rounded-xl text-xs font-bold flex items-center gap-1 border bg-white/10 text-neutral-500 border-white/10 cursor-not-allowed">
                           <ChevronLeft size={16} />
                           <span className="hidden sm:inline pr-1">Anterior</span>
                         </span>
@@ -849,12 +835,12 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                             <span key={idx}>
                               {pageControl(p, p, `w-9 h-9 rounded-xl text-xs font-bold transition-all border flex items-center justify-center ${
                                 currentPage === p
-                                  ? 'bg-red-600 text-white border-red-600 shadow-xs shadow-red-600/30'
-                                  : 'bg-white text-slate-700 hover:text-red-600 border-slate-200 hover:bg-slate-50'
+                                  ? 'bg-red-600 text-white border-red-600'
+                                  : 'bg-ink-raised text-neutral-300 hover:text-red-400 border-white/10 hover:bg-white/5'
                               }`, { current: currentPage === p })}
                             </span>
                           ) : (
-                            <span key={idx} className="px-1 text-slate-400 text-xs font-bold">
+                            <span key={idx} className="px-1 text-neutral-500 text-xs font-bold">
                               •••
                             </span>
                           )
@@ -867,9 +853,9 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                             <span className="hidden sm:inline pl-1">Próxima</span>
                             <ChevronRight size={16} />
                           </>
-                        ), 'p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all border bg-white text-slate-700 hover:text-red-600 border-slate-200 hover:bg-slate-50 shadow-xs', { title: 'Próxima página', rel: 'next' })
+                        ), 'p-2 rounded-xl text-xs font-bold flex items-center gap-1 transition-all border bg-ink-raised text-neutral-300 hover:text-red-400 border-white/10 hover:bg-white/5', { title: 'Próxima página', rel: 'next' })
                       ) : (
-                        <span aria-hidden="true" className="p-2 rounded-xl text-xs font-bold flex items-center gap-1 border bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed">
+                        <span aria-hidden="true" className="p-2 rounded-xl text-xs font-bold flex items-center gap-1 border bg-white/10 text-neutral-500 border-white/10 cursor-not-allowed">
                           <span className="hidden sm:inline pl-1">Próxima</span>
                           <ChevronRight size={16} />
                         </span>

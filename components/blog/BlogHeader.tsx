@@ -13,13 +13,13 @@ interface BlogHeaderProps {
 
 /**
  * Abertura das páginas de listagem e de busca: o mesmo desenho das seções da
- * página inicial (etiqueta, título extranegrito centralizado, texto cinza).
+ * campanha /promo (rótulo vermelho, título grande e apertado, texto cinza), centralizado por causa da busca.
  * Sem `overflow-hidden`, para o painel de sugestões da busca poder sair do bloco.
  */
 export default function BlogHeader({ eyebrow, title, intro, children, borderless = false }: BlogHeaderProps) {
   return (
     <header
-      className={`relative bg-gradient-to-b from-gray-50 to-white pb-8 pt-28 lg:pb-10 lg:pt-32 ${borderless ? '' : 'border-b border-gray-100'}`}
+      className={`relative bg-gradient-to-b from-ink to-ink pb-10 pt-32 lg:pb-14 lg:pt-40 ${borderless ? '' : 'border-b border-white/10'}`}
     >
       {/* Brilho vermelho bem suave atrás do título: dá profundidade sem competir com o texto */}
       <div
@@ -28,11 +28,11 @@ export default function BlogHeader({ eyebrow, title, intro, children, borderless
       />
       <div className={`${CONTAINER} relative`}>
         <div className="mx-auto max-w-4xl text-center">
-          <span className={EYEBROW}>{eyebrow}</span>
-          <h1 className="mt-5 text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-gray-900 sm:text-5xl lg:text-[3.5rem]">
+          <p className={EYEBROW}>{eyebrow}</p>
+          <h1 className="mt-4 text-balance text-5xl font-bold leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
             {title}
           </h1>
-          {intro && <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-gray-600 sm:text-lg">{intro}</p>}
+          {intro && <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-neutral-400 sm:text-lg">{intro}</p>}
         </div>
         {children}
       </div>

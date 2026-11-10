@@ -1,197 +1,256 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Menu, X, Settings } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion'
+import { Menu, MessageCircle, Settings, X } from 'lucide-react'
+import { whatsappUrl } from '@/components/promo/promo.config'
+import { EASE_OUT } from '@/components/promo/ui'
+
+/**
+ * Cabeçalho do site: a mesma cápsula flutuante da campanha /promo.
+ *
+ * Na home fica transparente sobre o palco da DS3 e ganha vidro quando o palco termina;
+ * nas outras páginas já nasce com vidro. A aba ativa vem do endereço (Produtos, Sobre,
+ * Blog) ou, na home, da seção que cruza o meio da tela.
+ */
+
+const NAV = [
+  { href: '/produtos', label: 'Produtos' },
+  { href: '/#services', label: 'Serviços' },
+  { href: '/sobre', label: 'Sobre' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/#testimonials', label: 'Avaliações' },
+  { href: '/#faq', label: 'FAQ' },
+] as const
+
+const HERO_ID = 'home'
+const MESSAGE = 'Olá! Vim pelo site do Grupo Venda Forte e quero falar com um consultor.'
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
+  const [overHero, setOverHero] = useState(true)
+  const [section, setSection] = useState<string | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const url = whatsappUrl(MESSAGE)
 
-  const isHomePage = pathname === '/'
-  // Header é considerado "light" (fundo branco / texto escuro) se rolou OU se está em qualquer página que não seja a home
-  const isLightHeader = isScrolled || !isHomePage
+  const { scrollYProgress } = useScroll()
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 })
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    const update = () => {
+      // Na home, a âncora cuja seção cruza o meio da tela
+      const middle = window.innerHeight / 2
+      const current = NAV.find(({ href }) => {
+        if (!href.startsWith('/#')) return false
+        const rect = document.getElementById(href.slice(2))?.getBoundingClientRect()
+        return rect ? rect.top <= middle && rect.bottom >= middle : false
+      })
+      setSection(current?.href ?? null)
 
-  const menuItems = [
-    { label: 'Início', href: '/#home' },
-    { label: 'Produtos', href: '/produtos' },
-    { label: 'Sobre', href: '/#about' },
-    { label: 'Serviços', href: '/#services' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'Avaliações', href: '/#testimonials' },
-    { label: 'FAQ', href: '/#faq' },
-    { label: 'Contato', href: '/#contact' },
-  ]
+      const hero = document.getElementById(HERO_ID)
+      if (!hero) {
+        setOverHero(false)
+        return
+      }
+      const limit = hero.dataset.hero === 'stage' ? window.innerHeight + 1 : window.innerHeight * 0.35
+      setOverHero(hero.getBoundingClientRect().bottom > limit)
+    }
+
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    // O palco troca de variante depois da montagem e muda a altura da página
+    const observer = new ResizeObserver(update)
+    observer.observe(document.body)
+    return () => {
+      window.removeEventListener('scroll', update)
+      observer.disconnect()
+    }
+  }, [pathname])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const close = (event: KeyboardEvent) => event.key === 'Escape' && setMenuOpen(false)
+    window.addEventListener('keydown', close)
+    return () => window.removeEventListener('keydown', close)
+  }, [menuOpen])
+
+  const isActive = (href: string) =>
+    href.startsWith('/#') ? pathname === '/' && section === href : pathname === href || pathname.startsWith(`${href}/`)
+
+  const solid = !overHero
+  const glass = solid || menuOpen
 
   return (
     <>
-      {/* Barra de progresso da rolagem: CSS puro (ver .scroll-progress em globals.css) */}
-      <div
-        aria-hidden="true"
-        className="scroll-progress fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-red-500 to-red-600 z-[60]"
-      />
-
-      {/* Main Navbar */}
-      <nav
-        className={`fixed w-full z-50 transition-all duration-300 ${
-          isLightHeader 
-            ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100' 
-            : 'bg-transparent'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <Link href="/" aria-label="Página Inicial - Grupo Venda Forte" title="Grupo Venda Forte - Página Inicial" className="flex items-center gap-3">
-              <div className="relative w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
-                {/* Logo Image */}
-                <img 
-                  src="/logo.png" 
-                  alt="Venda Forte Logo" 
-                  className="w-full h-full object-contain"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                    const parent = e.currentTarget.parentElement!
-                    parent.classList.add('bg-red-600')
-                    parent.innerHTML = '<span class="text-white font-bold text-xl">VF</span>'
-                  }}
-                />
-              </div>
-              <div>
-                <div className={`text-xl font-bold transition-colors duration-300 ${
-                  isLightHeader ? 'text-gray-900' : 'text-white'
-                }`}>
-                  Venda Forte
-                </div>
-                <p className={`text-xs font-medium transition-colors duration-300 ${
-                  isLightHeader ? 'text-gray-500' : 'text-white/80'
-                }`}>
-                  Grupo
-                </p>
-              </div>
+      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4">
+        <div
+          className={`relative mx-auto max-w-6xl rounded-[28px] border transition-[background-color,border-color,box-shadow] duration-500 ${
+            glass
+              ? 'border-white/10 bg-ink/75 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-xl'
+              : 'border-transparent bg-transparent'
+          }`}
+        >
+          <div className="flex h-14 items-center justify-between gap-3 px-2">
+            <Link
+              href="/"
+              onClick={() => setMenuOpen(false)}
+              aria-label="Página inicial do Grupo Venda Forte"
+              className="flex items-center gap-3 rounded-2xl py-1 pl-1 pr-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+            >
+              <span className="relative h-10 w-10 overflow-hidden rounded-xl">
+                <Image src="/logo.png" alt="Logo do Grupo Venda Forte" fill sizes="40px" loading="eager" className="object-cover" />
+              </span>
+              <span className="leading-none">
+                <span className="block text-[15px] font-semibold tracking-tight text-white">Venda Forte</span>
+                <span className="mt-1 block text-[11px] font-medium text-white/50">Dealer EP Equipment</span>
+              </span>
             </Link>
 
-            {/* Desktop Menu */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-center space-x-8">
-                {menuItems.map((item, index) => (
-                  <a
-                    key={item.label}
+            <nav aria-label="Menu principal" className="hidden items-center lg:flex">
+              {NAV.map((item) => {
+                const active = isActive(item.href)
+                return (
+                  <Link
+                    key={item.href}
                     href={item.href}
-                    aria-label={`Acessar seção ${item.label}`}
-                    className={`font-medium relative group transition-colors duration-300 ${
-                      isLightHeader 
-                        ? 'text-gray-800 hover:text-red-600' 
-                        : 'text-white hover:text-red-300'
+                    aria-current={active ? 'page' : undefined}
+                    className={`relative rounded-full px-3.5 py-2 text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:px-4 ${
+                      active ? 'text-white' : 'text-white/60 hover:text-white'
                     }`}
                   >
-                    {item.label}
-                    <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${
-                      isLightHeader ? 'bg-red-600' : 'bg-white'
-                    }`}></span>
-                  </a>
-                ))}
+                    {active && (
+                      <motion.span
+                        layoutId="site-nav-ativo"
+                        className="absolute inset-0 rounded-full bg-white/10"
+                        transition={{ duration: 0.5, ease: EASE_OUT }}
+                      />
+                    )}
+                    <span className="relative">{item.label}</span>
+                  </Link>
+                )
+              })}
+            </nav>
 
-                <Link
-                  href="/admin"
-                  rel="nofollow"
-                  aria-label="Acessar Painel Administrativo"
-                  title="Painel Administrativo"
-                  className={`p-2 rounded-lg transition-all ${
-                    isLightHeader
-                      ? 'hover:bg-gray-100 text-gray-600 hover:text-red-600'
-                      : 'hover:bg-white/10 text-white'
-                  }`}
-                >
-                  <Settings size={20} />
-                </Link>
-
-                <a
-                  href="/#contact"
-                  aria-label="Fale Conosco - Solicitar orçamento de empilhadeiras"
-                  className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-semibold"
-                >
-                  Fale Conosco
-                </a>
-              </div>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className={`p-2 rounded-md transition-colors ${
-                  isLightHeader 
-                    ? 'text-gray-800 hover:bg-gray-100' 
-                    : 'text-white hover:bg-white/10'
-                }`}
-              >
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div
-            aria-hidden="true"
-            className={`md:hidden ${
-              isLightHeader ? 'bg-white' : 'bg-gray-900/95 backdrop-blur-lg'
-            } shadow-lg border-t ${
-              isLightHeader ? 'border-gray-200' : 'border-white/10'
-            }`}
-          >
-            <div className="px-4 pt-4 pb-6 space-y-1">
-              {menuItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  tabIndex={-1}
-                  onClick={() => setIsOpen(false)}
-                  className={`block px-4 py-3 rounded-xl transition-all font-medium ${
-                    isLightHeader
-                      ? 'text-gray-800 hover:bg-red-50 hover:text-red-600'
-                      : 'text-white hover:bg-white/10'
-                  }`}
-                >
-                  {item.label}
-                </a>
-              ))}
-              <a
-                href="/#contact"
-                tabIndex={-1}
-                onClick={() => setIsOpen(false)}
-                aria-label="Entre em contato pelo formulário"
-                className="block px-4 py-3 mt-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:shadow-lg transition-all text-center font-semibold"
-              >
-                Entre em Contato
-              </a>
+            <div className="flex items-center gap-2">
               <Link
                 href="/admin"
                 rel="nofollow"
-                tabIndex={-1}
-                onClick={() => setIsOpen(false)}
-                className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm transition-all ${
-                  isLightHeader ? 'text-gray-600 hover:bg-gray-100' : 'text-white/80 hover:bg-white/10'
-                }`}
+                aria-label="Acessar Painel Administrativo"
+                title="Painel Administrativo"
+                className="hidden h-10 w-10 place-items-center rounded-full text-white/40 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:grid"
               >
-                <Settings size={16} />
-                Painel administrativo
+                <Settings className="h-4 w-4" aria-hidden="true" />
               </Link>
+              <Link
+                href="/#contact"
+                className="hidden h-10 items-center rounded-full border border-white/15 px-4 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 xl:inline-flex"
+              >
+                Pedir cotação
+              </Link>
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Falar com um consultor no WhatsApp"
+                className="inline-flex h-10 items-center gap-2 rounded-full bg-green-600 px-3.5 text-sm font-semibold text-white transition-colors hover:bg-green-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400/60 sm:px-4"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                <span className="hidden sm:inline">WhatsApp</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => setMenuOpen((open) => !open)}
+                aria-expanded={menuOpen}
+                aria-controls="site-menu"
+                aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+                className="grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-white/[0.08] text-white transition-colors hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 lg:hidden"
+              >
+                {menuOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
+              </button>
             </div>
           </div>
-        )}
-      </nav>
+
+          <AnimatePresence initial={false}>
+            {menuOpen && (
+              <motion.nav
+                id="site-menu"
+                aria-label="Menu principal"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.4, ease: EASE_OUT }}
+                className="overflow-hidden lg:hidden"
+              >
+                <ul className="border-t border-white/10 px-2 pb-2 pt-2">
+                  {NAV.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={() => setMenuOpen(false)}
+                        className={`flex items-center justify-between rounded-2xl px-4 py-3 text-base font-medium transition-colors hover:bg-white/[0.06] ${
+                          isActive(item.href) ? 'text-white' : 'text-white/70'
+                        }`}
+                      >
+                        {item.label}
+                        {isActive(item.href) && <span className="h-1.5 w-1.5 rounded-full bg-red-500" aria-hidden="true" />}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <div className="space-y-1 px-2 pb-3">
+                  <Link
+                    href="/#contact"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex h-12 items-center justify-center rounded-full bg-red-600 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+                  >
+                    Pedir cotação
+                  </Link>
+                  <Link
+                    href="/admin"
+                    rel="nofollow"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex h-11 items-center justify-center gap-2 rounded-full text-sm text-white/40 transition-colors hover:bg-white/[0.06] hover:text-white"
+                  >
+                    <Settings className="h-4 w-4" aria-hidden="true" />
+                    Painel administrativo
+                  </Link>
+                </div>
+              </motion.nav>
+            )}
+          </AnimatePresence>
+
+          {/* Progresso da página, só depois do palco */}
+          <motion.span
+            aria-hidden="true"
+            style={{ scaleX: progress }}
+            className={`absolute inset-x-7 -bottom-px h-px origin-left bg-gradient-to-r from-red-600/0 via-red-500 to-red-600 transition-opacity duration-500 ${
+              solid && !menuOpen ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        </div>
+      </header>
+
+      {/* Barra fixa de conversão, só no celular, depois do palco */}
+      <div
+        inert={!solid}
+        className={`fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-ink/90 px-3 pb-3 pt-2.5 backdrop-blur-xl transition-transform duration-500 md:hidden ${
+          solid ? 'translate-y-0' : 'translate-y-full'
+        }`}
+      >
+        <p className="mb-2 text-center text-[11px] font-medium text-white/60">Dealer oficial EP Equipment no Sul do Brasil</p>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-green-600 py-3.5 text-sm font-semibold text-white active:scale-[0.99]"
+        >
+          <MessageCircle className="h-4 w-4" aria-hidden="true" />
+          Falar no WhatsApp
+        </a>
+      </div>
     </>
   )
 }

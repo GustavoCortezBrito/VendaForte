@@ -123,70 +123,73 @@ export default async function PostPreviewPage({ params }: { params: Promise<{ sl
       </section>
 
       {/* ---------------- Como fica no site ---------------- */}
-      <header className={`${CONTAINER} pt-10`}>
-        <nav aria-label="Você está em" className="flex flex-wrap items-center gap-1.5 text-sm text-gray-500">
-          <span>Blog Venda Forte</span>
-          <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
-          <span>{post.category}</span>
-        </nav>
+      {/* O que vem abaixo é o site: o mesmo fundo escuro das páginas públicas */}
+      <div className="theme-ink mt-10 bg-ink text-white">
+        <header className={`${CONTAINER} pt-10`}>
+          <nav aria-label="Você está em" className="flex flex-wrap items-center gap-1.5 text-sm text-white/60">
+            <span>Blog Venda Forte</span>
+            <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
+            <span>{post.category}</span>
+          </nav>
 
-        <div className="mt-8 max-w-4xl">
-          <h1 className="text-balance text-4xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-            {post.title}
-          </h1>
-          {post.description && <p className="mt-6 max-w-3xl text-pretty text-xl leading-relaxed text-gray-600">{post.description}</p>}
-          <div className="mt-8 flex items-center gap-3 text-sm text-gray-500">
-            <span aria-hidden="true" className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-red-600 font-bold text-white">
-              {post.author.charAt(0).toUpperCase()}
-            </span>
-            <p>
-              <span className="block font-semibold text-gray-900">{post.author}</span>
-              {shownDate && <time dateTime={shownDate.slice(0, 10)}>{formatPostDate(shownDate)}</time>}
-              {shownDate && <span aria-hidden="true"> · </span>}
-              {post.readingTime}
-            </p>
-          </div>
-        </div>
-
-        <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-3xl border border-gray-200 bg-gray-900 shadow-xl">
-          <PostImage src={post.image || '/sede.png'} alt={post.title} sizes="(max-width: 1280px) 100vw, 1216px" priority />
-        </div>
-      </header>
-
-      <div className={`${CONTAINER} grid gap-x-12 py-14 lg:grid-cols-12 lg:py-20`}>
-        {showToc && (
-          <aside className="lg:col-span-3">
-            <div className="lg:sticky lg:top-28">
-              <TableOfContents headings={tocHeadings} />
-            </div>
-          </aside>
-        )}
-
-        <article className={showToc ? 'min-w-0 lg:col-span-9' : 'mx-auto max-w-3xl lg:col-span-12'}>
-          <div className={showToc ? 'max-w-3xl lg:mx-auto' : undefined}>
-            <div className={PROSE} dangerouslySetInnerHTML={{ __html: post.html }} />
-
-            {post.tags.length > 0 && (
-              <ul className="mt-12 flex flex-wrap gap-2 border-t border-gray-200 pt-8" aria-label="Assuntos">
-                {post.tags.map((tag) => (
-                  <li key={tag} className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            <div className="mt-8">
-              <BlogCta
-                variant="compact"
-                title="Quer aplicar isso na sua operação?"
-                text="Um consultor da Venda Forte avalia o seu corredor, a sua carga e o seu turno e indica a máquina certa."
-                primary={{ href: '/promo#cotacao', label: 'Pedir cotação' }}
-                whatsappHref={quoteUrl}
-              />
+          <div className="mt-8 max-w-4xl">
+            <h1 className="text-balance text-5xl font-bold leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
+              {post.title}
+            </h1>
+            {post.description && <p className="mt-6 max-w-3xl text-pretty text-xl leading-relaxed text-white/70">{post.description}</p>}
+            <div className="mt-8 flex items-center gap-3 text-sm text-white/60">
+              <span aria-hidden="true" className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-red-600 font-bold text-white">
+                {post.author.charAt(0).toUpperCase()}
+              </span>
+              <p>
+                <span className="block font-semibold text-white">{post.author}</span>
+                {shownDate && <time dateTime={shownDate.slice(0, 10)}>{formatPostDate(shownDate)}</time>}
+                {shownDate && <span aria-hidden="true"> · </span>}
+                {post.readingTime}
+              </p>
             </div>
           </div>
-        </article>
+
+          <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-3xl border border-white/10 bg-ink-raised shadow-xl">
+            <PostImage src={post.image || '/sede.png'} alt={post.title} sizes="(max-width: 1280px) 100vw, 1216px" priority />
+          </div>
+        </header>
+
+        <div className={`${CONTAINER} grid gap-x-12 py-14 lg:grid-cols-12 lg:py-20`}>
+          {showToc && (
+            <aside className="lg:col-span-3">
+              <div className="lg:sticky lg:top-28">
+                <TableOfContents headings={tocHeadings} />
+              </div>
+            </aside>
+          )}
+
+          <article className={showToc ? 'min-w-0 lg:col-span-9' : 'mx-auto max-w-3xl lg:col-span-12'}>
+            <div className={showToc ? 'max-w-3xl lg:mx-auto' : undefined}>
+              <div className={PROSE} dangerouslySetInnerHTML={{ __html: post.html }} />
+
+              {post.tags.length > 0 && (
+                <ul className="mt-12 flex flex-wrap gap-2 border-t border-white/10 pt-8" aria-label="Assuntos">
+                  {post.tags.map((tag) => (
+                    <li key={tag} className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <div className="mt-8">
+                <BlogCta
+                  variant="compact"
+                  title="Quer aplicar isso na sua operação?"
+                  text="Um consultor da Venda Forte avalia o seu corredor, a sua carga e o seu turno e indica a máquina certa."
+                  primary={{ href: '/promo#cotacao', label: 'Pedir cotação' }}
+                  whatsappHref={quoteUrl}
+                />
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   )

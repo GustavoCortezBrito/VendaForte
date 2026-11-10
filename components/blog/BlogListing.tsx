@@ -23,13 +23,13 @@ export default function BlogListing({ posts }: { posts: BlogPostSummary[] }) {
   }))
 
   return (
-    <div className="bg-white">
+    <div className="bg-ink-raised">
       <BlogHeader
         borderless
         eyebrow="Blog Venda Forte"
         title={
           <>
-            Conteúdo técnico para quem <span className="whitespace-nowrap text-red-600">compra e opera</span> empilhadeiras
+            Conteúdo técnico para quem <span className="whitespace-nowrap text-red-500">compra e opera</span> empilhadeiras
           </>
         }
         intro="Fichas técnicas explicadas, comparativos e guias de decisão sobre a linha EP Equipment de lítio, escritos pela equipe da Venda Forte."

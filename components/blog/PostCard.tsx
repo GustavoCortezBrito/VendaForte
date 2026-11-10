@@ -12,8 +12,8 @@ interface PostCardProps {
 /** Cartão de um post na listagem, nos resultados da busca e nos "relacionados". */
 export default function PostCard({ post, priority = false }: PostCardProps) {
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2">
-      <div className="relative aspect-[16/9] overflow-hidden bg-gray-900">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-raised transition-all duration-300 hover:border-white/15 focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2">
+      <div className="relative aspect-[16/9] overflow-hidden bg-ink-raised">
         <PostImage
           src={post.image}
           alt={`Capa do artigo: ${post.title}`}
@@ -24,8 +24,8 @@ export default function PostCard({ post, priority = false }: PostCardProps) {
       </div>
 
       <div className="flex flex-1 flex-col p-6">
-        <p className="text-xs font-bold uppercase tracking-wider text-red-600">{categoryOf(post)}</p>
-        <h3 className="mt-2 text-balance text-xl font-bold leading-snug text-gray-900 transition-colors group-hover:text-red-600">
+        <p className="text-xs font-bold text-red-500">{categoryOf(post)}</p>
+        <h3 className="mt-2 text-balance text-xl font-bold leading-snug text-white transition-colors group-hover:text-red-400">
           <Link
             href={`/blog/${post.slug}`}
             className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
@@ -34,12 +34,12 @@ export default function PostCard({ post, priority = false }: PostCardProps) {
           </Link>
         </h3>
         {post.description && (
-          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-gray-600">{post.description}</p>
+          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-neutral-400">{post.description}</p>
         )}
 
         {/* O respiro fica fora da linha: com a descrição no limite de linhas, o texto não encosta nela */}
         <div className="mt-auto pt-6">
-          <div className="flex items-center justify-between gap-4 border-t border-gray-100 pt-5 text-xs text-gray-500">
+          <div className="flex items-center justify-between gap-4 border-t border-white/10 pt-5 text-xs text-neutral-400">
             <p>
               <time dateTime={postDateTime(post.date)}>{formatPostDate(post.date, 'short')}</time>
               <span aria-hidden="true"> · </span>
@@ -47,7 +47,7 @@ export default function PostCard({ post, priority = false }: PostCardProps) {
             </p>
             <ArrowUpRight
               aria-hidden="true"
-              className="h-4 w-4 shrink-0 text-gray-400 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-red-600"
+              className="h-4 w-4 shrink-0 text-neutral-500 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-red-400"
             />
           </div>
         </div>

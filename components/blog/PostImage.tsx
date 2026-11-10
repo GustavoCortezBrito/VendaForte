@@ -22,7 +22,7 @@ export default function PostImage({ src, alt, sizes, priority = false, className
   // em 16:9 perdem o topo, então aparecem inteiras sobre um painel claro.
   if (isStudioProductShot(src)) {
     return (
-      <div className="absolute inset-0 bg-neutral-100">
+      <div className="absolute inset-0 bg-ink-raised">
         <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className={`object-contain p-4 ${className}`} />
       </div>
     )
