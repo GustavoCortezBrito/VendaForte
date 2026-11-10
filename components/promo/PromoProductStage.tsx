@@ -170,6 +170,9 @@ function Loop() {
           <p className="mt-2 text-sm font-medium text-neutral-300">{DS3.priceNote}</p>
         )}
         <p className="mt-1 text-sm text-neutral-400">{DS3.installment}</p>
+        <WhatsAppLink href={QUOTE_URL} className="mt-5">
+          Cotar a {DS3.shortName} no WhatsApp
+        </WhatsAppLink>
       </div>
     </section>
   );

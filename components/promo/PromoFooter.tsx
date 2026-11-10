@@ -8,7 +8,6 @@ import {
   MAIN_SITE_URL,
   PONTOS_ATENDIMENTO,
   PROMO_NAV,
-  WHATSAPP_CENTRAL,
   WHATSAPP_DISPLAY,
   WHATSAPP_GENERAL_MESSAGE,
   whatsappUrl,
@@ -151,7 +150,7 @@ export default function PromoFooter() {
           <Column title="Contato" className="lg:col-span-3">
             <li>
               <a
-                href={`https://wa.me/${WHATSAPP_CENTRAL}`}
+                href={whatsappUrl(WHATSAPP_GENERAL_MESSAGE)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex items-center gap-2.5 ${LINK_CLASS}`}

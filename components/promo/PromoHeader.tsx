@@ -205,27 +205,6 @@ export default function PromoHeader() {
           />
         </div>
       </header>
-
-      {/* Barra fixa de conversão, exclusiva do mobile, depois do hero */}
-      <div
-        inert={!solid}
-        className={`fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-ink/90 px-3 pb-3 pt-2.5 backdrop-blur-xl transition-transform duration-500 md:hidden ${
-          solid ? "translate-y-0" : "translate-y-full"
-        }`}
-      >
-        <p className="mb-2 text-center text-[11px] font-medium text-white/60">
-          Pronta entrega · Faturamento direto para CNPJ
-        </p>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-green-600 py-3.5 text-sm font-semibold text-white active:scale-[0.99]"
-        >
-          <MessageCircle className="h-4 w-4" aria-hidden="true" />
-          Cotar agora no WhatsApp
-        </a>
-      </div>
     </>
   );
 }

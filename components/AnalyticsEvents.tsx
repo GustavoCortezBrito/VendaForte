@@ -6,7 +6,7 @@ type Gtag = (command: 'event', name: string, params?: Record<string, string>) =>
 
 const send = (name: string, params: Record<string, string>) => {
   const gtag = (window as unknown as { gtag?: Gtag }).gtag
-  if (typeof gtag === 'function') gtag('event', name, params)
+  if (typeof gtag === 'function') gtag('event', name, { transport_type: 'beacon', ...params })
 }
 
 const isWhatsApp = (url: string) => /^https?:\/\/(wa\.me|api\.whatsapp\.com|web\.whatsapp\.com)\b/i.test(url)

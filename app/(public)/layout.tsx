@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PromoWhatsAppFloat from "@/components/promo/PromoWhatsAppFloat";
 import { PromoMotion } from "@/components/promo/ui";
 
 export default function PublicLayout({
@@ -16,6 +17,7 @@ export default function PublicLayout({
         <Navbar />
         {children}
         <Footer />
+        <PromoWhatsAppFloat />
       </PromoMotion>
     </div>
   );

@@ -22,6 +22,7 @@ import {
   PROMO_PRODUCTS,
   WHATSAPP_CENTRAL,
   WHATSAPP_DISPLAY,
+  WHATSAPP_GENERAL_MESSAGE,
   whatsappUrl,
   type PromoProductId,
 } from "./promo.config";
@@ -352,7 +353,7 @@ function ContactPanel() {
 
         <ul className="mt-10 space-y-7">
           {/* Os textos dos links diferem dos do rodapé, que lista os mesmos contatos */}
-          <ContactItem icon={Phone} title="Telefones">
+          <ContactItem icon={Phone} title="Telefones" iconHref="tel:+554933239050" iconLabel="Ligar para matriz em Chapecó">
             <span className="block">
               Matriz em Chapecó:{" "}
               <a href="tel:+554933239050" className="transition-colors hover:text-white">
@@ -366,10 +367,23 @@ function ContactPanel() {
               </a>
             </span>
           </ContactItem>
-          <ContactItem icon={MessageCircle} title="WhatsApp">
-            <span className="block">{WHATSAPP_DISPLAY}</span>
+          <ContactItem
+            icon={MessageCircle}
+            title="WhatsApp"
+            iconHref={whatsappUrl(WHATSAPP_GENERAL_MESSAGE)}
+            iconLabel={`Falar no WhatsApp ${WHATSAPP_DISPLAY}`}
+            external
+          >
             <a
-              href={`https://wa.me/${WHATSAPP_CENTRAL}`}
+              href={whatsappUrl(WHATSAPP_GENERAL_MESSAGE)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block transition-colors hover:text-white"
+            >
+              {WHATSAPP_DISPLAY}
+            </a>
+            <a
+              href={whatsappUrl(WHATSAPP_GENERAL_MESSAGE)}
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-white underline-offset-4 transition-colors hover:underline"
@@ -377,8 +391,10 @@ function ContactPanel() {
               Iniciar conversa
             </a>
           </ContactItem>
-          <ContactItem icon={Mail} title="E-mail">
-            <span className="block break-all">{CONTATO.email}</span>
+          <ContactItem icon={Mail} title="E-mail" iconHref={`mailto:${CONTATO.email}`} iconLabel="Enviar e-mail">
+            <a href={`mailto:${CONTATO.email}`} className="block break-all transition-colors hover:text-white">
+              {CONTATO.email}
+            </a>
             <a
               href={`mailto:${CONTATO.email}`}
               className="font-medium text-white underline-offset-4 transition-colors hover:underline"
@@ -410,12 +426,38 @@ function ContactPanel() {
   );
 }
 
-function ContactItem({ icon: Icon, title, children }: { icon: LucideIcon; title: string; children: ReactNode }) {
+function ContactItem({
+  icon: Icon,
+  title,
+  iconHref,
+  iconLabel,
+  external = false,
+  children,
+}: {
+  icon: LucideIcon;
+  title: string;
+  iconHref?: string;
+  iconLabel?: string;
+  external?: boolean;
+  children: ReactNode;
+}) {
+  const badgeClass = "grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-red-500/10 text-red-500";
   return (
     <li className="flex gap-4">
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-red-500/10 text-red-500">
-        <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
-      </span>
+      {iconHref ? (
+        <a
+          href={iconHref}
+          aria-label={iconLabel ?? title}
+          {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          className={`${badgeClass} transition-colors hover:bg-red-500/20`}
+        >
+          <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+        </a>
+      ) : (
+        <span className={badgeClass}>
+          <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+        </span>
+      )}
       <div className="min-w-0 text-sm leading-relaxed text-neutral-400">
         <p className="font-semibold text-white">{title}</p>
         {children}

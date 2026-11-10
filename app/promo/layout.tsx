@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PromoHeader from "@/components/promo/PromoHeader";
 import PromoFooter from "@/components/promo/PromoFooter";
+import PromoWhatsAppFloat from "@/components/promo/PromoWhatsAppFloat";
 import { PromoMotion } from "@/components/promo/ui";
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function PromoLayout({ children }: { children: React.ReactNode })
         {/* Sem recuo no topo: o hero ocupa a tela toda e o header só entra depois dele */}
         <main>{children}</main>
         <PromoFooter />
+        <PromoWhatsAppFloat />
       </PromoMotion>
     </div>
   );

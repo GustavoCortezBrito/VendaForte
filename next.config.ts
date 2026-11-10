@@ -61,19 +61,27 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
-    return [
-      // Subdomínio promo.grupovendaforte.com carrega a página promocional na raiz
-      {
-        source: "/",
-        has: [{ type: "host", value: "promo.grupovendaforte.com" }],
-        destination: "/promo",
-      },
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "promo.grupovendaforte.com" }],
-        destination: "/promo/:path*",
-      },
-    ];
+    return {
+      // Subdomínio promo.grupovendaforte.com carrega a página promocional na raiz.
+      // Precisa ser `beforeFiles`: na lista simples (afterFiles) a home de
+      // app/(public)/page.tsx atende "/" primeiro e o subdomínio mostrava a home.
+      beforeFiles: [
+        {
+          source: "/",
+          has: [{ type: "host", value: "promo.grupovendaforte.com" }],
+          destination: "/promo",
+        },
+      ],
+      // Fica em afterFiles para não desviar /_next e os arquivos de public/
+      afterFiles: [
+        {
+          source: "/:path*",
+          has: [{ type: "host", value: "promo.grupovendaforte.com" }],
+          destination: "/promo/:path*",
+        },
+      ],
+      fallback: [],
+    };
   },
 };
 
