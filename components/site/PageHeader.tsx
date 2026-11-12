@@ -30,13 +30,21 @@ export default function PageHeader({
       <div className={`relative ${CONTAINER}`}>
         {before}
         <div className="max-w-4xl">
-          {eyebrow && <p className={EYEBROW}>{eyebrow}</p>}
+          {eyebrow && <p className={`${EYEBROW} rise`} style={{ '--delay': '0.05s' } as React.CSSProperties}>{eyebrow}</p>}
           <h1 className="mt-4 text-balance text-5xl font-bold leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
             {title}
           </h1>
-          {lead && <div className={`mt-6 max-w-2xl ${LEAD}`}>{lead}</div>}
+          {lead && (
+            <div className={`rise mt-6 max-w-2xl ${LEAD}`} style={{ '--delay': '0.15s' } as React.CSSProperties}>
+              {lead}
+            </div>
+          )}
         </div>
-        {children && <div className="mt-8">{children}</div>}
+        {children && (
+          <div className="rise mt-8" style={{ '--delay': '0.28s' } as React.CSSProperties}>
+            {children}
+          </div>
+        )}
       </div>
     </section>
   )

@@ -4,6 +4,8 @@ import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ZoomIn, MessageCircle, ChevronRight, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
+import { PRODUCT_STAGE } from '@/components/site/styles'
+import { stagePhoto } from '@/lib/product-photo'
 
 interface LightboxProps {
   isOpen: boolean
@@ -103,15 +105,14 @@ export default function ImageLightboxModal({
             </div>
 
             {/* Imagem Ampliada */}
-            <div className="relative flex-1 min-h-[280px] sm:min-h-[420px] bg-white flex items-center justify-center p-6 sm:p-10 overflow-hidden">
+            <div className={`relative flex-1 min-h-[280px] sm:min-h-[420px] ${PRODUCT_STAGE} flex items-center justify-center p-6 sm:p-10 overflow-hidden`}>
               <motion.img
                 initial={{ scale: 0.96 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.3 }}
-                src={imageSrc}
+                src={stagePhoto(imageSrc, 1080)}
                 alt={title}
-                className="max-h-[55vh] w-auto max-w-full object-contain filter drop-shadow-xl select-none"
-                style={{ mixBlendMode: 'multiply' }}
+                className="max-h-[55vh] w-auto max-w-full object-contain select-none"
               />
             </div>
 

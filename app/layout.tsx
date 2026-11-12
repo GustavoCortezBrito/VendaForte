@@ -53,9 +53,8 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         
-        {/* Theme Color */}
-        <meta name="theme-color" content="#dc2626" />
-        <meta name="msapplication-TileColor" content="#dc2626" />
+        {/* A cor da barra do navegador vem do `viewport.themeColor` acima (#0d0d0d) */}
+        <meta name="msapplication-TileColor" content="#0d0d0d" />
       </head>
       <body className={inter.className}>
         <AnalyticsEvents />

@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { ArrowUp, Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
 import { CONTATO, WHATSAPP_CENTRAL, WHATSAPP_DISPLAY } from '@/components/promo/promo.config'
 import { TYPE_PAGES } from '@/lib/catalog'
+import { Reveal } from '@/components/promo/ui'
 
 /**
  * Rodapé do site: o mesmo da campanha /promo (chamada final, colunas e linha final),
@@ -52,12 +53,12 @@ const SOCIAL = [
   },
 ] as const
 
-function Column({ title, children, className = '' }: { title: string; children: ReactNode; className?: string }) {
+function Column({ title, children, className = '', delay = 0 }: { title: string; children: ReactNode; className?: string; delay?: number }) {
   return (
-    <div className={className}>
+    <Reveal className={className} delay={delay}>
       <p className="text-sm font-semibold text-white">{title}</p>
       <ul className="mt-5 space-y-3 text-sm text-neutral-400">{children}</ul>
-    </div>
+    </Reveal>
   )
 }
 
@@ -67,7 +68,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Colunas */}
         <div className="grid gap-12 py-14 sm:grid-cols-2 lg:grid-cols-12 lg:py-16">
-          <div className="sm:col-span-2 lg:col-span-3">
+          <Reveal className="sm:col-span-2 lg:col-span-3">
             <Link href="/" className="inline-flex items-center gap-3">
               <span className="relative h-11 w-11 overflow-hidden rounded-xl">
                 <Image src="/logo.png" alt="Logo do Grupo Venda Forte" fill sizes="44px" className="object-cover" />
@@ -99,9 +100,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
 
-          <Column title="Navegação" className="lg:col-span-2">
+          <Column title="Navegação" className="lg:col-span-2" delay={0.08}>
             {NAVEGACAO.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className={LINK_CLASS}>
@@ -111,7 +112,7 @@ export default function Footer() {
             ))}
           </Column>
 
-          <Column title="Produtos" className="lg:col-span-2">
+          <Column title="Produtos" className="lg:col-span-2" delay={0.16}>
             {PRODUTOS.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className={LINK_CLASS}>
@@ -121,7 +122,7 @@ export default function Footer() {
             ))}
           </Column>
 
-          <Column title="Contato" className="lg:col-span-3">
+          <Column title="Contato" className="lg:col-span-3" delay={0.24}>
             <li>
               <a
                 href={`https://wa.me/${WHATSAPP_CENTRAL}`}
@@ -153,7 +154,7 @@ export default function Footer() {
             </li>
           </Column>
 
-          <Column title="Pontos de atendimento" className="lg:col-span-2">
+          <Column title="Pontos de atendimento" className="lg:col-span-2" delay={0.32}>
             {PONTOS.map((cidade) => (
               <li key={cidade} className="flex items-center gap-2">
                 <MapPin className="h-3.5 w-3.5 text-red-500" aria-hidden="true" />

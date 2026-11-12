@@ -3,9 +3,11 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Save, Plus, X, Truck, FileText, ChevronRight, Eye, LogOut } from 'lucide-react'
+import { Save, Plus, X } from 'lucide-react'
 import RichTextEditor from '@/components/RichTextEditor'
+import AdminNav from '@/components/admin/AdminNav'
 
+import { notify } from '@/components/admin/Feedback'
 // Categorias do blog: as mesmas das abas da listagem (/blog). Novas categorias criadas
 // no formulário também viram aba, ordenadas das mais cheias às mais vazias.
 const DEFAULT_CATEGORIES = [
@@ -41,12 +43,6 @@ export default function NovoPostPage() {
   // Falso em ambiente local: só dá para salvar rascunho
   const [canPublish, setCanPublish] = useState(true)
 
-  async function handleLogout() {
-    try {
-      await fetch('/api/auth/logout', { method: 'POST' })
-    } catch {}
-    router.push('/admin/login')
-  }
   const [showNewCategory, setShowNewCategory] = useState(false)
   const [newCategoryName, setNewCategoryName] = useState('')
   const [existingCategories, setExistingCategories] = useState<string[]>(DEFAULT_CATEGORIES)
@@ -150,7 +146,7 @@ export default function NovoPostPage() {
 
       if (!response.ok) {
         const error = await response.json()
-        alert(error.error || 'Erro ao fazer upload')
+        notify(error.error || 'Erro ao fazer upload')
         return
       }
 
@@ -159,7 +155,7 @@ export default function NovoPostPage() {
       setImagePreview(data.url)
     } catch (error) {
       console.error('Erro ao fazer upload:', error)
-      alert('Erro ao fazer upload da imagem')
+      notify('Erro ao fazer upload da imagem')
     } finally {
       setUploadingImage(false)
     }
@@ -189,7 +185,7 @@ export default function NovoPostPage() {
     const publish = submitter?.value !== 'rascunho'
     
     if (!formData.category) {
-      alert('Por favor, selecione ou crie uma categoria')
+      notify('Por favor, selecione ou crie uma categoria')
       return
     }
 
@@ -214,15 +210,15 @@ export default function NovoPostPage() {
       })
 
       if (response.ok) {
-        alert(publish ? 'Post publicado com sucesso!' : 'Rascunho salvo! Ele não aparece no site até você publicar.')
+        notify(publish ? 'Post publicado com sucesso!' : 'Rascunho salvo! Ele não aparece no site até você publicar.')
         router.push(publish ? '/admin/blog' : '/admin/rascunhos')
       } else {
         const error = await response.json()
-        alert(error.error || 'Erro ao criar post')
+        notify(error.error || 'Erro ao criar post')
       }
     } catch (error) {
       console.error('Erro:', error)
-      alert('Erro ao criar post')
+      notify('Erro ao criar post')
     } finally {
       setSaving(false)
     }
@@ -230,93 +226,35 @@ export default function NovoPostPage() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-white/[0.03] flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
+    <div className="min-h-screen bg-ink ">
       {/* ── Header Admin ── */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-
-            {/* Brand + Tabs + Breadcrumb */}
-            <div className="flex items-center gap-3 sm:gap-6">
-              <Link href="/admin" className="flex items-center gap-2 sm:gap-3">
-                <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-red-600/20">
-                  VF
-                </div>
-                <div className="hidden sm:block">
-                  <span className="text-sm font-bold text-gray-900 leading-none block">Venda Forte</span>
-                  <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-wider block">Painel Admin</span>
-                </div>
-              </Link>
-
-              <div className="flex items-center gap-1 sm:gap-2 border-l border-gray-200 pl-3 sm:pl-5">
-                <Link
-                  href="/admin/empilhadeiras"
-                  className="px-3 py-1.5 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-semibold text-xs flex items-center gap-1.5 transition-colors"
-                >
-                  <Truck size={13} />
-                  <span className="hidden md:inline">Empilhadeiras</span>
-                </Link>
-                <Link
-                  href="/admin/blog"
-                  className="px-3 py-1.5 rounded-full bg-red-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-sm"
-                >
-                  <FileText size={13} />
-                  <span className="hidden md:inline">Blog</span>
-                </Link>
-              </div>
-
-              <ChevronRight size={14} className="text-gray-300 hidden sm:block" />
-              <span className="font-bold text-gray-900 text-xs sm:text-sm">Novo Post</span>
-            </div>
-
-            {/* Right actions */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              <Link
-                href="/blog"
-                target="_blank"
-                className="text-xs font-semibold text-gray-600 hover:text-red-600 flex items-center gap-1 transition-colors px-2.5 py-1.5 rounded-full hover:bg-red-50"
-              >
-                <Eye size={14} />
-                <span className="hidden md:inline">Ver Blog</span>
-              </Link>
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="p-1.5 text-gray-400 hover:text-red-600 rounded-full hover:bg-red-50 transition-colors"
-                title="Sair do Painel"
-              >
-                <LogOut size={16} />
-              </button>
-              <button
-                type="submit"
-                value="publicar"
-                form="blog-form"
-                disabled={saving || !canPublish}
-                title={canPublish ? undefined : 'Indisponível no ambiente local'}
-                className="flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 sm:px-5 py-2 rounded-full hover:shadow-lg transition-all font-semibold text-xs disabled:opacity-50"
-              >
-                <Save size={14} />
-                <span>{saving ? 'Salvando...' : 'Publicar Post'}</span>
-              </button>
-            </div>
-
-          </div>
-        </div>
-      </nav>
+      <AdminNav active="blog" crumb="Novo post">
+        <button
+          type="submit"
+          value="publicar"
+          form="blog-form"
+          disabled={saving || !canPublish}
+          title={canPublish ? undefined : 'Indisponível no ambiente local'}
+          className="flex h-10 items-center gap-2 rounded-full bg-red-600 px-5 text-[13px] font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <Save size={14} aria-hidden="true" />
+          <span>{saving ? 'Salvando…' : 'Publicar post'}</span>
+        </button>
+      </AdminNav>
 
       {/* Form */}
       <main className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
-        <form id="blog-form" onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-2xl p-10 space-y-8 border border-gray-100">
+        <form id="blog-form" onSubmit={handleSubmit} className="bg-ink-raised rounded-[28px] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.8)] p-10 space-y-8 border border-white/[0.06]">
           {/* Título */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-neutral-200 mb-2">
               Título *
             </label>
             <input
@@ -325,14 +263,14 @@ export default function NovoPostPage() {
               value={formData.title}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+              className="w-full px-4 py-3 border border-white/10 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
               placeholder="Digite o título do post"
             />
           </div>
 
           {/* Slug */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-neutral-200 mb-2">
               Slug (URL) *
             </label>
             <input
@@ -341,17 +279,17 @@ export default function NovoPostPage() {
               value={formData.slug}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+              className="w-full px-4 py-3 border border-white/10 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
               placeholder="titulo-do-post"
             />
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-ink-muted mt-1">
               URL: /blog/{formData.slug || 'titulo-do-post'}
             </p>
           </div>
 
           {/* Descrição */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-neutral-200 mb-2">
               Descrição *
             </label>
             <textarea
@@ -360,7 +298,7 @@ export default function NovoPostPage() {
               onChange={handleChange}
               required
               rows={3}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all resize-none"
+              className="w-full px-4 py-3 border border-white/10 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition resize-none"
               placeholder="Breve descrição do post (aparece na listagem)"
             />
           </div>
@@ -368,14 +306,14 @@ export default function NovoPostPage() {
           {/* Grid: Categoria e Autor */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-neutral-200 mb-2">
                 Categoria *
               </label>
               <select
                 name="category"
                 value={showNewCategory ? '__new__' : formData.category}
                 onChange={handleCategoryChange}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
               >
                 {existingCategories.map(cat => (
                   <option key={cat} value={cat}>{cat}</option>
@@ -392,12 +330,12 @@ export default function NovoPostPage() {
                     onChange={(e) => setNewCategoryName(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddNewCategory())}
                     placeholder="Nome da nova categoria"
-                    className="flex-1 px-4 py-2 border-2 border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                    className="flex-1 px-4 py-2 border border-red-500/40 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                   />
                   <button
                     type="button"
                     onClick={handleAddNewCategory}
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold transition-all"
+                    className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 font-semibold transition"
                   >
                     <Plus size={20} />
                   </button>
@@ -408,7 +346,7 @@ export default function NovoPostPage() {
                       setNewCategoryName('')
                       setFormData(prev => ({ ...prev, category: existingCategories[0] }))
                     }}
-                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-semibold transition-all"
+                    className="px-4 py-2 bg-white/10 text-neutral-200 rounded-lg hover:bg-white/25 font-semibold transition"
                   >
                     <X size={20} />
                   </button>
@@ -417,7 +355,7 @@ export default function NovoPostPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-neutral-200 mb-2">
                 Autor *
               </label>
               <input
@@ -426,30 +364,30 @@ export default function NovoPostPage() {
                 value={formData.author}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                className="w-full px-4 py-3 border border-white/10 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
               />
             </div>
           </div>
 
           {/* Tags com Sugestões */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-neutral-200 mb-2">
               Tags
             </label>
             
             {/* Tags Selecionadas */}
             {selectedTags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-4 p-4 bg-gray-50 rounded-lg border-2 border-gray-200">
+              <div className="flex flex-wrap gap-2 mb-4 p-4 bg-white/[0.03] rounded-lg border border-white/10">
                 {selectedTags.map(tag => (
                   <span
                     key={tag}
-                    className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1.5 rounded-full text-sm font-semibold"
+                    className="inline-flex items-center gap-2 bg-red-500/15 text-red-400 px-3 py-1.5 rounded-full text-sm font-semibold"
                   >
                     #{tag}
                     <button
                       type="button"
                       onClick={() => removeTag(tag)}
-                      className="hover:text-red-900 transition-colors"
+                      className="hover:text-red-200 transition-colors"
                     >
                       <X size={14} />
                     </button>
@@ -460,18 +398,18 @@ export default function NovoPostPage() {
 
             {/* Sugestões de Tags */}
             <div className="mb-3">
-              <p className="text-xs text-gray-500 mb-2 font-medium">Sugestões populares:</p>
+              <p className="text-xs text-ink-muted mb-2 font-medium">Sugestões populares:</p>
               <div className="flex flex-wrap gap-2">
                 {SUGGESTED_TAGS.map(tag => (
                   <button
                     key={tag}
                     type="button"
                     onClick={() => toggleTag(tag)}
-                    className={`px-3 py-1.5 rounded-full text-sm font-semibold transition-all ${
-                      selectedTags.includes(tag)
-                        ? 'bg-red-600 text-white shadow-md'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }`}
+                    className={`px-3 py-1.5 rounded-full text-sm font-semibold transition ${
+ selectedTags.includes(tag)
+ ? 'bg-red-600 text-white shadow-md'
+ : 'bg-white/10 text-neutral-200 hover:bg-white/25'
+ }`}
                   >
                     #{tag}
                   </button>
@@ -487,18 +425,18 @@ export default function NovoPostPage() {
                 onChange={(e) => setCustomTag(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomTag())}
                 placeholder="Adicionar tag personalizada..."
-                className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                className="min-w-0 flex-1 px-4 py-3 border border-white/10 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
               />
               <button
                 type="button"
                 onClick={addCustomTag}
-                className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold transition-all flex items-center gap-2"
+                className="shrink-0 px-4 sm:px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 font-semibold transition flex items-center gap-2"
               >
                 <Plus size={20} />
                 Adicionar
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-ink-muted mt-2">
               Clique nas sugestões ou adicione tags personalizadas.
               As tags <strong>DS3</strong>, <strong>F4</strong> e <strong>EFL302 B3</strong> ligam o artigo à máquina: aparece o cartão “Na campanha” e ele entra em “Guias por máquina”. Use só uma por artigo: com mais de uma tag de máquina, o cartão “Na campanha” não aparece.
             </p>
@@ -506,14 +444,14 @@ export default function NovoPostPage() {
 
           {/* Imagem de Capa */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-neutral-200 mb-2">
               Imagem de Capa *
             </label>
             
             <div className="flex flex-col md:flex-row gap-4">
               {/* Preview da imagem */}
               <div className="flex-shrink-0">
-                <div className="w-full md:w-48 h-32 rounded-lg border-2 border-gray-200 overflow-hidden bg-gray-50">
+                <div className="w-full md:w-48 h-32 rounded-lg border border-white/10 overflow-hidden bg-white/[0.03]">
                   <img
                     src={imagePreview}
                     alt="Preview"
@@ -527,7 +465,7 @@ export default function NovoPostPage() {
 
               {/* Upload */}
               <div className="flex-1">
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-red-500 transition-colors">
+                <div className="border border-dashed border-white/15 rounded-lg p-6 text-center hover:border-red-500 transition-colors">
                   <input
                     type="file"
                     accept="image/*"
@@ -544,17 +482,17 @@ export default function NovoPostPage() {
                       {uploadingImage ? (
                         <>
                           <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-red-600"></div>
-                          <p className="text-sm text-gray-600">Fazendo upload...</p>
+                          <p className="text-sm text-neutral-400">Fazendo upload...</p>
                         </>
                       ) : (
                         <>
-                          <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-12 h-12 text-ink-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                           </svg>
-                          <p className="text-sm font-semibold text-gray-700">
+                          <p className="text-sm font-semibold text-neutral-200">
                             Clique para selecionar ou arraste a imagem
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-ink-muted">
                             JPG, PNG, GIF ou WebP (máx. 5MB)
                           </p>
                         </>
@@ -563,7 +501,7 @@ export default function NovoPostPage() {
                   </label>
                 </div>
                 
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-ink-muted mt-2">
                   É a capa do artigo, do cartão na listagem e do compartilhamento. Use uma imagem horizontal 16:9 (ex.: 1600 × 900 px); imagens quadradas ou verticais são cortadas.
                 </p>
               </div>
@@ -572,7 +510,7 @@ export default function NovoPostPage() {
 
           {/* Conteúdo */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-3">
+            <label className="block text-sm font-semibold text-neutral-200 mb-3">
               Conteúdo *
             </label>
             <RichTextEditor
@@ -582,18 +520,18 @@ export default function NovoPostPage() {
           </div>
 
           {!canPublish && (
-            <p role="status" className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm font-semibold text-amber-900">
+            <p role="status" className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-5 py-4 text-sm font-semibold text-amber-300">
               Ambiente local: só dá para salvar como rascunho. Para publicar, use o painel do site publicado.
             </p>
           )}
 
           {/* Botões */}
-          <div className="flex flex-wrap gap-4 pt-8 border-t-2 border-gray-200">
+          <div className="flex flex-wrap gap-4 pt-8 border-t border-white/10">
             <button
               type="submit"
               value="rascunho"
               disabled={saving}
-              className="flex-1 inline-flex items-center justify-center gap-3 border-2 border-gray-900 bg-white text-gray-900 px-8 py-5 rounded-xl hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-bold text-lg"
+              className="flex-1 inline-flex items-center justify-center gap-3 border border-white bg-ink-raised text-white px-8 py-5 rounded-xl hover:bg-white/[0.06] disabled:opacity-50 disabled:cursor-not-allowed transition font-bold text-lg"
             >
               <Save size={22} />
               {saving ? 'Salvando...' : 'Salvar rascunho'}
@@ -603,14 +541,14 @@ export default function NovoPostPage() {
               value="publicar"
               disabled={saving || !canPublish}
               title={canPublish ? undefined : 'Indisponível no ambiente local'}
-              className="flex-1 inline-flex items-center justify-center gap-3 bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-5 rounded-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all font-bold text-lg transform hover:-translate-y-0.5"
+              className="flex-1 inline-flex items-center justify-center gap-3 bg-red-600 text-white px-8 py-5 rounded-full hover:shadow-[0_24px_60px_-12px_rgba(0,0,0,0.8)] disabled:opacity-50 disabled:cursor-not-allowed transition font-bold text-lg transform hover:-translate-y-0.5"
             >
               <Save size={22} />
               {saving ? 'Salvando...' : 'Publicar agora'}
             </button>
             <Link
               href="/admin/blog"
-              className="px-8 py-5 border-2 border-gray-300 rounded-xl hover:bg-gray-50 transition-colors font-bold text-gray-700 text-lg"
+              className="px-8 py-5 border border-white/15 rounded-full hover:bg-white/[0.06] transition-colors font-bold text-neutral-200 text-lg"
             >
               Cancelar
             </Link>

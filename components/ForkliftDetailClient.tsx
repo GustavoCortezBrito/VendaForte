@@ -24,6 +24,8 @@ import type { CatalogItem, ForkliftProduct } from '@/lib/catalog'
 import { energyLabel } from '@/lib/catalog'
 import { formatLift } from '@/lib/product-seo'
 import { getOrganizedSpecs, FormattedSpecGroup } from '@/lib/utils/specs-formatter'
+import { PRODUCT_STAGE } from '@/components/site/styles'
+import { stagePhoto } from '@/lib/product-photo'
 
 interface Props {
   product: ForkliftProduct
@@ -118,7 +120,7 @@ export default function ForkliftDetailClient({ product, relatedProducts, typeLin
           <div className="lg:col-span-7 space-y-4">
             <div
               onClick={() => setIsLightboxOpen(true)}
-              className="relative aspect-[4/3] bg-white rounded-[28px] p-4 sm:p-6 flex items-center justify-center overflow-hidden cursor-zoom-in group/mainimg"
+              className={`relative aspect-[4/3] ${PRODUCT_STAGE} rounded-[28px] p-4 sm:p-6 flex items-center justify-center overflow-hidden cursor-zoom-in group/mainimg`}
               style={{ isolation: 'isolate' }}
               title="Clique para ampliar a imagem"
             >
@@ -133,15 +135,14 @@ export default function ForkliftDetailClient({ product, relatedProducts, typeLin
 
               {/* Fotos reais (arquivos locais) preenchem o quadro; os recortes do catálogo ficam inteiros sobre o fundo claro */}
               <Image
-                src={activeImage}
+                src={stagePhoto(activeImage, 1080)}
                 alt={`${product.type} EP ${product.title}`}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 className={`transition-transform duration-300 group-hover/mainimg:scale-105 ${
-                  activeImage.startsWith('/') ? 'object-cover' : 'object-contain p-4 sm:p-6 drop-shadow-md'
+                  activeImage.startsWith('/') ? 'object-cover' : 'object-contain p-4 sm:p-6'
                 }`}
-                style={activeImage.startsWith('/') ? undefined : { mixBlendMode: 'multiply' }}
               />
 
               {/* Badge de zoom ao passar o mouse */}
@@ -158,19 +159,18 @@ export default function ForkliftDetailClient({ product, relatedProducts, typeLin
                   <button
                     key={i}
                     onClick={() => setActiveImage(img)}
-                    className={`relative w-20 h-20 rounded-xl bg-white border flex-shrink-0 ${img.startsWith('/') ? 'p-0.5' : 'p-2'} overflow-hidden transition ${
+                    className={`relative w-20 h-20 rounded-xl ${PRODUCT_STAGE} border flex-shrink-0 ${img.startsWith('/') ? 'p-0.5' : 'p-2'} overflow-hidden transition ${
                       activeImage === img
                         ? 'border-red-600 ring-2 ring-red-600/30'
                         : 'border-white/10 hover:border-white/15 opacity-70 hover:opacity-100'
                     }`}
                   >
                     <Image
-                      src={img}
+                      src={stagePhoto(img, 384)}
                       alt={`Foto ${i + 1} da EP ${product.title}`}
                       fill
                       sizes="80px"
                       className={img.startsWith('/') ? 'object-cover rounded-lg' : 'object-contain p-2'}
-                      style={img.startsWith('/') ? undefined : { mixBlendMode: 'multiply' }}
                     />
                   </button>
                 ))}
@@ -426,15 +426,14 @@ export default function ForkliftDetailClient({ product, relatedProducts, typeLin
                     href={`/produtos/${item.slug}`}
                     className="block h-full rounded-2xl border border-white/10 bg-ink-raised p-4 transition-colors hover:border-red-500/30"
                   >
-                    <span className="relative mb-3 block aspect-[4/3] overflow-hidden rounded-xl bg-white">
+                    <span className={`relative mb-3 block aspect-[4/3] overflow-hidden rounded-xl ${PRODUCT_STAGE}`}>
                       <Image
-                        src={item.mainImage}
+                        src={stagePhoto(item.mainImage, 640)}
                         alt=""
                         fill
                         sizes="(max-width: 1024px) 45vw, 260px"
                         loading="lazy"
                         className="object-contain p-3"
-                        style={{ mixBlendMode: 'multiply' }}
                       />
                     </span>
                     <span className="block font-bold text-white">EP {item.title}</span>

@@ -1,8 +1,11 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Lock, Mail, Eye, EyeOff } from 'lucide-react'
+import { Lock, Mail, Eye, EyeOff, Loader2, ArrowLeft } from 'lucide-react'
+import { BTN_PRIMARY, EYEBROW, INPUT, LABEL } from '@/components/site/styles'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -58,114 +61,108 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center p-4">
-      {/* Pattern decorativo */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
-          backgroundSize: '40px 40px'
-        }} />
-      </div>
+    <main className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
+      {/* A fachada da matriz, a mesma da abertura do site */}
+      <aside className="relative hidden overflow-hidden lg:block">
+        <Image src="/fotos/home/fachada.webp" alt="" fill priority sizes="55vw" className="object-cover object-[60%_center]" />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/30" />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-ink" />
+        <div className="relative flex h-full flex-col justify-between p-12">
+          <span className="flex items-center gap-3">
+            <span className="relative h-11 w-11 overflow-hidden rounded-xl">
+              <Image src="/logo.png" alt="" fill sizes="44px" className="object-cover" />
+            </span>
+            <span className="leading-none">
+              <span className="block text-lg font-semibold tracking-tight text-white">Venda Forte</span>
+              <span className="mt-1 block text-xs font-medium text-white/70">Dealer oficial EP Equipment</span>
+            </span>
+          </span>
+          <p className="max-w-md text-balance text-4xl font-bold leading-[1.05] tracking-[-0.035em] text-white">
+            Catálogo, blog e redes sociais num só lugar.
+          </p>
+        </div>
+      </aside>
 
-      <div className="relative w-full max-w-md">
-        {/* Card de Login */}
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-gray-900 to-gray-800 px-8 py-12 text-center">
-            <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Lock size={32} className="text-white" />
-            </div>
-            <h1 className="text-3xl font-bold text-white mb-2">
-              Painel Admin
-            </h1>
-            <p className="text-gray-300">
-              Blog Venda Forte
-            </p>
-          </div>
+      <section className="flex items-center justify-center bg-ink px-6 py-16 sm:px-12">
+        <div className="w-full max-w-sm">
+          <p className={EYEBROW}>Painel administrativo</p>
+          <h1 className="mt-4 text-4xl font-bold leading-[1.04] tracking-[-0.035em] text-white">Entrar</h1>
+          <p className="mt-3 text-neutral-400">Use o e-mail e a senha que você recebeu.</p>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="p-8 space-y-6">
+          <form onSubmit={handleSubmit} className="mt-10 space-y-6">
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+              <div role="alert" className="rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
                 {error}
               </div>
             )}
 
-            {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email
+              <label htmlFor="login-email" className={LABEL}>
+                E-mail
               </label>
               <div className="relative">
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  <Mail size={20} />
-                </div>
+                <Mail size={18} aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted" />
                 <input
+                  id="login-email"
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
-                  placeholder="seu@email.com"
+                  autoComplete="username"
+                  spellCheck={false}
+                  className={`${INPUT} pl-11`}
+                  placeholder="nome@empresa.com.br"
                 />
               </div>
             </div>
 
-            {/* Senha */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="login-senha" className={LABEL}>
                 Senha
               </label>
               <div className="relative">
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  <Lock size={20} />
-                </div>
+                <Lock size={18} aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted" />
                 <input
+                  id="login-senha"
                   type={showPassword ? 'text' : 'password'}
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="w-full pl-11 pr-11 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
-                  placeholder="••••••••"
+                  autoComplete="current-password"
+                  className={`${INPUT} pl-11 pr-14`}
+                  placeholder="Sua senha"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  aria-label={showPassword ? 'Esconder a senha' : 'Mostrar a senha'}
+                  className="absolute right-1.5 top-1/2 grid h-11 w-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full text-ink-muted transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
                 >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  {showPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
                 </button>
               </div>
             </div>
 
-            {/* Botão de Login */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-            >
+            <button type="submit" disabled={loading} className={`${BTN_PRIMARY} w-full cursor-pointer disabled:cursor-not-allowed disabled:opacity-60`}>
               {loading ? (
-                <div className="flex items-center justify-center gap-2">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  Entrando...
-                </div>
+                <>
+                  <Loader2 size={18} className="animate-spin" aria-hidden="true" />
+                  Entrando…
+                </>
               ) : (
                 'Entrar'
               )}
             </button>
-
           </form>
 
-          {/* Footer */}
-          <div className="bg-gray-50 px-8 py-4 text-center text-sm text-gray-500">
-            <a href="/" className="hover:text-red-600 transition-colors">
-              ← Voltar para o site
-            </a>
-          </div>
+          <Link href="/" className="mt-10 inline-flex items-center gap-2 text-sm text-neutral-400 transition-colors hover:text-white">
+            <ArrowLeft size={16} aria-hidden="true" />
+            Voltar para o site
+          </Link>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   )
 }

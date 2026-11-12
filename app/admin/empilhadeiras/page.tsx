@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import AdminNav from '@/components/admin/AdminNav'
+import { BTN_ICON, BTN_PRIMARY, BTN_WHITE, CHIP_OFF, CHIP_ON, EYEBROW, INPUT, PAGE_TITLE } from '@/components/admin/ui'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import {
   Trash2, Edit, Plus, Eye, Search,
-  ChevronLeft, ChevronRight, Truck, ExternalLink
+  ChevronLeft, ChevronRight, Truck, ExternalLink, Loader2
 } from 'lucide-react'
+import { askConfirm, notify } from '@/components/admin/Feedback'
 
 interface Forklift {
   id: string
@@ -83,19 +85,19 @@ export default function AdminEmpilhadeirasPage() {
   }
 
   async function handleDelete(id: string, title: string) {
-    if (!confirm(`Tem certeza que deseja excluir o modelo "${title}"?`)) return
+    if (!(await askConfirm(`Tem certeza que deseja excluir o modelo "${title}"?`, { confirmLabel: 'Excluir' }))) return
 
     try {
       const res = await fetch(`/api/empilhadeiras?id=${id}`, { method: 'DELETE' })
       if (res.ok) {
         setForklifts(prev => prev.filter(item => item.id !== id))
-        alert(`Equipamento "${title}" excluído com sucesso!`)
+        notify(`Equipamento "${title}" excluído com sucesso!`)
       } else {
         const errData = await res.json()
-        alert(`Erro ao excluir: ${errData.error}`)
+        notify(`Erro ao excluir: ${errData.error}`)
       }
     } catch {
-      alert('Erro na requisição ao excluir.')
+      notify('Erro na requisição ao excluir.')
     }
   }
 
@@ -103,234 +105,188 @@ export default function AdminEmpilhadeirasPage() {
   const paginatedItems = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white pb-20">
-
+    <div className="min-h-screen bg-ink pb-20">
       <AdminNav active="empilhadeiras">
         <Link
           href="/empilhadeiras-eletricas"
           target="_blank"
-          className="text-xs font-semibold text-gray-600 hover:text-red-600 hidden sm:flex items-center gap-1.5 transition-colors px-3 py-1.5 rounded-full hover:bg-red-50"
+          className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-[13px] font-medium text-white/60 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 md:flex"
         >
-          <ExternalLink size={14} />
-          <span>Ver no Site</span>
+          <ExternalLink size={15} aria-hidden="true" />
+          <span>Ver no site</span>
+        </Link>
+        <Link href="/admin/empilhadeiras/novo" className={BTN_PRIMARY}>
+          <Plus size={14} aria-hidden="true" />
+          <span>Novo equipamento</span>
         </Link>
       </AdminNav>
 
-      {/* ── Main Content ── */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <main className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+        <header className="max-w-3xl">
+          <p className={EYEBROW}>Catálogo</p>
+          <h1 className={`mt-3 ${PAGE_TITLE}`}>Empilhadeiras</h1>
+          <p className="mt-3 text-neutral-400">{forklifts.length} modelos cadastrados.</p>
+        </header>
 
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-          <div>
-            <span className="text-red-600 font-semibold text-xs uppercase tracking-wider">Gestão do Catálogo</span>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">
-              Catálogo de <span className="text-red-600">Empilhadeiras</span>
-            </h1>
-            <p className="text-sm text-gray-600 mt-1">
-              {forklifts.length} modelos cadastrados e disponíveis para visualização pública.
-            </p>
-          </div>
-
-          <Link
-            href="/admin/empilhadeiras/novo"
-            className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-full hover:shadow-lg hover:scale-105 transition-all font-semibold text-xs uppercase tracking-wider flex items-center gap-2"
-          >
-            <Plus size={16} />
-            <span>Novo Equipamento</span>
-          </Link>
-        </div>
-
-        {/* Search & Filters */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-4 sm:p-5 shadow-sm mb-6 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+        <div className="mt-8 flex flex-col gap-3 md:flex-row md:items-center">
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted" size={18} />
             <input
-              type="text"
-              placeholder="Buscar por modelo, subtítulo ou capacidade..."
+              type="search"
+              aria-label="Buscar equipamento"
+              placeholder="Buscar por modelo, subtítulo ou capacidade…"
               value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all"
+              onChange={(e) => setSearchTerm(e.target.value)}
+              autoComplete="off"
+              spellCheck={false}
+              className={`${INPUT} rounded-full pl-11`}
             />
           </div>
-
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Bateria:</span>
-            {['all', '80V', '48V'].map(v => (
-              <button
-                key={v}
-                onClick={() => setVoltageFilter(v)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                  voltageFilter === v
-                    ? 'bg-red-600 text-white shadow-sm'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
+          <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filtrar pela tensão da bateria">
+            <span className="mr-1 text-sm text-ink-muted">Bateria</span>
+            {['all', '24V', '48V', '80V'].map((v) => (
+              <button key={v} type="button" onClick={() => setVoltageFilter(v)} aria-pressed={voltageFilter === v} className={voltageFilter === v ? CHIP_ON : CHIP_OFF}>
                 {v === 'all' ? 'Todas' : v}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Loading State */}
         {loading ? (
-          <div className="bg-white border border-gray-100 rounded-2xl p-16 text-center shadow-sm">
-            <div className="w-10 h-10 border-4 border-red-100 border-t-red-600 rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-sm font-semibold text-gray-600">Carregando equipamentos...</p>
-          </div>
+          <p role="status" className="mt-16 flex items-center justify-center gap-3 text-sm font-medium text-neutral-400">
+            <Loader2 size={18} className="animate-spin text-red-500" aria-hidden="true" />
+            Carregando os equipamentos…
+          </p>
         ) : filtered.length === 0 ? (
-          <div className="bg-white border border-gray-100 rounded-2xl p-16 text-center shadow-sm">
-            <Truck className="mx-auto text-gray-300 mb-3" size={48} />
-            <h3 className="text-base font-bold text-gray-900">Nenhum equipamento encontrado</h3>
-            <p className="text-xs text-gray-500 mt-1">Tente ajustar seus termos de pesquisa ou filtros.</p>
+          <div className="mt-8 rounded-[28px] border border-dashed border-white/15 bg-ink-raised px-6 py-16 text-center">
+            <Truck className="mx-auto text-neutral-600" size={40} aria-hidden="true" />
+            <p className="mt-4 text-xl font-semibold text-white">Nenhum equipamento encontrado</p>
+            <p className="mx-auto mt-2 max-w-sm text-sm text-neutral-400">Mude a busca ou o filtro de bateria.</p>
           </div>
         ) : (
-          /* Grid of Forklifts */
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {paginatedItems.map(item => {
+          <div className="mt-8 space-y-10">
+            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {paginatedItems.map((item) => {
                 const voltBadge = (item.batteryVoltage || '80V').replace(/\s+/g, '').toUpperCase()
                 return (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between"
-                  >
-                    <div>
-                      {/* Image container */}
-                      <div className="relative aspect-[4/3] bg-gradient-to-br from-gray-50 to-slate-100 p-4 flex items-center justify-center overflow-hidden">
+                  <motion.li key={item.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}>
+                    <article className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised transition-colors duration-300 hover:border-white/25">
+                      {/* Fotos do catálogo são recortes de fundo branco: o quadro precisa ser branco */}
+                      <div className="relative m-2 aspect-[4/3] overflow-hidden rounded-[22px] bg-white">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={item.mainImage || '/sede.png'}
                           alt={item.title}
-                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-                          onError={e => { (e.target as HTMLImageElement).src = '/sede.png' }}
+                          className="h-full w-full object-contain p-4 mix-blend-multiply"
+                          onError={(e) => { (e.target as HTMLImageElement).src = '/sede.png' }}
                         />
-                        <span className="absolute top-3 left-3 bg-red-600 text-white text-[9px] font-bold uppercase px-2.5 py-0.5 rounded-full shadow-sm">
-                          {voltBadge}
-                        </span>
+                        <span className="absolute left-3 top-3 rounded-full bg-ink/85 px-2.5 py-1 text-[11px] font-semibold text-white">{voltBadge}</span>
                       </div>
 
-                      {/* Content */}
-                      <div className="p-4">
-                        <h3 className="font-bold text-gray-900 text-base group-hover:text-red-600 transition-colors">
-                          {item.title}
-                        </h3>
-                        <p className="text-xs text-red-600 font-semibold mt-0.5 line-clamp-1">
-                          {item.subtitle || item.type || 'Empilhadeira Elétrica'}
-                        </p>
+                      <div className="flex flex-1 flex-col p-5 pt-3">
+                        <h2 className="text-lg font-semibold tracking-tight text-white">{item.title}</h2>
+                        <p className="mt-0.5 line-clamp-1 text-sm text-neutral-400">{item.subtitle || item.type || 'Empilhadeira elétrica'}</p>
 
-                        <div className="grid grid-cols-2 gap-2 mt-3 text-xs">
-                          <div className="bg-gray-50 rounded-xl p-2">
-                            <span className="text-[9px] font-semibold text-gray-400 uppercase tracking-wider block">Carga</span>
-                            <span className="font-bold text-gray-800">{item.capacity || '—'}</span>
+                        <dl className="mt-4 grid grid-cols-2 gap-2">
+                          <div className="rounded-2xl bg-white/[0.03] px-3 py-2">
+                            <dt className="text-[11px] text-ink-muted">Carga</dt>
+                            <dd className="text-sm font-semibold text-white">{item.capacity || '—'}</dd>
                           </div>
-                          <div className="bg-gray-50 rounded-xl p-2">
-                            <span className="text-[9px] font-semibold text-gray-400 uppercase tracking-wider block">Elevação</span>
-                            <span className="font-bold text-gray-800">{item.liftingHeight || '—'}</span>
+                          <div className="rounded-2xl bg-white/[0.03] px-3 py-2">
+                            <dt className="text-[11px] text-ink-muted">Elevação</dt>
+                            <dd className="text-sm font-semibold text-white">{item.liftingHeight || '—'}</dd>
                           </div>
-                        </div>
-                      </div>
-                    </div>
+                        </dl>
 
-                    {/* Actions */}
-                    <div className="p-4 pt-0 border-t border-gray-50 flex items-center justify-between gap-2 mt-2">
-                      <Link
-                        href={`/empilhadeiras-eletricas/${item.slug}`}
-                        target="_blank"
-                        className="p-2 text-gray-400 hover:text-gray-700 rounded-xl hover:bg-gray-100 transition-colors"
-                        title="Ver no site"
-                      >
-                        <Eye size={16} />
-                      </Link>
-
-                      <div className="flex items-center gap-1">
-                        <Link
-                          href={`/admin/empilhadeiras/editar/${item.id}`}
-                          className="px-3 py-1.5 rounded-full bg-gray-900 hover:bg-red-600 text-white font-semibold text-xs flex items-center gap-1 transition-colors"
-                        >
-                          <Edit size={12} />
-                          <span>Editar</span>
-                        </Link>
-
-                        <button
-                          onClick={() => handleDelete(item.id, item.title)}
-                          className="p-2 text-gray-400 hover:text-red-600 rounded-xl hover:bg-red-50 transition-colors"
-                          title="Excluir"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
-                )
-              })}
-            </div>
-
-            {/* Paginação - Estilo Blog Admin */}
-            {totalPages > 1 && (
-              <div className="mt-12 space-y-6">
-                <div className="flex items-center justify-center gap-2 flex-wrap">
-                  <button
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1}
-                    className="p-3 rounded-xl border-2 border-gray-200 hover:bg-red-50 hover:border-red-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95 bg-white"
-                    title="Página anterior"
-                  >
-                    <ChevronLeft size={20} className="text-gray-600" />
-                  </button>
-
-                  <div className="flex gap-2 flex-wrap justify-center">
-                    {Array.from({ length: totalPages }, (_, i) => i + 1)
-                      .filter(pageNumber => {
-                        if (totalPages <= 7) return true
-                        return (
-                          pageNumber === 1 ||
-                          pageNumber === totalPages ||
-                          Math.abs(pageNumber - currentPage) <= 2
-                        )
-                      })
-                      .map((pageNumber, idx, array) => {
-                        const prevPage = array[idx - 1]
-                        const showEllipsis = prevPage && pageNumber - prevPage > 1
-                        return (
-                          <div key={pageNumber} className="flex items-center gap-2">
-                            {showEllipsis && <span className="text-gray-400 font-bold px-1">...</span>}
-                            <button
-                              onClick={() => setCurrentPage(pageNumber)}
-                              className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full font-bold transition-all text-sm sm:text-base ${
-                                currentPage === pageNumber
-                                  ? 'bg-red-600 text-white shadow-xl scale-110 ring-4 ring-red-100'
-                                  : 'bg-white text-gray-600 hover:bg-gray-50 border-2 border-gray-200 hover:border-red-600 hover:text-red-600 hover:scale-105 active:scale-95'
-                              }`}
+                        <div className="mt-auto flex items-center justify-between gap-2 pt-5">
+                          <div className="flex gap-2">
+                            <Link
+                              href={`/empilhadeiras-eletricas/${item.slug}`}
+                              target="_blank"
+                              className={BTN_ICON}
+                              title="Ver no site"
+                              aria-label={`Ver ${item.title} no site`}
                             >
-                              {pageNumber}
+                              <Eye size={17} aria-hidden="true" />
+                            </Link>
+                            <button
+                              type="button"
+                              onClick={() => handleDelete(item.id, item.title)}
+                              className={`${BTN_ICON} hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400`}
+                              title="Excluir"
+                              aria-label={`Excluir ${item.title}`}
+                            >
+                              <Trash2 size={17} aria-hidden="true" />
                             </button>
                           </div>
-                        )
-                      })}
-                  </div>
+                          <Link href={`/admin/empilhadeiras/editar/${item.id}`} className={BTN_WHITE} aria-label={`Editar ${item.title}`}>
+                            <Edit size={13} aria-hidden="true" />
+                            <span>Editar</span>
+                          </Link>
+                        </div>
+                      </div>
+                    </article>
+                  </motion.li>
+                )
+              })}
+            </ul>
+
+            {totalPages > 1 && (
+              <nav aria-label="Páginas" className="flex flex-col items-center gap-4">
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className={BTN_ICON}
+                    aria-label="Página anterior"
+                  >
+                    <ChevronLeft size={18} aria-hidden="true" />
+                  </button>
+
+                  {Array.from({ length: totalPages }, (_, i) => i + 1)
+                    .filter((pageNumber) => {
+                      if (totalPages <= 7) return true
+                      return pageNumber === 1 || pageNumber === totalPages || Math.abs(pageNumber - currentPage) <= 2
+                    })
+                    .map((pageNumber, idx, array) => {
+                      const prevPage = array[idx - 1]
+                      const showEllipsis = prevPage && pageNumber - prevPage > 1
+                      return (
+                        <div key={pageNumber} className="flex items-center gap-2">
+                          {showEllipsis && <span aria-hidden="true" className="px-1 text-ink-muted">…</span>}
+                          <button
+                            type="button"
+                            onClick={() => setCurrentPage(pageNumber)}
+                            aria-current={currentPage === pageNumber ? 'page' : undefined}
+                            aria-label={`Página ${pageNumber}`}
+                            className={`grid h-11 w-11 cursor-pointer place-items-center rounded-full text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
+                              currentPage === pageNumber ? 'bg-red-600 text-white' : 'border border-white/10 text-neutral-300 hover:border-white/25 hover:text-white'
+                            }`}
+                          >
+                            {pageNumber}
+                          </button>
+                        </div>
+                      )
+                    })}
 
                   <button
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    type="button"
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                     disabled={currentPage === totalPages}
-                    className="p-3 rounded-xl border-2 border-gray-200 hover:bg-red-50 hover:border-red-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95 bg-white"
-                    title="Próxima página"
+                    className={BTN_ICON}
+                    aria-label="Próxima página"
                   >
-                    <ChevronRight size={20} className="text-gray-600" />
+                    <ChevronRight size={18} aria-hidden="true" />
                   </button>
                 </div>
-
-                {/* Info de resultados */}
-                <div className="text-center">
-                  <p className="text-gray-600 font-medium text-sm">
-                    Mostrando <span className="text-red-600 font-bold">{Math.min((currentPage - 1) * itemsPerPage + 1, filtered.length)}-{Math.min(currentPage * itemsPerPage, filtered.length)}</span> de <span className="text-red-600 font-bold">{filtered.length}</span> empilhadeiras
-                  </p>
-                </div>
-              </div>
+                <p className="text-sm text-neutral-400">
+                  Mostrando {Math.min((currentPage - 1) * itemsPerPage + 1, filtered.length)} a {Math.min(currentPage * itemsPerPage, filtered.length)} de {filtered.length} empilhadeiras
+                </p>
+              </nav>
             )}
           </div>
         )}
-
       </main>
     </div>
   )

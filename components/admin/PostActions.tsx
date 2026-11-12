@@ -110,7 +110,7 @@ export default function PostActions({ slug, source, published, errors, blockedRe
 
   if (readOnly) {
     return (
-      <p className="max-w-xs text-sm font-semibold text-gray-500 md:text-right">
+      <p className="max-w-xs text-sm font-semibold text-ink-muted md:text-right">
         Você pode ler e conferir este texto. Quem edita e publica é quem escreve; para pedir mudança, fale com o Gustavo.
       </p>
     )
@@ -124,7 +124,7 @@ export default function PostActions({ slug, source, published, errors, blockedRe
             type="button"
             onClick={importFile}
             disabled={busy}
-            className={`${ACTION} bg-gray-900 text-white hover:bg-gray-800 focus-visible:outline-gray-900`}
+            className={`${ACTION} bg-white text-ink hover:bg-neutral-200 focus-visible:outline-white`}
           >
             {busy ? <Loader2 size={16} className="animate-spin" aria-hidden="true" /> : <Download size={16} aria-hidden="true" />}
             Importar para o painel
@@ -134,7 +134,7 @@ export default function PostActions({ slug, source, published, errors, blockedRe
         {source === 'banco' && (
           <Link
             href={`/admin/blog/editar/${slug}`}
-            className={`${ACTION} border border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus-visible:outline-gray-900`}
+            className={`${ACTION} border border-white/15 bg-ink-raised text-neutral-100 hover:bg-white/[0.06] focus-visible:outline-white`}
           >
             <Pencil size={16} aria-hidden="true" />
             Editar texto
@@ -146,7 +146,7 @@ export default function PostActions({ slug, source, published, errors, blockedRe
             type="button"
             onClick={() => setDialog('publicar')}
             disabled={Boolean(blockedReason)}
-            className={`${ACTION} bg-red-600 text-white shadow-md shadow-red-600/20 hover:bg-red-700 focus-visible:outline-red-600`}
+            className={`${ACTION} bg-red-600 text-white hover:bg-red-700 focus-visible:outline-red-600`}
           >
             <Rocket size={16} aria-hidden="true" />
             Publicar
@@ -159,7 +159,7 @@ export default function PostActions({ slug, source, published, errors, blockedRe
               href={`/blog/${slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${ACTION} border border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus-visible:outline-gray-900`}
+              className={`${ACTION} border border-white/15 bg-ink-raised text-neutral-100 hover:bg-white/[0.06] focus-visible:outline-white`}
             >
               <ExternalLink size={16} aria-hidden="true" />
               Ver no site
@@ -168,7 +168,7 @@ export default function PostActions({ slug, source, published, errors, blockedRe
               type="button"
               onClick={() => setDialog('despublicar')}
               disabled={Boolean(blockedReason)}
-              className={`${ACTION} border border-red-200 bg-white text-red-700 hover:bg-red-50 focus-visible:outline-red-600`}
+              className={`${ACTION} border border-red-500/30 bg-ink-raised text-red-400 hover:bg-red-500/15 focus-visible:outline-red-600`}
             >
               <Undo2 size={16} aria-hidden="true" />
               Despublicar
@@ -178,33 +178,33 @@ export default function PostActions({ slug, source, published, errors, blockedRe
       </div>
 
       {blockedReason && ((source === 'banco' && !published) || published) && (
-        <p role="status" className="max-w-md text-sm font-semibold text-amber-800">
+        <p role="status" className="max-w-md text-sm font-semibold text-amber-300">
           {blockedReason}
         </p>
       )}
       {error && !dialog && (
-        <p role="alert" className="max-w-md text-sm font-medium text-red-600">
+        <p role="alert" className="max-w-md text-sm font-medium text-red-500">
           {error}
         </p>
       )}
       {notice && (
-        <p role="status" className="inline-flex items-center gap-1.5 text-sm font-semibold text-green-700">
+        <p role="status" className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-400">
           <CheckCircle2 size={16} aria-hidden="true" />
           {notice}
         </p>
       )}
 
       {dialog && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/60 p-4" onClick={() => !busy && close()}>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4" onClick={() => !busy && close()}>
           <div
             role="dialog"
             aria-modal="true"
             aria-labelledby="dialogo-titulo"
-            className="w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-2xl"
+            className="w-full max-w-lg rounded-2xl bg-ink-raised p-6 text-left shadow-[0_24px_60px_-12px_rgba(0,0,0,0.8)]"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-4">
-              <h2 id="dialogo-titulo" className="text-xl font-extrabold text-gray-900">
+              <h2 id="dialogo-titulo" className="text-xl font-extrabold text-white">
                 {dialog === 'publicar' ? 'Publicar este post?' : 'Tirar este post do blog?'}
               </h2>
               <button
@@ -212,7 +212,7 @@ export default function PostActions({ slug, source, published, errors, blockedRe
                 onClick={close}
                 disabled={busy}
                 aria-label="Fechar"
-                className="rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-700"
+                className="rounded-full p-1 text-ink-muted hover:bg-white/10 hover:text-white"
               >
                 <X size={20} aria-hidden="true" />
               </button>
@@ -220,13 +220,13 @@ export default function PostActions({ slug, source, published, errors, blockedRe
 
             {dialog === 'publicar' ? (
               <>
-                <p className="mt-2 text-sm text-gray-600">
+                <p className="mt-2 text-sm text-neutral-400">
                   O post vai para o blog agora, com a data de hoje, e entra no mapa do site. Confirme cada item:
                 </p>
                 <ul className="mt-4 space-y-3">
                   {CONFIRMATIONS.map((text, index) => (
                     <li key={text}>
-                      <label className="flex cursor-pointer items-start gap-3 text-sm text-gray-800">
+                      <label className="flex cursor-pointer items-start gap-3 text-sm text-neutral-100">
                         <input
                           ref={index === 0 ? firstCheckbox : undefined}
                           type="checkbox"
@@ -242,20 +242,20 @@ export default function PostActions({ slug, source, published, errors, blockedRe
                   ))}
                 </ul>
                 {errors > 0 && (
-                  <p role="alert" className="mt-4 rounded-lg bg-red-50 p-3 text-sm font-medium text-red-700">
+                  <p role="alert" className="mt-4 rounded-lg bg-red-500/10 p-3 text-sm font-medium text-red-400">
                     A conferência automática achou {errors} {errors === 1 ? 'erro' : 'erros'}. Corrija antes de publicar.
                   </p>
                 )}
               </>
             ) : (
-              <p className="mt-2 text-sm text-gray-600">
+              <p className="mt-2 text-sm text-neutral-400">
                 O post volta a ser rascunho: sai da lista do blog, da busca e do mapa do site, e o endereço deixa de abrir. O
                 texto fica guardado no painel.
               </p>
             )}
 
             {error && (
-              <p role="alert" className="mt-4 text-sm font-medium text-red-600">
+              <p role="alert" className="mt-4 text-sm font-medium text-red-500">
                 {error}
               </p>
             )}
@@ -266,7 +266,7 @@ export default function PostActions({ slug, source, published, errors, blockedRe
                 ref={cancelButton}
                 onClick={close}
                 disabled={busy}
-                className={`${ACTION} border border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus-visible:outline-gray-900`}
+                className={`${ACTION} border border-white/15 bg-ink-raised text-neutral-100 hover:bg-white/[0.06] focus-visible:outline-white`}
               >
                 Cancelar
               </button>

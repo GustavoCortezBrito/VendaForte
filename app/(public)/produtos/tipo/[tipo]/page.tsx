@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import PageHeader from '@/components/site/PageHeader'
-import { BTN_GHOST, BTN_WHATSAPP } from '@/components/site/styles'
+import { BTN_GHOST, BTN_WHATSAPP, PRODUCT_STAGE } from '@/components/site/styles'
+import { stagePhoto } from '@/lib/product-photo'
 import { notFound } from 'next/navigation'
 import { ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react'
 import { whatsappUrl } from '@/components/promo/promo.config'
@@ -171,15 +172,14 @@ export default async function TypePage({ params, searchParams }: Props) {
                   <tr key={product.slug} className="hover:bg-white/5">
                     <th scope="row" className="px-4 py-2.5 font-semibold text-white">
                       <Link href={`/produtos/${product.slug}`} className="flex items-center gap-3 hover:text-red-400">
-                        <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-white">
+                        <span className={`relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-white/10 ${PRODUCT_STAGE}`}>
                           <Image
-                            src={product.mainImage}
+                            src={stagePhoto(product.mainImage, 384)}
                             alt=""
                             fill
                             sizes="48px"
                             loading="lazy"
                             className="object-contain p-1"
-                            style={{ mixBlendMode: 'multiply' }}
                           />
                         </span>
                         <span>EP {product.title}</span>

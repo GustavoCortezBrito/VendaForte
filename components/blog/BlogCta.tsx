@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight, MapPin, MessageCircle } from 'lucide-react'
 import { whatsappUrl } from '@/components/promo/promo.config'
+import { Reveal } from '@/components/promo/ui'
 import { BTN_DARK_LINE, BTN_RED, CONTAINER } from './styles'
 
 const SALES_URL = whatsappUrl('Olá! Vim pelo blog da Venda Forte e quero falar com um consultor.')
@@ -58,7 +59,7 @@ export default function BlogCta({
 
   return (
     <section className="bg-ink pb-16 pt-14 lg:pb-24 lg:pt-20" aria-labelledby="blog-cta">
-      <div className={CONTAINER}>
+      <Reveal className={CONTAINER}>
         <div className="relative isolate grid overflow-hidden rounded-[28px] bg-ink text-white lg:grid-cols-2">
           <div className="relative z-10 flex flex-col justify-center p-8 sm:p-12 lg:py-16 lg:pl-14 lg:pr-4">
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold text-red-400">
@@ -68,7 +69,7 @@ export default function BlogCta({
               id="blog-cta"
               className="mt-5 max-w-lg text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl"
             >
-              Quer ver <span className="text-red-500">preço e prazo</span> da sua operação?
+              Quer ver preço e prazo da sua operação?
             </h2>
             <p className="mt-4 max-w-md text-lg leading-relaxed text-ink-muted">{text}</p>
             {buttons}
@@ -93,7 +94,7 @@ export default function BlogCta({
             />
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   )
 }

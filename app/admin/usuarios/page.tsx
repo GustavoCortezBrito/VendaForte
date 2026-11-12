@@ -5,6 +5,7 @@ import { AlertTriangle, KeyRound, Loader2, Trash2, UserPlus } from 'lucide-react
 import AdminNav from '@/components/admin/AdminNav'
 import { ROLES, ROLE_HELP, ROLE_LABEL, type Role } from '@/lib/permissions'
 
+import { askConfirm } from '@/components/admin/Feedback'
 interface UserRow {
   id: string
   email: string
@@ -14,8 +15,8 @@ interface UserRow {
 }
 
 const FIELD =
-  'w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-100'
-const LABEL = 'mb-1 block text-xs font-bold uppercase tracking-wider text-gray-500'
+  'w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-ink-muted focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500/20'
+const LABEL = 'mb-1 block text-xs font-bold text-ink-muted'
 const PASSWORD_MIN = 10
 
 export default function UsuariosPage() {
@@ -98,48 +99,48 @@ export default function UsuariosPage() {
       `${user.name} agora é ${ROLE_LABEL[role].toLowerCase()}. A mudança vale no próximo login dessa pessoa.`
     )
 
-  function remove(user: UserRow) {
-    if (!window.confirm(`Remover ${user.name} (${user.email})? A pessoa perde o acesso no próximo login.`)) return
-    call(() => fetch(`/api/usuarios?id=${encodeURIComponent(user.id)}`, { method: 'DELETE' }), `${user.name} removido.`)
+  async function remove(user: UserRow) {
+    if (!(await askConfirm(`Remover ${user.name} (${user.email})? A pessoa perde o acesso no próximo login.`, { confirmLabel: 'Remover' }))) return
+    await call(() => fetch(`/api/usuarios?id=${encodeURIComponent(user.id)}`, { method: 'DELETE' }), `${user.name} removido.`)
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
+    <div className="min-h-screen bg-ink ">
       <AdminNav active="usuarios" />
 
       <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
         <header className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Usuários</h1>
-          <p className="mt-2 max-w-2xl text-sm text-gray-600">
+          <h1 className="text-3xl font-bold text-white">Usuários</h1>
+          <p className="mt-2 max-w-2xl text-sm text-neutral-400">
             Cada pessoa entra com o próprio e-mail e senha. Crie o login do Paulo e do Rodrigo como Revisor: eles leem, comentam e aprovam, sem alterar catálogo nem posts.
           </p>
         </header>
 
         {message && (
-          <p role="status" className={`mb-6 rounded-2xl border px-5 py-3 text-sm font-semibold ${message.ok ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : 'border-red-200 bg-red-50 text-red-800'}`}>
+          <p role="status" className={`mb-6 rounded-2xl border px-5 py-3 text-sm font-semibold ${message.ok ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300' : 'border-red-500/30 bg-red-500/10 text-red-300'}`}>
             {message.text}
           </p>
         )}
 
         {loading ? (
           <div className="flex justify-center py-32">
-            <Loader2 className="animate-spin text-red-600" size={32} />
+            <Loader2 className="animate-spin text-red-500" size={32} />
           </div>
         ) : error ? (
-          <div role="alert" className="rounded-2xl border border-red-200 bg-red-50 p-6 text-sm font-semibold text-red-800">
+          <div role="alert" className="rounded-2xl border border-red-500/30 bg-red-500/10 p-6 text-sm font-semibold text-red-300">
             <AlertTriangle size={18} className="mb-2" /> {error}
           </div>
         ) : (
           <div className="space-y-8">
-            <ul className="divide-y divide-gray-100 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+            <ul className="divide-y divide-white/[0.06] overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised ">
               {users.map((user) => (
                 <li key={user.id} className="px-5 py-4">
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
                     <span className="min-w-[14rem] flex-1">
-                      <span className="block text-sm font-bold text-gray-900">
-                        {user.name} {user.id === me && <span className="ml-1 rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-bold text-gray-600">você</span>}
+                      <span className="block text-sm font-bold text-white">
+                        {user.name} {user.id === me && <span className="ml-1 rounded-full bg-white/[0.06] px-2 py-0.5 text-[10px] font-bold text-neutral-400">você</span>}
                       </span>
-                      <span className="block text-xs text-gray-500">{user.email}</span>
+                      <span className="block text-xs text-ink-muted">{user.email}</span>
                     </span>
 
                     <label className="shrink-0">
@@ -148,7 +149,7 @@ export default function UsuariosPage() {
                         value={user.role}
                         disabled={busy}
                         onChange={(e) => changeRole(user, e.target.value as Role)}
-                        className="rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 focus:border-red-500 focus:outline-none"
+                        className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 text-xs font-semibold text-neutral-200 focus:border-red-500 focus:outline-none"
                       >
                         {ROLES.map((role) => (
                           <option key={role} value={role}>
@@ -163,7 +164,7 @@ export default function UsuariosPage() {
                         setResetting(resetting === user.id ? null : user.id)
                         setNewPassword('')
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100"
+                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold text-neutral-400 hover:bg-white/10"
                     >
                       <KeyRound size={14} /> Trocar senha
                     </button>
@@ -171,7 +172,7 @@ export default function UsuariosPage() {
                       <button
                         onClick={() => remove(user)}
                         disabled={busy}
-                        className="rounded-full p-2 text-gray-400 hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
+                        className="rounded-full p-2 text-ink-muted hover:bg-red-500/15 hover:text-red-400 disabled:opacity-50"
                         title={`Remover ${user.name}`}
                         aria-label={`Remover ${user.name}`}
                       >
@@ -181,7 +182,7 @@ export default function UsuariosPage() {
                   </div>
 
                   {resetting === user.id && (
-                    <div className="mt-4 flex flex-wrap items-end gap-3 rounded-xl border border-gray-200 bg-gray-50 p-4">
+                    <div className="mt-4 flex flex-wrap items-end gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4">
                       <label className="min-w-[16rem] flex-1">
                         <span className={LABEL}>Nova senha (mínimo {PASSWORD_MIN} caracteres)</span>
                         <input type="password" autoComplete="new-password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className={FIELD} />
@@ -189,7 +190,7 @@ export default function UsuariosPage() {
                       <button
                         onClick={() => savePassword(user.id, user.name)}
                         disabled={busy || newPassword.length < PASSWORD_MIN}
-                        className="rounded-xl bg-gray-900 px-5 py-3 text-sm font-bold text-white hover:bg-gray-800 disabled:opacity-50"
+                        className="rounded-xl bg-white px-5 py-3 text-sm font-bold text-ink hover:bg-neutral-200 disabled:opacity-50"
                       >
                         Salvar senha
                       </button>
@@ -199,8 +200,8 @@ export default function UsuariosPage() {
               ))}
             </ul>
 
-            <form onSubmit={create} className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-              <h2 className="flex items-center gap-2 text-sm font-bold text-gray-900">
+            <form onSubmit={create} className="rounded-[28px] border border-white/10 bg-ink-raised p-6 ">
+              <h2 className="flex items-center gap-2 text-sm font-bold text-white">
                 <UserPlus size={16} /> Novo usuário
               </h2>
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -225,11 +226,11 @@ export default function UsuariosPage() {
                       </option>
                     ))}
                   </select>
-                  <span className="mt-1 block text-xs text-gray-500">{ROLE_HELP[form.role]}</span>
+                  <span className="mt-1 block text-xs text-ink-muted">{ROLE_HELP[form.role]}</span>
                 </label>
               </div>
-              <p className="mt-4 text-xs text-gray-500">Passe a senha à pessoa por um canal privado. A senha nunca aparece de novo aqui; para mudar, use “Trocar senha”.</p>
-              <button type="submit" disabled={busy} className="mt-5 inline-flex items-center gap-2 rounded-xl bg-red-600 px-6 py-3 text-sm font-bold text-white shadow-md shadow-red-600/20 hover:bg-red-700 disabled:opacity-60">
+              <p className="mt-4 text-xs text-ink-muted">Passe a senha à pessoa por um canal privado. A senha nunca aparece de novo aqui; para mudar, use “Trocar senha”.</p>
+              <button type="submit" disabled={busy} className="mt-5 inline-flex items-center gap-2 rounded-full bg-red-600 px-6 py-3 text-sm font-bold text-white hover:bg-red-700 disabled:opacity-60">
                 {busy ? <Loader2 size={16} className="animate-spin" /> : <UserPlus size={16} />}
                 Criar usuário
               </button>

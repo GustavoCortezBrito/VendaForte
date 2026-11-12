@@ -34,6 +34,7 @@ import {
 } from 'lucide-react'
 import { useCallback, useEffect } from 'react'
 
+import { notify } from '@/components/admin/Feedback'
 interface RichTextEditorProps {
   content: string
   onChange: (html: string) => void
@@ -59,14 +60,14 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
         inline: false,
         allowBase64: true,
         HTMLAttributes: {
-          class: 'rounded-lg shadow-lg max-w-full h-auto cursor-move hover:shadow-2xl transition-all my-4',
+          class: 'rounded-lg max-w-full h-auto cursor-move hover:shadow-[0_24px_60px_-12px_rgba(0,0,0,0.8)] transition my-4',
           style: 'max-width: 100%;',
         },
       }),
       LinkExtension.configure({
         openOnClick: false,
         HTMLAttributes: {
-          class: 'text-red-600 underline hover:text-red-700',
+          class: 'text-red-500 underline hover:text-red-300',
         },
       }),
       TextAlign.configure({
@@ -89,7 +90,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
     content,
     editorProps: {
       attributes: {
-        class: 'prose prose-lg max-w-none focus:outline-none min-h-[500px] p-6',
+        class: 'prose prose-lg prose-invert max-w-none focus:outline-none min-h-[500px] p-6',
       },
       handleDrop: (view, event, slice, moved) => {
         if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
@@ -220,7 +221,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           
           if (!response.ok) {
             const error = await response.json()
-            alert(error.error || 'Erro ao fazer upload')
+            notify(error.error || 'Erro ao fazer upload')
             return
           }
           
@@ -230,7 +231,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           editor?.chain().focus().setImage({ src: data.url }).run()
         } catch (error) {
           console.error('Erro ao fazer upload:', error)
-          alert('Erro ao fazer upload da imagem')
+          notify('Erro ao fazer upload da imagem')
         }
       }
     }
@@ -257,16 +258,16 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
   }
 
   return (
-    <div className="border-2 border-gray-200 rounded-xl overflow-hidden bg-white">
+    <div className="border border-white/10 rounded-xl overflow-hidden bg-ink-raised">
       {/* Barra de Ferramentas */}
-      <div className="border-b-2 border-gray-200 bg-gray-50 p-4 flex flex-wrap gap-2">
+      <div className="border-b border-white/10 bg-white/[0.03] p-4 flex flex-wrap gap-2">
         {/* Títulos */}
-        <div className="flex gap-1 border-r border-gray-300 pr-2">
+        <div className="flex gap-1 border-r border-white/15 pr-2">
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive('heading', { level: 1 }) ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive('heading', { level: 1 }) ? 'bg-white/20' : ''
+ }`}
             title="Título 1"
             type="button"
           >
@@ -274,9 +275,9 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           </button>
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive('heading', { level: 2 }) ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive('heading', { level: 2 }) ? 'bg-white/20' : ''
+ }`}
             title="Título 2"
             type="button"
           >
@@ -284,9 +285,9 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           </button>
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive('heading', { level: 3 }) ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive('heading', { level: 3 }) ? 'bg-white/20' : ''
+ }`}
             title="Título 3"
             type="button"
           >
@@ -295,12 +296,12 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
         </div>
 
         {/* Formatação de texto */}
-        <div className="flex gap-1 border-r border-gray-300 pr-2">
+        <div className="flex gap-1 border-r border-white/15 pr-2">
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive('bold') ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive('bold') ? 'bg-white/20' : ''
+ }`}
             title="Negrito"
             type="button"
           >
@@ -308,9 +309,9 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           </button>
           <button
             onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive('italic') ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive('italic') ? 'bg-white/20' : ''
+ }`}
             title="Itálico"
             type="button"
           >
@@ -318,9 +319,9 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           </button>
           <button
             onClick={() => editor.chain().focus().toggleUnderline().run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive('underline') ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive('underline') ? 'bg-white/20' : ''
+ }`}
             title="Sublinhado"
             type="button"
           >
@@ -329,12 +330,12 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
         </div>
 
         {/* Listas */}
-        <div className="flex gap-1 border-r border-gray-300 pr-2">
+        <div className="flex gap-1 border-r border-white/15 pr-2">
           <button
             onClick={() => editor.chain().focus().toggleBulletList().run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive('bulletList') ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive('bulletList') ? 'bg-white/20' : ''
+ }`}
             title="Lista com marcadores"
             type="button"
           >
@@ -342,9 +343,9 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           </button>
           <button
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive('orderedList') ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive('orderedList') ? 'bg-white/20' : ''
+ }`}
             title="Lista numerada"
             type="button"
           >
@@ -353,12 +354,12 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
         </div>
 
         {/* Alinhamento */}
-        <div className="flex gap-1 border-r border-gray-300 pr-2">
+        <div className="flex gap-1 border-r border-white/15 pr-2">
           <button
             onClick={() => editor.chain().focus().setTextAlign('left').run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive({ textAlign: 'left' }) ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive({ textAlign: 'left' }) ? 'bg-white/20' : ''
+ }`}
             title="Alinhar à esquerda"
             type="button"
           >
@@ -366,9 +367,9 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           </button>
           <button
             onClick={() => editor.chain().focus().setTextAlign('center').run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive({ textAlign: 'center' }) ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive({ textAlign: 'center' }) ? 'bg-white/20' : ''
+ }`}
             title="Centralizar"
             type="button"
           >
@@ -376,9 +377,9 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           </button>
           <button
             onClick={() => editor.chain().focus().setTextAlign('right').run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive({ textAlign: 'right' }) ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive({ textAlign: 'right' }) ? 'bg-white/20' : ''
+ }`}
             title="Alinhar à direita"
             type="button"
           >
@@ -387,12 +388,12 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
         </div>
 
         {/* Outros */}
-        <div className="flex gap-1 border-r border-gray-300 pr-2">
+        <div className="flex gap-1 border-r border-white/15 pr-2">
           <button
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive('blockquote') ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive('blockquote') ? 'bg-white/20' : ''
+ }`}
             title="Citação"
             type="button"
           >
@@ -400,9 +401,9 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           </button>
           <button
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive('codeBlock') ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive('codeBlock') ? 'bg-white/20' : ''
+ }`}
             title="Bloco de código"
             type="button"
           >
@@ -411,12 +412,12 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
         </div>
 
         {/* Mídia e Links */}
-        <div className="flex gap-1 border-r border-gray-300 pr-2">
+        <div className="flex gap-1 border-r border-white/15 pr-2">
           <button
             onClick={setLink}
-            className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-              editor.isActive('link') ? 'bg-gray-300' : ''
-            }`}
+            className={`p-2 rounded hover:bg-white/15 transition-colors ${
+ editor.isActive('link') ? 'bg-white/20' : ''
+ }`}
             title="Inserir link"
             type="button"
           >
@@ -424,7 +425,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           </button>
           <button
             onClick={addImage}
-            className="p-2 rounded hover:bg-gray-200 transition-colors"
+            className="p-2 rounded hover:bg-white/15 transition-colors"
             title="Inserir imagem (selecionar arquivo)"
             type="button"
           >
@@ -433,10 +434,10 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
         </div>
 
         {/* Tabela: inserir e, com o cursor dentro dela, editar linhas e colunas */}
-        <div className="flex flex-wrap items-center gap-1 border-r border-gray-300 pr-2">
+        <div className="flex flex-wrap items-center gap-1 border-r border-white/15 pr-2">
           <button
             onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}
-            className="p-2 rounded hover:bg-gray-200 transition-colors"
+            className="p-2 rounded hover:bg-white/15 transition-colors"
             title="Inserir tabela (3 × 3, com linha de título)"
             type="button"
           >
@@ -454,7 +455,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
                 <button
                   key={label}
                   onClick={run}
-                  className="rounded px-2 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-200 transition-colors"
+                  className="rounded px-2 py-1 text-xs font-semibold text-neutral-200 hover:bg-white/15 transition-colors"
                   title={title}
                   type="button"
                 >
@@ -470,7 +471,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           <button
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().undo()}
-            className="p-2 rounded hover:bg-gray-200 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="p-2 rounded hover:bg-white/15 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             title="Desfazer"
             type="button"
           >
@@ -479,7 +480,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           <button
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().redo()}
-            className="p-2 rounded hover:bg-gray-200 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="p-2 rounded hover:bg-white/15 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             title="Refazer"
             type="button"
           >
@@ -492,9 +493,9 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
       <EditorContent editor={editor} />
       
       {/* Dicas de Uso */}
-      <div className="border-t-2 border-gray-200 bg-blue-50 p-4 text-sm text-blue-800">
+      <div className="border-t border-white/10 bg-sky-500/10 p-4 text-sm text-sky-300">
         <div className="flex items-start gap-3">
-          <div className="text-blue-600 font-bold text-xl">💡</div>
+          <div className="text-sky-400 font-bold text-xl">💡</div>
           <div>
             <p className="font-semibold mb-2">Dicas de uso:</p>
             <ul className="space-y-1.5 text-xs">

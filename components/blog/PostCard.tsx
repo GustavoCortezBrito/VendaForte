@@ -12,19 +12,22 @@ interface PostCardProps {
 /** Cartão de um post na listagem, nos resultados da busca e nos "relacionados". */
 export default function PostCard({ post, priority = false }: PostCardProps) {
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-raised transition duration-300 hover:border-white/15 focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2">
-      <div className="relative aspect-[16/9] overflow-hidden bg-ink-raised">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised transition-colors duration-500 hover:border-white/25 focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2">
+      <div className="relative m-2 aspect-[16/9] overflow-hidden rounded-[22px] bg-ink-raised">
         <PostImage
           src={post.image}
           alt={`Capa do artigo: ${post.title}`}
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 400px"
           priority={priority}
-          className="transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          className="transition-transform duration-700 ease-out group-hover:scale-[1.05]"
         />
+        <span className="absolute left-3 top-3 flex items-center gap-2 rounded-full border border-white/15 bg-ink/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md">
+          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-red-500" />
+          {categoryOf(post)}
+        </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-6">
-        <p className="text-xs font-bold text-red-500">{categoryOf(post)}</p>
+      <div className="flex flex-1 flex-col p-6 pt-4">
         <h3 className="mt-2 text-balance text-xl font-bold leading-snug text-white transition-colors group-hover:text-red-400">
           <Link
             href={`/blog/${post.slug}`}

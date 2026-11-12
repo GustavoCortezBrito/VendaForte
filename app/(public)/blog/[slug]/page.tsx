@@ -9,6 +9,7 @@ import PostImage from '@/components/blog/PostImage'
 import TableOfContents from '@/components/blog/TableOfContents'
 import { BTN_LINE, CONTAINER, PROSE } from '@/components/blog/styles'
 import { whatsappUrl } from '@/components/promo/promo.config'
+import { Reveal } from '@/components/promo/ui'
 import { getPost, listPosts } from '@/lib/blog-data'
 import { categoryOf, formatPostDate, postDateTime, relatedPosts, slugifyText } from '@/lib/blog-format'
 import { productForPost } from '@/lib/blog-products'
@@ -117,7 +118,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
       {/* ---------------- Cabeçalho do artigo ---------------- */}
       <header className={`${CONTAINER} pt-32 lg:pt-36`}>
-        <nav aria-label="Você está em" className="flex flex-wrap items-center gap-1.5 text-sm text-neutral-400">
+        <nav aria-label="Você está em" className="rise flex flex-wrap items-center gap-1.5 text-sm text-neutral-400">
           <Link href="/blog" className="transition-colors hover:text-red-400">
             Blog Venda Forte
           </Link>
@@ -132,9 +133,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             {post.title}
           </h1>
           {post.description && (
-            <p className="mt-6 max-w-3xl text-pretty text-xl leading-relaxed text-neutral-400">{post.description}</p>
+            <p className="rise mt-6 max-w-3xl text-pretty text-xl leading-relaxed text-neutral-400" style={{ "--delay": "0.1s" } as React.CSSProperties}>
+              {post.description}
+            </p>
           )}
-          <div className="mt-8 flex items-center gap-3 text-sm text-neutral-400">
+          <div className="rise mt-8 flex items-center gap-3 text-sm text-neutral-400" style={{ "--delay": "0.2s" } as React.CSSProperties}>
             <span
               aria-hidden="true"
               className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-red-600 font-bold text-white"
@@ -150,8 +153,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </div>
         </div>
 
-        <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised">
-          <PostImage src={post.image || '/sede.png'} alt={post.title} sizes="(max-width: 1280px) 100vw, 1216px" priority />
+        <div className="rise relative mt-10 aspect-[16/9] overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised" style={{ "--delay": "0.3s" } as React.CSSProperties}>
+          <div className="hero-kenburns absolute inset-0">
+            <PostImage src={post.image || '/sede.png'} alt={post.title} sizes="(max-width: 1280px) 100vw, 1216px" priority />
+          </div>
         </div>
       </header>
 
@@ -229,16 +234,18 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <div className={CONTAINER}>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <h2 id="continue-lendo" className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Continue <span className="text-red-500">lendo</span>
+                Continue lendo
               </h2>
               <Link href="/blog" className={BTN_LINE}>
                 Ver todos os artigos
               </Link>
             </div>
             <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((item) => (
+              {related.map((item, index) => (
                 <li key={item.slug}>
-                  <PostCard post={item} />
+                  <Reveal delay={index * 0.08} className="h-full">
+                    <PostCard post={item} />
+                  </Reveal>
                 </li>
               ))}
             </ul>

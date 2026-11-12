@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import type { BlogPostSummary } from '@/lib/blog-format'
 import type { BlogProduct } from '@/lib/blog-products'
+import { Reveal } from '@/components/promo/ui'
 import { CONTAINER, EYEBROW, H2 } from './styles'
 
 export interface Guide {
@@ -15,20 +16,19 @@ export default function GuideCards({ guides }: { guides: Guide[] }) {
   return (
     <section className="bg-ink pt-16 lg:pt-24" aria-labelledby="guias-maquina">
       <div className={CONTAINER}>
-        <div className="mx-auto max-w-3xl text-center">
+        <Reveal className="mx-auto max-w-3xl text-center">
           <span className={EYEBROW}>Guias por máquina</span>
           <h2 id="guias-maquina" className={`${H2} mt-5 text-balance`}>
-            As três máquinas da campanha, <span className="text-red-500">explicadas</span>
+            As três máquinas da campanha, explicadas
           </h2>
-        </div>
+        </Reveal>
 
         <ul className="mt-12 grid gap-6 lg:grid-cols-3">
-          {guides.map(({ product, post }) => (
-            <li
-              key={product.id}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-raised transition duration-300 focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2"
-            >
-              <div className="relative aspect-[16/9] overflow-hidden bg-ink-raised">
+          {guides.map(({ product, post }, index) => (
+            <li key={product.id}>
+              <Reveal delay={index * 0.08} className="h-full">
+                <div className="group relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised transition-colors duration-500 hover:border-white/25 focus-within:ring-2 focus-within:ring-red-500 focus-within:ring-offset-2">
+              <div className="relative m-2 aspect-[16/9] overflow-hidden rounded-[22px] bg-ink-raised">
                 <Image
                   src={product.image}
                   alt={product.imageAlt}
@@ -60,6 +60,8 @@ export default function GuideCards({ guides }: { guides: Guide[] }) {
                   </Link>
                 </div>
               </div>
+                </div>
+              </Reveal>
             </li>
           ))}
         </ul>

@@ -29,7 +29,7 @@ export default function BlogListing({ posts }: { posts: BlogPostSummary[] }) {
         eyebrow="Blog Venda Forte"
         title={
           <>
-            Conteúdo técnico para quem <span className="whitespace-nowrap text-red-500">compra e opera</span> empilhadeiras
+            Conteúdo técnico para quem <span className="whitespace-nowrap">compra e opera</span> empilhadeiras
           </>
         }
         intro="Fichas técnicas explicadas, comparativos e guias de decisão sobre a linha EP Equipment de lítio, escritos pela equipe da Venda Forte."

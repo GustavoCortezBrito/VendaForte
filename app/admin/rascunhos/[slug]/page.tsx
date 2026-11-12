@@ -24,9 +24,9 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 const LEVEL = {
-  ok: { Icon: CheckCircle2, color: 'text-green-600', label: 'Certo' },
-  aviso: { Icon: AlertTriangle, color: 'text-amber-600', label: 'Atenção' },
-  erro: { Icon: XCircle, color: 'text-red-600', label: 'Corrigir' },
+  ok: { Icon: CheckCircle2, color: 'text-emerald-400', label: 'Certo' },
+  aviso: { Icon: AlertTriangle, color: 'text-amber-400', label: 'Atenção' },
+  erro: { Icon: XCircle, color: 'text-red-500', label: 'Corrigir' },
 } as const
 
 export default async function PostPreviewPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -46,13 +46,13 @@ export default async function PostPreviewPage({ params }: { params: Promise<{ sl
   const shownDate = post.published ? (post.publishedAt ?? post.updatedAt ?? '') : new Date().toISOString()
 
   const banner = post.published
-    ? { tone: 'border-green-200 bg-green-50 text-green-900', text: 'Publicado: este post está no ar. Esta é uma visualização dentro do painel.' }
+    ? { tone: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300', text: 'Publicado: este post está no ar. Esta é uma visualização dentro do painel.' }
     : post.source === 'arquivo'
-      ? { tone: 'border-blue-200 bg-blue-50 text-blue-900', text: 'Texto pronto, ainda fora do painel. Importe para poder editar e publicar.' }
-      : { tone: 'border-amber-200 bg-amber-50 text-amber-900', text: 'Rascunho: só aparece para quem está logado no painel. No site, este texto ainda não existe.' }
+      ? { tone: 'border-sky-500/30 bg-sky-500/10 text-sky-300', text: 'Texto pronto, ainda fora do painel. Importe para poder editar e publicar.' }
+      : { tone: 'border-amber-500/30 bg-amber-500/10 text-amber-300', text: 'Rascunho: só aparece para quem está logado no painel. No site, este texto ainda não existe.' }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-ink-raised">
       <DraftsHeader />
 
       <div className={`border-b ${banner.tone}`}>
@@ -67,15 +67,15 @@ export default async function PostPreviewPage({ params }: { params: Promise<{ sl
 
       {/* Quadro de conferência e ações */}
       <section className={`${CONTAINER} mt-8`} aria-labelledby="conferencia">
-        <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h2 id="conferencia" className="flex items-center gap-2 text-lg font-extrabold text-gray-900">
-                <ListChecks size={20} className="text-red-600" aria-hidden="true" />
+              <h2 id="conferencia" className="flex items-center gap-2 text-lg font-extrabold text-white">
+                <ListChecks size={20} className="text-red-500" aria-hidden="true" />
                 {post.published ? 'Conferência do post' : 'Antes de publicar'}
               </h2>
-              <p className="mt-1 text-sm text-gray-500">
-                Endereço: <span className="font-mono font-semibold text-gray-800">/blog/{post.slug}</span>
+              <p className="mt-1 text-sm text-ink-muted">
+                Endereço: <span className="font-mono font-semibold text-neutral-100">/blog/{post.slug}</span>
                 {post.plannedDate && <> · previsto para {formatPostDate(post.plannedDate)}</>}
               </p>
             </div>
@@ -85,14 +85,14 @@ export default async function PostPreviewPage({ params }: { params: Promise<{ sl
           <div className="mt-5 grid gap-6 md:grid-cols-2">
             {post.source === 'arquivo' && (
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500">O que falta ({post.pending.length})</h3>
+                <h3 className="text-xs font-bold text-ink-muted">O que falta ({post.pending.length})</h3>
                 {post.pending.length === 0 ? (
-                  <p className="mt-2 text-sm text-gray-600">Nenhuma pendência anotada.</p>
+                  <p className="mt-2 text-sm text-neutral-400">Nenhuma pendência anotada.</p>
                 ) : (
                   <ul className="mt-3 space-y-2">
                     {post.pending.map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-sm text-gray-800">
-                        <span aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 rounded border-2 border-gray-300 bg-white" />
+                      <li key={item} className="flex items-start gap-2.5 text-sm text-neutral-100">
+                        <span aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 rounded border border-white/15 bg-ink-raised" />
                         {item}
                       </li>
                     ))}
@@ -102,12 +102,12 @@ export default async function PostPreviewPage({ params }: { params: Promise<{ sl
             )}
 
             <div className={post.source === 'arquivo' ? undefined : 'md:col-span-2'}>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500">Conferência automática</h3>
+              <h3 className="text-xs font-bold text-ink-muted">Conferência automática</h3>
               <ul className="mt-3 space-y-2">
                 {post.checks.map((check) => {
                   const { Icon, color, label } = LEVEL[check.level]
                   return (
-                    <li key={check.text} className="flex items-start gap-2.5 text-sm text-gray-800">
+                    <li key={check.text} className="flex items-start gap-2.5 text-sm text-neutral-100">
                       <Icon size={17} className={`mt-0.5 shrink-0 ${color}`} aria-hidden="true" />
                       <span>
                         <span className="sr-only">{label}: </span>
@@ -150,7 +150,7 @@ export default async function PostPreviewPage({ params }: { params: Promise<{ sl
             </div>
           </div>
 
-          <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-3xl border border-white/10 bg-ink-raised shadow-xl">
+          <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised shadow-[0_24px_60px_-12px_rgba(0,0,0,0.8)]">
             <PostImage src={post.image || '/sede.png'} alt={post.title} sizes="(max-width: 1280px) 100vw, 1216px" priority />
           </div>
         </header>

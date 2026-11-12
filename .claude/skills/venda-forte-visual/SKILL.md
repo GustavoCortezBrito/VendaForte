@@ -1,11 +1,11 @@
 ---
 name: venda-forte-visual
-description: Visual do site público do Grupo Venda Forte (tema escuro da /promo). Use ao criar ou mudar qualquer página, seção, botão, cartão, imagem ou vídeo do site fora do /admin, para sair igual ao que já existe.
+description: Visual do site e do painel do Grupo Venda Forte (tema escuro da /promo). Use ao criar ou mudar qualquer página, seção, botão, cartão, imagem ou vídeo do site ou do /admin, para sair igual ao que já existe.
 ---
 
 # Visual do site Venda Forte
 
-Tema criado com a ideia do theme-factory ("Venda Forte Ink") sobre a campanha `/promo`. O guia completo,
+Tema criado com a ideia do theme-factory ("Venda Forte Ink") sobre a campanha `/promo`. Vale também para o painel `/admin`, os termos e a privacidade. O guia completo,
 com as peças e o passo a passo das imagens e vídeos do Higgsfield, é `docs/site/README.md`. Leia a seção
 que interessa antes de mexer; abaixo está só o que não pode ser esquecido.
 
@@ -29,11 +29,17 @@ Seção `SECTION` + `CONTAINER`, título `TITLE`, rótulo `EYEBROW`, texto `LEAD
 botões `BTN_PRIMARY` / `BTN_GHOST` / `BTN_WHATSAPP`, campo `INPUT` + `LABEL`, entrada ao rolar `Reveal`.
 Cartão `rounded-[28px] border-white/10`, botão em pílula, título com `tracking-[-0.035em]`.
 
+## Painel administrativo
+
+Mesmo fundo e mesmas peças. Use `components/admin/AdminNav.tsx` (cápsula com `crumb`, `progress` e ações), as classes de `components/admin/ui.ts`
+(`BTN_PRIMARY`, `BTN_ICON`, `CHIP_ON/OFF`, `BADGE_*`) e, no lugar de `alert` e `confirm`, `notify` e `askConfirm` de `components/admin/Feedback.tsx`.
+Páginas de texto longo usam `components/site/LegalLayout.tsx`. Foto de produto usa `PHOTO_STUDIO`.
+
 ## Regras de leitura (o usuário pediu pouca informação por tela)
 
 - Uma ideia por seção: rótulo, título, uma frase, e o conteúdo. Lista longa vira "Ver todas".
 - Título todo branco; o vermelho fica em rótulo, ícone e botão.
-- Foto de produto tem fundo branco (`mix-blend-mode: multiply`): moldura `bg-white`.
+- Foto de produto tem fundo branco (`mix-blend-mode: multiply`): moldura clara com `PHOTO_STUDIO` (ou `bg-white` em miniatura).
 
 ## Acessibilidade (ui-ux-pro-max + Vercel Web Interface Guidelines)
 

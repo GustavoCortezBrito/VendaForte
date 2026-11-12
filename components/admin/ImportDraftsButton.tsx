@@ -48,13 +48,13 @@ export default function ImportDraftsButton({ count }: { count: number }) {
         type="button"
         onClick={run}
         disabled={busy}
-        className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-ink transition-colors hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {busy ? <Loader2 size={16} className="animate-spin" aria-hidden="true" /> : <Download size={16} aria-hidden="true" />}
         {busy ? 'Importando...' : `Importar ${count} ${count === 1 ? 'texto' : 'textos'} para o painel`}
       </button>
       {message && (
-        <p role="status" className={`max-w-md text-sm font-medium ${message.ok ? 'text-green-700' : 'text-red-600'}`}>
+        <p role="status" className={`max-w-md text-sm font-medium ${message.ok ? 'text-emerald-400' : 'text-red-500'}`}>
           {message.text}
         </p>
       )}

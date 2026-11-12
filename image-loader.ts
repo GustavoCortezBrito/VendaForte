@@ -17,6 +17,9 @@ const WIDTHS = [384, 640, 1080, 1920]
 const snap = (width: number) => WIDTHS.find((candidate) => candidate >= width) ?? WIDTHS[WIDTHS.length - 1]
 
 export default function imageLoader({ src, width, quality }: { src: string; width: number; quality?: number }) {
+  // Foto de produto sem fundo (app/api/foto): a rota aceita só as larguras da lista
+  if (src.startsWith('/api/foto')) return src.replace(/&w=\d+/, `&w=${snap(width)}`)
+
   if (/^https?:\/\/cdn\.ep-portal\.net\//.test(src)) return src
 
   if (/^https?:\/\//.test(src)) {

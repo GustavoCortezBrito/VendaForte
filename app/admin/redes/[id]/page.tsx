@@ -20,23 +20,23 @@ import {
 } from '@/lib/social'
 
 const FIELD =
-  'w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-100 disabled:bg-gray-50 disabled:text-gray-600'
+  'w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-ink-muted focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500/20 disabled:bg-white/[0.03] disabled:text-neutral-400'
 const BUTTON =
   'inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600'
 
 const ACTION_BUTTON: Record<Action, { label: string; icon: typeof Send; style: string }> = {
-  enviar: { label: 'Mandar para aprovação', icon: Send, style: 'bg-red-600 text-white shadow-md shadow-red-600/20 hover:bg-red-700' },
-  aprovar: { label: 'Aprovar', icon: CheckCircle2, style: 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 hover:bg-emerald-700' },
-  ajustes: { label: 'Pedir ajustes', icon: XCircle, style: 'border border-orange-300 bg-orange-50 text-orange-900 hover:bg-orange-100' },
-  publicar: { label: 'Marcar como publicado', icon: Check, style: 'bg-sky-600 text-white shadow-md shadow-sky-600/20 hover:bg-sky-700' },
-  voltar: { label: 'Voltar para rascunho', icon: Undo2, style: 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-50' },
+  enviar: { label: 'Mandar para aprovação', icon: Send, style: 'bg-red-600 text-white hover:bg-red-700' },
+  aprovar: { label: 'Aprovar', icon: CheckCircle2, style: 'bg-emerald-600 text-white hover:bg-emerald-700' },
+  ajustes: { label: 'Pedir ajustes', icon: XCircle, style: 'border border-orange-500/40 bg-orange-500/10 text-orange-300 hover:bg-orange-500/15' },
+  publicar: { label: 'Marcar como publicado', icon: Check, style: 'bg-sky-600 text-white hover:bg-sky-700' },
+  voltar: { label: 'Voltar para rascunho', icon: Undo2, style: 'border border-white/10 bg-ink-raised text-neutral-200 hover:bg-white/[0.06]' },
 }
 
 const KIND_LABEL: Record<SocialComment['kind'], string> = { comentario: 'Comentário', aprovado: 'Aprovou', ajustes: 'Pediu ajustes' }
 const KIND_STYLE: Record<SocialComment['kind'], string> = {
-  comentario: 'bg-gray-100 text-gray-700',
-  aprovado: 'bg-emerald-100 text-emerald-800',
-  ajustes: 'bg-orange-100 text-orange-800',
+  comentario: 'bg-white/[0.06] text-neutral-200',
+  aprovado: 'bg-emerald-500/15 text-emerald-300',
+  ajustes: 'bg-orange-500/15 text-orange-300',
 }
 
 const when = (iso: string) =>
@@ -155,52 +155,52 @@ export default function RedeDetalhePage() {
   const actions = post && me ? (Object.keys(ACTION_BUTTON) as Action[]).filter((a) => nextStatus(a, post.status, me.role, { caption: post.caption }).ok) : []
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
+    <div className="min-h-screen bg-ink ">
       <AdminNav active="redes" />
 
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <Link href="/admin/redes" className="mb-6 inline-flex items-center gap-2 text-xs font-semibold text-gray-600 hover:text-red-600">
+        <Link href="/admin/redes" className="mb-6 inline-flex items-center gap-2 text-xs font-semibold text-neutral-400 hover:text-red-400">
           <ArrowLeft size={14} /> Voltar para as redes sociais
         </Link>
 
         {loading ? (
           <div className="flex justify-center py-32">
-            <Loader2 className="animate-spin text-red-600" size={32} />
+            <Loader2 className="animate-spin text-red-500" size={32} />
           </div>
         ) : error || !post ? (
-          <div role="alert" className="rounded-2xl border border-red-200 bg-red-50 p-6 text-sm font-semibold text-red-800">
+          <div role="alert" className="rounded-2xl border border-red-500/30 bg-red-500/10 p-6 text-sm font-semibold text-red-300">
             <AlertTriangle size={18} className="mb-2" /> {error || 'Texto não encontrado.'}
           </div>
         ) : (
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
             <div className="space-y-6">
-              <header className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+              <header className="rounded-[28px] border border-white/10 bg-ink-raised p-6 ">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className={`rounded-full border px-3 py-1 text-[11px] font-bold ${CHANNEL_STYLE[post.channel]}`}>{post.channel}</span>
-                  <span className="text-xs font-bold tabular-nums text-gray-700">
+                  <span className="text-xs font-bold tabular-nums text-neutral-200">
                     {weekdayShort(post.scheduled_for)} {shortDate(post.scheduled_for)}
                   </span>
                   <span className={`rounded-full border px-3 py-1 text-[11px] font-bold ${STATUS_STYLE[post.status]}`}>{STATUS_LABEL[post.status]}</span>
                   {post.conditional && (
-                    <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-[11px] font-bold text-gray-600">Depende de confirmação</span>
+                    <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-bold text-neutral-400">Depende de confirmação</span>
                   )}
                 </div>
-                <h1 className="mt-4 text-xl font-bold leading-snug text-gray-900 sm:text-2xl">{post.title}</h1>
-                <p className="mt-2 text-sm text-gray-600">
+                <h1 className="mt-4 text-xl font-bold leading-snug text-white sm:text-2xl">{post.title}</h1>
+                <p className="mt-2 text-sm text-neutral-400">
                   {post.post_number ? `Ligado ao post ${post.post_number} do blog: “${post.post_title}”.` : 'Não está ligado a um post do blog.'}
                   {post.owner ? ` Responsável: ${post.owner}.` : ''}
                 </p>
               </header>
 
-              <section className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+              <section className="rounded-[28px] border border-white/10 bg-ink-raised p-6 ">
                 <div className="mb-2 flex items-center justify-between gap-3">
-                  <label htmlFor="legenda" className="text-sm font-bold text-gray-900">
+                  <label htmlFor="legenda" className="text-sm font-bold text-white">
                     Legenda
                   </label>
                   <button
                     onClick={() => copy(caption, 'legenda')}
                     disabled={!caption.trim()}
-                    className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 disabled:opacity-40"
+                    className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-neutral-400 hover:bg-white/10 disabled:opacity-40"
                   >
                     {copied === 'legenda' ? <Check size={14} /> : <Copy size={14} />}
                     {copied === 'legenda' ? 'Copiada' : 'Copiar legenda'}
@@ -215,15 +215,15 @@ export default function RedeDetalhePage() {
                   placeholder={mayEdit ? 'Escreva a legenda como vai aparecer na rede.' : 'O Gustavo ainda não escreveu a legenda.'}
                   className={FIELD}
                 />
-                <p className={`mt-2 text-xs font-semibold tabular-nums ${over ? 'text-red-600' : 'text-gray-500'}`}>
+                <p className={`mt-2 text-xs font-semibold tabular-nums ${over ? 'text-red-500' : 'text-ink-muted'}`}>
                   {caption.length} de {limit} caracteres no {post.channel}
                 </p>
 
                 {post.link && (
-                  <div className="mt-5 rounded-xl border border-gray-200 bg-gray-50 p-4">
-                    <p className="text-xs font-bold uppercase tracking-wider text-gray-500">Link com rastreio (vai na legenda)</p>
-                    <p className="mt-1 break-all text-xs text-gray-700">{post.link}</p>
-                    <button onClick={() => copy(post.link!, 'link')} className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-red-600 hover:underline">
+                  <div className="mt-5 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                    <p className="text-xs font-bold text-ink-muted">Link com rastreio (vai na legenda)</p>
+                    <p className="mt-1 break-all text-xs text-neutral-200">{post.link}</p>
+                    <button onClick={() => copy(post.link!, 'link')} className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-red-500 hover:underline">
                       {copied === 'link' ? <Check size={14} /> : <Copy size={14} />}
                       {copied === 'link' ? 'Copiado' : 'Copiar link'}
                     </button>
@@ -232,7 +232,7 @@ export default function RedeDetalhePage() {
 
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="arte-link" className="mb-1 block text-xs font-bold uppercase tracking-wider text-gray-500">
+                    <label htmlFor="arte-link" className="mb-1 block text-xs font-bold text-ink-muted">
                       Link da arte
                     </label>
                     <input
@@ -244,13 +244,13 @@ export default function RedeDetalhePage() {
                       className={FIELD}
                     />
                     {artUrl && /^https?:\/\//i.test(artUrl) && (
-                      <a href={artUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-xs font-semibold text-red-600 hover:underline">
+                      <a href={artUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-xs font-semibold text-red-500 hover:underline">
                         Abrir a arte
                       </a>
                     )}
                   </div>
                   <div>
-                    <label htmlFor="arte-nota" className="mb-1 block text-xs font-bold uppercase tracking-wider text-gray-500">
+                    <label htmlFor="arte-nota" className="mb-1 block text-xs font-bold text-ink-muted">
                       O que a arte mostra
                     </label>
                     <textarea id="arte-nota" value={artNote} onChange={(e) => setArtNote(e.target.value)} disabled={locked} rows={3} className={FIELD} />
@@ -262,34 +262,34 @@ export default function RedeDetalhePage() {
                     <button
                       onClick={() => send({ caption, art_url: artUrl, art_note: artNote }, 'Salvo.')}
                       disabled={busy || !dirty || over || post.status === 'publicado'}
-                      className={`${BUTTON} bg-gray-900 text-white hover:bg-gray-800`}
+                      className={`${BUTTON} bg-white text-ink hover:bg-neutral-200`}
                     >
                       {busy ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
                       Salvar
                     </button>
                     {(post.status === 'em_aprovacao' || post.status === 'aprovado') && dirty && (
-                      <p className="text-xs font-semibold text-amber-700">Mudar a legenda devolve o texto para rascunho: a aprovação vale só para o que foi aprovado.</p>
+                      <p className="text-xs font-semibold text-amber-400">Mudar a legenda devolve o texto para rascunho: a aprovação vale só para o que foi aprovado.</p>
                     )}
-                    {post.status === 'publicado' && <p className="text-xs font-semibold text-gray-500">Já publicado. Volte para rascunho para alterar.</p>}
+                    {post.status === 'publicado' && <p className="text-xs font-semibold text-ink-muted">Já publicado. Volte para rascunho para alterar.</p>}
                   </div>
                 )}
               </section>
             </div>
 
             <aside className="space-y-6">
-              <section className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm" aria-label="Andamento">
-                <h2 className="text-sm font-bold text-gray-900">Andamento</h2>
+              <section className="rounded-[28px] border border-white/10 bg-ink-raised p-6 " aria-label="Andamento">
+                <h2 className="text-sm font-bold text-white">Andamento</h2>
                 {post.reviewed_at && (post.status === 'aprovado' || post.status === 'ajustes') && (
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-ink-muted">
                     {post.status === 'aprovado' ? 'Aprovado' : 'Ajustes pedidos'} em {when(post.reviewed_at)}.
                   </p>
                 )}
-                {dirty && actions.length > 0 && <p className="mt-3 text-xs font-semibold text-amber-700">Salve as mudanças antes de mudar o andamento.</p>}
+                {dirty && actions.length > 0 && <p className="mt-3 text-xs font-semibold text-amber-400">Salve as mudanças antes de mudar o andamento.</p>}
                 {actions.includes('ajustes') && !comment.trim() && (
-                  <p className="mt-3 text-xs text-gray-500">Para pedir ajustes, escreva o que precisa mudar na caixa de comentário, na conversa abaixo.</p>
+                  <p className="mt-3 text-xs text-ink-muted">Para pedir ajustes, escreva o que precisa mudar na caixa de comentário, na conversa abaixo.</p>
                 )}
                 <div className="mt-4 flex flex-col gap-3">
-                  {actions.length === 0 && <p className="text-xs text-gray-500">Nada para você fazer neste texto agora.</p>}
+                  {actions.length === 0 && <p className="text-xs text-ink-muted">Nada para você fazer neste texto agora.</p>}
                   {actions.map((action) => {
                     const { label, icon: Icon, style } = ACTION_BUTTON[action]
                     const needsComment = action === 'ajustes'
@@ -309,18 +309,18 @@ export default function RedeDetalhePage() {
                 </div>
               </section>
 
-              <section className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm" aria-label="Conversa">
-                <h2 className="text-sm font-bold text-gray-900">Conversa</h2>
+              <section className="rounded-[28px] border border-white/10 bg-ink-raised p-6 " aria-label="Conversa">
+                <h2 className="text-sm font-bold text-white">Conversa</h2>
                 <ul className="mt-4 space-y-4">
-                  {comments.length === 0 && <li className="text-xs text-gray-500">Ninguém comentou ainda.</li>}
+                  {comments.length === 0 && <li className="text-xs text-ink-muted">Ninguém comentou ainda.</li>}
                   {comments.map((c) => (
                     <li key={c.id} className="text-sm">
-                      <p className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
-                        <strong className="text-gray-800">{c.author_name}</strong>
+                      <p className="flex flex-wrap items-center gap-2 text-xs text-ink-muted">
+                        <strong className="text-neutral-100">{c.author_name}</strong>
                         <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${KIND_STYLE[c.kind]}`}>{KIND_LABEL[c.kind]}</span>
                         <span className="tabular-nums">{when(c.created_at)}</span>
                       </p>
-                      {c.body && <p className="mt-1 whitespace-pre-wrap leading-relaxed text-gray-800">{c.body}</p>}
+                      {c.body && <p className="mt-1 whitespace-pre-wrap leading-relaxed text-neutral-100">{c.body}</p>}
                     </li>
                   ))}
                 </ul>
@@ -335,13 +335,13 @@ export default function RedeDetalhePage() {
                   placeholder="Escreva um comentário. Para pedir ajustes, diga o que precisa mudar."
                   className={`${FIELD} mt-5`}
                 />
-                <button onClick={sendComment} disabled={busy || !comment.trim()} className={`${BUTTON} mt-3 w-full border border-gray-200 bg-white text-gray-800 hover:bg-gray-50`}>
+                <button onClick={sendComment} disabled={busy || !comment.trim()} className={`${BUTTON} mt-3 w-full border border-white/10 bg-ink-raised text-neutral-100 hover:bg-white/[0.06]`}>
                   Enviar comentário
                 </button>
               </section>
 
               {message && (
-                <p role="status" className={`rounded-2xl border px-4 py-3 text-sm font-semibold ${message.ok ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : 'border-red-200 bg-red-50 text-red-800'}`}>
+                <p role="status" className={`rounded-2xl border px-4 py-3 text-sm font-semibold ${message.ok ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300' : 'border-red-500/30 bg-red-500/10 text-red-300'}`}>
                   {message.text}
                 </p>
               )}

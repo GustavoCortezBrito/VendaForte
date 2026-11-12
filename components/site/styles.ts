@@ -42,6 +42,19 @@ export const CHIP =
 export const CHIP_ON = `${CHIP} border-white bg-white text-ink`
 export const CHIP_OFF = `${CHIP} border-white/10 text-neutral-400 hover:border-white/25 hover:text-white`
 
+/**
+ * Fundo de estúdio das fotos de produto: as fotos do catálogo são recortes de fundo branco desenhados com
+ * `mix-blend-mode: multiply`, então o quadro precisa ser claro. O degradê suave dá a luz de um estúdio, em
+ * vez do branco chapado que parecia um adesivo no site escuro.
+ */
+/**
+ * Palco escuro para o produto sem fundo (ver lib/product-photo.ts): um foco de luz suave no centro, como o
+ * estúdio da DS3 na /promo.
+ */
+export const PRODUCT_STAGE = 'bg-[radial-gradient(ellipse_at_50%_42%,#2d2d33_0%,#18181b_58%,#0d0d0f_100%)]'
+
+export const PHOTO_STUDIO = 'bg-[radial-gradient(ellipse_at_50%_38%,#ffffff_0%,#f1f2f5_62%,#e3e6eb_100%)]'
+
 /** Etiqueta neutra (cidade, assunto). */
 export const TAG = 'rounded-full border border-white/10 px-4 py-1.5 text-sm font-medium text-neutral-300'
 

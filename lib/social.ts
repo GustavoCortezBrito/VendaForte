@@ -23,11 +23,11 @@ export const STATUS_LABEL: Record<Status, string> = {
 }
 
 export const STATUS_STYLE: Record<Status, string> = {
-  rascunho: 'bg-gray-100 text-gray-700 border-gray-200',
-  em_aprovacao: 'bg-amber-50 text-amber-800 border-amber-200',
-  ajustes: 'bg-orange-50 text-orange-800 border-orange-200',
-  aprovado: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-  publicado: 'bg-sky-50 text-sky-800 border-sky-200',
+  rascunho: 'bg-white/[0.04] text-neutral-300 border-white/10',
+  em_aprovacao: 'bg-amber-500/10 text-amber-300 border-amber-500/30',
+  ajustes: 'bg-orange-500/10 text-orange-300 border-orange-500/30',
+  aprovado: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30',
+  publicado: 'bg-sky-500/10 text-sky-300 border-sky-500/30',
 }
 
 /** Limite de caracteres de cada rede para a legenda; o aviso aparece perto do limite. */

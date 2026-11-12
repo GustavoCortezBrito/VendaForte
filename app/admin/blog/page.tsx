@@ -3,9 +3,12 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import AdminNav from '@/components/admin/AdminNav'
+import PostImage from '@/components/blog/PostImage'
+import { BADGE_DRAFT, BADGE_INFO, BTN_GHOST, BTN_ICON, BTN_PRIMARY, CHIP_OFF, CHIP_ON, EYEBROW, INPUT, PAGE_TITLE } from '@/components/admin/ui'
 import { useRouter } from 'next/navigation'
-import { Trash2, Edit, Plus, Eye, Search, X, SlidersHorizontal, ChevronLeft, ChevronRight, EyeOff, Rocket } from 'lucide-react'
+import { Trash2, Edit, Plus, Eye, Search, X, SlidersHorizontal, ChevronLeft, ChevronRight, EyeOff, Rocket, Loader2 } from 'lucide-react'
 
+import { askConfirm, notify } from '@/components/admin/Feedback'
 interface Post {
   slug: string
   title: string
@@ -17,6 +20,7 @@ interface Post {
   reading_time: string
   tags: string[]
   published: boolean
+  image?: string
 }
 
 type SortOption = 'newest' | 'oldest' | 'title-asc' | 'title-desc'
@@ -126,7 +130,7 @@ export default function AdminBlogPage() {
   }
 
   async function handleDelete(slug: string) {
-    if (!confirm('Tem certeza que deseja deletar este post?')) {
+    if (!(await askConfirm('Tem certeza que deseja deletar este post?', { confirmLabel: 'Excluir' }))) {
       return
     }
 
@@ -136,19 +140,19 @@ export default function AdminBlogPage() {
       })
 
       if (response.ok) {
-        alert('Post deletado com sucesso!')
+        notify('Post deletado com sucesso!')
         fetchPosts()
       } else {
-        alert('Erro ao deletar post')
+        notify('Erro ao deletar post')
       }
     } catch (error) {
       console.error('Erro ao deletar post:', error)
-      alert('Erro ao deletar post')
+      notify('Erro ao deletar post')
     }
   }
 
   async function handleUnpublish(slug: string) {
-    if (!confirm('Tirar este post do blog? Ele volta a ser rascunho: sai da lista, da busca e do mapa do site, e o endereço deixa de abrir. O texto fica guardado.')) {
+    if (!(await askConfirm('Tirar este post do blog? Ele volta a ser rascunho: sai da lista, da busca e do mapa do site, e o endereço deixa de abrir. O texto fica guardado.', { confirmLabel: 'Tirar do blog', danger: false }))) {
       return
     }
 
@@ -163,11 +167,11 @@ export default function AdminBlogPage() {
         fetchPosts()
       } else {
         const error = await response.json().catch(() => ({}))
-        alert(error.error || 'Erro ao despublicar post')
+        notify(error.error || 'Erro ao despublicar post')
       }
     } catch (error) {
       console.error('Erro ao despublicar post:', error)
-      alert('Erro ao despublicar post')
+      notify('Erro ao despublicar post')
     }
   }
 
@@ -183,156 +187,100 @@ export default function AdminBlogPage() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+      <div role="status" className="flex min-h-screen items-center justify-center bg-ink">
+        <Loader2 size={28} className="animate-spin text-red-500" aria-label="Carregando" />
       </div>
     )
   }
 
+  const statusTabs = [
+    ['all', 'Todos', posts.length],
+    ['published', 'No ar', publishedCount],
+    ['draft', 'Rascunhos', draftCount],
+  ] as const
+
+  const ICON_LIVE = `${BTN_ICON} hover:text-sky-300`
+  const ICON_DANGER = `${BTN_ICON} hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400`
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
+    <div className="min-h-screen bg-ink">
       <AdminNav active="blog">
-        <Link
-          href="/admin/blog/novo"
-          className="flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 sm:px-5 py-2 rounded-full hover:shadow-lg transition-all font-semibold text-xs"
-        >
-          <Plus size={14} />
-          <span>Novo Post</span>
+        <Link href="/admin/blog/novo" className={BTN_PRIMARY}>
+          <Plus size={14} aria-hidden="true" />
+          <span>Novo post</span>
         </Link>
       </AdminNav>
 
-      {/* Conteúdo Principal */}
-      <main className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
-        {loading ? (
-          <div className="text-center py-32">
-            <div className="animate-spin rounded-full h-20 w-20 border-b-4 border-red-600 mx-auto mb-6"></div>
-            <p className="text-gray-600 text-xl font-medium">Carregando posts...</p>
+      <main className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+        <header className="max-w-3xl">
+          <p className={EYEBROW}>Blog e notícias</p>
+          <h1 className={`mt-3 ${PAGE_TITLE}`}>Artigos do blog</h1>
+          {!loading && posts.length > 0 && (
+            <p className="mt-3 text-neutral-400">
+              {posts.length} {posts.length === 1 ? 'artigo' : 'artigos'}: {publishedCount} no ar e {draftCount} {draftCount === 1 ? 'rascunho' : 'rascunhos'}.
+            </p>
+          )}
+        </header>
+
+        {!canPublish && (
+          <div role="status" className="mt-8 rounded-2xl border border-amber-500/40 bg-amber-500/10 px-5 py-4 text-sm font-medium text-amber-300">
+            Ambiente local: dá para criar e editar rascunhos, mas não para publicar, despublicar nem alterar o que já está no ar. Para isso, use o painel do site
+            publicado.
           </div>
+        )}
+
+        {loading ? (
+          <p role="status" className="mt-16 flex items-center justify-center gap-3 text-sm font-medium text-neutral-400">
+            <Loader2 size={18} className="animate-spin text-red-500" aria-hidden="true" />
+            Carregando os artigos…
+          </p>
         ) : posts.length === 0 ? (
-          <div className="text-center py-24 bg-white rounded-3xl shadow-2xl border border-gray-100">
-            <div className="max-w-lg mx-auto px-6">
-              <div className="w-24 h-24 bg-gradient-to-br from-red-100 to-red-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg">
-                <Plus size={48} className="text-red-600" />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Nenhum post ainda</h2>
-              <p className="text-gray-600 mb-10 text-lg">Comece criando seu primeiro post para o blog da Venda Forte</p>
-              <Link
-                href="/admin/blog/novo"
-                className="inline-flex items-center gap-3 bg-gradient-to-r from-red-600 to-red-700 text-white px-10 py-5 rounded-xl hover:shadow-2xl transition-all duration-200 font-bold text-lg transform hover:-translate-y-1"
-              >
-                <Plus size={24} />
-                Criar Primeiro Post
-              </Link>
-            </div>
+          <div className="mt-10 rounded-[28px] border border-dashed border-white/15 bg-ink-raised px-6 py-16 text-center">
+            <p className="text-xl font-semibold text-white">Nenhum artigo ainda</p>
+            <p className="mx-auto mt-2 max-w-sm text-sm text-neutral-400">Crie o primeiro texto do blog da Venda Forte.</p>
+            <Link href="/admin/blog/novo" className={`${BTN_PRIMARY} mt-6`}>
+              <Plus size={14} aria-hidden="true" />
+              Criar o primeiro post
+            </Link>
           </div>
         ) : (
-          <div className="space-y-8">
-            {!canPublish && (
-              <div role="status" className="rounded-2xl border-2 border-amber-300 bg-amber-50 px-6 py-4 text-sm font-semibold text-amber-900">
-                Ambiente local: dá para criar e editar rascunhos, mas não para publicar, despublicar nem alterar o que já está no ar.
-                Para isso, use o painel do site publicado.
-              </div>
-            )}
-
-            {/* Estatísticas no Topo */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Total de Posts */}
-              <div className="bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-100 hover:border-red-600 transition-all duration-300 group">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-red-50 rounded-xl group-hover:bg-red-100 transition-colors">
-                    <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </div>
-                  <span className="text-5xl font-black text-red-600">{posts.length}</span>
-                </div>
-                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">Total de Posts</h3>
-                <p className="text-gray-600 text-sm">
-                  {publishedCount} {publishedCount === 1 ? 'publicado' : 'publicados'} · {draftCount} {draftCount === 1 ? 'rascunho' : 'rascunhos'}
-                </p>
-              </div>
-
-              {/* Categorias */}
-              <div className="bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-100 hover:border-red-600 transition-all duration-300 group">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-red-50 rounded-xl group-hover:bg-red-100 transition-colors">
-                    <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                    </svg>
-                  </div>
-                  <span className="text-5xl font-black text-red-600">
-                    {new Set(posts.map(p => p.category)).size}
-                  </span>
-                </div>
-                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">Categorias</h3>
-                <p className="text-gray-600 text-sm">
-                  categorias ativas
-                </p>
-              </div>
-
-              {/* Último Post */}
-              <div className="bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-100 hover:border-red-600 transition-all duration-300 group">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-red-50 rounded-xl group-hover:bg-red-100 transition-colors">
-                    <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">Último Post</h3>
-                <p className="text-2xl font-bold text-gray-900">
-                  {new Date(posts[0].created_at).toLocaleDateString('pt-BR', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric'
-                  })}
-                </p>
-                <p className="text-gray-600 text-sm mt-1">
-                  publicação mais recente
-                </p>
-              </div>
-            </div>
-
-            {/* Barra de Busca e Filtros */}
-            <div className="space-y-6">
-              <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrar por status">
-                {([
-                  ['all', 'Todos', posts.length],
-                  ['published', 'No ar', publishedCount],
-                  ['draft', 'Rascunhos', draftCount],
-                ] as const).map(([value, label, count]) => (
+          <div className="mt-10 space-y-6">
+            <div className="space-y-4">
+              <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrar por situação">
+                {statusTabs.map(([value, label, count]) => (
                   <button
                     key={value}
                     type="button"
-                    onClick={() => { setStatusFilter(value); setCurrentPage(1); }}
+                    onClick={() => { setStatusFilter(value); setCurrentPage(1) }}
                     aria-pressed={statusFilter === value}
-                    className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all ${
-                      statusFilter === value
-                        ? 'bg-gray-900 text-white shadow-md'
-                        : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-gray-900'
-                    }`}
+                    className={statusFilter === value ? CHIP_ON : CHIP_OFF}
                   >
-                    {label} <span className="opacity-70">({count})</span>
+                    {label} <span className="opacity-60">{count}</span>
                   </button>
                 ))}
               </div>
 
-              <div className="flex flex-col md:flex-row gap-4">
-                <div className="relative flex-1 group">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-red-600 transition-colors" size={22} />
+              <div className="flex flex-col gap-3 md:flex-row">
+                <div className="relative flex-1">
+                  <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted" size={18} />
                   <input
-                    type="text"
-                    placeholder="Buscar por título, descrição, categoria ou autor..."
+                    type="search"
+                    aria-label="Buscar artigo"
+                    placeholder="Buscar por título, descrição, categoria ou autor…"
                     value={searchTerm}
-                    onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
-                    className="w-full pl-12 pr-12 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all shadow-sm hover:shadow-md text-base bg-white"
+                    onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1) }}
+                    autoComplete="off"
+                    spellCheck={false}
+                    className={`${INPUT} rounded-full pl-11 pr-12`}
                   />
                   {searchTerm && (
                     <button
+                      type="button"
                       onClick={() => setSearchTerm('')}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-600 transition-colors"
+                      aria-label="Limpar a busca"
+                      className="absolute right-1 top-1/2 grid h-11 w-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full text-ink-muted transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
                     >
-                      <X size={20} />
+                      <X size={18} aria-hidden="true" />
                     </button>
                   )}
                 </div>
@@ -340,279 +288,196 @@ export default function AdminBlogPage() {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all font-semibold bg-white shadow-sm hover:shadow-md cursor-pointer text-base"
+                  aria-label="Ordenar por"
+                  className={`${INPUT} w-full cursor-pointer rounded-full md:w-56`}
                 >
-                  <option value="newest">📅 Mais Recentes</option>
-                  <option value="oldest">📅 Mais Antigos</option>
-                  <option value="title-asc">🔤 Título (A-Z)</option>
-                  <option value="title-desc">🔤 Título (Z-A)</option>
+                  <option value="newest">Mais recentes</option>
+                  <option value="oldest">Mais antigos</option>
+                  <option value="title-asc">Título (A a Z)</option>
+                  <option value="title-desc">Título (Z a A)</option>
                 </select>
 
                 <button
+                  type="button"
                   onClick={() => setShowFilters(!showFilters)}
-                  className={`px-6 py-4 rounded-xl font-bold transition-all flex items-center gap-3 shadow-sm hover:shadow-md ${
-                    showFilters || hasActiveFilters
-                      ? 'bg-red-600 text-white hover:bg-red-700 scale-105'
-                      : 'bg-white text-gray-700 border-2 border-gray-200 hover:bg-gray-50 hover:border-red-600'
+                  aria-expanded={showFilters}
+                  className={`inline-flex h-[50px] cursor-pointer items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
+                    showFilters || hasActiveFilters ? 'bg-white text-ink' : 'border border-white/15 text-white hover:bg-white/10'
                   }`}
                 >
-                  <SlidersHorizontal size={22} />
-                  <span className="hidden sm:inline">Filtros</span>
-                  {hasActiveFilters && (
-                    <span className="bg-white text-red-600 text-xs px-2.5 py-1 rounded-full font-bold shadow-lg">
-                      {selectedCategory !== 'all' ? 1 : 0}
-                    </span>
-                  )}
+                  <SlidersHorizontal size={16} aria-hidden="true" />
+                  Filtros
                 </button>
               </div>
 
-              {/* Painel de Filtros */}
               {showFilters && (
-                <div className="bg-gradient-to-br from-gray-50 to-white border-2 border-gray-200 rounded-2xl p-8 space-y-6 shadow-lg animate-fade-in-up">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-black text-xl text-gray-800 flex items-center gap-2">
-                      <SlidersHorizontal className="text-red-600" size={24} />
-                      Filtros
-                    </h3>
+                <div className="rounded-[28px] border border-white/10 bg-ink-raised p-6">
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-sm font-semibold text-white">Categoria</p>
                     {hasActiveFilters && (
                       <button
+                        type="button"
                         onClick={clearFilters}
-                        className="text-red-600 hover:text-white hover:bg-red-600 px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2 border-2 border-red-600 transition-all hover:shadow-lg"
+                        className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-full px-4 text-sm font-medium text-red-400 transition-colors hover:bg-red-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50"
                       >
-                        <X size={18} />
-                        Limpar Filtros
+                        <X size={16} aria-hidden="true" />
+                        Limpar filtros
                       </button>
                     )}
                   </div>
-
-                  {/* Filtro de Categorias */}
-                  <div>
-                    <label className="block font-bold text-gray-700 mb-4 text-base">📂 Categorias</label>
-                    <div className="flex flex-wrap gap-3">
-                      <button
-                        onClick={() => { setSelectedCategory('all'); setCurrentPage(1); }}
-                        className={`px-5 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-md ${
-                          selectedCategory === 'all'
-                            ? 'bg-red-600 text-white scale-105'
-                            : 'bg-white text-gray-600 hover:bg-gray-50 border-2 border-gray-200 hover:border-red-600'
-                        }`}
-                      >
-                        Todas <span className="ml-1 opacity-75">({posts.length})</span>
-                      </button>
-                      {categories.map(category => {
-                        const count = posts.filter(p => p.category === category).length
-                        return (
-                          <button
-                            key={category}
-                            onClick={() => { setSelectedCategory(category); setCurrentPage(1); }}
-                            className={`px-5 py-2.5 rounded-xl font-bold transition-all shadow-sm hover:shadow-md ${
-                              selectedCategory === category
-                                ? 'bg-red-600 text-white scale-105'
-                                : 'bg-white text-gray-600 hover:bg-gray-50 border-2 border-gray-200 hover:border-red-600'
-                            }`}
-                          >
-                            {category} <span className="ml-1 opacity-75">({count})</span>
-                          </button>
-                        )
-                      })}
-                    </div>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedCategory('all'); setCurrentPage(1) }}
+                      aria-pressed={selectedCategory === 'all'}
+                      className={selectedCategory === 'all' ? CHIP_ON : CHIP_OFF}
+                    >
+                      Todas <span className="opacity-60">{posts.length}</span>
+                    </button>
+                    {categories.map((category) => {
+                      const count = posts.filter((p) => p.category === category).length
+                      return (
+                        <button
+                          key={category}
+                          type="button"
+                          onClick={() => { setSelectedCategory(category); setCurrentPage(1) }}
+                          aria-pressed={selectedCategory === category}
+                          className={selectedCategory === category ? CHIP_ON : CHIP_OFF}
+                        >
+                          {category} <span className="opacity-60">{count}</span>
+                        </button>
+                      )
+                    })}
                   </div>
                 </div>
               )}
 
-              {/* Indicador de Resultados */}
               {hasActiveFilters && (
-                <div className="flex items-center justify-between bg-blue-50 border-2 border-blue-200 rounded-xl p-4">
-                  <p className="text-blue-900 font-semibold">
-                    Mostrando <span className="text-blue-600 font-bold">{filteredPosts.length}</span> de <span className="text-blue-600 font-bold">{posts.length}</span> posts
-                  </p>
-                </div>
+                <p role="status" className="text-sm text-neutral-400">
+                  Mostrando <span className="font-semibold text-white">{filteredPosts.length}</span> de {posts.length} artigos
+                </p>
               )}
             </div>
 
-            {/* Lista de Posts */}
             {filteredPosts.length === 0 ? (
-              <div className="text-center py-20 bg-gradient-to-br from-gray-50 to-white rounded-3xl shadow-xl border border-gray-100">
-                <div className="mb-6">
-                  <svg className="w-24 h-24 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-700 mb-3">Nenhum post encontrado</h3>
-                <p className="text-gray-500 text-lg mb-6">Tente ajustar os filtros ou buscar por outro termo</p>
-                <button
-                  onClick={clearFilters}
-                  className="inline-flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-red-700 transition-all shadow-lg hover:shadow-xl"
-                >
-                  <X size={20} />
-                  Limpar Filtros
+              <div className="rounded-[28px] border border-dashed border-white/15 bg-ink-raised px-6 py-16 text-center">
+                <p className="text-xl font-semibold text-white">Nenhum artigo encontrado</p>
+                <p className="mx-auto mt-2 max-w-sm text-sm text-neutral-400">Mude os filtros ou busque por outro termo.</p>
+                <button type="button" onClick={clearFilters} className={`${BTN_GHOST} mt-6`}>
+                  <X size={14} aria-hidden="true" />
+                  Limpar filtros
                 </button>
               </div>
             ) : (
               <>
-                <div className="space-y-6">
-                  {currentPosts.map((post) => (
-                  <article
-                    key={post.slug}
-                    className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 transform hover:-translate-y-1"
-                  >
-                  <div className="p-8">
-                    <div className="flex items-start justify-between gap-8">
-                      {/* Conteúdo do Post */}
-                      <div className="flex-1 space-y-4">
-                        {/* Meta informações */}
-                        <div className="flex items-center gap-4 flex-wrap">
-                          <span className="px-4 py-1.5 text-sm font-bold rounded-full bg-gradient-to-r from-red-100 to-red-50 text-red-700 border border-red-200">
-                            {post.category}
-                          </span>
-                          {post.published === false && (
-                            <span className="px-3 py-1.5 text-xs font-bold uppercase tracking-wide rounded-full bg-amber-100 text-amber-800 border border-amber-200">
-                              Rascunho
-                            </span>
+                <ul className="space-y-4">
+                  {currentPosts.map((post) => {
+                    const draft = post.published === false
+                    return (
+                      <li key={post.slug}>
+                        <article className="flex flex-col gap-5 rounded-[28px] border border-white/10 bg-ink-raised p-5 transition-colors hover:border-white/20 sm:flex-row sm:items-center">
+                          {post.image && (
+                            <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-2xl bg-white/[0.03] sm:w-56">
+                              <PostImage src={post.image} alt="" sizes="224px" />
+                            </div>
                           )}
-                          <span className="text-sm text-gray-500 font-medium">
-                            {new Date(post.created_at).toLocaleDateString('pt-BR', {
-                              day: '2-digit',
-                              month: 'long',
-                              year: 'numeric'
-                            })}
-                          </span>
-                        </div>
-                        
-                        {/* Título */}
-                        <h3 className="text-2xl font-bold text-gray-900 hover:text-red-600 transition-colors leading-tight">
-                          {post.title}
-                        </h3>
-                        
-                        {/* Descrição */}
-                        <p className="text-gray-600 text-base leading-relaxed line-clamp-2">
-                          {post.description}
-                        </p>
-                        
-                        {/* Informações adicionais */}
-                        <div className="flex items-center gap-5 text-sm text-gray-500 pt-2">
-                          <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-gradient-to-br from-gray-100 to-gray-50 rounded-full flex items-center justify-center">
-                              <span className="text-xs font-bold text-gray-600">
-                                {post.author.split(' ').map(n => n[0]).join('').slice(0, 2)}
+
+                          <div className="min-w-0 flex-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className={BADGE_INFO}>{post.category}</span>
+                              {draft && <span className={BADGE_DRAFT}>Rascunho</span>}
+                              <span className="text-sm text-ink-muted">
+                                {new Date(post.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
                               </span>
                             </div>
-                            <span className="font-medium">{post.author}</span>
+                            <h2 className="mt-3 text-balance text-xl font-semibold leading-snug tracking-tight text-white">{post.title}</h2>
+                            <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-400">{post.description}</p>
+                            <p className="mt-3 text-xs text-ink-muted">
+                              {post.author} · {post.reading_time}
+                            </p>
                           </div>
-                          <span className="text-gray-400">•</span>
-                          <span className="font-medium">{post.reading_time}</span>
-                        </div>
-                      </div>
 
-                      {/* Ações */}
-                      <div className="flex flex-col gap-3">
-                        {post.published === false ? (
-                          <>
-                            <Link
-                              href={`/admin/rascunhos/${post.slug}`}
-                              className="p-3.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-blue-100"
-                              title="Visualizar rascunho e publicar"
-                            >
-                              <Eye size={22} />
+                          <div className="flex shrink-0 gap-2 sm:grid sm:grid-cols-2">
+                            {draft ? (
+                              <Link href={`/admin/rascunhos/${post.slug}`} className={ICON_LIVE} title="Ver o rascunho e publicar" aria-label={`Ver o rascunho e publicar: ${post.title}`}>
+                                <Rocket size={18} aria-hidden="true" />
+                              </Link>
+                            ) : (
+                              <Link href={`/blog/${post.slug}`} target="_blank" className={ICON_LIVE} title="Ver no site" aria-label={`Ver no site: ${post.title}`}>
+                                <Eye size={18} aria-hidden="true" />
+                              </Link>
+                            )}
+                            {draft ? (
+                              <span aria-hidden="true" className="hidden sm:block" />
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={() => handleUnpublish(post.slug)}
+                                disabled={!canPublish}
+                                className={`${BTN_ICON} hover:text-amber-300`}
+                                title={canPublish ? 'Despublicar (volta a ser rascunho)' : 'Indisponível no ambiente local'}
+                                aria-label={`Despublicar: ${post.title}`}
+                              >
+                                <EyeOff size={18} aria-hidden="true" />
+                              </button>
+                            )}
+                            <Link href={`/admin/blog/editar/${post.slug}`} className={BTN_ICON} title="Editar" aria-label={`Editar: ${post.title}`}>
+                              <Edit size={18} aria-hidden="true" />
                             </Link>
-                            <Link
-                              href={`/admin/rascunhos/${post.slug}`}
-                              className="p-3.5 text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-amber-100"
-                              title="Conferir e publicar"
-                            >
-                              <Rocket size={22} />
-                            </Link>
-                          </>
-                        ) : (
-                          <>
-                            <Link
-                              href={`/blog/${post.slug}`}
-                              target="_blank"
-                              className="p-3.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-blue-100"
-                              title="Ver no site"
-                            >
-                              <Eye size={22} />
-                            </Link>
-                            <button
-                              onClick={() => handleUnpublish(post.slug)}
-                              disabled={!canPublish}
-                              className="p-3.5 text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-amber-100 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:shadow-sm"
-                              title={canPublish ? 'Despublicar (volta a ser rascunho)' : 'Indisponível no ambiente local'}
-                            >
-                              <EyeOff size={22} />
+                            <button type="button" onClick={() => handleDelete(post.slug)} className={ICON_DANGER} title="Excluir" aria-label={`Excluir: ${post.title}`}>
+                              <Trash2 size={18} aria-hidden="true" />
                             </button>
-                          </>
-                        )}
-                        <Link
-                          href={`/admin/blog/editar/${post.slug}`}
-                          className="p-3.5 text-green-600 hover:text-green-700 hover:bg-green-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-green-100"
-                          title="Editar post"
-                        >
-                          <Edit size={22} />
-                        </Link>
-                        <button
-                          onClick={() => handleDelete(post.slug)}
-                          className="p-3.5 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl transition-all shadow-sm hover:shadow-md border border-red-100"
-                          title="Deletar post"
-                        >
-                          <Trash2 size={22} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-                ))}
-              </div>
+                          </div>
+                        </article>
+                      </li>
+                    )
+                  })}
+                </ul>
 
-              {/* Paginação - Sempre visível */}
-              <div className="mt-12 space-y-6">
-                <div className="flex items-center justify-center gap-2">
-                  <button
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1}
-                    className="p-3 rounded-xl border-2 border-gray-200 hover:bg-red-50 hover:border-red-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95"
-                    title="Página anterior"
-                  >
-                    <ChevronLeft size={24} className="text-gray-600" />
-                  </button>
-
-                  <div className="flex gap-2">
+                <nav aria-label="Páginas" className="flex flex-col items-center gap-4 pt-4">
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                      disabled={currentPage === 1}
+                      className={BTN_ICON}
+                      aria-label="Página anterior"
+                    >
+                      <ChevronLeft size={18} aria-hidden="true" />
+                    </button>
                     {[...Array(totalPages || 1)].map((_, index) => {
                       const pageNumber = index + 1
                       return (
                         <button
                           key={pageNumber}
+                          type="button"
                           onClick={() => setCurrentPage(pageNumber)}
-                          className={`w-12 h-12 rounded-full font-bold transition-all ${
-                            currentPage === pageNumber
-                              ? 'bg-red-600 text-white shadow-xl scale-110 ring-4 ring-red-100'
-                              : 'bg-white text-gray-600 hover:bg-gray-50 border-2 border-gray-200 hover:border-red-600 hover:text-red-600 hover:scale-105 active:scale-95'
+                          aria-current={currentPage === pageNumber ? 'page' : undefined}
+                          aria-label={`Página ${pageNumber}`}
+                          className={`grid h-11 w-11 cursor-pointer place-items-center rounded-full text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
+                            currentPage === pageNumber ? 'bg-red-600 text-white' : 'border border-white/10 text-neutral-300 hover:border-white/25 hover:text-white'
                           }`}
                         >
                           {pageNumber}
                         </button>
                       )
                     })}
+                    <button
+                      type="button"
+                      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages || 1))}
+                      disabled={currentPage === (totalPages || 1)}
+                      className={BTN_ICON}
+                      aria-label="Próxima página"
+                    >
+                      <ChevronRight size={18} aria-hidden="true" />
+                    </button>
                   </div>
-
-                  <button
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages || 1))}
-                    disabled={currentPage === (totalPages || 1)}
-                    className="p-3 rounded-xl border-2 border-gray-200 hover:bg-red-50 hover:border-red-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95"
-                    title="Próxima página"
-                  >
-                    <ChevronRight size={24} className="text-gray-600" />
-                  </button>
-                </div>
-
-                {/* Info de resultados */}
-                <div className="text-center">
-                  <p className="text-gray-600 font-medium">
-                    Mostrando <span className="text-red-600 font-bold">{Math.min(indexOfFirstPost + 1, filteredPosts.length)}-{Math.min(indexOfLastPost, filteredPosts.length)}</span> de <span className="text-red-600 font-bold">{filteredPosts.length}</span> {filteredPosts.length === 1 ? 'post' : 'posts'}
+                  <p className="text-sm text-neutral-400">
+                    Mostrando {Math.min(indexOfFirstPost + 1, filteredPosts.length)} a {Math.min(indexOfLastPost, filteredPosts.length)} de {filteredPosts.length}{' '}
+                    {filteredPosts.length === 1 ? 'artigo' : 'artigos'}
                   </p>
-                </div>
-              </div>
-            </>
+                </nav>
+              </>
             )}
           </div>
         )}

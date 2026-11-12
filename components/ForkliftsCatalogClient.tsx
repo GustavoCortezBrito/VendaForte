@@ -31,6 +31,8 @@ import {
 import ImageLightboxModal from '@/components/ImageLightboxModal'
 import { useDragScroll } from '@/components/useDragScroll'
 import { TYPE_LABELS, formatLift } from '@/lib/product-seo'
+import { PRODUCT_STAGE } from '@/components/site/styles'
+import { stagePhoto } from '@/lib/product-photo'
 
 import type { CatalogItem, ForkliftProduct } from '@/lib/catalog'
 
@@ -70,6 +72,25 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
   const [showMobileFilters, setShowMobileFilters] = useState(false)
   // Fileira de categorias: também rola arrastando com o mouse
   const { ref: categoriesRef, dragging, handlers: dragHandlers } = useDragScroll<HTMLDivElement>()
+  // Bordas da fileira: mostram a seta e o esmaecido só do lado em que ainda há o que rolar
+  const [chipEdge, setChipEdge] = useState({ start: true, end: false })
+  useEffect(() => {
+    const el = categoriesRef.current
+    if (!el) return
+    const update = () => setChipEdge({ start: el.scrollLeft <= 4, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 4 })
+    update()
+    el.addEventListener('scroll', update, { passive: true })
+    const observer = new ResizeObserver(update)
+    observer.observe(el)
+    return () => {
+      el.removeEventListener('scroll', update)
+      observer.disconnect()
+    }
+  }, [categoriesRef])
+  const scrollChips = (direction: 1 | -1) => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    categoriesRef.current?.scrollBy({ left: direction * 320, behavior: reduce ? 'auto' : 'smooth' })
+  }
   const phoneNumber = '+5549988395635'
 
   const parseCapacityKg = (capacityStr: string): number => {
@@ -280,13 +301,12 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
       <div className="sticky top-20 z-30 bg-ink/95 backdrop-blur-md border-b border-white/10 transition">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
           
-          {/* Barra de categorias: rola arrastando, pela roda ou pela barra fina embaixo */}
+          {/* Barra de categorias: rola arrastando, pelo dedo, pela roda ou pelas setas; sem barra de rolagem */}
           <div className="relative flex items-center flex-1 min-w-0">
-            {/* Scrollable Container with Proportional Micro-Scrollbar */}
             <div
               ref={categoriesRef}
               {...dragHandlers}
-              className={`flex items-center gap-2 overflow-x-auto pb-1.5 pt-0.5 px-0.5 scrollbar-proportional flex-1 min-w-0 ${dragging ? 'cursor-grabbing select-none' : 'sm:cursor-grab'}`}
+              className={`flex items-center gap-2 overflow-x-auto py-0.5 px-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex-1 min-w-0 ${dragging ? 'cursor-grabbing select-none' : 'sm:cursor-grab'}`}
             >
               {CATEGORIES_CONFIG.map((cat) => {
                 const Icon = cat.icon
@@ -300,7 +320,11 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                 return (
                   <button
                     key={cat.id}
-                    onClick={() => setCategoryFilter(cat.id)}
+                    onClick={(event) => {
+                      setCategoryFilter(cat.id)
+                      event.currentTarget.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' })
+                    }}
+                    aria-pressed={isSelected}
                     className={`flex shrink-0 cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                       isSelected
                         ? 'border-white bg-white text-ink'
@@ -319,6 +343,27 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
               })}
             </div>
 
+            {/* Esmaecido e seta nas pontas em que ainda há o que rolar */}
+            <div aria-hidden="true" className={`pointer-events-none absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-ink to-transparent transition-opacity duration-300 ${chipEdge.start ? 'opacity-0' : 'opacity-100'}`} />
+            <div aria-hidden="true" className={`pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-ink to-transparent transition-opacity duration-300 ${chipEdge.end ? 'opacity-0' : 'opacity-100'}`} />
+            <button
+              type="button"
+              onClick={() => scrollChips(-1)}
+              aria-label="Categorias anteriores"
+              tabIndex={chipEdge.start ? -1 : 0}
+              className={`absolute left-0 top-1/2 hidden h-9 w-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full border border-white/15 bg-ink-raised text-white transition duration-300 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:grid ${chipEdge.start ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
+            >
+              <ChevronLeft size={16} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollChips(1)}
+              aria-label="Mais categorias"
+              tabIndex={chipEdge.end ? -1 : 0}
+              className={`absolute right-0 top-1/2 hidden h-9 w-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full border border-white/15 bg-ink-raised text-white transition duration-300 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:grid ${chipEdge.end ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
+            >
+              <ChevronRight size={16} aria-hidden="true" />
+            </button>
           </div>
 
           {/* Quick Search Box inside Sticky Bar */}
@@ -699,8 +744,12 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                       : 'Equipamento'
 
                     return (
-                      <div
+                      <motion.div
                         key={product.id}
+                        initial={{ opacity: 0, y: 28 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-40px' }}
+                        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: (index % 3) * 0.08 }}
                         className="group relative flex flex-col justify-between rounded-[28px] border border-white/10 bg-ink-raised p-3 transition-colors duration-500 hover:border-white/25 sm:p-4"
                       >
                         {/* Ambient Background Glow on Hover */}
@@ -710,7 +759,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                           {/* Image Showcase Frame */}
                           <div
                             onClick={() => setActiveLightboxProduct(product)}
-                            className="relative aspect-[4/3] bg-white rounded-[20px] p-4 mb-3.5 overflow-hidden cursor-zoom-in group/frame"
+                            className={`relative aspect-[4/3] ${PRODUCT_STAGE} rounded-[20px] p-4 mb-3.5 overflow-hidden cursor-zoom-in group/frame`}
                             title={`Clique para ampliar imagem da ${product.title}`}
                           >
                             {/* Battery Badge */}
@@ -738,13 +787,12 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
 
                             {/* Product Image */}
                             <Image
-                              src={product.mainImage}
+                              src={stagePhoto(product.mainImage)}
                               alt={product.title}
                               fill
                               priority={index < 3}
                               sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 280px"
-                              className="object-contain p-4 filter drop-shadow-xs group-hover:scale-110 transition-transform duration-500 ease-out"
-                              style={{ mixBlendMode: 'multiply' }}
+                              className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 ease-out"
                             />
                           </div>
 
@@ -802,7 +850,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
                             <span>Cotação</span>
                           </button>
                         </div>
-                      </div>
+                      </motion.div>
                     )
                   })}
                 </div>

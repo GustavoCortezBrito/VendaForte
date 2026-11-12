@@ -4,37 +4,35 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import {
-  ArrowLeft, Save, Upload, ImageIcon, X, Plus, Tag, Zap,
-  Layers, Star, Grid3X3, FileText, Eye, CheckCircle2,
-  ChevronRight, HelpCircle, Truck, LogOut, ExternalLink
-} from 'lucide-react'
+import AdminNav from '@/components/admin/AdminNav'
+import { Save, Upload, ImageIcon, X, Plus, Tag, Zap, Star, Eye, ExternalLink } from 'lucide-react'
 
+import { notify } from '@/components/admin/Feedback'
 // ─── Design Tokens ──────────────────────────────────────────────
 const INPUT = [
-  'w-full bg-white border border-gray-200 rounded-xl px-4 py-3',
-  'text-sm text-gray-800 font-medium placeholder:text-gray-400',
+  'w-full bg-ink-raised border border-white/10 rounded-xl px-4 py-3',
+  'text-sm text-neutral-100 font-medium placeholder:text-ink-muted',
   'focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500',
-  'transition-all duration-200 shadow-sm',
+  'transition-all duration-200 ',
 ].join(' ')
 
 const SELECT = [
-  'w-full bg-white border border-gray-200 rounded-xl px-4 py-3',
-  'text-sm text-gray-800 font-medium',
+  'w-full bg-ink-raised border border-white/10 rounded-xl px-4 py-3',
+  'text-sm text-neutral-100 font-medium',
   'focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500',
-  'transition-all duration-200 shadow-sm',
+  'transition-all duration-200 ',
 ].join(' ')
 
-const LABEL = 'block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-2'
+const LABEL = 'block text-xs font-semibold text-neutral-400 mb-2'
 
 function Field({ label, required, children, hint }: { label: string; required?: boolean; children: React.ReactNode; hint?: string }) {
   return (
     <div>
       <label className={LABEL}>
-        {label} {required && <span className="text-red-600 font-bold">*</span>}
+        {label} {required && <span className="text-red-500 font-bold">*</span>}
       </label>
       {children}
-      {hint && <p className="mt-1.5 text-xs text-gray-400">{hint}</p>}
+      {hint && <p className="mt-1.5 text-xs text-ink-muted">{hint}</p>}
     </div>
   )
 }
@@ -45,40 +43,40 @@ function CatalogCardPreview({ title, subtitle, capacity, liftingHeight, batteryV
 }) {
   const badge = batteryVoltage ? batteryVoltage.trim().toUpperCase().replace(' ', '') : '80V'
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-md overflow-hidden">
-      <div className="px-3.5 py-2 bg-gray-50 border-b border-gray-100 flex items-center justify-between text-[11px] font-semibold text-gray-500">
+    <div className="bg-ink-raised rounded-[28px] border border-white/10 overflow-hidden">
+      <div className="px-3.5 py-2 bg-white/[0.03] border-b border-white/[0.06] flex items-center justify-between text-[11px] font-semibold text-ink-muted">
         <span>Pré-visualização no Site</span>
-        <span className="text-[9px] bg-red-100 text-red-600 px-2 py-0.5 rounded-full font-bold">Catálogo</span>
+        <span className="text-[9px] bg-red-500/15 text-red-500 px-2 py-0.5 rounded-full font-bold">Catálogo</span>
       </div>
       <div className="relative">
-        <div className="aspect-[16/9] bg-gradient-to-br from-gray-50 to-slate-100 flex items-center justify-center overflow-hidden">
+        <div className="aspect-[16/9] bg-ink-raised flex items-center justify-center overflow-hidden">
           {mainImage ? (
             <img src={mainImage} alt="" className="w-full h-full object-contain p-2"
               onError={e => { (e.target as HTMLImageElement).src = '/sede.png' }} />
           ) : (
-            <div className="flex flex-col items-center gap-1 text-gray-300">
+            <div className="flex flex-col items-center gap-1 text-neutral-600">
               <ImageIcon size={28} />
               <span className="text-[10px] font-medium">Nenhuma foto</span>
             </div>
           )}
         </div>
-        <span className="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded-full tracking-wider shadow">
+        <span className="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow">
           {badge} LI-ION
         </span>
       </div>
       <div className="p-3 space-y-2">
         <div>
-          <p className="text-sm font-bold text-gray-900 leading-snug">{title || 'Nome do Modelo'}</p>
-          <p className="text-[11px] text-red-600 font-semibold mt-0.5 line-clamp-1">{subtitle || 'Subtítulo / Descrição rápida'}</p>
+          <p className="text-sm font-bold text-white leading-snug">{title || 'Nome do Modelo'}</p>
+          <p className="text-[11px] text-red-500 font-semibold mt-0.5 line-clamp-1">{subtitle || 'Subtítulo / Descrição rápida'}</p>
         </div>
         <div className="grid grid-cols-2 gap-1.5">
-          <div className="bg-gray-50 rounded-lg p-1.5">
-            <p className="text-[8px] font-semibold uppercase text-gray-400 tracking-wider">Capacidade</p>
-            <p className="text-xs font-bold text-gray-900 mt-0.5">{capacity || '—'}</p>
+          <div className="bg-white/[0.03] rounded-lg p-1.5">
+            <p className="text-[8px] font-semibold text-ink-muted ">Capacidade</p>
+            <p className="text-xs font-bold text-white mt-0.5">{capacity || '—'}</p>
           </div>
-          <div className="bg-gray-50 rounded-lg p-1.5">
-            <p className="text-[8px] font-semibold uppercase text-gray-400 tracking-wider">Elevação</p>
-            <p className="text-xs font-bold text-gray-900 mt-0.5">{liftingHeight || '—'}</p>
+          <div className="bg-white/[0.03] rounded-lg p-1.5">
+            <p className="text-[8px] font-semibold text-ink-muted ">Elevação</p>
+            <p className="text-xs font-bold text-white mt-0.5">{liftingHeight || '—'}</p>
           </div>
         </div>
       </div>
@@ -91,15 +89,15 @@ function FormSection({ id, icon: Icon, step, title, description, children }: {
   id: string; icon: React.ElementType; step: string; title: string; description: string; children: React.ReactNode
 }) {
   return (
-    <div id={id} className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden scroll-mt-24">
-      <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
-        <div className="w-9 h-9 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center shadow-sm">
+    <div id={id} className="bg-ink-raised rounded-[28px] border border-white/10 overflow-hidden scroll-mt-24">
+      <div className="flex items-center gap-3 px-6 py-4 border-b border-white/[0.06] bg-white/[0.03] ">
+        <div className="w-9 h-9 bg-red-600 rounded-xl flex items-center justify-center ">
           <Icon size={16} className="text-white" />
         </div>
         <div>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-red-600">{step}</span>
-          <h3 className="text-base font-bold text-gray-900">{title}</h3>
-          <p className="text-xs text-gray-500">{description}</p>
+          <span className="text-[10px] font-bold text-red-500">{step}</span>
+          <h3 className="text-base font-bold text-white">{title}</h3>
+          <p className="text-xs text-ink-muted">{description}</p>
         </div>
       </div>
       <div className="p-6 space-y-6">{children}</div>
@@ -186,12 +184,12 @@ export default function NovoEquipamentoPage() {
       const fd = new FormData()
       fd.append('file', file)
       const res = await fetch('/api/upload', { method: 'POST', body: fd })
-      if (!res.ok) { alert((await res.json()).error || 'Erro no upload'); return }
+      if (!res.ok) { notify((await res.json()).error || 'Erro no upload'); return }
       const { url: imgUrl } = await res.json()
       setMainImage(imgUrl)
       setGallery(prev => prev.includes(imgUrl) ? prev : [imgUrl, ...prev])
     } catch {
-      alert('Erro no upload da imagem principal.')
+      notify('Erro no upload da imagem principal.')
     } finally {
       setUploadMain(false)
       e.target.value = ''
@@ -214,7 +212,7 @@ export default function NovoEquipamentoPage() {
       setGallery(prev => [...prev, ...urls])
       if (!mainImage && urls[0]) setMainImage(urls[0])
     } catch {
-      alert('Erro no upload das imagens da galeria.')
+      notify('Erro no upload das imagens da galeria.')
     } finally {
       setUploadGal(false)
       e.target.value = ''
@@ -225,7 +223,7 @@ export default function NovoEquipamentoPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!title.trim()) {
-      alert('Por favor, informe o Modelo / Título do equipamento.')
+      notify('Por favor, informe o Modelo / Título do equipamento.')
       return
     }
 
@@ -266,107 +264,44 @@ export default function NovoEquipamentoPage() {
       })
 
       if (res.ok) {
-        alert('Equipamento cadastrado no catálogo com sucesso!')
+        notify('Equipamento cadastrado no catálogo com sucesso!')
         router.push('/admin/empilhadeiras')
       } else {
         const err = await res.json()
-        alert(`Erro ao salvar: ${err.error}`)
+        notify(`Erro ao salvar: ${err.error}`)
       }
     } catch {
-      alert('Erro na conexão com o servidor.')
+      notify('Erro na conexão com o servidor.')
     } finally {
       setSaving(false)
     }
   }
 
-  async function handleLogout() {
-    try {
-      await fetch('/api/auth/logout', { method: 'POST' })
-    } catch {}
-    router.push('/admin/login')
-  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-white pb-20 font-sans">
+    <div className="min-h-screen bg-ink pb-20 font-sans">
 
       {/* ── Header Admin Completo & Adaptado ───────────────────── */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
-        <div className="h-1 bg-gray-100">
-          <div
-            className="h-full bg-gradient-to-r from-red-600 to-red-500 transition-all duration-500"
-            style={{ width: `${completePct}%` }}
-          />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            
-            {/* Logo + Tabs + Breadcrumb */}
-            <div className="flex items-center gap-3 sm:gap-6">
-              <Link href="/admin" className="flex items-center gap-2 sm:gap-3">
-                <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-red-600/20">
-                  VF
-                </div>
-                <div className="hidden sm:block">
-                  <span className="text-sm font-bold text-gray-900 leading-none block">Venda Forte</span>
-                  <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-wider block">Painel Admin</span>
-                </div>
-              </Link>
-
-              {/* Tabs de navegação do Admin */}
-              <div className="flex items-center gap-1 sm:gap-2 border-l border-gray-200 pl-3 sm:pl-5">
-                <Link
-                  href="/admin/empilhadeiras"
-                  className="px-3 py-1.5 rounded-full bg-red-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-sm"
-                >
-                  <Truck size={13} />
-                  <span className="hidden md:inline">Empilhadeiras</span>
-                </Link>
-                <Link
-                  href="/admin/blog"
-                  className="px-3 py-1.5 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-semibold text-xs flex items-center gap-1.5 transition-colors"
-                >
-                  <FileText size={13} />
-                  <span className="hidden md:inline">Blog</span>
-                </Link>
-              </div>
-
-              <ChevronRight size={14} className="text-gray-300 hidden sm:block" />
-              <span className="font-bold text-gray-900 text-xs sm:text-sm">Novo Equipamento</span>
-            </div>
-
-            {/* Ações da direita */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              <Link
-                href="/empilhadeiras-eletricas"
-                target="_blank"
-                className="text-xs font-semibold text-gray-600 hover:text-red-600 flex items-center gap-1 transition-colors px-2.5 py-1.5 rounded-full hover:bg-red-50"
-                title="Ver site público"
-              >
-                <ExternalLink size={14} />
-                <span className="hidden md:inline">Ver Site</span>
-              </Link>
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="p-1.5 text-gray-400 hover:text-red-600 rounded-full hover:bg-red-50 transition-colors"
-                title="Sair do Painel"
-              >
-                <LogOut size={16} />
-              </button>
-
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={saving || uploadMain || uploadGal}
-                className="flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-semibold text-sm disabled:opacity-50"
-              >
-                <Save size={15} />
-                <span>{saving ? 'Salvando...' : 'Salvar Equipamento'}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <AdminNav active="empilhadeiras" crumb="Novo equipamento" progress={completePct}>
+        <Link
+          href="/empilhadeiras-eletricas"
+          target="_blank"
+          title="Ver no site público"
+          className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-[13px] font-medium text-white/60 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 md:flex"
+        >
+          <ExternalLink size={15} aria-hidden="true" />
+          <span>Ver no site</span>
+        </Link>
+        <button
+          type="button"
+          onClick={handleSubmit}
+          disabled={saving || uploadMain || uploadGal}
+          className="flex h-10 items-center gap-2 rounded-full bg-red-600 px-5 text-[13px] font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <Save size={14} aria-hidden="true" />
+          <span>{saving ? 'Salvando…' : 'Salvar equipamento'}</span>
+        </button>
+      </AdminNav>
 
       {/* ── Formulário Principal ───────────────────────────────── */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
@@ -528,16 +463,16 @@ export default function NovoEquipamentoPage() {
               </div>
 
               {/* Tabela de Ficha Técnica Completa */}
-              <div className="pt-4 border-t border-gray-100">
+              <div className="pt-4 border-t border-white/[0.06]">
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <h4 className="text-sm font-bold text-gray-900">Ficha Técnica Completa</h4>
-                    <p className="text-xs text-gray-500">Tabela detalhada de especificações exibida na página do equipamento</p>
+                    <h4 className="text-sm font-bold text-white">Ficha Técnica Completa</h4>
+                    <p className="text-xs text-ink-muted">Tabela detalhada de especificações exibida na página do equipamento</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => setSpecs([...specs, ['', '']])}
-                    className="text-xs font-bold text-red-600 hover:text-red-800 flex items-center gap-1 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition-colors"
+                    className="text-xs font-bold text-red-500 hover:text-red-300 flex items-center gap-1 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg transition-colors"
                   >
                     <Plus size={13} />
                     <span>Adicionar Linha</span>
@@ -545,7 +480,7 @@ export default function NovoEquipamentoPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <div className="grid grid-cols-[1fr_1fr_36px] gap-2 text-[10px] font-semibold uppercase tracking-wider text-gray-400 px-1 pb-1">
+                  <div className="grid grid-cols-[1fr_1fr_36px] gap-2 text-[10px] font-semibold text-ink-muted px-1 pb-1">
                     <span>Especificação</span>
                     <span>Valor</span>
                     <span></span>
@@ -577,7 +512,7 @@ export default function NovoEquipamentoPage() {
                       <button
                         type="button"
                         onClick={() => setSpecs(specs.filter((_, j) => j !== idx))}
-                        className="w-9 h-9 flex items-center justify-center rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                        className="w-9 h-9 flex items-center justify-center rounded-lg text-ink-muted hover:text-red-400 hover:bg-red-500/15 transition-colors"
                       >
                         <X size={14} />
                       </button>
@@ -601,7 +536,7 @@ export default function NovoEquipamentoPage() {
                 <div>
                   <label className={LABEL}>Imagem Principal (Card do Catálogo)</label>
                   <div className="flex flex-col sm:flex-row gap-5">
-                    <div className="w-full sm:w-48 aspect-square rounded-2xl border-2 border-gray-100 bg-gray-50 flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <div className="w-full sm:w-48 aspect-square rounded-2xl border border-white/[0.06] bg-white/[0.03] flex items-center justify-center overflow-hidden flex-shrink-0">
                       {mainImage ? (
                         <img
                           src={mainImage}
@@ -610,7 +545,7 @@ export default function NovoEquipamentoPage() {
                           onError={e => { (e.target as HTMLImageElement).src = '/sede.png' }}
                         />
                       ) : (
-                        <div className="text-center text-gray-300">
+                        <div className="text-center text-neutral-600">
                           <ImageIcon size={40} className="mx-auto mb-1" />
                           <span className="text-xs font-medium">Nenhuma foto</span>
                         </div>
@@ -628,30 +563,30 @@ export default function NovoEquipamentoPage() {
                       />
                       <label
                         htmlFor="main-image-input"
-                        className={`flex flex-col items-center justify-center gap-3 p-8 rounded-2xl border-2 border-dashed cursor-pointer transition-all ${
-                          uploadMain ? 'border-red-300 bg-red-50/50' : 'border-gray-200 hover:border-red-400 hover:bg-red-50/30'
-                        }`}
+                        className={`flex flex-col items-center justify-center gap-3 p-8 rounded-2xl border border-dashed cursor-pointer transition ${
+ uploadMain ? 'border-red-500/40 bg-red-500/5' : 'border-white/10 hover:border-red-400 hover:bg-red-500/5'
+ }`}
                       >
                         {uploadMain ? (
                           <>
-                            <div className="w-10 h-10 border-4 border-red-200 border-t-red-600 rounded-full animate-spin" />
-                            <span className="text-xs font-semibold text-red-600">Enviando imagem...</span>
+                            <div className="w-10 h-10 border-4 border-red-500/30 border-t-red-600 rounded-full animate-spin" />
+                            <span className="text-xs font-semibold text-red-500">Enviando imagem...</span>
                           </>
                         ) : (
                           <>
-                            <div className="w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center">
-                              <Upload size={22} className="text-red-600" />
+                            <div className="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center">
+                              <Upload size={22} className="text-red-500" />
                             </div>
                             <div className="text-center">
-                              <p className="text-xs font-bold text-gray-800">Clique para selecionar do computador</p>
-                              <p className="text-[11px] text-gray-400 mt-1">PNG, JPG ou WebP (máx. 5MB)</p>
+                              <p className="text-xs font-bold text-neutral-100">Clique para selecionar do computador</p>
+                              <p className="text-[11px] text-ink-muted mt-1">PNG, JPG ou WebP (máx. 5MB)</p>
                             </div>
                           </>
                         )}
                       </label>
 
                       <div className="relative">
-                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">URL</span>
+                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-ink-muted">URL</span>
                         <input
                           type="text"
                           placeholder="Ou cole a URL direta (https://cdn.ep-portal.net/...)"
@@ -665,13 +600,13 @@ export default function NovoEquipamentoPage() {
                 </div>
 
                 {/* Galeria de Fotos */}
-                <div className="pt-4 border-t border-gray-100">
+                <div className="pt-4 border-t border-white/[0.06]">
                   <label className={LABEL}>Galeria de Imagens Adicionais</label>
                   
                   {gallery.length > 0 && (
                     <div className="grid grid-cols-4 sm:grid-cols-6 gap-3 mb-4">
                       {gallery.map((imgUrl, idx) => (
-                        <div key={idx} className="relative group aspect-square rounded-xl border border-gray-200 bg-gray-50 overflow-hidden flex items-center justify-center">
+                        <div key={idx} className="relative group aspect-square rounded-xl border border-white/10 bg-white/[0.03] overflow-hidden flex items-center justify-center">
                           <img
                             src={imgUrl}
                             alt=""
@@ -679,7 +614,7 @@ export default function NovoEquipamentoPage() {
                             onError={e => { (e.target as HTMLImageElement).src = '/sede.png' }}
                           />
                           {imgUrl === mainImage && (
-                            <span className="absolute bottom-0 inset-x-0 bg-red-600 text-white text-[8px] font-bold text-center py-0.5 uppercase">
+                            <span className="absolute bottom-0 inset-x-0 bg-red-600 text-white text-[8px] font-bold text-center py-0.5 ">
                               Principal
                             </span>
                           )}
@@ -688,7 +623,7 @@ export default function NovoEquipamentoPage() {
                               <button
                                 type="button"
                                 onClick={() => setMainImage(imgUrl)}
-                                className="p-1.5 bg-white text-gray-800 rounded-lg shadow hover:text-red-600"
+                                className="p-1.5 bg-ink-raised text-neutral-100 rounded-lg shadow hover:text-red-400"
                                 title="Definir como principal"
                               >
                                 <Eye size={12} />
@@ -720,9 +655,9 @@ export default function NovoEquipamentoPage() {
                     />
                     <label
                       htmlFor="gallery-input"
-                      className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-dashed cursor-pointer text-xs font-bold transition-all ${
-                        uploadGal ? 'border-red-300 bg-red-50 text-red-600' : 'border-gray-200 text-gray-600 hover:border-red-400 hover:bg-red-50/30'
-                      }`}
+                      className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-full border border-dashed cursor-pointer text-xs font-bold transition ${
+ uploadGal ? 'border-red-500/40 bg-red-500/10 text-red-500' : 'border-white/10 text-neutral-400 hover:border-red-400 hover:bg-red-500/5'
+ }`}
                     >
                       {uploadGal ? (
                         <>
@@ -753,7 +688,7 @@ export default function NovoEquipamentoPage() {
                             inp.value = ''
                           }
                         }}
-                        className="px-4 py-2 bg-gray-900 text-white font-bold text-xs rounded-xl hover:bg-gray-800 transition-colors flex-shrink-0"
+                        className="px-4 py-2 bg-white text-ink font-bold text-xs rounded-xl hover:bg-neutral-200 transition-colors flex-shrink-0"
                       >
                         + Adicionar
                       </button>
@@ -776,13 +711,13 @@ export default function NovoEquipamentoPage() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-sm font-bold text-gray-900">Aplicações Recomendadas</h4>
-                    <p className="text-xs text-gray-500">Exemplos de ambientes onde este equipamento se destaca</p>
+                    <h4 className="text-sm font-bold text-white">Aplicações Recomendadas</h4>
+                    <p className="text-xs text-ink-muted">Exemplos de ambientes onde este equipamento se destaca</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => setApps([...apps, ''])}
-                    className="text-xs font-bold text-red-600 hover:text-red-800 flex items-center gap-1 bg-red-50 px-3 py-1.5 rounded-lg"
+                    className="text-xs font-bold text-red-500 hover:text-red-300 flex items-center gap-1 bg-red-500/10 px-3 py-1.5 rounded-lg"
                   >
                     <Plus size={13} />
                     <span>Adicionar</span>
@@ -807,7 +742,7 @@ export default function NovoEquipamentoPage() {
                       <button
                         type="button"
                         onClick={() => setApps(apps.filter((_, j) => j !== idx))}
-                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg"
+                        className="p-2 text-ink-muted hover:text-red-400 hover:bg-red-500/15 rounded-lg"
                       >
                         <X size={14} />
                       </button>
@@ -817,16 +752,16 @@ export default function NovoEquipamentoPage() {
               </div>
 
               {/* Highlights */}
-              <div className="pt-4 border-t border-gray-100 space-y-3">
+              <div className="pt-4 border-t border-white/[0.06] space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-sm font-bold text-gray-900">Diferenciais em Destaque (Highlights)</h4>
-                    <p className="text-xs text-gray-500">PONTOS FORTES para a ficha técnica do produto</p>
+                    <h4 className="text-sm font-bold text-white">Diferenciais em Destaque (Highlights)</h4>
+                    <p className="text-xs text-ink-muted">PONTOS FORTES para a ficha técnica do produto</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => setHighlights([...highlights, { title: '', desc: '' }])}
-                    className="text-xs font-bold text-red-600 hover:text-red-800 flex items-center gap-1 bg-red-50 px-3 py-1.5 rounded-lg"
+                    className="text-xs font-bold text-red-500 hover:text-red-300 flex items-center gap-1 bg-red-500/10 px-3 py-1.5 rounded-lg"
                   >
                     <Plus size={13} />
                     <span>Adicionar Destaque</span>
@@ -835,8 +770,8 @@ export default function NovoEquipamentoPage() {
 
                 <div className="space-y-3">
                   {highlights.map((item, idx) => (
-                    <div key={idx} className="flex gap-3 items-start p-4 rounded-xl bg-gray-50 border border-gray-100 relative group">
-                      <div className="w-7 h-7 rounded-lg bg-red-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
+                    <div key={idx} className="flex gap-3 items-start p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] relative group">
+                      <div className="w-7 h-7 rounded-lg bg-red-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-1 ">
                         {idx + 1}
                       </div>
                       <div className="flex-1 space-y-2">
@@ -866,7 +801,7 @@ export default function NovoEquipamentoPage() {
                       <button
                         type="button"
                         onClick={() => setHighlights(highlights.filter((_, j) => j !== idx))}
-                        className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-100 rounded-lg flex-shrink-0"
+                        className="p-1.5 text-ink-muted hover:text-red-400 hover:bg-red-500/20 rounded-lg flex-shrink-0"
                       >
                         <X size={14} />
                       </button>
@@ -893,25 +828,25 @@ export default function NovoEquipamentoPage() {
             />
 
             {/* Status & Progresso */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 space-y-4">
+            <div className="bg-ink-raised rounded-[28px] border border-white/10 p-5 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-500">Progresso</span>
-                <span className="text-sm font-bold text-red-600">{completePct}%</span>
+                <span className="text-xs font-bold text-ink-muted">Progresso</span>
+                <span className="text-sm font-bold text-red-500">{completePct}%</span>
               </div>
-              <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+              <div className="w-full bg-white/[0.06] h-2 rounded-full overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-red-600 to-red-500 h-full rounded-full transition-all duration-500"
+                  className="bg-red-600 h-full rounded-full transition duration-500"
                   style={{ width: `${completePct}%` }}
                 />
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-gray-100">
+              <div className="space-y-2 pt-2 border-t border-white/[0.06]">
                 {STATUS.map(({ label, ok }) => (
                   <div key={label} className="flex items-center justify-between text-xs">
-                    <span className={ok ? 'text-gray-800 font-medium' : 'text-gray-400'}>{label}</span>
+                    <span className={ok ? 'text-neutral-100 font-medium' : 'text-ink-muted'}>{label}</span>
                     <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                      ok ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-400'
-                    }`}>
+ ok ? 'bg-emerald-500/15 text-emerald-400' : 'bg-white/[0.06] text-ink-muted'
+ }`}>
                       {ok ? '✓ OK' : 'Pendente'}
                     </span>
                   </div>
@@ -921,7 +856,7 @@ export default function NovoEquipamentoPage() {
               <button
                 type="submit"
                 disabled={saving || uploadMain || uploadGal}
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white font-bold py-3.5 rounded-xl hover:shadow-lg hover:scale-105 transition-all text-sm flex items-center justify-center gap-2 shadow-md shadow-red-600/20 disabled:opacity-50"
+                className="w-full bg-red-600 text-white font-bold py-3.5 rounded-xl transition text-sm flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <Save size={16} />
                 <span>{saving ? 'Salvar Equipamento...' : 'Salvar Equipamento'}</span>

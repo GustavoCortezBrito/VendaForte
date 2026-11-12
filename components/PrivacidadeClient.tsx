@@ -1,206 +1,177 @@
-import { Lock, Eye, FileText, Users, AlertCircle } from 'lucide-react'
-import Link from 'next/link'
-import PageHeader from '@/components/site/PageHeader'
+import LegalLayout, { type LegalSection } from '@/components/site/LegalLayout'
+
+const SECTIONS: LegalSection[] = [
+  {
+    id: 'informacoes-coletadas',
+    title: '1. Informações que Coletamos',
+    body: (
+      <>
+        <h3>1.1. Informações Fornecidas Voluntariamente</h3>
+        <ul>
+          <li>Nome completo</li>
+          <li>E-mail</li>
+          <li>Telefone</li>
+          <li>Empresa/Razão Social</li>
+          <li>Cidade e Estado</li>
+          <li>Mensagens e solicitações enviadas através dos formulários de contato</li>
+        </ul>
+        <h3>1.2. Informações Coletadas Automaticamente</h3>
+        <ul>
+          <li>Endereço IP</li>
+          <li>Tipo de navegador</li>
+          <li>Páginas visitadas</li>
+          <li>Tempo de permanência no site</li>
+          <li>Sistema operacional</li>
+          <li>Cookies e tecnologias similares</li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: 'como-usamos',
+    title: '2. Como Usamos suas Informações',
+    body: (
+      <>
+        <p>Utilizamos as informações coletadas para:</p>
+        <ul>
+          <li>Responder às suas solicitações de contato e orçamentos</li>
+          <li>Fornecer informações sobre nossos produtos e serviços</li>
+          <li>Processar pedidos e transações</li>
+          <li>Melhorar nosso site e experiência do usuário</li>
+          <li>Enviar comunicações de marketing (com seu consentimento)</li>
+          <li>Cumprir obrigações legais e regulatórias</li>
+          <li>Prevenir fraudes e garantir a segurança</li>
+          <li>Realizar análises estatísticas e pesquisas de mercado</li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: 'compartilhamento',
+    title: '3. Compartilhamento de Informações',
+    body: (
+      <>
+        <p>Não vendemos, alugamos ou compartilhamos suas informações pessoais com terceiros, exceto nas seguintes situações:</p>
+        <ul>
+          <li><strong>Fornecedores de Serviços:</strong> Compartilhamos com empresas que nos auxiliam em operações como hospedagem de site, análise de dados e processamento de pagamentos</li>
+          <li><strong>Obrigações Legais:</strong> Quando exigido por lei ou para proteger nossos direitos legais</li>
+          <li><strong>Parceiros Comerciais:</strong> Com seu consentimento explícito, para ofertas relevantes</li>
+          <li><strong>Transferência de Negócios:</strong> Em caso de fusão, aquisição ou venda de ativos</li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: 'seguranca',
+    title: '4. Segurança dos Dados',
+    body: (
+      <>
+        <p>Implementamos medidas de segurança técnicas e organizacionais para proteger suas informações pessoais:</p>
+        <ul>
+          <li>Criptografia de dados sensíveis (SSL/TLS)</li>
+          <li>Controles de acesso restritos</li>
+          <li>Monitoramento contínuo de sistemas</li>
+          <li>Backups regulares</li>
+          <li>Treinamento de equipe sobre proteção de dados</li>
+          <li>Atualizações de segurança regulares</li>
+        </ul>
+        <p>
+          No entanto, nenhum método de transmissão pela Internet ou armazenamento eletrônico é 100% seguro. Embora nos esforcemos para proteger suas informações, não podemos garantir segurança absoluta.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'cookies',
+    title: '5. Cookies e Tecnologias Similares',
+    body: (
+      <>
+        <p>Utilizamos cookies para melhorar sua experiência em nosso site. Cookies são pequenos arquivos armazenados em seu dispositivo que nos ajudam a:</p>
+        <ul>
+          <li>Lembrar suas preferências</li>
+          <li>Entender como você usa nosso site</li>
+          <li>Melhorar o desempenho do site</li>
+          <li>Personalizar conteúdo</li>
+        </ul>
+        <p>Você pode configurar seu navegador para recusar cookies, mas isso pode afetar a funcionalidade do site.</p>
+      </>
+    ),
+  },
+  {
+    id: 'direitos',
+    title: '6. Seus Direitos (LGPD)',
+    body: (
+      <>
+        <p>De acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 - LGPD), você tem os seguintes direitos:</p>
+        <ul>
+          <li><strong>Acesso:</strong> Solicitar informações sobre os dados que mantemos sobre você</li>
+          <li><strong>Retificação:</strong> Corrigir dados incompletos, inexatos ou desatualizados</li>
+          <li><strong>Exclusão:</strong> Solicitar a eliminação de seus dados pessoais</li>
+          <li><strong>Portabilidade:</strong> Receber seus dados em formato estruturado</li>
+          <li><strong>Revogação:</strong> Retirar consentimento a qualquer momento</li>
+          <li><strong>Oposição:</strong> Opor-se ao tratamento de seus dados</li>
+          <li><strong>Informação:</strong> Conhecer as entidades com as quais compartilhamos dados</li>
+        </ul>
+        <p>
+          Para exercer seus direitos, entre em contato conosco através do e-mail:{' '}
+          <a href="mailto:comercial@grupovendaforte.com">comercial@grupovendaforte.com</a>
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'retencao',
+    title: '7. Retenção de Dados',
+    body: (
+      <p>Mantemos suas informações pessoais apenas pelo tempo necessário para cumprir as finalidades descritas nesta política, incluindo requisitos legais, contábeis ou de relatórios.</p>
+    ),
+  },
+  {
+    id: 'menores',
+    title: '8. Menores de Idade',
+    body: (
+      <p>Nossos serviços não são direcionados a menores de 18 anos. Não coletamos intencionalmente informações de menores. Se você acredita que coletamos dados de um menor, entre em contato conosco imediatamente.</p>
+    ),
+  },
+  {
+    id: 'alteracoes',
+    title: '9. Alterações nesta Política',
+    body: (
+      <p>Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos sobre mudanças significativas através do nosso site ou por e-mail. Recomendamos que você revise esta página regularmente.</p>
+    ),
+  },
+]
 
 export default function PrivacidadeClient() {
   return (
-    <div className="min-h-screen bg-ink">
-      <PageHeader
-        eyebrow="LGPD"
-        title="Política de Privacidade"
-        lead={<p>Última atualização: {new Date().toLocaleDateString('pt-BR')}</p>}
-      />
-
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[28px] border border-white/10 bg-ink-raised p-8 md:p-12">
-
-            {/* Introdução */}
-            <div className="mb-12">
-              <h2 className="text-2xl font-bold text-white mb-4">Introdução</h2>
-              <p className="text-neutral-400 leading-relaxed mb-4">
-                O Grupo Venda Forte está comprometido em proteger a privacidade e a segurança dos dados pessoais de nossos clientes, parceiros e visitantes do nosso site. Esta Política de Privacidade descreve como coletamos, usamos, armazenamos e protegemos suas informações pessoais.
-              </p>
-              <p className="text-neutral-400 leading-relaxed">
-                Ao utilizar nossos serviços e/ou nosso website, você concorda com a coleta e uso de informações de acordo com esta política.
-              </p>
-            </div>
-
-            {/* Informações que Coletamos */}
-            <div className="mb-12">
-              <div className="flex items-center gap-3 mb-4">
-                <FileText className="text-red-500" size={28} />
-                <h2 className="text-2xl font-bold text-white">1. Informações que Coletamos</h2>
-              </div>
-              <div className="space-y-4 ml-11">
-                <div>
-                  <h3 className="text-lg font-semibold text-white mb-2">1.1. Informações Fornecidas Voluntariamente</h3>
-                  <ul className="list-disc list-inside text-neutral-400 space-y-2">
-                    <li>Nome completo</li>
-                    <li>E-mail</li>
-                    <li>Telefone</li>
-                    <li>Empresa/Razão Social</li>
-                    <li>Cidade e Estado</li>
-                    <li>Mensagens e solicitações enviadas através dos formulários de contato</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white mb-2">1.2. Informações Coletadas Automaticamente</h3>
-                  <ul className="list-disc list-inside text-neutral-400 space-y-2">
-                    <li>Endereço IP</li>
-                    <li>Tipo de navegador</li>
-                    <li>Páginas visitadas</li>
-                    <li>Tempo de permanência no site</li>
-                    <li>Sistema operacional</li>
-                    <li>Cookies e tecnologias similares</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Como Usamos */}
-            <div className="mb-12">
-              <div className="flex items-center gap-3 mb-4">
-                <Eye className="text-red-500" size={28} />
-                <h2 className="text-2xl font-bold text-white">2. Como Usamos suas Informações</h2>
-              </div>
-              <div className="ml-11 space-y-3 text-neutral-400">
-                <p>Utilizamos as informações coletadas para:</p>
-                <ul className="list-disc list-inside space-y-2">
-                  <li>Responder às suas solicitações de contato e orçamentos</li>
-                  <li>Fornecer informações sobre nossos produtos e serviços</li>
-                  <li>Processar pedidos e transações</li>
-                  <li>Melhorar nosso site e experiência do usuário</li>
-                  <li>Enviar comunicações de marketing (com seu consentimento)</li>
-                  <li>Cumprir obrigações legais e regulatórias</li>
-                  <li>Prevenir fraudes e garantir a segurança</li>
-                  <li>Realizar análises estatísticas e pesquisas de mercado</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Compartilhamento */}
-            <div className="mb-12">
-              <div className="flex items-center gap-3 mb-4">
-                <Users className="text-red-500" size={28} />
-                <h2 className="text-2xl font-bold text-white">3. Compartilhamento de Informações</h2>
-              </div>
-              <div className="ml-11 space-y-3 text-neutral-400">
-                <p>Não vendemos, alugamos ou compartilhamos suas informações pessoais com terceiros, exceto nas seguintes situações:</p>
-                <ul className="list-disc list-inside space-y-2">
-                  <li><strong>Fornecedores de Serviços:</strong> Compartilhamos com empresas que nos auxiliam em operações como hospedagem de site, análise de dados e processamento de pagamentos</li>
-                  <li><strong>Obrigações Legais:</strong> Quando exigido por lei ou para proteger nossos direitos legais</li>
-                  <li><strong>Parceiros Comerciais:</strong> Com seu consentimento explícito, para ofertas relevantes</li>
-                  <li><strong>Transferência de Negócios:</strong> Em caso de fusão, aquisição ou venda de ativos</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Segurança */}
-            <div className="mb-12">
-              <div className="flex items-center gap-3 mb-4">
-                <Lock className="text-red-500" size={28} />
-                <h2 className="text-2xl font-bold text-white">4. Segurança dos Dados</h2>
-              </div>
-              <div className="ml-11 space-y-3 text-neutral-400">
-                <p>Implementamos medidas de segurança técnicas e organizacionais para proteger suas informações pessoais:</p>
-                <ul className="list-disc list-inside space-y-2">
-                  <li>Criptografia de dados sensíveis (SSL/TLS)</li>
-                  <li>Controles de acesso restritos</li>
-                  <li>Monitoramento contínuo de sistemas</li>
-                  <li>Backups regulares</li>
-                  <li>Treinamento de equipe sobre proteção de dados</li>
-                  <li>Atualizações de segurança regulares</li>
-                </ul>
-                <p className="mt-4">
-                  No entanto, nenhum método de transmissão pela Internet ou armazenamento eletrônico é 100% seguro. Embora nos esforcemos para proteger suas informações, não podemos garantir segurança absoluta.
-                </p>
-              </div>
-            </div>
-
-            {/* Cookies */}
-            <div className="mb-12">
-              <h2 className="text-2xl font-bold text-white mb-4">5. Cookies e Tecnologias Similares</h2>
-              <div className="ml-11 space-y-3 text-neutral-400">
-                <p>Utilizamos cookies para melhorar sua experiência em nosso site. Cookies são pequenos arquivos armazenados em seu dispositivo que nos ajudam a:</p>
-                <ul className="list-disc list-inside space-y-2">
-                  <li>Lembrar suas preferências</li>
-                  <li>Entender como você usa nosso site</li>
-                  <li>Melhorar o desempenho do site</li>
-                  <li>Personalizar conteúdo</li>
-                </ul>
-                <p className="mt-4">Você pode configurar seu navegador para recusar cookies, mas isso pode afetar a funcionalidade do site.</p>
-              </div>
-            </div>
-
-            {/* Direitos LGPD */}
-            <div className="mb-12">
-              <div className="flex items-center gap-3 mb-4">
-                <AlertCircle className="text-red-500" size={28} />
-                <h2 className="text-2xl font-bold text-white">6. Seus Direitos (LGPD)</h2>
-              </div>
-              <div className="ml-11 space-y-3 text-neutral-400">
-                <p>De acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 - LGPD), você tem os seguintes direitos:</p>
-                <ul className="list-disc list-inside space-y-2">
-                  <li><strong>Acesso:</strong> Solicitar informações sobre os dados que mantemos sobre você</li>
-                  <li><strong>Retificação:</strong> Corrigir dados incompletos, inexatos ou desatualizados</li>
-                  <li><strong>Exclusão:</strong> Solicitar a eliminação de seus dados pessoais</li>
-                  <li><strong>Portabilidade:</strong> Receber seus dados em formato estruturado</li>
-                  <li><strong>Revogação:</strong> Retirar consentimento a qualquer momento</li>
-                  <li><strong>Oposição:</strong> Opor-se ao tratamento de seus dados</li>
-                  <li><strong>Informação:</strong> Conhecer as entidades com as quais compartilhamos dados</li>
-                </ul>
-                <p className="mt-4">
-                  Para exercer seus direitos, entre em contato conosco através do e-mail:{' '}
-                  <a href="mailto:comercial@grupovendaforte.com" className="text-red-500 hover:text-red-300 font-semibold">comercial@grupovendaforte.com</a>
-                </p>
-              </div>
-            </div>
-
-            {/* Retenção */}
-            <div className="mb-12">
-              <h2 className="text-2xl font-bold text-white mb-4">7. Retenção de Dados</h2>
-              <div className="ml-11 text-neutral-400">
-                <p>Mantemos suas informações pessoais apenas pelo tempo necessário para cumprir as finalidades descritas nesta política, incluindo requisitos legais, contábeis ou de relatórios.</p>
-              </div>
-            </div>
-
-            {/* Menores */}
-            <div className="mb-12">
-              <h2 className="text-2xl font-bold text-white mb-4">8. Menores de Idade</h2>
-              <div className="ml-11 text-neutral-400">
-                <p>Nossos serviços não são direcionados a menores de 18 anos. Não coletamos intencionalmente informações de menores. Se você acredita que coletamos dados de um menor, entre em contato conosco imediatamente.</p>
-              </div>
-            </div>
-
-            {/* Alterações */}
-            <div className="mb-12">
-              <h2 className="text-2xl font-bold text-white mb-4">9. Alterações nesta Política</h2>
-              <div className="ml-11 text-neutral-400">
-                <p>Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos sobre mudanças significativas através do nosso site ou por e-mail. Recomendamos que você revise esta página regularmente.</p>
-              </div>
-            </div>
-
-            {/* Contato */}
-            <div className="bg-gradient-to-r from-red-500/10 to-orange-50 p-6 rounded-2xl border-l-4 border-red-600">
-              <h2 className="text-2xl font-bold text-white mb-4">10. Contato do Encarregado de Dados (DPO)</h2>
-              <p className="text-neutral-400 mb-4">Para questões sobre esta Política de Privacidade ou sobre o tratamento de seus dados pessoais, entre em contato:</p>
-              <div className="space-y-2 text-neutral-300">
-                <p><strong>Grupo Venda Forte</strong></p>
-                <p>E-mail: <a href="mailto:comercial@grupovendaforte.com" className="text-red-500 hover:text-red-300 font-semibold">comercial@grupovendaforte.com</a></p>
-                <p>Telefone: <a href="tel:+554933239050" className="text-red-500 hover:text-red-300 font-semibold">(49) 3323-9050</a></p>
-                <p>Endereço: Chapecó - SC</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link href="/" className="inline-flex items-center gap-2 text-red-500 hover:text-red-300 font-semibold">
-              ← Voltar para o site
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
+    <LegalLayout
+      eyebrow="LGPD"
+      title="Política de Privacidade"
+      updated={`Última atualização: ${new Date().toLocaleDateString('pt-BR')}`}
+      intro={
+        <>
+          <h2 className="mb-4 text-2xl font-semibold tracking-tight text-white">Introdução</h2>
+          <p>
+            O Grupo Venda Forte está comprometido em proteger a privacidade e a segurança dos dados pessoais de nossos clientes, parceiros e visitantes do nosso site. Esta Política de Privacidade descreve como coletamos, usamos, armazenamos e protegemos suas informações pessoais.
+          </p>
+          <p>
+            Ao utilizar nossos serviços e/ou nosso website, você concorda com a coleta e uso de informações de acordo com esta política.
+          </p>
+        </>
+      }
+      sections={SECTIONS}
+      contact={{
+        title: '10. Contato do Encarregado de Dados (DPO)',
+        lines: (
+          <>
+            <p>Para questões sobre esta Política de Privacidade ou sobre o tratamento de seus dados pessoais, entre em contato:</p>
+            <p><strong>Grupo Venda Forte</strong></p>
+            <p>E-mail: <a href="mailto:comercial@grupovendaforte.com">comercial@grupovendaforte.com</a></p>
+            <p>Telefone: <a href="tel:+554933239050">(49) 3323-9050</a></p>
+            <p>Endereço: Chapecó - SC</p>
+          </>
+        ),
+      }}
+    />
   )
 }

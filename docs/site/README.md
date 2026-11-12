@@ -4,7 +4,7 @@ O site público do Grupo Venda Forte segue o visual da campanha `/promo` (a pág
 registra as regras, as peças e o caminho das imagens e vídeos, para qualquer seção nova nascer igual
 às que já existem. A campanha em si está documentada em `docs/promo/`.
 
-O painel `/admin` não segue este guia: ele continua claro.
+O painel `/admin` também segue este guia desde 12/11/2026 (seção 16): mesmo fundo escuro, mesmas peças e o mesmo cabeçalho de cápsula.
 
 ## 1. Princípios
 
@@ -286,3 +286,43 @@ depender do otimizador da Vercel, o site tem o seu:
 - Ao mudar as larguras, mude juntas as três listas: `WIDTHS` no script e no loader e `deviceSizes`/`imageSizes`
   no `next.config.ts`. Foto nova em `public/` não precisa de nada: o prebuild gera as versões.
 - Quem roda `next dev` já aberto precisa reiniciar o servidor para pegar a configuração nova.
+
+## 16. Painel administrativo, termos e privacidade (12/11/2026)
+
+O painel `/admin` deixou de ser claro e segue o visual do site e da `/promo`.
+
+**Base.** `app/admin/layout.tsx` usa o mesmo invólucro do site (`theme-ink bg-ink font-sans`). Em `app/globals.css`, os campos sem classe de
+cor (`input`, `textarea`, `select`) ficam escuros por regra de peso baixo (`:where`), e o editor de texto do blog usa `prose-invert`.
+
+**Peças do painel** (`components/admin/`):
+
+| Peça | Arquivo | Para que serve |
+|---|---|---|
+| Barra do painel | `AdminNav.tsx` | Cápsula de vidro igual à do site. Abas, rastro da tela (`crumb`), linha de progresso (`progress`) e ações à direita (`children`). Todas as telas usam; as de edição já não copiam a barra |
+| Classes | `ui.ts` | Botões em pílula (`BTN_PRIMARY`, `BTN_GHOST`, `BTN_WHITE`, `BTN_ICON` de 44 px), `CHIP_ON/OFF`, `BADGE_*`, `PAGE_TITLE`; reexporta `CARD`, `INPUT`, `EYEBROW` do site |
+| Avisos e confirmações | `Feedback.tsx` | `notify("texto")` no lugar do `alert` e `await askConfirm("texto", { confirmLabel })` no lugar do `confirm`. O `FeedbackHost` fica no layout do painel; sem ele, cai nas janelas do navegador |
+
+**Regras.** Título todo branco e rótulo vermelho sem caixa alta; um botão vermelho por tela; botão só de ícone sempre com `aria-label`; sem emoji como
+ícone; sem `transition-all`; fotos de produto em quadro claro (`bg-white`, com `mix-blend-multiply`).
+
+**Termos de uso e política de privacidade** usam `components/site/LegalLayout.tsx`: abertura da campanha, índice fixo à esquerda que acompanha a
+leitura (no celular vira um botão que abre a lista), seções separadas por linhas finas e o contato num cartão. O texto de cada seção é JSX comum
+em `TermosClient.tsx` e `PrivacidadeClient.tsx`; o texto jurídico não foi alterado. Atenção: a linha "Última atualização" mostra a data de hoje a cada
+visita (já era assim), o que não é a data real da última revisão do texto: vale trocar por uma data fixa quando o Paulo confirmar.
+
+**Fotos de produto sem fundo.** As 222 fotos do catálogo vêm da CDN da EP (`cdn.ep-portal.net`) como recortes sobre fundo branco. A rota
+`app/api/foto` (`?u=<foto>&w=384|640|1080`) tira o fundo claro ligado à borda, transforma a sombra do chão em preto suave e devolve um WebP com
+transparência, cacheado por um ano na CDN (cada foto é processada uma vez e não usa a cota de otimização de imagens da Vercel). `lib/product-photo.ts`
+(`stagePhoto`) monta o endereço e `PRODUCT_STAGE` (`components/site/styles.ts`) é o palco escuro com foco de luz, como o estúdio da DS3 na /promo.
+Vale para o catálogo, a ficha do modelo, os relacionados, as miniaturas e a janela de ampliação. Só aceita o host da EP. `PHOTO_STUDIO` (degradê
+claro) ficou para quadros que ainda mostrem foto com fundo branco.
+
+**Fileira de categorias do catálogo:** sem barra de rolagem; esmaecido e seta (`sm` em diante) só no lado em que ainda há o que rolar, arraste com
+o mouse, dedo ou roda, e a categoria escolhida rola para o centro.
+
+**Blog:** a abertura entra em cascata (classe `rise`, CSS puro); os cartões entram ao rolar em cascata (`whileInView`, uma vez); o cartão segue o
+padrão da /promo (canto de 28 px, capa inset com rótulo sobre a imagem); a capa do artigo ganha a aproximação lenta da abertura da home. Tudo
+respeita `prefers-reduced-motion`.
+
+**Outros ajustes.** Palavras em vermelho dentro de títulos do blog saíram (o vermelho fica em rótulo, ícone e botão); a `meta theme-color` vermelha do
+`app/layout.tsx` conflitava com a escura do `viewport` e foi removida; `lib/social.ts` ganhou os tons escuros dos estados dos textos das redes.

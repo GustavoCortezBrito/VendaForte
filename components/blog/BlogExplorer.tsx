@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useSyncExternalStore } from 'r
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { X } from 'lucide-react'
+import { EASE_OUT } from '@/components/promo/ui'
 import { blogHref, categoryIntro, categoryOf, type BlogPostSummary } from '@/lib/blog-format'
 import { buildListing, listingTitle, parseBlogPath, sortSuffix, type SortOrder } from '@/lib/blog-list'
 import CategoryTiles from './CategoryTiles'
@@ -140,7 +141,7 @@ export default function BlogExplorer({ posts, guides }: BlogExplorerProps) {
               </p>
             )}
 
-            <AnimatePresence mode="wait" initial={false}>
+            <AnimatePresence mode="wait">
               <motion.div
                 key={`${category?.slug ?? 'todos'}-${page}-${sort}`}
                 initial={reduceMotion ? false : { opacity: 0, y: 12 }}
@@ -148,14 +149,28 @@ export default function BlogExplorer({ posts, guides }: BlogExplorerProps) {
                 exit={reduceMotion ? undefined : { opacity: 0, transition: { duration: 0.1 } }}
                 transition={{ duration: reduceMotion ? 0 : 0.24, ease: 'easeOut' }}
               >
-                {featured && <FeaturedPost post={featured} label={sort === 'antigos' ? 'Mais antigo' : 'Mais recente'} />}
+                {featured && (
+                  <motion.div
+                    initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, ease: EASE_OUT }}
+                  >
+                    <FeaturedPost post={featured} label={sort === 'antigos' ? 'Mais antigo' : 'Mais recente'} />
+                  </motion.div>
+                )}
 
                 {items.length > 0 && (
                   <ul className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ${featured ? 'mt-8' : ''}`}>
                     {items.map((post, position) => (
-                      <li key={post.slug}>
+                      <motion.li
+                        key={post.slug}
+                        initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-40px' }}
+                        transition={{ duration: 0.65, ease: EASE_OUT, delay: (position % 3) * 0.08 }}
+                      >
                         <PostCard post={post} priority={!featured && position < 3} />
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
                 )}

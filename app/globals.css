@@ -447,3 +447,51 @@ html:has(.theme-ink)::-webkit-scrollbar-track {
   outline: 2px solid rgba(255, 255, 255, 0.85);
   outline-offset: 3px;
 }
+
+/* Painel administrativo no tema escuro do site.
+   Campos sem classe de cor ficam como os do site; peso baixo (:where) para qualquer classe vencer. */
+:where(.admin-layout) :where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"]), textarea, select) {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #fff;
+}
+
+:where(.admin-layout) :where(input, textarea)::placeholder {
+  color: #8c8c8c;
+}
+
+:where(.admin-layout) select option {
+  background-color: #151515;
+  color: #fff;
+}
+
+/* Editor de texto do blog: o mesmo escuro do site */
+.admin-layout .ProseMirror {
+  caret-color: #fff;
+}
+
+.admin-layout .ProseMirror[contenteditable="true"]:hover {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.admin-layout .ProseMirror img:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.admin-layout .ProseMirror th,
+.admin-layout .ProseMirror td {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.admin-layout .ProseMirror th {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.admin-layout .ProseMirror blockquote {
+  color: #a3a3a3;
+}
+
+.admin-layout .ProseMirror pre {
+  background: #0d0d0d;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
