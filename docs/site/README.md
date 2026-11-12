@@ -270,3 +270,19 @@ cabeçalho fixo, botão só de ícone, vídeo que toca sozinho, carrossel) e a c
   entrada com subida em toda seção, que a frontend-design chama de padrão genérico mas são da /promo, e a
   /promo manda. Pendente com o Paulo: o FAQ declara 10 perguntas no JSON-LD e mostra 5 até clicar em "Ver todas".
 - `components/promo/` (a campanha) e o `/admin` não foram tocados.
+
+## 15. Imagens sem gastar a cota da Vercel (12/11/2026)
+
+Em 12/11 a conta Hobby estourou "Image Optimization – Transformations" (5,1K de 5K em 30 dias; 99,7% do
+`venda-forte`, com pico de 2,2 mil em 06/11). Sem a cota, imagens novas deixam de ser geradas. Em vez de
+depender do otimizador da Vercel, o site tem o seu:
+
+- `scripts/gen-images.mjs` (roda sozinho em `npm run dev` e `npm run build`, via `predev`/`prebuild`) lê as
+  imagens de `public/` e grava WebP de 384, 640, 1080 e 1920 px em `public/_img/<largura>/...` (pasta ignorada
+  pelo git; só refaz o que mudou; cerca de 2 min na primeira vez, 88 MB).
+- `image-loader.ts` (`images.loader: "custom"` no `next.config.ts`) manda cada `<Image>` para o arquivo da
+  largura certa. São arquivos estáticos: zero transformação. O catálogo da EP (`cdn.ep-portal.net`, já WebP de
+  cerca de 60 KB) vai direto da CDN deles. Só imagens de outros hosts (Supabase) ainda usam o otimizador.
+- Ao mudar as larguras, mude juntas as três listas: `WIDTHS` no script e no loader e `deviceSizes`/`imageSizes`
+  no `next.config.ts`. Foto nova em `public/` não precisa de nada: o prebuild gera as versões.
+- Quem roda `next dev` já aberto precisa reiniciar o servidor para pegar a configuração nova.

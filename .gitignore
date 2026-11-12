@@ -47,3 +47,6 @@ next-env.d.ts
 # Python (scripts das skills)
 __pycache__/
 *.pyc
+
+# Versões menores das imagens, geradas por scripts/gen-images.mjs
+/public/_img/

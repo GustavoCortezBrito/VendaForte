@@ -18,8 +18,15 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    // AVIF para quem aceita, WebP como reserva
-    formats: ["image/avif", "image/webp"],
+    // Imagens do próprio site são pré-geradas por scripts/gen-images.mjs e servidas como arquivo
+    // (image-loader.ts), sem gastar a cota de otimização da Vercel. Só as de fora (catálogo da EP,
+    // Supabase) ainda passam pelo otimizador do Next, com estas larguras e formatos.
+    loader: "custom",
+    loaderFile: "./image-loader.ts",
+    // Iguais a WIDTHS em image-loader.ts e scripts/gen-images.mjs
+    deviceSizes: [640, 1080, 1920],
+    imageSizes: [384],
+    formats: ["image/webp"],
     remotePatterns: [
       {
         protocol: "https",
