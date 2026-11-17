@@ -298,7 +298,8 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
       />
 
       {/* STICKY TOOLBAR (Categories & Search Bar that follow on scroll) */}
-      <div className="sticky top-20 z-30 bg-ink/95 backdrop-blur-md border-b border-white/10 transition">
+      {/* No celular a barra (categorias + busca) tem 120 px: fixa, tomaria um quarto da tela; só fixa a partir do tablet */}
+      <div className="z-30 border-b border-white/10 bg-ink/95 backdrop-blur-md md:sticky md:top-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
           
           {/* Barra de categorias: rola arrastando, pelo dedo, pela roda ou pelas setas; sem barra de rolagem */}

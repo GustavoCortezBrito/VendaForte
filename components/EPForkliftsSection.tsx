@@ -29,7 +29,7 @@ export default function EPForkliftsSection({ total, categories }: { total: numbe
 
         <ul className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {categories.map((category, index) => (
-            <li key={category.href}>
+            <li key={category.href} className="[&:last-child:nth-child(odd)]:col-span-2 sm:[&:last-child:nth-child(odd)]:col-span-1">
               <Reveal delay={(index % 5) * 0.05} className="h-full">
                 <Link href={category.href} aria-label={`${category.label}: ${category.count} modelos`} className={`${CARD_LINK} p-6`}>
                   <p className="text-5xl font-bold tracking-[-0.045em] text-white">{category.count}</p>

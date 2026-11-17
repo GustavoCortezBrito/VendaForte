@@ -45,7 +45,7 @@ Reunião do Paulo com o Rodrigo marcada para 23/10 para alinhar o resto. Os deta
 | 19 erros de dados estruturados | Product sem `offers`, `review` ou `aggregateRating` (o Google exige um dos três) | Auditoria e documentação do Google |
 | 14 fichas diesel descritas como lítio | Slugs `cpcd*`, "Drive: Diesel" na ficha técnica, "Li-Ion" no catálogo; o título e a descrição gerados em `lib/product-seo.ts` dizem "bateria 24 V (lítio)" | `lib/data/electric-forklifts.json` |
 | 38 fichas de chumbo-ácido com texto "Íon-Lítio" | E 212 de 222 fichas repetem o mesmo parágrafo de abertura | Mesmo arquivo |
-| Contatos não medidos | O GA4 (G-7JE64BV56H) só carrega a tag, sem eventos | `app/layout.tsx` |
+| Contatos medidos (corrigido) | `components/AnalyticsEvents.tsx` manda `click_whatsapp`, `click_phone` e `generate_lead` ao GA4 (G-7JE64BV56H) com `pagina`, `botao` e `origem`, e põe "Ref: origem · página" no fim do texto pronto do WhatsApp (vale também na /promo). Cadastrar essas três como dimensões personalizadas (escopo Evento) e marcar os três eventos como eventos-chave | `components/AnalyticsEvents.tsx` |
 | Painel admin linkado no menu | `components/Navbar.tsx` tem ícone com `rel="nofollow"` para `/admin`, em 53 páginas | Código |
 | Metadados da home | Título "Empilhadeiras e Equipamentos"; descrição promete "assistência 24h no Sul e SP" (não confirmado) e há 40 termos de meta keywords | `app/metadata.ts` |
 | Visibilidade | 2 palavras-chave no SEMrush, Authority Score 2, cerca de 230 impressões e 5 cliques no Search Console importado (75% por modelo ou marca) | SEMrush e Search Console |

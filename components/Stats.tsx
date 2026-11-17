@@ -20,7 +20,9 @@ const format = (value: number, suffix: string) => `${Math.round(value).toLocaleS
  */
 function Counter({ value, suffix }: { value: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+  // Margem só embaixo: com -80px nos quatro lados, o "0+" (que é estreito) da coluna da esquerda ficava
+  // fora da área observada no celular e a contagem nunca começava
+  const inView = useInView(ref, { once: true, margin: '0px 0px -80px 0px' })
   const reduced = useReducedMotion()
 
   // Fora da tela, zera antes que alguém veja; a contagem começa quando a seção aparece

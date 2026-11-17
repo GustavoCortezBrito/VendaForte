@@ -51,9 +51,9 @@ export default function Hero() {
   return (
     <section ref={ref} id="home" data-hero="photo" className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-ink lg:items-center">
       {/* Fachada */}
-      <motion.div aria-hidden="true" style={{ y: photoY }} className="absolute inset-0 -z-20">
+      <motion.div aria-hidden="true" style={{ y: photoY }} className="absolute inset-x-0 top-0 -z-20 h-80 sm:h-[26rem] lg:inset-0 lg:h-auto">
         <div className={`absolute inset-0 ${HERO_VIDEO && !reduced ? '' : 'hero-kenburns'}`}>
-          <Image src={HERO_PHOTO} alt="" fill priority sizes="100vw" quality={75} className="object-cover object-[60%_center]" />
+          <Image src={HERO_PHOTO} alt="" fill priority sizes="100vw" quality={75} className="object-cover object-[30%_center] lg:object-[60%_center]" />
           {HERO_VIDEO && !reduced && (
             <video
               ref={videoRef}
@@ -65,7 +65,7 @@ export default function Hero() {
               preload="metadata"
               onPlaying={() => setVideoReady(true)}
               onError={() => setVideoReady(false)}
-              className={`absolute inset-0 h-full w-full object-cover object-[60%_center] transition-opacity duration-1000 ${
+              className={`absolute inset-0 h-full w-full object-cover object-[30%_center] lg:object-[60%_center] transition-opacity duration-1000 ${
                 videoReady ? 'opacity-100' : 'opacity-0'
               }`}
             />
@@ -75,9 +75,9 @@ export default function Hero() {
 
       {/* Véus: escuro à esquerda para o texto, base dissolvendo na página, brilho vermelho atrás do título */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-ink/45 lg:hidden" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/55 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink via-ink/55 to-transparent lg:h-1/2 lg:via-ink/45" />
+        {/* Celular: a fachada ocupa a parte de cima e o texto assenta sobre a base escura; no desktop o véu vem da esquerda */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/55 to-transparent max-lg:hidden" />
+        <div className="absolute inset-x-0 top-36 h-52 bg-gradient-to-b from-transparent to-ink sm:top-48 sm:h-64 lg:bottom-0 lg:top-auto lg:h-1/2 lg:bg-gradient-to-t lg:from-ink lg:via-ink/45 lg:via-50% lg:to-transparent" />
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ink/60 to-transparent" />
         <div
           className="absolute -left-40 top-1/4 h-[36rem] w-[36rem] rounded-full"
@@ -86,14 +86,14 @@ export default function Hero() {
         {!(HERO_VIDEO && !reduced) && <div className="hero-sweep absolute inset-y-0 -left-1/2 w-1/2" />}
       </div>
 
-      <motion.div style={{ y: textY, opacity: textOpacity }} className="mx-auto w-full max-w-7xl px-6 pb-20 pt-32 lg:px-8 lg:pb-0 lg:pt-24">
+      <motion.div style={{ y: textY, opacity: textOpacity }} className="mx-auto w-full max-w-7xl px-6 pb-20 pt-[17rem] sm:pt-[22rem] lg:px-8 lg:pb-0 lg:pt-24">
         <div className="max-w-2xl">
-          <motion.p {...rise(0.1)} className="text-sm font-semibold text-red-400 lg:text-base lg:text-red-500">
+          <motion.p {...rise(0.1)} className="text-sm font-semibold text-red-400 [text-shadow:0_1px_14px_rgba(0,0,0,0.75)] lg:text-base lg:text-red-500 lg:[text-shadow:none]">
             Grupo Venda Forte · Dealer oficial EP Equipment
           </motion.p>
           <motion.h1
             {...rise(0.2)}
-            className="mt-4 text-balance text-5xl font-bold leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl"
+            className="mt-4 text-balance text-[2.6rem] font-bold leading-[1] tracking-[-0.045em] text-white sm:text-6xl sm:leading-[0.98] lg:text-7xl"
           >
             Soluções completas em empilhadeiras e equipamentos
           </motion.h1>

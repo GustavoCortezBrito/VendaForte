@@ -29,7 +29,7 @@ export default function BlogHeader({ eyebrow, title, intro, children, borderless
       <div className={`${CONTAINER} relative`}>
         <div className="mx-auto max-w-4xl text-center">
           <p className={`${EYEBROW} rise`} style={{ "--delay": "0.05s" } as React.CSSProperties}>{eyebrow}</p>
-          <h1 className="mt-4 text-balance text-5xl font-bold leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
+          <h1 className="mt-4 text-balance text-[2.5rem] font-bold leading-[1] sm:text-5xl sm:leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
             {title}
           </h1>
           {intro && (
