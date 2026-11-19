@@ -44,7 +44,7 @@ export const PROSE = [
   // Tabelas feitas no editor do admin guardam o texto das células dentro de <p>
   '[&_td_p]:m-0 [&_th_p]:m-0 [&_th_p]:text-white',
   // Tabelas dentro de um contêiner que rola na horizontal (ver `enhanceHtml`)
-  '[&_.blog-table]:my-8 [&_.blog-table]:overflow-x-auto [&_.blog-table]:rounded-2xl [&_.blog-table]:border [&_.blog-table]:border-white/10 [&_.blog-table]:shadow-sm [&_.blog-table_table]:my-0 [&_.blog-table_table]:min-w-[34rem]',
+  '[&_.blog-table]:my-8 [&_.blog-table]:overflow-x-auto [&_.blog-table]:rounded-2xl [&_.blog-table]:border [&_.blog-table]:border-white/10 [&_.blog-table]:shadow-sm [&_.blog-table_table]:my-0 [&_.blog-table_table]:min-w-[20rem] sm:[&_.blog-table_table]:min-w-[34rem] max-sm:[&_.blog-table_table]:text-[13px] max-sm:[&_.blog-table_:is(th,td)]:px-2',
   // Checklists do Markdown (- [ ] item)
   '[&_.contains-task-list]:list-none [&_.contains-task-list]:pl-0 [&_.task-list-item]:flex [&_.task-list-item]:items-start [&_.task-list-item]:gap-3 [&_.task-list-item_input]:mt-2 [&_.task-list-item_input]:accent-red-600',
 ].join(' ')

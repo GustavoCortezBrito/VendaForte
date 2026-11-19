@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import PageHeader from '@/components/site/PageHeader'
+import ReadMore from '@/components/site/ReadMore'
 import { BTN_GHOST, BTN_WHATSAPP, PRODUCT_STAGE } from '@/components/site/styles'
 import { stagePhoto } from '@/lib/product-photo'
 import { notFound } from 'next/navigation'
@@ -111,11 +112,13 @@ export default async function TypePage({ params, searchParams }: Props) {
         eyebrow={`${stats.count} modelos no catálogo`}
         title={<>{page.label} EP Equipment</>}
         lead={
-          <div className="space-y-3">
-            {page.intro(stats).map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
+          <ReadMore>
+            <div className="space-y-3">
+              {page.intro(stats).map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </ReadMore>
         }
       >
         <div className="flex flex-col gap-3 sm:flex-row">
@@ -141,30 +144,30 @@ export default async function TypePage({ params, searchParams }: Props) {
           </div>
 
           <div className="mt-6 overflow-x-auto rounded-[28px] border border-white/10 bg-ink-raised">
-            <table className="w-full min-w-[40rem] text-left text-sm">
+            <table className="w-full text-left text-sm sm:min-w-[40rem]">
               <caption className="sr-only">
                 {page.label} EP: capacidade, elevação, energia e raio de giro de cada modelo
               </caption>
               <thead className="bg-ink-raised text-xs text-white">
                 <tr>
-                  <th scope="col" className="px-4 py-3 font-bold">
+                  <th scope="col" className="px-3 py-3 font-bold sm:px-4">
                     Modelo
                   </th>
                   {showKind && (
-                    <th scope="col" className="px-4 py-3 font-bold">
+                    <th scope="col" className="px-3 py-3 font-bold sm:px-4">
                       Tipo
                     </th>
                   )}
-                  <th scope="col" className="px-4 py-3 font-bold">
+                  <th scope="col" className="px-3 py-3 font-bold sm:px-4">
                     Capacidade
                   </th>
-                  <th scope="col" className="px-4 py-3 font-bold">
+                  <th scope="col" className="px-3 py-3 font-bold sm:px-4">
                     Elevação
                   </th>
-                  <th scope="col" className="px-4 py-3 font-bold">
+                  <th scope="col" className="hidden px-3 py-3 font-bold sm:px-4 sm:table-cell">
                     Energia
                   </th>
-                  <th scope="col" className="px-4 py-3 font-bold">
+                  <th scope="col" className="hidden px-3 py-3 font-bold sm:px-4 sm:table-cell">
                     Raio de giro
                   </th>
                 </tr>
@@ -172,7 +175,7 @@ export default async function TypePage({ params, searchParams }: Props) {
               <tbody className="divide-y divide-white/10">
                 {visible.map((product) => (
                   <tr key={product.slug} className="hover:bg-white/5">
-                    <th scope="row" className="px-4 py-2.5 font-semibold text-white">
+                    <th scope="row" className="px-3 py-2.5 sm:px-4 font-semibold text-white">
                       <Link href={`/produtos/${product.slug}`} className="flex items-center gap-3 hover:text-red-400">
                         <span className={`relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-white/10 ${PRODUCT_STAGE}`}>
                           <Image
@@ -184,18 +187,21 @@ export default async function TypePage({ params, searchParams }: Props) {
                             className="object-contain p-1"
                           />
                         </span>
-                        <span>EP {product.title}</span>
+                        <span>
+                          EP {product.title}
+                          <span className="block text-xs font-normal text-neutral-400 sm:hidden">{energyLabel(product)}</span>
+                        </span>
                       </Link>
                     </th>
                     {showKind && (
-                      <td className="px-4 py-2.5 text-neutral-400">
+                      <td className="px-3 py-2.5 sm:px-4 text-neutral-400">
                         {product.type === 'Rebocador Elétrico' ? 'Rebocador' : 'Selecionadora'}
                       </td>
                     )}
-                    <td className="px-4 py-2.5 tabular-nums text-neutral-300">{product.capacity}</td>
-                    <td className="px-4 py-2.5 tabular-nums text-neutral-300">{formatLift(product.liftingHeight)}</td>
-                    <td className="px-4 py-2.5 text-neutral-300">{energyLabel(product)}</td>
-                    <td className="px-4 py-2.5 tabular-nums text-neutral-300">{turningLabel(product.turningRadius)}</td>
+                    <td className="px-3 py-2.5 sm:px-4 whitespace-nowrap tabular-nums text-neutral-300">{product.capacity}</td>
+                    <td className="px-3 py-2.5 sm:px-4 whitespace-nowrap tabular-nums text-neutral-300">{formatLift(product.liftingHeight)}</td>
+                    <td className="hidden px-3 py-2.5 sm:px-4 text-neutral-300 sm:table-cell">{energyLabel(product)}</td>
+                    <td className="hidden px-3 py-2.5 sm:px-4 tabular-nums text-neutral-300 sm:table-cell">{turningLabel(product.turningRadius)}</td>
                   </tr>
                 ))}
               </tbody>
