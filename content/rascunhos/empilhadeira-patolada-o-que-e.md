@@ -71,7 +71,7 @@ Para os detalhes da DS3, leia a [EP DS3: a ficha técnica explicada](/blog/ep-ds
 
 ## Para escolher a sua
 
-Para indicar o modelo, a Venda Forte precisa da **altura da prateleira mais alta**, do **peso do palete carregado** e da **largura do corredor**. [Peça uma cotação](/promo#cotacao) com esses dados ou [fale com um consultor no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20empilhadeira%20patolada%20e%20quero%20ajuda%20para%20escolher.).
+Para indicar o modelo, a Venda Forte precisa da **altura da prateleira mais alta**, do **peso do palete carregado** e da **largura do corredor**. [Peça uma cotação](/promo#cotacao) com esses dados ou [fale com um consultor no WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20empilhadeira%20patolada%20e%20quero%20ajuda%20para%20escolher.).
 
 ## Leia também
 

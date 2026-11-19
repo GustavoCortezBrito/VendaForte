@@ -83,7 +83,7 @@ Com a consolidação da tecnologia **Li-Ion (Fosfato de Ferro-Lítio - LiFePO4)*
 
 Deseja saber exatamente o ponto de equilíbrio entre comprar ou alugar para o volume de carga da sua empresa?
 
-👉 **[Fale com um Especialista Técnico no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20gostaria%20de%20uma%20simula%C3%A7%C3%A3o%20comparativa%20entre%20loca%C3%A7%C3%A3o%20e%20compra%20de%20empilhadeira.)** e receba um estudo de viabilidade gratuito.
+👉 **[Fale com um Especialista Técnico no WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1%2C%20gostaria%20de%20uma%20simula%C3%A7%C3%A3o%20comparativa%20entre%20loca%C3%A7%C3%A3o%20e%20compra%20de%20empilhadeira.)** e receba um estudo de viabilidade gratuito.
 
 ## Leia também
 

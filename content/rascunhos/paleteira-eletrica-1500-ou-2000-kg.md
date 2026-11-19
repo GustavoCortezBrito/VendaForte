@@ -77,7 +77,7 @@ Para os detalhes de um modelo de 1.500 kg, leia a [EP F4: a ficha técnica expli
 
 ## Preço e cotação
 
-Os valores ficam com o consultor e mudam conforme o modelo e a campanha. Para receber a proposta certa, informe o peso do palete carregado, a rampa e a largura do corredor. [Peça uma cotação](/promo#cotacao) ou [fale com um consultor no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20paleteira%20el%C3%A9trica%20e%20quero%20ajuda%20para%20escolher%20entre%201.500%20e%202.000%20kg.).
+Os valores ficam com o consultor e mudam conforme o modelo e a campanha. Para receber a proposta certa, informe o peso do palete carregado, a rampa e a largura do corredor. [Peça uma cotação](/promo#cotacao) ou [fale com um consultor no WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20paleteira%20el%C3%A9trica%20e%20quero%20ajuda%20para%20escolher%20entre%201.500%20e%202.000%20kg.).
 
 ## Leia também
 

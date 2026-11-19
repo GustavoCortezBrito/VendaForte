@@ -67,7 +67,7 @@ Para aumentar a vida útil do equipamento no ambiente frigorífico:
 
 O **Grupo Venda Forte** disponibiliza empilhadeiras patoladas, retráteis e paleteiras elétricas com pacote completo de proteção para câmaras frias e frigoríficos, garantindo conformidade sanitária e alta produtividade.
 
-👉 **[Consulte nossa Linha para Câmaras Frias no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20empilhadeiras%20preparadas%20para%20c%C3%A2mara%20fria%20e%20frigor%C3%ADfico.)** e fale com um engenheiro especialista.
+👉 **[Consulte nossa Linha para Câmaras Frias no WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20empilhadeiras%20preparadas%20para%20c%C3%A2mara%20fria%20e%20frigor%C3%ADfico.)** e fale com um engenheiro especialista.
 
 ## Leia também
 

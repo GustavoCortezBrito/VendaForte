@@ -1,5 +1,6 @@
 'use client'
 
+import { WHATSAPP_CENTRAL } from '@/components/promo/promo.config'
 import { useState, useMemo, useEffect, useRef, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
@@ -91,7 +92,7 @@ export default function ForkliftsCatalogClient({ initialProducts, initialPage = 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     categoriesRef.current?.scrollBy({ left: direction * 320, behavior: reduce ? 'auto' : 'smooth' })
   }
-  const phoneNumber = '+5549988395635'
+  const phoneNumber = WHATSAPP_CENTRAL
 
   const parseCapacityKg = (capacityStr: string): number => {
     if (!capacityStr) return 1500

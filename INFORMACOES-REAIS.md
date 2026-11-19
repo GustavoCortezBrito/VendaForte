@@ -31,7 +31,7 @@ Todas as informações do site foram atualizadas com dados reais da empresa.
 ### Telefones
 - **Chapecó (Matriz):** 49 3323-9050
 - **Joinville:** 47 3842-3333
-- **WhatsApp:** 49 98839-5635
+- **WhatsApp:** 47 9997-0464
 
 ### E-mail
 - **Comercial:** comercial@grupovendaforte.com
@@ -232,7 +232,7 @@ Empresas que confiam no Grupo Venda Forte:
 - **E-mail:** comercial@grupovendaforte.com
 - **Telefone Chapecó:** 49 3323-9050
 - **Telefone Joinville:** 47 3842-3333
-- **WhatsApp:** 49 98839-5635
+- **WhatsApp:** 47 9997-0464
 
 ### Endereços
 - **Matriz:** Chapecó - SC

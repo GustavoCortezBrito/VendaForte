@@ -32,7 +32,7 @@ Em julho de 2021, em contato com a SDO Empilhadeiras, de Campinas-SP, fechamos a
 
 **Itajaí.** Ponto de atendimento no litoral catarinense.
 
-Telefones: Chapecó (49) 3323-9050 e Joinville (47) 3842-3333. WhatsApp: (49) 98839-5635.
+Telefones: Chapecó (49) 3323-9050 e Joinville (47) 3842-3333. WhatsApp: (47) 9997-0464.
 
 ## O que oferecemos
 
@@ -59,4 +59,4 @@ Empresas de diferentes setores já escolheram a Venda Forte, entre elas BRF, JBS
 
 ## Fale com a equipe
 
-[Peça uma cotação](/promo#cotacao) ou fale pelo WhatsApp: +55 49 98839-5635. Acompanhe também no [Instagram](https://www.instagram.com/vendaforte/) e no [YouTube](https://www.youtube.com/@grupovendaforte7665).
+[Peça uma cotação](/promo#cotacao) ou fale pelo WhatsApp: +55 47 9997-0464. Acompanhe também no [Instagram](https://www.instagram.com/vendaforte/) e no [YouTube](https://www.youtube.com/@grupovendaforte7665).

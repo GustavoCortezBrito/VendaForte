@@ -52,4 +52,4 @@ Agradecemos a todos os clientes, parceiros e visitantes que passaram pelo nosso 
 
 Se você não pôde comparecer ao evento ou deseja aprofundar uma proposta comercial para renovação ou ampliação de frota:
 
-👉 **[Fale com nossos consultores no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20as%20empilhadeiras%20el%C3%A9tricas%20do%20Grupo%20Venda%20Forte.)** e solicite uma demonstração técnica.
+👉 **[Fale com nossos consultores no WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20as%20empilhadeiras%20el%C3%A9tricas%20do%20Grupo%20Venda%20Forte.)** e solicite uma demonstração técnica.

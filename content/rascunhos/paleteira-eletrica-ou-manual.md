@@ -64,7 +64,7 @@ Todos os detalhes, com opcionais, estão na [EP F4: a ficha técnica explicada](
 
 ## Como decidir
 
-Observe uma semana de operação: quantos paletes passam, a que distância andam e se há rampa. Com esses números, um consultor mostra se a troca compensa ou se a manual ainda atende. [Peça uma cotação](/promo#cotacao) ou [fale com um consultor no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20paleteira%20el%C3%A9trica%20ou%20manual%20e%20quero%20avaliar%20a%20troca.).
+Observe uma semana de operação: quantos paletes passam, a que distância andam e se há rampa. Com esses números, um consultor mostra se a troca compensa ou se a manual ainda atende. [Peça uma cotação](/promo#cotacao) ou [fale com um consultor no WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20paleteira%20el%C3%A9trica%20ou%20manual%20e%20quero%20avaliar%20a%20troca.).
 
 ## Leia também
 

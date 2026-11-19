@@ -66,7 +66,7 @@ A comparação acima usa o GLP, o combustível mais comum em operação interna.
 
 Cada operação tem tarifas energéticas e intensidades de turno diferentes. A equipe técnica do **Grupo Venda Forte** calcula o comparativo exato de Payback para o seu negócio sem compromisso.
 
-👉 **[Clique aqui para solicitar um comparativo gratuito de TCO no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20uma%20simula%C3%A7%C3%A3o%20de%20custos%20GLP%20vs%20El%C3%A9trica.)** e descubra o potencial de economia da sua frota!
+👉 **[Clique aqui para solicitar um comparativo gratuito de TCO no WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20uma%20simula%C3%A7%C3%A3o%20de%20custos%20GLP%20vs%20El%C3%A9trica.)** e descubra o potencial de economia da sua frota!
 
 ## Leia também
 

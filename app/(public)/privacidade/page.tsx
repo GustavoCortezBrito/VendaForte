@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     url: `${siteUrl}/privacidade`,
     siteName: 'Venda Forte',
     type: 'website',
+    images: [{ url: `${siteUrl}/sede.png`, width: 1200, height: 630, alt: 'Grupo Venda Forte, matriz em Chapecó' }],
   },
 }
 

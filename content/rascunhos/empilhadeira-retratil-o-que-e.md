@@ -67,7 +67,7 @@ Empilhadeira só pode ser operada por quem foi treinado e autorizado. Em altura,
 
 ## Para dimensionar a sua
 
-Para indicar o modelo certo, a Venda Forte precisa de três informações: a **altura da última posição** do porta-paletes, a **largura real do corredor** e o **peso do palete carregado**. [Peça uma cotação](/promo#cotacao) com esses dados ou [fale com um consultor no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20empilhadeira%20retr%C3%A1til%20e%20quero%20ajuda%20para%20dimensionar.).
+Para indicar o modelo certo, a Venda Forte precisa de três informações: a **altura da última posição** do porta-paletes, a **largura real do corredor** e o **peso do palete carregado**. [Peça uma cotação](/promo#cotacao) com esses dados ou [fale com um consultor no WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20empilhadeira%20retr%C3%A1til%20e%20quero%20ajuda%20para%20dimensionar.).
 
 ## Leia também
 

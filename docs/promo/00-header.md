@@ -36,7 +36,7 @@ Duas faixas empilhadas, altura total de 88 px.
 - **Navegação:** DS3 1.500 kg · Economia · Ofertas · Vendedores · Cotação
 - **Botão do header:** WhatsApp
 - **Barra fixa mobile:** Cotar agora no WhatsApp
-- **Destino de ambos:** `https://wa.me/5549988395635` com a mensagem geral da campanha
+- **Destino de ambos:** `https://wa.me/554799970464` com a mensagem geral da campanha
 
 ## 4. Animações
 

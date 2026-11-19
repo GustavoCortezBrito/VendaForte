@@ -37,7 +37,7 @@ rápidos vêm depois delas.
 Confirmados em `INFORMACOES-REAIS.md` e no uso do site principal. Use estes valores,
 não invente variação.
 
-- **WhatsApp comercial:** `5549988395635`, exibido como (49) 98839-5635
+- **WhatsApp comercial:** `554799970464`, exibido como (47) 9997-0464
 - **Telefones:** Chapecó (49) 3323-9050 · Joinville (47) 3842-3333
 - **E-mail:** comercial@grupovendaforte.com
 - **Matriz:** Chapecó, SC
@@ -50,7 +50,7 @@ não invente variação.
 ## Pendências que bloqueiam publicação
 
 1. **Número de WhatsApp.** Os componentes de `components/promo/` usam o placeholder
-   `5511999999999`. Trocar por `5549988395635` em `components/promo/promo.config.ts`.
+   `5511999999999`. Trocar por `554799970464` em `components/promo/promo.config.ts`.
 2. **Conflito de cobertura.** A página promocional afirma atendimento nacional e região
    Sudeste. O dado real da empresa é Sul do Brasil, três estados. Definir com o cliente
    se a campanha vende cobertura nacional. Até a definição, a copy destes arquivos usa

@@ -14,8 +14,8 @@ import type { FrameSequence } from "./ScrollSequence";
 /* -------------------------------------------------------------------------- */
 
 /** Número comercial real, o mesmo usado no site principal. */
-export const WHATSAPP_CENTRAL = "5549988395635";
-export const WHATSAPP_DISPLAY = "(49) 98839-5635";
+export const WHATSAPP_CENTRAL = "554799970464";
+export const WHATSAPP_DISPLAY = "(47) 9997-0464";
 
 export const CONTATO = {
   chapeco: "(49) 3323-9050",

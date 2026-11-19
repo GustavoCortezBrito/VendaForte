@@ -1,5 +1,6 @@
 'use client'
 
+import { WHATSAPP_CENTRAL } from '@/components/promo/promo.config'
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ZoomIn, MessageCircle, ChevronRight, ExternalLink } from 'lucide-react'
@@ -30,7 +31,7 @@ export default function ImageLightboxModal({
   batteryVoltage,
   slug,
 }: LightboxProps) {
-  const phoneNumber = '+5549988395635'
+  const phoneNumber = WHATSAPP_CENTRAL
 
   // Fechar com tecla ESC
   useEffect(() => {

@@ -47,17 +47,19 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const stats = statsOf(productsOfType(page))
   const totalPages = Math.ceil(stats.count / TYPE_PAGE_SIZE)
   const suffix = current > 1 ? ` (página ${current})` : ''
+  const description = current > 1 ? `${page.metaDescription(stats)} Página ${current} de ${totalPages}.` : page.metaDescription(stats)
 
   return {
     title: { absolute: `${page.label} EP: ${stats.count} modelos${suffix} | Venda Forte` },
-    description: page.metaDescription(stats),
+    description,
     // Cada página da lista tem canônica própria: a página 2 não é cópia da 1
     alternates: { canonical: hrefOf(page.slug, Math.min(current, totalPages)) },
     openGraph: {
       title: `${page.label} EP Equipment | Venda Forte`,
-      description: page.metaDescription(stats),
+      description,
       type: 'website',
       url: hrefOf(page.slug, current),
+      images: [{ url: `${SITE_URL}/sede.png`, width: 1200, height: 630, alt: 'Grupo Venda Forte, matriz em Chapecó' }],
     },
   }
 }

@@ -1,5 +1,6 @@
 'use client'
 
+import { WHATSAPP_CENTRAL } from '@/components/promo/promo.config'
 import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -44,7 +45,7 @@ export default function ForkliftDetailClient({ product, relatedProducts, typeLin
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [activeSpecTab, setActiveSpecTab] = useState<string>('all')
-  const phoneNumber = '+5549988395635'
+  const phoneNumber = WHATSAPP_CENTRAL
 
   const handleShare = () => {
     if (navigator.clipboard) {

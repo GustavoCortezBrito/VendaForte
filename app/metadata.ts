@@ -95,7 +95,7 @@ export const metadata: Metadata = {
     'ai:main_services': 'Venda, Locação, Manutenção, Assistência Técnica',
     'ai:experience_years': '20+',
     'ai:contact_phone': '+55 49 3323-9050',
-    'ai:contact_whatsapp': '+55 49 98839-5635',
+    'ai:contact_whatsapp': '+55 47 9997-0464',
     'ai:contact_email': 'comercial@grupovendaforte.com',
     'ai:headquarters': 'Chapecó - Santa Catarina - Brasil',
     
@@ -130,11 +130,10 @@ export const jsonLdOrganization = {
     },
     {
       '@type': 'ContactPoint',
-      telephone: '+55-49-98839-5635',
+      telephone: '+55-47-9997-0464',
       contactType: 'customer service',
       areaServed: 'BR',
-      availableLanguage: 'Portuguese',
-      contactOption: 'TollFree'
+      availableLanguage: 'Portuguese'
     }
   ],
   sameAs: [

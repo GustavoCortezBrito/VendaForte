@@ -94,7 +94,7 @@ Muitos compradores confundem esses dois conceitos:
 
 Os engenheiros de movimentação do **Grupo Venda Forte** realizam o estudo de layout do seu galpão sem custos.
 
-👉 **[Solicite um Diagnóstico de Layout e Equipamento no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20para%20dimensionar%20a%20empilhadeira%20ideal%20para%20meu%20armaz%C3%A9m.)** e receba a especificação técnica recomendada.
+👉 **[Solicite um Diagnóstico de Layout e Equipamento no WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20para%20dimensionar%20a%20empilhadeira%20ideal%20para%20meu%20armaz%C3%A9m.)** e receba a especificação técnica recomendada.
 
 ## Leia também
 

@@ -82,7 +82,7 @@ Sim. A exigência da NR-11 vale para qualquer empilhadeira, própria ou alugada.
 
 ## Como pedir a proposta à Venda Forte
 
-A Venda Forte trabalha com locação de empilhadeiras. Envie as respostas da lista acima pelo [WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1!%20Vim%20pelo%20blog%20e%20quero%20uma%20proposta%20de%20loca%C3%A7%C3%A3o%20de%20empilhadeira.) ou pelo [formulário de contato](/#contact), e a equipe monta a proposta com o modelo, o prazo e o que está incluso.
+A Venda Forte trabalha com locação de empilhadeiras. Envie as respostas da lista acima pelo [WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1!%20Vim%20pelo%20blog%20e%20quero%20uma%20proposta%20de%20loca%C3%A7%C3%A3o%20de%20empilhadeira.) ou pelo [formulário de contato](/#contact), e a equipe monta a proposta com o modelo, o prazo e o que está incluso.
 
 ## Leia também
 

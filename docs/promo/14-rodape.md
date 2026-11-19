@@ -30,7 +30,7 @@ barra fixa de WhatsApp não cobrir os links.
 
 ### Contatos
 
-- WhatsApp: (49) 98839-5635
+- WhatsApp: (47) 9997-0464
 - Chapecó: (49) 3323-9050
 - Joinville: (47) 3842-3333
 - comercial@grupovendaforte.com

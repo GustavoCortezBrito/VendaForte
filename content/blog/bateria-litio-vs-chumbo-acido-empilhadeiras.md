@@ -97,7 +97,7 @@ Mesmo que o investimento inicial de aquisição do lítio seja ligeiramente supe
 
 O **Grupo Venda Forte** é especialista na transição de frotas convencionais para empilhadeiras e paleteiras com tecnologia EP Li-Ion com garantia de 5 anos e pronta entrega.
 
-👉 **[Fale com nosso Time de Engenharia no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20as%20vantagens%20da%20bateria%20de%20l%C3%ADtio%20para%20minha%20empilhadeira.)** e conheça os modelos em promoção.
+👉 **[Fale com nosso Time de Engenharia no WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20as%20vantagens%20da%20bateria%20de%20l%C3%ADtio%20para%20minha%20empilhadeira.)** e conheça os modelos em promoção.
 
 ## Leia também
 

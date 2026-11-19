@@ -93,7 +93,7 @@ Anote o horímetro, a data, o que foi feito e o que foi trocado em cada interval
 
 ## Como pedir atendimento
 
-A Venda Forte é dealer oficial da EP Equipment e faz assistência técnica. Para pedir atendimento, envie pelo [WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1!%20Vim%20pelo%20blog%20e%20preciso%20de%20assist%C3%AAncia%20t%C3%A9cnica%20para%20a%20minha%20empilhadeira.) ou pelo [formulário de contato](/#contact):
+A Venda Forte é dealer oficial da EP Equipment e faz assistência técnica. Para pedir atendimento, envie pelo [WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1!%20Vim%20pelo%20blog%20e%20preciso%20de%20assist%C3%AAncia%20t%C3%A9cnica%20para%20a%20minha%20empilhadeira.) ou pelo [formulário de contato](/#contact):
 
 - o **modelo** e o **número de série**, que ficam na plaqueta da máquina;
 - as **horas** que aparecem no horímetro;

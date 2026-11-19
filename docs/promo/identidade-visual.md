@@ -189,6 +189,6 @@ são intencionais em parte e acidentais em parte. Precisam de decisão.
 - **Matriz:** Chapecó, SC
 - **Pontos de atendimento:** Chapecó, Itajaí, Joinville, Maringá, Seberi, Esteio
 - **CEO:** Rodrigo Schilke
-- **WhatsApp:** (49) 98839-5635
+- **WhatsApp:** (47) 9997-0464
 - **E-mail:** comercial@grupovendaforte.com
 - **Site:** grupovendaforte.com

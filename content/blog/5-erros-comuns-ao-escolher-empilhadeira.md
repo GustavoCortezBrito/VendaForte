@@ -71,7 +71,7 @@ Junte estas informações e a proposta sai mais rápida e mais precisa:
 
 ## Fale com a equipe
 
-A Venda Forte é dealer oficial da EP Equipment e faz o dimensionamento junto com você. [Peça uma cotação](/promo#cotacao) ou [fale com um consultor no WhatsApp](https://wa.me/5549988395635?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20erros%20ao%20escolher%20empilhadeira%20e%20quero%20ajuda%20para%20dimensionar.).
+A Venda Forte é dealer oficial da EP Equipment e faz o dimensionamento junto com você. [Peça uma cotação](/promo#cotacao) ou [fale com um consultor no WhatsApp](https://wa.me/554799970464?text=Ol%C3%A1%2C%20li%20o%20artigo%20sobre%20erros%20ao%20escolher%20empilhadeira%20e%20quero%20ajuda%20para%20dimensionar.).
 
 ## Leia também
 

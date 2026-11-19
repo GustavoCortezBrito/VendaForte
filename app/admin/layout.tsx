@@ -1,5 +1,12 @@
+import type { Metadata } from 'next'
 import { ReactNode } from 'react'
 import FeedbackHost from '@/components/admin/Feedback'
+
+export const metadata: Metadata = {
+  title: { absolute: 'Painel administrativo | Venda Forte' },
+  description: 'Área restrita do Grupo Venda Forte.',
+  robots: { index: false, follow: false },
+}
 
 export default function AdminLayout({
   children,
