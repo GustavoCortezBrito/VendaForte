@@ -147,7 +147,7 @@ export default function PrivacidadeClient() {
     <LegalLayout
       eyebrow="LGPD"
       title="Política de Privacidade"
-      updated={`Última atualização: ${new Date().toLocaleDateString('pt-BR')}`}
+      updated="Última atualização: 19/11/2026"
       intro={
         <>
           <h2 className="mb-4 text-2xl font-semibold tracking-tight text-white">Introdução</h2>

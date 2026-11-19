@@ -134,7 +134,7 @@ export default function TermosClient() {
     <LegalLayout
       eyebrow="Condições de uso do site"
       title="Termos de Uso"
-      updated={`Última atualização: ${new Date().toLocaleDateString('pt-BR')}`}
+      updated="Última atualização: 19/11/2026"
       intro={
         <>
           <h2 className="mb-4 text-2xl font-semibold tracking-tight text-white">Bem-vindo ao Grupo Venda Forte</h2>
