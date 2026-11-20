@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import AboutPageClient from '@/components/AboutPageClient'
+import { SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: { absolute: 'Sobre a Venda Forte | Dealer EP em Chapecó e Joinville' },
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
     description: 'Dealer EP Equipment em Chapecó e Joinville. Empilhadeiras elétricas, assistência técnica e peças originais no Sul do Brasil e SP.',
     type: 'website',
     locale: 'pt_BR',
+    images: [{ url: `${SITE_URL}/sede.png`, width: 1200, height: 630, alt: 'Grupo Venda Forte, matriz em Chapecó' }],
   },
   alternates: {
     canonical: '/sobre'

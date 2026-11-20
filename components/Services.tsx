@@ -87,7 +87,7 @@ const SERVICES: Service[] = [
 const CARD_CLASS =
   'group relative flex h-full w-full flex-col overflow-hidden rounded-[28px] border border-white/10 bg-ink-raised text-left transition-colors duration-500 hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/60'
 
-function CardBody({ service, icon }: { service: Service; icon: ReactNode }) {
+function CardBody({ service, icon, href }: { service: Service; icon: ReactNode; href?: string }) {
   return (
     <>
       <div className="relative m-2 aspect-[16/10] overflow-hidden rounded-[22px]">
@@ -104,7 +104,16 @@ function CardBody({ service, icon }: { service: Service; icon: ReactNode }) {
         </span>
       </div>
       <div className="flex flex-1 flex-col p-6 pt-4">
-        <h3 className="text-xl font-semibold tracking-tight text-white">{service.title}</h3>
+        <h3 className="text-xl font-semibold tracking-tight text-white">
+          {href ? (
+            // O ::after estica o link por cima do cartão inteiro: o texto do link é só o título, a área clicável é toda
+            <Link href={href} className="after:absolute after:inset-0 after:z-10 after:rounded-[28px] focus-visible:outline-none">
+              {service.title}
+            </Link>
+          ) : (
+            service.title
+          )}
+        </h3>
         <p className="mt-2 text-sm leading-relaxed text-neutral-400">{service.description}</p>
         <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-semibold text-white">
           {icon}
@@ -177,9 +186,9 @@ export default function Services() {
                     <CardBody service={service} icon={<Play className="h-4 w-4 fill-current" aria-hidden="true" />} />
                   </button>
                 ) : (
-                  <Link href={service.ctaHref ?? '/'} aria-label={`${service.ctaText} - ${service.title}`} className={CARD_CLASS}>
-                    <CardBody service={service} icon={null} />
-                  </Link>
+                  <div className={`${CARD_CLASS} focus-within:ring-2 focus-within:ring-red-500/60`}>
+                    <CardBody service={service} icon={null} href={service.ctaHref ?? '/'} />
+                  </div>
                 )}
               </Reveal>
             </li>

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import PageHeader from '@/components/site/PageHeader'
 import ReadMore from '@/components/site/ReadMore'
+import { fitTitle } from '@/lib/seo-title'
 import { BTN_GHOST, BTN_WHATSAPP, PRODUCT_STAGE } from '@/components/site/styles'
 import { stagePhoto } from '@/lib/product-photo'
 import { notFound } from 'next/navigation'
@@ -51,7 +52,16 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const description = current > 1 ? `${page.metaDescription(stats)} Página ${current} de ${totalPages}.` : page.metaDescription(stats)
 
   return {
-    title: { absolute: `${page.label} EP: ${stats.count} modelos${suffix} | Venda Forte` },
+    title: {
+      absolute:
+        current > 1
+          ? fitTitle(
+              `${page.label} EP: ${stats.count} modelos${suffix} | Venda Forte`,
+              `${page.label} EP: página ${current} | Venda Forte`,
+              `${page.label}: página ${current} | Venda Forte`
+            )
+          : fitTitle(`${page.label} EP: ${stats.count} modelos | Venda Forte`, `${page.label} EP | Venda Forte`, `${page.label} | Venda Forte`),
+    },
     description,
     // Cada página da lista tem canônica própria: a página 2 não é cópia da 1
     alternates: { canonical: hrefOf(page.slug, Math.min(current, totalPages)) },

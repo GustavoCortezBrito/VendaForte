@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "seo:auditar": "node scripts/seo/auditar-paginas.cjs",
     "migrate": "tsx scripts/migrate-posts.ts",
     "db:migrate": "tsx scripts/migrate-posts.ts"
   },

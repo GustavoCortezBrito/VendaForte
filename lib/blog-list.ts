@@ -14,6 +14,7 @@ import {
   type BlogPostSummary,
   type CategoryInfo,
 } from './blog-format'
+import { fitTitle } from './seo-title'
 
 /** Ordem da lista: do mais novo ao mais velho (padrão) ou o contrário. */
 export type SortOrder = 'recentes' | 'antigos'
@@ -106,6 +107,6 @@ export function listingTitle({ category, page }: { category: CategoryInfo | null
   const suffix = page > 1 ? ` – Página ${page}` : ''
   return category
     ? `${category.name} | Blog Venda Forte${suffix}`
-    : `Blog Venda Forte | Guias sobre empilhadeiras elétricas${suffix}`
+    : fitTitle(`Blog Venda Forte | Guias sobre empilhadeiras elétricas${suffix}`, `Blog Venda Forte | Guias de empilhadeiras${suffix}`)
 }
 

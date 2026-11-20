@@ -3,7 +3,7 @@ import { SITE_URL } from '@/lib/site';
 
 const siteUrl = SITE_URL;
 const siteName = "Grupo Venda Forte";
-const siteTitle = `Venda de empilhadeiras em Chapecó e Joinville | ${siteName}`;
+const siteTitle = "Venda de empilhadeiras em Chapecó e Joinville | Venda Forte";
 const siteDescription = "Venda e locação de empilhadeiras e paleteiras EP Equipment em Chapecó e Joinville, com assistência técnica e peças. Peça sua cotação.";
 
 

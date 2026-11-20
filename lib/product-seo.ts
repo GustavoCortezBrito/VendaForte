@@ -3,6 +3,7 @@
  * para a página (servidor) e o catálogo (navegador) usarem os mesmos nomes de tipo.
  */
 import { SITE_URL } from '@/lib/site'
+import { fitTitle } from '@/lib/seo-title'
 
 interface ProductLike {
   slug: string
@@ -54,7 +55,13 @@ export const powerText = (p: ProductLike) =>
   isDiesel(p) ? 'motor a diesel' : `bateria ${p.batteryVoltage} (${batteryKind(p.batteryType)})`
 
 /** Título único por modelo (absoluto: já leva a marca, para não repeti-la). */
-export const productTitle = (p: ProductLike) => `EP ${p.title} ${p.capacity}: ${typeLabel(p.type)} | Venda Forte`
+export const productTitle = (p: ProductLike) =>
+  fitTitle(
+    `EP ${p.title} ${p.capacity}: ${typeLabel(p.type)} | Venda Forte`,
+    `EP ${p.title} ${p.capacity}: ${typeLabel(p.type).replace(/^Empilhadeira /, '')} | Venda Forte`,
+    `EP ${p.title} ${p.capacity} | Venda Forte`,
+    `EP ${p.title} | Venda Forte`
+  )
 
 /** Descrição de até 160 caracteres, com o tipo de bateria real do modelo. */
 export function productDescription(p: ProductLike): string {

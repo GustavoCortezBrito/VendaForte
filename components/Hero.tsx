@@ -53,7 +53,7 @@ export default function Hero() {
       {/* Fachada */}
       <motion.div aria-hidden="true" style={{ y: photoY }} className="absolute inset-x-0 top-0 -z-20 h-80 sm:h-[26rem] lg:inset-0 lg:h-auto">
         <div className={`absolute inset-0 ${HERO_VIDEO && !reduced ? '' : 'hero-kenburns'}`}>
-          <Image src={HERO_PHOTO} alt="" fill priority sizes="100vw" quality={75} className="object-cover object-[30%_center] lg:object-[60%_center]" />
+          <Image src={HERO_PHOTO} alt="Fachada da matriz do Grupo Venda Forte em Chapecó, Santa Catarina" fill priority sizes="100vw" quality={75} className="object-cover object-[30%_center] lg:object-[60%_center]" />
           {HERO_VIDEO && !reduced && (
             <video
               ref={videoRef}

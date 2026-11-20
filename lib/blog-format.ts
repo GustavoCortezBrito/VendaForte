@@ -68,7 +68,7 @@ export function categoryOf(post: Pick<BlogPostSummary, 'category'>): string {
 /** Texto de abertura de cada categoria: dá à página o que dizer antes da lista e à busca o que mostrar. */
 const CATEGORY_INTROS: Record<string, string> = {
   Custos:
-    'Guias para entender o custo de ter e operar uma empilhadeira: locar ou comprar, custo total de propriedade e custo de energia, com as contas explicadas passo a passo.',
+    'Guias para entender o custo de ter e operar uma empilhadeira: locar ou comprar, custo total de propriedade e custo de energia, com as contas explicadas.',
   'Máquinas EP':
     'Fichas técnicas explicadas dos modelos EP Equipment: capacidade, bateria, dimensões, corredor e opcionais, lidos direto da ficha do fabricante.',
   Tecnologia:
