@@ -4,6 +4,10 @@ import type { NextConfig } from "next";
 const PROMO_VIDEOS = ["ds3-giro-15s", "efl302b3-movimento", "f4-revelacao"];
 
 const nextConfig: NextConfig = {
+  // Avisa agentes de código quando houver atualização de segurança do Next.js
+  experimental: {
+    agentUpgrade: "security",
+  },
   // Quadros e vídeos da campanha levam a versão na URL (?v=), então o navegador
   // pode guardá-los por um ano sem revalidar. Ao trocar esses arquivos, suba
   // ASSET_VERSION em components/promo/promo.config.ts.
