@@ -27,6 +27,8 @@ function detectOrigem(): string {
     const ref = new URL(document.referrer)
     if (ref.host === window.location.host) return ''
     const host = ref.hostname.replace(/^www\./, '')
+    // Painel e endereços de teste da Vercel não são origem de cliente: não entram na mensagem nem no GA4
+    if (/(^|\.)vercel\.(com|app)$/.test(host)) return ''
     if (/(^|\.)google\./.test(host)) return 'Google (busca)'
     if (/(^|\.)bing\.com$/.test(host)) return 'Bing'
     if (/instagram\.com$/.test(host)) return 'Instagram'
